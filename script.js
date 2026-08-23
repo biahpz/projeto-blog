@@ -1,3 +1,19 @@
+"use strict";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ = (selector, parent = document) =>
+    parent.querySelector(selector);
+
+const $$ = (selector, parent = document) =>
+    [...parent.querySelectorAll(selector)];
+
+const body = document.body;
+
+
 /* =========================================================
    BANCO DE DADOS DAS SÉRIES
 ========================================================= */
@@ -11,185 +27,214 @@ const seriesData = [
 
         year: 2016,
 
+        seasons: 5,
+
+        genre: "Ficção científica",
+
         genres: [
             "Ficção científica",
             "Mistério",
             "Drama"
         ],
 
-        seasons: "5 temporadas",
-
         age: "16",
 
-        status: "Finalizada",
-
         rating: 4.9,
-
-        phrase: "uma das minhas favoritas!",
 
         poster:
             "https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg",
 
-        description: [
-            `Ambientada na pequena cidade de Hawkins, Stranger Things
-            começa quando o desaparecimento misterioso de Will Byers
-            revela acontecimentos sobrenaturais, experimentos secretos
-            e uma dimensão assustadora conhecida como Mundo Invertido.`,
+        backdrop:
+            "https://image.tmdb.org/t/p/original/56v2KjBlU4XaOv9rVYEQypROD7P.jpg",
 
-            `Com muita nostalgia, amizade e referências à cultura pop,
-            a série mistura aventura, mistério, ficção científica e
-            terror. A cada temporada, os personagens precisam enfrentar
-            ameaças cada vez maiores enquanto tentam proteger Hawkins
-            e uns aos outros.`
+        description: [
+            "Em Hawkins, uma pequena cidade aparentemente tranquila, o desaparecimento de um garoto dá início a uma sequência de acontecimentos estranhos.",
+            "Entre experiências secretas, criaturas assustadoras e amizades que parecem impossíveis de quebrar, Stranger Things mistura suspense, nostalgia e emoção de um jeito que prende do começo ao fim."
         ],
 
         tags: [
-            "anos 80",
             "amizade",
             "mistério",
-            "sobrenatural"
+            "anos 80",
+            "sobrenatural",
+            "aventura"
         ],
+
+        quote:
+            "Uma daquelas séries que fazem você falar “só mais um episódio” até amanhecer.",
+
+        phrase:
+            "Hawkins sempre faz a gente voltar ♡",
 
         trailer:
             "https://www.youtube.com/embed/b9EkMc79ZSU",
 
         cast: [
-            ["Millie Bobby Brown", "Eleven"],
-            ["Finn Wolfhard", "Mike"],
-            ["Noah Schnapp", "Will"],
-            ["Sadie Sink", "Max"],
-            ["Gaten Matarazzo", "Dustin"],
-            ["Caleb McLaughlin", "Lucas"]
-        ],
-
-        votes: {
-            like: 928,
-            dislike: 72
-        }
+            {
+                name: "Millie Bobby Brown",
+                role: "Eleven"
+            },
+            {
+                name: "Finn Wolfhard",
+                role: "Mike Wheeler"
+            },
+            {
+                name: "Noah Schnapp",
+                role: "Will Byers"
+            },
+            {
+                name: "Caleb McLaughlin",
+                role: "Lucas Sinclair"
+            },
+            {
+                name: "Gaten Matarazzo",
+                role: "Dustin Henderson"
+            },
+            {
+                name: "Sadie Sink",
+                role: "Max Mayfield"
+            }
+        ]
     },
 
 
     {
-        id: "riverdale",
+        id: "wednesday",
 
-        title: "Riverdale",
+        title: "Wandinha",
 
-        year: 2017,
+        year: 2022,
+
+        seasons: 2,
+
+        genre: "Mistério",
 
         genres: [
-            "Drama",
             "Mistério",
-            "Romance"
+            "Fantasia",
+            "Comédia"
         ],
 
-        seasons: "7 temporadas",
+        age: "14",
 
-        age: "16",
-
-        status: "Finalizada",
-
-        rating: 3.8,
-
-        phrase: "caótica, mas impossível de ignorar",
+        rating: 4.8,
 
         poster:
-            "https://image.tmdb.org/t/p/w500/cdM7S25iXWQbKi7lN7l4mH8Jv5V.jpg",
+            "https://image.tmdb.org/t/p/w500/ooBR3qulC40ws0QkYBUAYFKmLRE.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/iHSwvRVsRyxpX7FE7GbviaDvgGZ.jpg",
 
         description: [
-            `Riverdale acompanha Archie Andrews, Betty Cooper,
-            Veronica Lodge, Jughead Jones e outros adolescentes
-            enquanto investigam os segredos escondidos por trás
-            de uma cidade aparentemente tranquila.`,
-
-            `O que começa como um mistério adolescente rapidamente
-            evolui para romances, crimes, conspirações e acontecimentos
-            cada vez mais inesperados. É uma série que definitivamente
-            não tem medo de ficar estranha.`
+            "Wandinha Addams começa uma nova fase de sua vida na Escola Nunca Mais, um lugar cheio de alunos tão diferentes quanto ela.",
+            "Enquanto tenta dominar seus poderes, ela acaba envolvida em assassinatos, segredos familiares e um mistério que parece ficar cada vez maior."
         ],
 
         tags: [
-            "romance",
-            "adolescente",
-            "crime",
-            "mistério"
+            "mistério",
+            "escola",
+            "fantasia",
+            "humor sombrio",
+            "investigação"
         ],
+
+        quote:
+            "Estranha, sarcástica e impossível de ignorar.",
+
+        phrase:
+            "um pouquinho sombria e perfeita ♡",
 
         trailer:
-            "https://www.youtube.com/embed/HxtLlByaYTc",
+            "https://www.youtube.com/embed/Di310WS8zLk",
 
         cast: [
-            ["KJ Apa", "Archie"],
-            ["Lili Reinhart", "Betty"],
-            ["Camila Mendes", "Veronica"],
-            ["Cole Sprouse", "Jughead"],
-            ["Madelaine Petsch", "Cheryl"]
-        ],
-
-        votes: {
-            like: 684,
-            dislike: 316
-        }
+            {
+                name: "Jenna Ortega",
+                role: "Wandinha Addams"
+            },
+            {
+                name: "Emma Myers",
+                role: "Enid Sinclair"
+            },
+            {
+                name: "Joy Sunday",
+                role: "Bianca Barclay"
+            },
+            {
+                name: "Hunter Doohan",
+                role: "Tyler Galpin"
+            }
+        ]
     },
 
 
     {
-        id: "gossip-girl",
+        id: "bridgerton",
 
-        title: "Gossip Girl",
+        title: "Bridgerton",
 
-        year: 2007,
+        year: 2020,
+
+        seasons: 4,
+
+        genre: "Romance",
 
         genres: [
+            "Romance",
             "Drama",
-            "Romance"
+            "Época"
         ],
-
-        seasons: "6 temporadas",
 
         age: "16",
 
-        status: "Finalizada",
-
-        rating: 4.5,
-
-        phrase: "fofoca, luxo e muito drama ♡",
+        rating: 4.7,
 
         poster:
-            "https://image.tmdb.org/t/p/w500/sdX4fZHYy1hD3U3VfJbY5VYJ4mR.jpg",
+            "https://image.tmdb.org/t/p/w500/luoKpgVwi1E5nQsi7W0UuKHu2Rq.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/9R9KI3f0gyLdH8xVJxXJ6x4T6Uk.jpg",
 
         description: [
-            `No Upper East Side de Manhattan, um grupo de jovens
-            privilegiados tem praticamente cada passo acompanhado
-            por uma blogueira anônima conhecida como Gossip Girl.`,
-
-            `Entre romances, amizades, traições e escândalos,
-            ninguém consegue manter um segredo por muito tempo.
-            É aquele tipo de série perfeita para quem gosta de
-            drama e personagens que vivem tomando decisões duvidosas.`
+            "Em meio à alta sociedade londrina, famílias poderosas disputam prestígio enquanto romances inesperados começam a surgir.",
+            "Bridgerton mistura festas luxuosas, fofocas, escândalos e histórias de amor que transformam completamente a vida de seus personagens."
         ],
 
         tags: [
-            "Nova York",
             "romance",
-            "fofoca",
-            "drama"
+            "época",
+            "drama",
+            "família",
+            "sociedade"
         ],
+
+        quote:
+            "Romance, vestidos lindos e fofoca: combinação perigosa.",
+
+        phrase:
+            "Lady Whistledown aprovaria ♡",
 
         trailer:
-            "https://www.youtube.com/embed/eCg1RN-dyQk",
+            "https://www.youtube.com/embed/gpv7ayf_tyE",
 
         cast: [
-            ["Blake Lively", "Serena"],
-            ["Leighton Meester", "Blair"],
-            ["Penn Badgley", "Dan"],
-            ["Ed Westwick", "Chuck"],
-            ["Chace Crawford", "Nate"]
-        ],
-
-        votes: {
-            like: 881,
-            dislike: 119
-        }
+            {
+                name: "Nicola Coughlan",
+                role: "Penelope Featherington"
+            },
+            {
+                name: "Luke Newton",
+                role: "Colin Bridgerton"
+            },
+            {
+                name: "Jonathan Bailey",
+                role: "Anthony Bridgerton"
+            },
+            {
+                name: "Simone Ashley",
+                role: "Kate Sharma"
+            }
+        ]
     },
 
 
@@ -200,182 +245,130 @@ const seriesData = [
 
         year: 2018,
 
+        seasons: 5,
+
+        genre: "Suspense",
+
         genres: [
             "Suspense",
-            "Drama",
-            "Crime"
+            "Crime",
+            "Drama"
         ],
-
-        seasons: "5 temporadas",
 
         age: "18",
 
-        status: "Finalizada",
-
         rating: 4.6,
 
-        phrase: "perturbadora do jeito certo",
-
         poster:
-            "https://image.tmdb.org/t/p/w500/7bEYwjUvlJW7GerM8GYmqwl4oS3.jpg",
+            "https://image.tmdb.org/t/p/w500/oANi0vEE92nuijiZQgPZ88FSxqQ.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/4R9BObP8MJP8S5ZrTCS2j79RrPM.jpg",
 
         description: [
-            `Joe Goldberg parece ser apenas um homem inteligente
-            e apaixonado por livros, mas sua visão sobre romance
-            rapidamente revela um lado obsessivo e extremamente
-            perigoso.`,
-
-            `You brinca constantemente com a perspectiva do
-            protagonista, fazendo o público acompanhar seus
-            pensamentos enquanto ele justifica atitudes cada
-            vez mais absurdas.`
+            "Joe Goldberg parece apenas um homem inteligente e romântico, mas sua obsessão rapidamente mostra um lado muito mais perigoso.",
+            "A série acompanha relações, crimes e decisões cada vez mais absurdas enquanto Joe tenta justificar para si mesmo tudo o que faz."
         ],
 
         tags: [
-            "obsessão",
+            "suspense",
             "crime",
-            "psicológico",
-            "suspense"
+            "obsessão",
+            "psicológico"
         ],
+
+        quote:
+            "Você sabe que não deveria torcer por ele. Mesmo assim, continua assistindo.",
+
+        phrase:
+            "problemático? bastante. viciante? também.",
 
         trailer:
             "https://www.youtube.com/embed/ga1m0wjzscU",
 
         cast: [
-            ["Penn Badgley", "Joe Goldberg"],
-            ["Victoria Pedretti", "Love Quinn"],
-            ["Elizabeth Lail", "Beck"],
-            ["Tati Gabrielle", "Marienne"]
-        ],
-
-        votes: {
-            like: 906,
-            dislike: 94
-        }
+            {
+                name: "Penn Badgley",
+                role: "Joe Goldberg"
+            },
+            {
+                name: "Charlotte Ritchie",
+                role: "Kate"
+            },
+            {
+                name: "Victoria Pedretti",
+                role: "Love Quinn"
+            }
+        ]
     },
 
 
     {
-        id: "la-casa-de-papel",
+        id: "cobra-kai",
 
-        title: "La Casa de Papel",
+        title: "Cobra Kai",
 
-        year: 2017,
+        year: 2018,
+
+        seasons: 6,
+
+        genre: "Ação",
 
         genres: [
-            "Crime",
+            "Ação",
             "Drama",
-            "Suspense"
+            "Comédia"
         ],
 
-        seasons: "5 partes",
+        age: "14",
 
-        age: "16",
-
-        status: "Finalizada",
-
-        rating: 4.8,
-
-        phrase: "Bella Ciao nunca mais foi a mesma",
+        rating: 4.6,
 
         poster:
-            "https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+            "https://image.tmdb.org/t/p/w500/6POBWybSBDBKjSs1VAQcnQC1qyt.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/35SS0nlBhu28cSe7TiO3ZiywZhl.jpg",
 
         description: [
-            `Um homem conhecido como Professor reúne criminosos
-            com habilidades diferentes para executar um plano
-            extremamente ambicioso: realizar um dos maiores
-            assaltos já imaginados.`,
-
-            `Com identidades baseadas em nomes de cidades,
-            máscaras icônicas e muitos planos dentro de outros
-            planos, La Casa de Papel mistura ação, emoção,
-            estratégia e relacionamentos.`
+            "Décadas depois do torneio que marcou suas vidas, Johnny Lawrence e Daniel LaRusso voltam a se encontrar.",
+            "Velhas rivalidades reaparecem enquanto uma nova geração começa a aprender karatê e descobrir que os conflitos vão muito além do tatame."
         ],
 
         tags: [
-            "assalto",
-            "Espanha",
+            "karatê",
             "ação",
-            "estratégia"
+            "rivalidade",
+            "nostalgia"
         ],
+
+        quote:
+            "Às vezes o maior adversário não está do outro lado do tatame.",
+
+        phrase:
+            "strike first... depois maratone ♡",
 
         trailer:
-            "https://www.youtube.com/embed/_InqQJRqGW4",
+            "https://www.youtube.com/embed/xCwwxNbtK6Y",
 
         cast: [
-            ["Álvaro Morte", "Professor"],
-            ["Úrsula Corberó", "Tokyo"],
-            ["Pedro Alonso", "Berlin"],
-            ["Itziar Ituño", "Lisboa"],
-            ["Jaime Lorente", "Denver"]
-        ],
-
-        votes: {
-            like: 944,
-            dislike: 56
-        }
-    },
-
-
-    {
-        id: "alice-in-borderland",
-
-        title: "Alice in Borderland",
-
-        year: 2020,
-
-        genres: [
-            "Suspense",
-            "Ficção científica",
-            "Ação"
-        ],
-
-        seasons: "3 temporadas",
-
-        age: "16",
-
-        status: "Em andamento",
-
-        rating: 4.7,
-
-        phrase: "jogos que você definitivamente não quer jogar",
-
-        poster:
-            "https://image.tmdb.org/t/p/w500/20mOwAAPwZ1vLQkw0fvuQHiG7bO.jpg",
-
-        description: [
-            `Arisu e seus amigos são transportados para uma
-            versão praticamente vazia de Tóquio, onde precisam
-            participar de jogos perigosos para continuar vivos.`,
-
-            `Cada carta representa um tipo e nível de desafio.
-            Conforme Arisu tenta entender aquele mundo, a série
-            mistura sobrevivência, inteligência, ação e questões
-            sobre o verdadeiro valor da vida.`
-        ],
-
-        tags: [
-            "Japão",
-            "sobrevivência",
-            "jogos",
-            "ação"
-        ],
-
-        trailer:
-            "https://www.youtube.com/embed/49_44FFKZ1M",
-
-        cast: [
-            ["Kento Yamazaki", "Arisu"],
-            ["Tao Tsuchiya", "Usagi"],
-            ["Nijiro Murakami", "Chishiya"],
-            ["Aya Asahina", "Kuina"]
-        ],
-
-        votes: {
-            like: 931,
-            dislike: 69
-        }
+            {
+                name: "William Zabka",
+                role: "Johnny Lawrence"
+            },
+            {
+                name: "Ralph Macchio",
+                role: "Daniel LaRusso"
+            },
+            {
+                name: "Xolo Maridueña",
+                role: "Miguel Diaz"
+            },
+            {
+                name: "Mary Mouser",
+                role: "Samantha LaRusso"
+            }
+        ]
     },
 
 
@@ -386,649 +379,962 @@ const seriesData = [
 
         year: 2020,
 
+        seasons: 4,
+
+        genre: "Aventura",
+
         genres: [
             "Aventura",
             "Drama",
             "Mistério"
         ],
 
-        seasons: "4 temporadas",
-
         age: "16",
 
-        status: "Em andamento",
-
         rating: 4.5,
-
-        phrase: "P4L! aventura do começo ao fim",
 
         poster:
             "https://image.tmdb.org/t/p/w500/ovDgO2LPfwdVRfvScAqo9aMiIW.jpg",
 
-        description: [
-            `John B e seus amigos vivem em Outer Banks e acabam
-            encontrando pistas relacionadas a um tesouro perdido
-            e ao desaparecimento do pai de John B.`,
+        backdrop:
+            "https://image.tmdb.org/t/p/original/4QpKxH614YFIsmiIBVUbsnG2H8w.jpg",
 
-            `A busca transforma as férias do grupo em uma grande
-            aventura cheia de perseguições, romances, rivalidades
-            e situações perigosas.`
+        description: [
+            "Um grupo de amigos parte em busca de respostas sobre o desaparecimento do pai de John B.",
+            "O que começa como uma investigação acaba levando os Pogues a mapas, tesouros, perseguições e situações cada vez mais perigosas."
         ],
 
         tags: [
-            "praia",
+            "aventura",
             "tesouro",
             "amizade",
-            "aventura"
+            "praia"
         ],
+
+        quote:
+            "Pogues juntos até o final.",
+
+        phrase:
+            "aventura, caos e pôr do sol ♡",
 
         trailer:
             "https://www.youtube.com/embed/uk_hFfUFXh4",
 
         cast: [
-            ["Chase Stokes", "John B"],
-            ["Madelyn Cline", "Sarah"],
-            ["Rudy Pankow", "JJ"],
-            ["Jonathan Daviss", "Pope"],
-            ["Madison Bailey", "Kiara"]
-        ],
-
-        votes: {
-            like: 894,
-            dislike: 106
-        }
+            {
+                name: "Chase Stokes",
+                role: "John B"
+            },
+            {
+                name: "Madelyn Cline",
+                role: "Sarah Cameron"
+            },
+            {
+                name: "Madison Bailey",
+                role: "Kiara"
+            },
+            {
+                name: "Jonathan Daviss",
+                role: "Pope"
+            },
+            {
+                name: "Rudy Pankow",
+                role: "JJ"
+            }
+        ]
     },
 
 
     {
-        id: "squid-game",
+        id: "lucifer",
 
-        title: "Round 6",
+        title: "Lucifer",
 
-        year: 2021,
+        year: 2016,
 
-        genres: [
-            "Suspense",
-            "Drama",
-            "Sobrevivência"
-        ],
+        seasons: 6,
 
-        seasons: "3 temporadas",
-
-        age: "18",
-
-        status: "Finalizada",
-
-        rating: 4.8,
-
-        phrase: "brincadeiras infantis nunca foram tão tensas",
-
-        poster:
-            "https://image.tmdb.org/t/p/w500/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg",
-
-        description: [
-            `Centenas de pessoas endividadas recebem um convite
-            misterioso para participar de uma competição com um
-            prêmio gigantesco.`,
-
-            `O problema é que as brincadeiras aparentemente
-            infantis possuem consequências mortais. Round 6
-            combina suspense, crítica social e personagens
-            marcantes em uma competição brutal.`
-        ],
-
-        tags: [
-            "Coreia",
-            "jogos",
-            "sobrevivência",
-            "suspense"
-        ],
-
-        trailer:
-            "https://www.youtube.com/embed/oqxAJKy0ii4",
-
-        cast: [
-            ["Lee Jung-jae", "Gi-hun"],
-            ["Lee Byung-hun", "Front Man"],
-            ["Wi Ha-jun", "Jun-ho"],
-            ["Jung Ho-yeon", "Sae-byeok"]
-        ],
-
-        votes: {
-            like: 951,
-            dislike: 49
-        }
-    },
-
-
-    {
-        id: "wednesday",
-
-        title: "Wednesday",
-
-        year: 2022,
-
-        genres: [
-            "Mistério",
-            "Comédia",
-            "Fantasia"
-        ],
-
-        seasons: "2 temporadas",
-
-        age: "14",
-
-        status: "Em andamento",
-
-        rating: 4.7,
-
-        phrase: "sombria, sarcástica e estilosa",
-
-        poster:
-            "https://image.tmdb.org/t/p/w500/9PFonBhy4cQy7Jz20NpMygczOkv.jpg",
-
-        description: [
-            `Wednesday Addams começa a estudar na Academia
-            Nevermore, uma escola cheia de alunos tão incomuns
-            quanto ela.`,
-
-            `Enquanto tenta dominar suas habilidades psíquicas,
-            Wednesday investiga uma sequência de acontecimentos
-            misteriosos e descobre segredos relacionados à
-            própria família.`
-        ],
-
-        tags: [
-            "Nevermore",
-            "mistério",
-            "gótico",
-            "fantasia"
-        ],
-
-        trailer:
-            "https://www.youtube.com/embed/Di310WS8zLk",
-
-        cast: [
-            ["Jenna Ortega", "Wednesday"],
-            ["Emma Myers", "Enid"],
-            ["Hunter Doohan", "Tyler"],
-            ["Joy Sunday", "Bianca"],
-            ["Catherine Zeta-Jones", "Morticia"]
-        ],
-
-        votes: {
-            like: 937,
-            dislike: 63
-        }
-    },
-
-
-    {
-        id: "umbrella-academy",
-
-        title: "The Umbrella Academy",
-
-        year: 2019,
+        genre: "Fantasia",
 
         genres: [
             "Fantasia",
-            "Ação",
+            "Crime",
             "Drama"
         ],
 
-        seasons: "4 temporadas",
-
         age: "16",
 
-        status: "Finalizada",
-
-        rating: 4.4,
-
-        phrase: "a família mais problemática possível",
+        rating: 4.8,
 
         poster:
-            "https://image.tmdb.org/t/p/w500/scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg",
+            "https://image.tmdb.org/t/p/w500/ekZobS8isE6mA53RAiGDG93hBxL.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/aDBRtunw49UF4XmqfyNuD9nlYIu.jpg",
 
         description: [
-            `Irmãos adotivos com habilidades extraordinárias
-            se reencontram após a morte do homem que os criou
-            para formar uma equipe de heróis.`,
-
-            `Além dos problemas familiares, eles descobrem que
-            precisam impedir acontecimentos capazes de destruir
-            o mundo. A série mistura superpoderes, humor,
-            viagens no tempo e muito caos.`
+            "Cansado de comandar o inferno, Lucifer Morningstar decide abandonar seu reino e viver em Los Angeles.",
+            "Depois de se envolver em uma investigação policial, ele descobre uma nova ocupação e uma pessoa que parece completamente diferente de todas as outras."
         ],
 
         tags: [
-            "superpoderes",
-            "família",
-            "tempo",
-            "ação"
+            "fantasia",
+            "crime",
+            "romance",
+            "investigação"
         ],
+
+        quote:
+            "Tell me, what is it you truly desire?",
+
+        phrase:
+            "crime, romance e um certo diabo charmoso.",
 
         trailer:
-            "https://www.youtube.com/embed/0DAmWHxeoKw",
+            "https://www.youtube.com/embed/X4bF_quwNtw",
 
         cast: [
-            ["Elliot Page", "Viktor"],
-            ["Tom Hopper", "Luther"],
-            ["Aidan Gallagher", "Five"],
-            ["Robert Sheehan", "Klaus"],
-            ["David Castañeda", "Diego"]
+            {
+                name: "Tom Ellis",
+                role: "Lucifer Morningstar"
+            },
+            {
+                name: "Lauren German",
+                role: "Chloe Decker"
+            },
+            {
+                name: "Kevin Alejandro",
+                role: "Dan Espinoza"
+            }
+        ]
+    },
+
+
+    {
+        id: "dark",
+
+        title: "Dark",
+
+        year: 2017,
+
+        seasons: 3,
+
+        genre: "Ficção científica",
+
+        genres: [
+            "Ficção científica",
+            "Mistério",
+            "Suspense"
         ],
 
-        votes: {
-            like: 872,
-            dislike: 128
-        }
+        age: "16",
+
+        rating: 4.9,
+
+        poster:
+            "https://image.tmdb.org/t/p/w500/apbrbWs8M9lyOpJYU5WXrpFbk1Z.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/3lBDg3i6nn5R2NKFCJ6oKyUo2j5.jpg",
+
+        description: [
+            "O desaparecimento de uma criança revela segredos escondidos por gerações em uma pequena cidade alemã.",
+            "Dark transforma viagem no tempo, famílias e acontecimentos aparentemente desconectados em um enorme quebra-cabeça."
+        ],
+
+        tags: [
+            "tempo",
+            "mistério",
+            "família",
+            "ficção científica"
+        ],
+
+        quote:
+            "O começo é o fim e o fim é o começo.",
+
+        phrase:
+            "prepare o cérebro antes de assistir.",
+
+        trailer:
+            "https://www.youtube.com/embed/rrwycJ08PSA",
+
+        cast: [
+            {
+                name: "Louis Hofmann",
+                role: "Jonas Kahnwald"
+            },
+            {
+                name: "Lisa Vicari",
+                role: "Martha Nielsen"
+            },
+            {
+                name: "Andreas Pietschmann",
+                role: "Jonas adulto"
+            }
+        ]
+    },
+
+
+    {
+        id: "money-heist",
+
+        title: "La Casa de Papel",
+
+        year: 2017,
+
+        seasons: 5,
+
+        genre: "Crime",
+
+        genres: [
+            "Crime",
+            "Suspense",
+            "Drama"
+        ],
+
+        age: "16",
+
+        rating: 4.8,
+
+        poster:
+            "https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/gFZriCkpJYsApPZEF3jhxL4yLzG.jpg",
+
+        description: [
+            "Um homem conhecido como Professor reúne um grupo de criminosos para executar um plano extremamente ambicioso.",
+            "Dentro da Casa da Moeda, cada etapa precisa acontecer no momento certo, mas sentimentos e decisões inesperadas começam a colocar tudo em risco."
+        ],
+
+        tags: [
+            "assalto",
+            "crime",
+            "estratégia",
+            "suspense"
+        ],
+
+        quote:
+            "Bella ciao, bella ciao, bella ciao ciao ciao.",
+
+        phrase:
+            "o plano era perfeito... quase.",
+
+        trailer:
+            "https://www.youtube.com/embed/_InqQJRqGW4",
+
+        cast: [
+            {
+                name: "Álvaro Morte",
+                role: "Professor"
+            },
+            {
+                name: "Úrsula Corberó",
+                role: "Tóquio"
+            },
+            {
+                name: "Pedro Alonso",
+                role: "Berlim"
+            }
+        ]
+    },
+
+
+    {
+        id: "queen-gambit",
+
+        title: "O Gambito da Rainha",
+
+        year: 2020,
+
+        seasons: 1,
+
+        genre: "Drama",
+
+        genres: [
+            "Drama",
+            "Época"
+        ],
+
+        age: "16",
+
+        rating: 4.8,
+
+        poster:
+            "https://image.tmdb.org/t/p/w500/zU0htwkhNvBQdVSIKB9s6hgVeFK.jpg",
+
+        backdrop:
+            "https://image.tmdb.org/t/p/original/34OGjFEbHj0E3lE2w0iTUVq0CBz.jpg",
+
+        description: [
+            "Beth Harmon descobre ainda criança um talento extraordinário para o xadrez.",
+            "Enquanto cresce e enfrenta adversários cada vez mais fortes, ela também precisa lidar com suas próprias dificuldades fora dos tabuleiros."
+        ],
+
+        tags: [
+            "xadrez",
+            "drama",
+            "competição",
+            "superação"
+        ],
+
+        quote:
+            "Às vezes é preciso perder para aprender a vencer.",
+
+        phrase:
+            "xeque-mate com muita elegância ♡",
+
+        trailer:
+            "https://www.youtube.com/embed/CDrieqwSdgI",
+
+        cast: [
+            {
+                name: "Anya Taylor-Joy",
+                role: "Beth Harmon"
+            },
+            {
+                name: "Thomas Brodie-Sangster",
+                role: "Benny Watts"
+            },
+            {
+                name: "Harry Melling",
+                role: "Harry Beltik"
+            }
+        ]
     }
 
 ];
 
 
 /* =========================================================
-   ESTADO DA APLICAÇÃO
+   ESTADO DO SITE
 ========================================================= */
 
-let currentSeriesIndex = 0;
+const state = {
 
-let currentFilter = "all";
+    currentSeriesId:
+        localStorage.getItem(
+            "biaCurrentSeries"
+        ) ||
+        seriesData[0].id,
 
-let favorites =
-    JSON.parse(
-        localStorage.getItem("biaFavorites")
-    ) || [];
+    filter: "all",
 
-let userVotes =
-    JSON.parse(
-        localStorage.getItem("biaVotes")
-    ) || {};
+    genre: "all",
 
-let userRatings =
-    JSON.parse(
-        localStorage.getItem("biaRatings")
-    ) || {};
+    search: "",
 
-let comments =
-    JSON.parse(
-        localStorage.getItem("biaComments")
-    ) || {};
+    recommendationsSeed: 0
 
-let preferences =
-    JSON.parse(
-        localStorage.getItem("biaPreferences")
-    ) || {
-        theme: "lavender",
-        font: "medium",
-        animations: true
-    };
+};
 
 
 /* =========================================================
    ELEMENTOS
 ========================================================= */
 
-const seriesList =
-    document.getElementById("seriesList");
-
 const seriesTitle =
-    document.getElementById("seriesTitle");
+    $("#seriesTitle");
 
 const seriesMetadata =
-    document.getElementById("seriesMetadata");
+    $("#seriesMetadata");
 
 const seriesRating =
-    document.getElementById("seriesRating");
+    $("#seriesRating");
 
 const seriesDescription =
-    document.getElementById("seriesDescription");
-
-const seriesPoster =
-    document.getElementById("seriesPoster");
-
-const seriesPhrase =
-    document.getElementById("seriesPhrase");
+    $("#seriesDescription");
 
 const tagsContainer =
-    document.getElementById("tagsContainer");
+    $("#tagsContainer");
+
+const seriesQuote =
+    $("#seriesQuote");
+
+const seriesPoster =
+    $("#seriesPoster");
+
+const seriesPhrase =
+    $("#seriesPhrase");
+
+const seriesList =
+    $("#seriesList");
 
 const favoriteButton =
-    document.getElementById("favoriteButton");
+    $("#favoriteButton");
 
-const favoritesCount =
-    document.getElementById("favoritesCount");
+const posterFavoriteButton =
+    $("#posterFavoriteButton");
 
-const seriesCount =
-    document.getElementById("seriesCount");
+const trailerButton =
+    $("#trailerButton");
+
+const posterTrailerButton =
+    $("#posterTrailerButton");
+
+const castButton =
+    $("#castButton");
+
+const copyLinkButton =
+    $("#copyLinkButton");
+
+const nextSeriesButton =
+    $("#nextSeriesButton");
+
+const nextSeriesName =
+    $("#nextSeriesName");
+
+const rankingGrid =
+    $("#rankingGrid");
+
+const recommendationsGrid =
+    $("#recommendationsGrid");
+
+const historyList =
+    $("#historyList");
 
 const searchInput =
-    document.getElementById("searchInput");
+    $("#searchInput");
 
 const clearSearch =
-    document.getElementById("clearSearch");
+    $("#clearSearch");
 
-const trailerModal =
-    document.getElementById("trailerModal");
+const searchBox =
+    $("#searchBox");
 
-const castModal =
-    document.getElementById("castModal");
-
-const trailerFrame =
-    document.getElementById("trailerFrame");
-
-const trailerModalTitle =
-    document.getElementById("trailerModalTitle");
-
-const castGrid =
-    document.getElementById("castGrid");
-
-const likeButton =
-    document.getElementById("likeButton");
-
-const dislikeButton =
-    document.getElementById("dislikeButton");
-
-const likePercentage =
-    document.getElementById("likePercentage");
-
-const dislikePercentage =
-    document.getElementById("dislikePercentage");
-
-const voteProgress =
-    document.getElementById("voteProgress");
-
-const starsContainer =
-    document.getElementById("starsContainer");
-
-const userRatingText =
-    document.getElementById("userRatingText");
+const genreSelect =
+    $("#genreSelect");
 
 const commentForm =
-    document.getElementById("commentForm");
+    $("#commentForm");
 
 const commentInput =
-    document.getElementById("commentInput");
-
-const commentsList =
-    document.getElementById("commentsList");
-
-const commentCounter =
-    document.getElementById("commentCounter");
+    $("#commentInput");
 
 const characterCounter =
-    document.getElementById("characterCounter");
+    $("#characterCounter");
 
-const sidebar =
-    document.querySelector(".sidebar");
+const commentsList =
+    $("#commentsList");
+
+const commentCounter =
+    $("#commentCounter");
+
+const episodeProgress =
+    $("#episodeProgress");
+
+const episodeProgressText =
+    $("#episodeProgressText");
+
+const starsContainer =
+    $("#starsContainer");
+
+const userRatingText =
+    $("#userRatingText");
+
+const likeButton =
+    $("#likeButton");
+
+const dislikeButton =
+    $("#dislikeButton");
+
+const likePercentage =
+    $("#likePercentage");
+
+const dislikePercentage =
+    $("#dislikePercentage");
+
+const voteProgress =
+    $("#voteProgress");
+
+const trailerModal =
+    $("#trailerModal");
+
+const trailerFrame =
+    $("#trailerFrame");
+
+const trailerModalTitle =
+    $("#trailerModalTitle");
+
+const castModal =
+    $("#castModal");
+
+const castGrid =
+    $("#castGrid");
+
+const searchModal =
+    $("#searchModal");
+
+const modalSearchInput =
+    $("#modalSearchInput");
+
+const modalSearchResults =
+    $("#modalSearchResults");
 
 const settingsPanel =
-    document.getElementById("settingsPanel");
+    $("#settingsPanel");
 
 const settingsOverlay =
-    document.getElementById("settingsOverlay");
+    $("#settingsOverlay");
+
+const readingProgress =
+    $("#readingProgress");
 
 const backToTop =
-    document.getElementById("backToTop");
+    $("#backToTop");
+
+const effectsContainer =
+    $("#effectsContainer");
+
+const toastContainer =
+    $("#toastContainer");
+
+const cursorGlow =
+    $("#cursorGlow");
 
 
 /* =========================================================
-   SALVAR DADOS
+   LOCAL STORAGE
 ========================================================= */
 
-function saveFavorites() {
+function getStorage(key, fallback) {
 
-    localStorage.setItem(
-        "biaFavorites",
-        JSON.stringify(favorites)
-    );
+    try {
 
-}
+        const value =
+            localStorage.getItem(key);
 
-function saveVotes() {
+        if (value === null) {
+            return fallback;
+        }
 
-    localStorage.setItem(
-        "biaVotes",
-        JSON.stringify(userVotes)
-    );
+        return JSON.parse(value);
 
-}
+    } catch (error) {
 
-function saveRatings() {
+        console.warn(
+            `Erro ao ler ${key}`,
+            error
+        );
 
-    localStorage.setItem(
-        "biaRatings",
-        JSON.stringify(userRatings)
-    );
+        return fallback;
 
-}
-
-function saveComments() {
-
-    localStorage.setItem(
-        "biaComments",
-        JSON.stringify(comments)
-    );
+    }
 
 }
 
-function savePreferences() {
 
-    localStorage.setItem(
-        "biaPreferences",
-        JSON.stringify(preferences)
-    );
+function setStorage(key, value) {
+
+    try {
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            `Erro ao salvar ${key}`,
+            error
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   UTILIDADES
+   DADOS SALVOS
+========================================================= */
+
+let favorites =
+    getStorage(
+        "biaFavorites",
+        []
+    );
+
+let watchStatus =
+    getStorage(
+        "biaWatchStatus",
+        {}
+    );
+
+let progressData =
+    getStorage(
+        "biaProgress",
+        {}
+    );
+
+let ratingsData =
+    getStorage(
+        "biaRatings",
+        {}
+    );
+
+let opinionsData =
+    getStorage(
+        "biaOpinions",
+        {}
+    );
+
+let reactionsData =
+    getStorage(
+        "biaReactions",
+        {}
+    );
+
+let commentsData =
+    getStorage(
+        "biaComments",
+        {}
+    );
+
+let historyData =
+    getStorage(
+        "biaHistory",
+        []
+    );
+
+let settings =
+    getStorage(
+        "biaSettings",
+        {
+            theme: "lavender",
+            font: "medium",
+            animations: true,
+            cursor: true,
+            effects: true
+        }
+    );
+
+
+/* =========================================================
+   SÉRIE ATUAL
 ========================================================= */
 
 function getCurrentSeries() {
 
-    return seriesData[currentSeriesIndex];
+    return (
+        seriesData.find(
+            series =>
+                series.id ===
+                state.currentSeriesId
+        ) ||
+        seriesData[0]
+    );
 
 }
 
+
+/* =========================================================
+   ESCAPAR HTML
+========================================================= */
 
 function escapeHTML(text) {
 
-    const div =
+    const element =
         document.createElement("div");
 
-    div.textContent = text;
+    element.textContent =
+        String(text);
 
-    return div.innerHTML;
+    return element.innerHTML;
 
 }
 
 
-function showToast(message, icon = "fa-heart") {
+/* =========================================================
+   TOAST
+========================================================= */
 
-    const container =
-        document.getElementById("toastContainer");
+function showToast(
+    message,
+    icon = "fa-heart"
+) {
 
     const toast =
         document.createElement("div");
 
-    toast.className = "toast";
+    toast.className =
+        "toast";
 
     toast.innerHTML = `
         <i class="fa-solid ${icon}"></i>
-        <span>${message}</span>
+        <span>${escapeHTML(message)}</span>
     `;
 
-    container.appendChild(toast);
+    toastContainer.appendChild(
+        toast
+    );
 
     setTimeout(() => {
 
-        toast.style.opacity = "0";
-        toast.style.transform =
-            "translateX(25px)";
+        toast.style.opacity =
+            "0";
 
-    }, 2600);
+        toast.style.transform =
+            "translateX(20px)";
+
+    }, 2700);
+
 
     setTimeout(() => {
 
         toast.remove();
 
-    }, 3000);
+    }, 3100);
 
 }
 
 
 /* =========================================================
-   RENDERIZAR LISTA
+   CORAÇÃO
 ========================================================= */
 
-function renderSeriesList() {
+function createHeart(
+    x = window.innerWidth / 2,
+    y = window.innerHeight / 2
+) {
 
-    const searchTerm =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-    seriesList.innerHTML = "";
-
-
-    const filteredSeries =
-        seriesData.filter(series => {
-
-            const matchesSearch =
-                series.title
-                    .toLowerCase()
-                    .includes(searchTerm) ||
-
-                series.genres
-                    .join(" ")
-                    .toLowerCase()
-                    .includes(searchTerm);
-
-
-            const matchesFilter =
-                currentFilter === "all" ||
-
-                (
-                    currentFilter === "favorite" &&
-                    favorites.includes(series.id)
-                );
-
-
-            return (
-                matchesSearch &&
-                matchesFilter
-            );
-
-        });
-
-
-    if (filteredSeries.length === 0) {
-
-        seriesList.innerHTML = `
-            <div class="empty-comments">
-                Nenhuma série encontrada ♡
-            </div>
-        `;
-
+    if (!settings.effects) {
         return;
+    }
+
+    const hearts = [
+        "♡",
+        "♥",
+        "♡",
+        "✦"
+    ];
+
+    const heart =
+        document.createElement("span");
+
+    heart.className =
+        "floating-heart";
+
+    heart.textContent =
+        hearts[
+            Math.floor(
+                Math.random() *
+                hearts.length
+            )
+        ];
+
+    heart.style.left =
+        `${x}px`;
+
+    heart.style.top =
+        `${y}px`;
+
+    heart.style.color =
+        Math.random() > 0.5
+            ? "var(--primary)"
+            : "var(--primary-3)";
+
+    effectsContainer.appendChild(
+        heart
+    );
+
+    setTimeout(
+        () => heart.remove(),
+        1300
+    );
+
+}
+
+
+/* =========================================================
+   CONFETE
+========================================================= */
+
+function createConfetti(
+    x = window.innerWidth / 2,
+    y = window.innerHeight / 2
+) {
+
+    if (!settings.effects) {
+        return;
+    }
+
+    const colors = [
+        "#b879dc",
+        "#e58fc1",
+        "#ffd46f",
+        "#9e84df",
+        "#ef9dac"
+    ];
+
+    for (
+        let i = 0;
+        i < 28;
+        i++
+    ) {
+
+        const piece =
+            document.createElement("span");
+
+        piece.className =
+            "confetti-piece";
+
+        piece.style.left =
+            `${x}px`;
+
+        piece.style.top =
+            `${y}px`;
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random() *
+                    colors.length
+                )
+            ];
+
+        piece.style.setProperty(
+            "--x",
+            `${
+                Math.random() *
+                260 -
+                130
+            }px`
+        );
+
+        piece.style.animationDelay =
+            `${
+                Math.random() *
+                0.12
+            }s`;
+
+        effectsContainer.appendChild(
+            piece
+        );
+
+        setTimeout(
+            () => piece.remove(),
+            1500
+        );
 
     }
 
-
-    filteredSeries.forEach(series => {
-
-        const originalIndex =
-            seriesData.findIndex(
-                item => item.id === series.id
-            );
-
-        const button =
-            document.createElement("button");
-
-        button.className =
-            "series-item" +
-            (
-                originalIndex === currentSeriesIndex
-                    ? " active"
-                    : ""
-            );
-
-
-        button.innerHTML = `
-
-            <span class="series-dot"></span>
-
-            <img
-                class="series-thumb"
-                src="${series.poster}"
-                alt="${series.title}"
-            >
-
-            <span class="series-item-info">
-
-                <strong>
-                    ${series.title}
-                </strong>
-
-                <small>
-                    ${series.genres[0]}
-                </small>
-
-            </span>
-
-            ${
-                favorites.includes(series.id)
-
-                ? `
-                    <i
-                        class="fa-solid fa-heart item-favorite"
-                    ></i>
-                `
-
-                : ""
-            }
-
-        `;
-
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                selectSeries(originalIndex);
-
-                if (
-                    window.innerWidth <= 850
-                ) {
-                    closeSidebar();
-                }
-
-            }
-        );
-
-
-        seriesList.appendChild(button);
-
-    });
-
-
-    updateCounters();
-
 }
 
 
 /* =========================================================
-   SELECIONAR SÉRIE
+   RENDER PRINCIPAL
 ========================================================= */
 
-function selectSeries(index) {
+function renderCurrentSeries() {
 
-    currentSeriesIndex = index;
+    const series =
+        getCurrentSeries();
+
+
+    localStorage.setItem(
+        "biaCurrentSeries",
+        series.id
+    );
+
+
+    /* TÍTULO */
+
+    seriesTitle.textContent =
+        series.title;
+
+
+    /* NOTA */
+
+    seriesRating.textContent =
+        series.rating.toFixed(1);
+
+
+    /* POSTER */
+
+    seriesPoster.src =
+        series.poster;
+
+    seriesPoster.alt =
+        `Poster de ${series.title}`;
+
+
+    /* METADADOS */
+
+    seriesMetadata.innerHTML = `
+        <span class="metadata-item">
+            <i class="fa-regular fa-calendar"></i>
+            ${series.year}
+        </span>
+
+        <span class="metadata-item">
+            <i class="fa-solid fa-layer-group"></i>
+            ${series.seasons}
+            ${
+                series.seasons === 1
+                    ? "temporada"
+                    : "temporadas"
+            }
+        </span>
+
+        <span class="metadata-item">
+            <i class="fa-solid fa-film"></i>
+            ${escapeHTML(series.genre)}
+        </span>
+
+        <span class="metadata-item">
+            <i class="fa-solid fa-user-shield"></i>
+            ${series.age}+
+        </span>
+    `;
+
+
+    /* DESCRIÇÃO */
+
+    seriesDescription.innerHTML =
+        series.description
+            .map(
+                paragraph => `
+                    <p>
+                        ${escapeHTML(paragraph)}
+                    </p>
+                `
+            )
+            .join("");
+
+
+    /* TAGS */
+
+    tagsContainer.innerHTML =
+        series.tags
+            .map(
+                tag => `
+                    <span class="tag">
+                        #${escapeHTML(tag)}
+                    </span>
+                `
+            )
+            .join("");
+
+
+    /* FRASE */
+
+    seriesQuote.innerHTML = `
+        <i class="fa-solid fa-quote-left"></i>
+
+        <span>
+            ${escapeHTML(series.quote)}
+        </span>
+    `;
+
+    seriesPhrase.textContent =
+        series.phrase;
+
+
+    /* EFEITO */
 
     const contentCard =
-        document.getElementById("contentCard");
+        $("#contentCard");
 
     contentCard.classList.remove(
         "content-changing"
@@ -1041,529 +1347,172 @@ function selectSeries(index) {
     );
 
 
-    renderCurrentSeries();
+    updateFavoriteUI();
+
+    updateWatchStatusUI();
+
+    updateProgressUI();
+
+    updateRatingUI();
+
+    updateOpinionUI();
+
+    updateReactionsUI();
+
+    renderComments();
 
     renderSeriesList();
 
+    updateNextSeries();
 
-    window.history.replaceState(
-        null,
-        "",
-        `#${getCurrentSeries().id}`
-    );
+    addToHistory(series.id);
 
+    renderHistory();
+
+    updateStatistics();
+
+}
+
+
+/* =========================================================
+   TROCAR SÉRIE
+========================================================= */
+
+function selectSeries(id) {
+
+    const exists =
+        seriesData.some(
+            series =>
+                series.id === id
+        );
+
+    if (!exists) {
+        return;
+    }
+
+    state.currentSeriesId =
+        id;
+
+    renderCurrentSeries();
 
     if (
         window.innerWidth <= 850
     ) {
 
-        window.scrollTo({
-            top: 100,
-            behavior: "smooth"
-        });
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDERIZAR SÉRIE ATUAL
-========================================================= */
-
-function renderCurrentSeries() {
-
-    const series =
-        getCurrentSeries();
-
-
-    document.title =
-        `${series.title} | Blog da Bia`;
-
-
-    seriesTitle.textContent =
-        series.title;
-
-
-    seriesRating.textContent =
-        series.rating.toFixed(1);
-
-
-    seriesPoster.src =
-        series.poster;
-
-    seriesPoster.alt =
-        `Poster de ${series.title}`;
-
-
-    seriesPhrase.textContent =
-        series.phrase;
-
-
-    /* METADADOS */
-
-    seriesMetadata.innerHTML = `
-
-        <span class="metadata-item">
-            <i class="fa-regular fa-calendar"></i>
-            ${series.year}
-        </span>
-
-        <span class="metadata-item">
-            <i class="fa-solid fa-film"></i>
-            ${series.genres.join(" • ")}
-        </span>
-
-        <span class="metadata-item">
-            <i class="fa-solid fa-layer-group"></i>
-            ${series.seasons}
-        </span>
-
-        <span class="metadata-item">
-            <i class="fa-solid fa-circle-info"></i>
-            ${series.status}
-        </span>
-
-        <span class="metadata-item">
-            ${series.age}+
-        </span>
-
-    `;
-
-
-    /* DESCRIÇÃO */
-
-    seriesDescription.innerHTML =
-        series.description
-            .map(
-                paragraph =>
-                    `<p>${paragraph}</p>`
-            )
-            .join("");
-
-
-    /* TAGS */
-
-    tagsContainer.innerHTML =
-        series.tags
-            .map(
-                tag =>
-                    `<span class="tag">#${tag}</span>`
-            )
-            .join("");
-
-
-    updateFavoriteButton();
-
-    updateVoteDisplay();
-
-    updateStars();
-
-    renderComments();
-
-}
-
-
-/* =========================================================
-   FAVORITOS
-========================================================= */
-
-function toggleFavorite() {
-
-    const series =
-        getCurrentSeries();
-
-    const index =
-        favorites.indexOf(series.id);
-
-
-    if (index === -1) {
-
-        favorites.push(series.id);
-
-        showToast(
-            `${series.title} foi adicionada aos favoritos ♡`
-        );
-
-    }
-
-    else {
-
-        favorites.splice(index, 1);
-
-        showToast(
-            `${series.title} foi removida dos favoritos`,
-            "fa-heart-crack"
-        );
-
-    }
-
-
-    saveFavorites();
-
-    updateFavoriteButton();
-
-    renderSeriesList();
-
-    updateCounters();
-
-}
-
-
-function updateFavoriteButton() {
-
-    const isFavorite =
-        favorites.includes(
-            getCurrentSeries().id
-        );
-
-
-    favoriteButton.classList.toggle(
-        "active",
-        isFavorite
-    );
-
-
-    favoriteButton.innerHTML =
-        isFavorite
-
-        ? `<i class="fa-solid fa-heart"></i>`
-
-        : `<i class="fa-regular fa-heart"></i>`;
-
-}
-
-
-function updateCounters() {
-
-    seriesCount.textContent =
-        seriesData.length;
-
-    favoritesCount.textContent =
-        favorites.length;
-
-}
-
-
-/* =========================================================
-   VOTAÇÃO
-========================================================= */
-
-function vote(type) {
-
-    const series =
-        getCurrentSeries();
-
-    const previousVote =
-        userVotes[series.id];
-
-
-    if (previousVote === type) {
-
-        delete userVotes[series.id];
-
-        showToast(
-            "Seu voto foi removido",
-            "fa-rotate-left"
-        );
-
-    }
-
-    else {
-
-        userVotes[series.id] = type;
-
-        showToast(
-            type === "like"
-                ? "Você gostou dessa série ♡"
-                : "Opinião registrada!"
-        );
-
-    }
-
-
-    saveVotes();
-
-    updateVoteDisplay();
-
-}
-
-
-function updateVoteDisplay() {
-
-    const series =
-        getCurrentSeries();
-
-    let likes =
-        series.votes.like;
-
-    let dislikes =
-        series.votes.dislike;
-
-
-    const vote =
-        userVotes[series.id];
-
-
-    if (vote === "like") {
-        likes++;
-    }
-
-    if (vote === "dislike") {
-        dislikes++;
-    }
-
-
-    const total =
-        likes + dislikes;
-
-
-    const likePercent =
-        total === 0
-            ? 0
-            : Math.round(
-                (likes / total) * 100
+        $("#sidebar")
+            .classList.remove(
+                "open"
             );
 
+    }
 
-    const dislikePercent =
-        100 - likePercent;
+    window.scrollTo({
+        top:
+            $("#contentCard")
+                .offsetTop - 15,
 
-
-    likePercentage.textContent =
-        `${likePercent}%`;
-
-    dislikePercentage.textContent =
-        `${dislikePercent}%`;
-
-    voteProgress.style.width =
-        `${likePercent}%`;
-
-
-    likeButton.classList.toggle(
-        "active",
-        vote === "like"
-    );
-
-    dislikeButton.classList.toggle(
-        "active",
-        vote === "dislike"
-    );
-
-
-    likeButton.querySelector("i").className =
-        vote === "like"
-            ? "fa-solid fa-thumbs-up"
-            : "fa-regular fa-thumbs-up";
-
-
-    dislikeButton.querySelector("i").className =
-        vote === "dislike"
-            ? "fa-solid fa-thumbs-down"
-            : "fa-regular fa-thumbs-down";
-
-}
-
-
-/* =========================================================
-   AVALIAÇÃO POR ESTRELAS
-========================================================= */
-
-function rateSeries(value) {
-
-    const series =
-        getCurrentSeries();
-
-
-    userRatings[series.id] =
-        Number(value);
-
-
-    saveRatings();
-
-    updateStars();
-
-
-    showToast(
-        `Você deu ${value} estrela${
-            value > 1 ? "s" : ""
-        } para ${series.title}`,
-        "fa-star"
-    );
-
-}
-
-
-function updateStars() {
-
-    const series =
-        getCurrentSeries();
-
-    const rating =
-        userRatings[series.id] || 0;
-
-
-    const buttons =
-        starsContainer.querySelectorAll(
-            "button"
-        );
-
-
-    buttons.forEach(button => {
-
-        const star =
-            Number(
-                button.dataset.star
-            );
-
-        const icon =
-            button.querySelector("i");
-
-
-        icon.className =
-            star <= rating
-                ? "fa-solid fa-star"
-                : "fa-regular fa-star";
-
+        behavior: "smooth"
     });
 
-
-    userRatingText.textContent =
-        rating
-            ? `${rating}/5`
-            : "ainda não avaliado";
-
 }
 
 
 /* =========================================================
-   MODAIS
+   LISTA LATERAL
 ========================================================= */
 
-function openTrailer() {
+function renderSeriesList() {
 
-    const series =
-        getCurrentSeries();
-
-
-    trailerModalTitle.textContent =
-        `Trailer de ${series.title}`;
+    let list =
+        [...seriesData];
 
 
-    trailerFrame.src =
-        series.trailer;
+    /* PESQUISA */
+
+    if (state.search) {
+
+        const term =
+            state.search
+                .toLowerCase()
+                .trim();
+
+        list =
+            list.filter(series => {
+
+                const text = `
+                    ${series.title}
+                    ${series.genre}
+                    ${series.genres.join(" ")}
+                    ${series.tags.join(" ")}
+                `.toLowerCase();
+
+                return text.includes(term);
+
+            });
+
+    }
 
 
-    trailerModal.classList.add("open");
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-function openCast() {
-
-    const series =
-        getCurrentSeries();
-
-
-    castGrid.innerHTML =
-        series.cast
-            .map(person => {
-
-                const initials =
-                    person[0]
-                        .split(" ")
-                        .map(name => name[0])
-                        .slice(0, 2)
-                        .join("");
-
-
-                return `
-
-                    <div class="cast-card">
-
-                        <div class="cast-avatar">
-                            ${initials}
-                        </div>
-
-                        <strong>
-                            ${person[0]}
-                        </strong>
-
-                        <small>
-                            ${person[1]}
-                        </small>
-
-                    </div>
-
-                `;
-
-            })
-            .join("");
-
-
-    castModal.classList.add("open");
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-function closeModals() {
-
-    document
-        .querySelectorAll(".modal")
-        .forEach(
-            modal =>
-                modal.classList.remove(
-                    "open"
-                )
-        );
-
-
-    trailerFrame.src = "";
-
-
-    document.body.style.overflow = "";
-
-}
-
-
-/* =========================================================
-   COMENTÁRIOS
-========================================================= */
-
-function renderComments() {
-
-    const series =
-        getCurrentSeries();
-
-    const seriesComments =
-        comments[series.id] || [];
-
-
-    commentCounter.textContent =
-        `${seriesComments.length} ${
-            seriesComments.length === 1
-                ? "comentário"
-                : "comentários"
-        }`;
-
+    /* GÊNERO */
 
     if (
-        seriesComments.length === 0
+        state.genre !== "all"
     ) {
 
-        commentsList.innerHTML = `
+        list =
+            list.filter(
+                series =>
+                    series.genres.includes(
+                        state.genre
+                    )
+            );
 
-            <div class="empty-comments">
-                Ainda não tem comentários.
-                Seja a primeira pessoa a comentar ♡
+    }
+
+
+    /* FAVORITOS */
+
+    if (
+        state.filter ===
+        "favorite"
+    ) {
+
+        list =
+            list.filter(
+                series =>
+                    favorites.includes(
+                        series.id
+                    )
+            );
+
+    }
+
+
+    /* ASSISTIDOS */
+
+    if (
+        state.filter ===
+        "watched"
+    ) {
+
+        list =
+            list.filter(
+                series =>
+                    watchStatus[
+                        series.id
+                    ] ===
+                    "watched"
+            );
+
+    }
+
+
+    if (!list.length) {
+
+        seriesList.innerHTML = `
+            <div class="empty-state">
+                Nenhuma série encontrada ♡
             </div>
-
         `;
 
         return;
@@ -1571,169 +1520,173 @@ function renderComments() {
     }
 
 
-    commentsList.innerHTML =
-        [...seriesComments]
-            .reverse()
-            .map(comment => `
+    seriesList.innerHTML =
+        list
+            .map(series => {
 
-                <div
-                    class="comment-card"
-                    data-comment-id="${comment.id}"
-                >
+                const favorite =
+                    favorites.includes(
+                        series.id
+                    );
 
-                    <div class="comment-card-avatar">
-                        B
-                    </div>
+                const status =
+                    watchStatus[
+                        series.id
+                    ];
 
-                    <div class="comment-card-content">
+                return `
+                    <button
+                        class="series-item
+                        ${
+                            series.id ===
+                            state.currentSeriesId
+                                ? "active"
+                                : ""
+                        }"
+                        data-series-id="${series.id}"
+                    >
 
-                        <div>
+                        <span class="series-dot"></span>
+
+                        <img
+                            class="series-thumb"
+                            src="${series.poster}"
+                            alt=""
+                        >
+
+                        <span class="series-item-info">
 
                             <strong>
-                                bia
+                                ${escapeHTML(series.title)}
                             </strong>
 
                             <small>
-                                ${comment.date}
+                                ${escapeHTML(series.genre)}
+                                ·
+                                ${series.year}
                             </small>
 
-                        </div>
+                        </span>
 
-                        <p>
-                            ${escapeHTML(comment.text)}
-                        </p>
+                        ${
+                            favorite
+                                ? `
+                                    <i
+                                        class="fa-solid fa-heart item-favorite"
+                                    ></i>
+                                `
+                                : ""
+                        }
 
-                    </div>
+                        ${
+                            status
+                                ? `
+                                    <i
+                                        class="
+                                            fa-solid
+                                            ${
+                                                status === "watched"
+                                                    ? "fa-check"
+                                                    : status === "watching"
+                                                        ? "fa-play"
+                                                        : "fa-bookmark"
+                                            }
+                                            item-watch-status
+                                        "
+                                    ></i>
+                                `
+                                : ""
+                        }
 
-                    <button
-                        class="delete-comment"
-                        data-delete-comment="${comment.id}"
-                        title="Excluir comentário"
-                    >
-                        <i class="fa-regular fa-trash-can"></i>
                     </button>
+                `;
 
-                </div>
-
-            `)
+            })
             .join("");
-
-
-    document
-        .querySelectorAll(
-            "[data-delete-comment]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    deleteComment(
-                        button.dataset
-                            .deleteComment
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
-function addComment(text) {
-
-    const series =
-        getCurrentSeries();
-
-
-    if (!comments[series.id]) {
-
-        comments[series.id] = [];
-
-    }
-
-
-    comments[series.id].push({
-
-        id:
-            Date.now().toString(),
-
-        text: text,
-
-        date:
-            new Date()
-                .toLocaleDateString(
-                    "pt-BR",
-                    {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric"
-                    }
-                )
-
-    });
-
-
-    saveComments();
-
-    renderComments();
-
-
-    showToast(
-        "Comentário publicado ♡",
-        "fa-comment"
-    );
-
-}
-
-
-function deleteComment(id) {
-
-    const series =
-        getCurrentSeries();
-
-
-    comments[series.id] =
-        (
-            comments[series.id] || []
-        )
-        .filter(
-            comment =>
-                comment.id !== id
-        );
-
-
-    saveComments();
-
-    renderComments();
-
-
-    showToast(
-        "Comentário excluído",
-        "fa-trash"
-    );
 
 }
 
 
 /* =========================================================
-   PESQUISA
+   CLIQUE LISTA
+========================================================= */
+
+seriesList.addEventListener(
+    "click",
+    event => {
+
+        const item =
+            event.target.closest(
+                "[data-series-id]"
+            );
+
+        if (!item) {
+            return;
+        }
+
+        selectSeries(
+            item.dataset.seriesId
+        );
+
+    }
+);
+
+
+/* =========================================================
+   GÊNEROS
+========================================================= */
+
+function populateGenres() {
+
+    const genres =
+        [
+            ...new Set(
+                seriesData.flatMap(
+                    series =>
+                        series.genres
+                )
+            )
+        ].sort();
+
+
+    genreSelect.innerHTML = `
+        <option value="all">
+            Todos os gêneros
+        </option>
+
+        ${
+            genres
+                .map(
+                    genre => `
+                        <option value="${genre}">
+                            ${genre}
+                        </option>
+                    `
+                )
+                .join("")
+        }
+    `;
+
+}
+
+
+/* =========================================================
+   BUSCA
 ========================================================= */
 
 searchInput.addEventListener(
     "input",
     () => {
 
-        searchInput
-            .parentElement
-            .classList
-            .toggle(
-                "has-text",
-                searchInput.value.length > 0
-            );
+        state.search =
+            searchInput.value;
 
+        searchBox.classList.toggle(
+            "has-text",
+            Boolean(
+                searchInput.value
+            )
+        );
 
         renderSeriesList();
 
@@ -1747,11 +1700,11 @@ clearSearch.addEventListener(
 
         searchInput.value = "";
 
-        searchInput
-            .parentElement
-            .classList
-            .remove("has-text");
+        state.search = "";
 
+        searchBox.classList.remove(
+            "has-text"
+        );
 
         renderSeriesList();
 
@@ -1765,34 +1718,26 @@ clearSearch.addEventListener(
    FILTROS
 ========================================================= */
 
-document
-    .querySelectorAll(".filter-button")
+$$(".filter-button")
     .forEach(button => {
 
         button.addEventListener(
             "click",
             () => {
 
-                currentFilter =
-                    button.dataset.filter;
-
-
-                document
-                    .querySelectorAll(
-                        ".filter-button"
-                    )
-                    .forEach(
-                        item =>
-                            item.classList.remove(
-                                "active"
-                            )
+                $$(".filter-button")
+                    .forEach(item =>
+                        item.classList.remove(
+                            "active"
+                        )
                     );
-
 
                 button.classList.add(
                     "active"
                 );
 
+                state.filter =
+                    button.dataset.filter;
 
                 renderSeriesList();
 
@@ -1802,147 +1747,2625 @@ document
     });
 
 
+genreSelect.addEventListener(
+    "change",
+    () => {
+
+        state.genre =
+            genreSelect.value;
+
+        renderSeriesList();
+
+    }
+);
+
+
 /* =========================================================
-   PRÓXIMA / ALEATÓRIA
+   FAVORITOS
 ========================================================= */
 
-function nextSeries() {
+function toggleFavorite(event) {
 
-    const nextIndex =
-        (
-            currentSeriesIndex + 1
-        ) % seriesData.length;
+    const series =
+        getCurrentSeries();
+
+    const index =
+        favorites.indexOf(
+            series.id
+        );
 
 
-    selectSeries(nextIndex);
+    if (index >= 0) {
+
+        favorites.splice(
+            index,
+            1
+        );
+
+        showToast(
+            `${series.title} removida dos favoritos`,
+            "fa-heart-crack"
+        );
+
+    } else {
+
+        favorites.push(
+            series.id
+        );
+
+        showToast(
+            `${series.title} adicionada aos favoritos ♡`,
+            "fa-heart"
+        );
+
+        const rect =
+            event?.currentTarget
+                ?.getBoundingClientRect();
+
+        createHeart(
+            rect
+                ? rect.left +
+                  rect.width / 2
+                : window.innerWidth / 2,
+
+            rect
+                ? rect.top +
+                  rect.height / 2
+                : window.innerHeight / 2
+        );
+
+    }
+
+
+    setStorage(
+        "biaFavorites",
+        favorites
+    );
+
+    updateFavoriteUI();
+
+    renderSeriesList();
+
+    updateStatistics();
 
 }
 
 
-function randomSeries() {
+favoriteButton.addEventListener(
+    "click",
+    toggleFavorite
+);
 
-    let randomIndex;
+
+posterFavoriteButton.addEventListener(
+    "click",
+    toggleFavorite
+);
 
 
-    do {
+function updateFavoriteUI() {
 
-        randomIndex =
-            Math.floor(
-                Math.random() *
-                seriesData.length
+    const active =
+        favorites.includes(
+            state.currentSeriesId
+        );
+
+    [
+        favoriteButton,
+        posterFavoriteButton
+    ].forEach(button => {
+
+        button.classList.toggle(
+            "active",
+            active
+        );
+
+        button.innerHTML =
+            active
+                ? `<i class="fa-solid fa-heart"></i>`
+                : `<i class="fa-regular fa-heart"></i>`;
+
+    });
+
+}
+
+
+/* =========================================================
+   STATUS DE EXIBIÇÃO
+========================================================= */
+
+$$("[data-watch-status]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const id =
+                    state.currentSeriesId;
+
+                const newStatus =
+                    button.dataset
+                        .watchStatus;
+
+                if (
+                    watchStatus[id] ===
+                    newStatus
+                ) {
+
+                    delete watchStatus[
+                        id
+                    ];
+
+                    showToast(
+                        "Status removido",
+                        "fa-bookmark"
+                    );
+
+                } else {
+
+                    watchStatus[id] =
+                        newStatus;
+
+                    const messages = {
+
+                        want:
+                            "Adicionada à sua lista ♡",
+
+                        watching:
+                            "Marcada como assistindo",
+
+                        watched:
+                            "Marcada como assistida ✓"
+
+                    };
+
+                    showToast(
+                        messages[
+                            newStatus
+                        ],
+                        "fa-tv"
+                    );
+
+                    if (
+                        newStatus ===
+                        "watched"
+                    ) {
+
+                        progressData[id] =
+                            100;
+
+                        setStorage(
+                            "biaProgress",
+                            progressData
+                        );
+
+                    }
+
+                }
+
+
+                setStorage(
+                    "biaWatchStatus",
+                    watchStatus
+                );
+
+                updateWatchStatusUI();
+
+                updateProgressUI();
+
+                renderSeriesList();
+
+                updateStatistics();
+
+            }
+        );
+
+    });
+
+
+function updateWatchStatusUI() {
+
+    const current =
+        watchStatus[
+            state.currentSeriesId
+        ];
+
+
+    $$("[data-watch-status]")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset
+                    .watchStatus ===
+                    current
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+episodeProgress.addEventListener(
+    "input",
+    () => {
+
+        const value =
+            Number(
+                episodeProgress.value
+            );
+
+        progressData[
+            state.currentSeriesId
+        ] = value;
+
+
+        if (value === 100) {
+
+            watchStatus[
+                state.currentSeriesId
+            ] = "watched";
+
+            setStorage(
+                "biaWatchStatus",
+                watchStatus
+            );
+
+            updateWatchStatusUI();
+
+        } else if (
+            value > 0 &&
+            !watchStatus[
+                state.currentSeriesId
+            ]
+        ) {
+
+            watchStatus[
+                state.currentSeriesId
+            ] = "watching";
+
+            setStorage(
+                "biaWatchStatus",
+                watchStatus
+            );
+
+            updateWatchStatusUI();
+
+        }
+
+
+        setStorage(
+            "biaProgress",
+            progressData
+        );
+
+        episodeProgressText
+            .textContent =
+            `${value}%`;
+
+        renderSeriesList();
+
+        updateStatistics();
+
+    }
+);
+
+
+episodeProgress.addEventListener(
+    "change",
+    () => {
+
+        if (
+            Number(
+                episodeProgress.value
+            ) === 100
+        ) {
+
+            showToast(
+                "Maratona concluída! ♡",
+                "fa-trophy"
+            );
+
+            createConfetti();
+
+        }
+
+    }
+);
+
+
+function updateProgressUI() {
+
+    const value =
+        progressData[
+            state.currentSeriesId
+        ] || 0;
+
+    episodeProgress.value =
+        value;
+
+    episodeProgressText
+        .textContent =
+        `${value}%`;
+
+}
+
+
+/* =========================================================
+   AVALIAÇÃO POR ESTRELAS
+========================================================= */
+
+$$("[data-star]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "mouseenter",
+            () => {
+
+                paintStars(
+                    Number(
+                        button.dataset.star
+                    )
+                );
+
+            }
+        );
+
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                const rating =
+                    Number(
+                        button.dataset.star
+                    );
+
+                ratingsData[
+                    state.currentSeriesId
+                ] = rating;
+
+                setStorage(
+                    "biaRatings",
+                    ratingsData
+                );
+
+                updateRatingUI();
+
+
+                if (rating === 5) {
+
+                    showToast(
+                        "5 estrelas! Essa entrou para as favoritas do coração ♡",
+                        "fa-star"
+                    );
+
+                    const rect =
+                        event.currentTarget
+                            .getBoundingClientRect();
+
+                    createConfetti(
+                        rect.left,
+                        rect.top
+                    );
+
+                } else {
+
+                    showToast(
+                        `Você deu ${rating} ${
+                            rating === 1
+                                ? "estrela"
+                                : "estrelas"
+                        }`,
+                        "fa-star"
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+starsContainer.addEventListener(
+    "mouseleave",
+    updateRatingUI
+);
+
+
+function paintStars(value) {
+
+    $$("[data-star]")
+        .forEach(button => {
+
+            const star =
+                Number(
+                    button.dataset.star
+                );
+
+            button.innerHTML =
+                star <= value
+                    ? `<i class="fa-solid fa-star"></i>`
+                    : `<i class="fa-regular fa-star"></i>`;
+
+        });
+
+}
+
+
+function updateRatingUI() {
+
+    const rating =
+        ratingsData[
+            state.currentSeriesId
+        ] || 0;
+
+    paintStars(rating);
+
+    if (!rating) {
+
+        userRatingText.textContent =
+            "ainda não avaliado";
+
+        return;
+
+    }
+
+    userRatingText.textContent =
+        `${rating}/5`;
+
+}
+
+
+/* =========================================================
+   LIKE / DISLIKE
+========================================================= */
+
+likeButton.addEventListener(
+    "click",
+    event => {
+
+        setOpinion(
+            "like",
+            event
+        );
+
+    }
+);
+
+
+dislikeButton.addEventListener(
+    "click",
+    event => {
+
+        setOpinion(
+            "dislike",
+            event
+        );
+
+    }
+);
+
+
+function setOpinion(
+    opinion,
+    event
+) {
+
+    const id =
+        state.currentSeriesId;
+
+    if (
+        opinionsData[id] ===
+        opinion
+    ) {
+
+        delete opinionsData[id];
+
+        showToast(
+            "Voto removido",
+            "fa-rotate-left"
+        );
+
+    } else {
+
+        opinionsData[id] =
+            opinion;
+
+        if (
+            opinion === "like"
+        ) {
+
+            showToast(
+                "Você gostou dessa série ♡",
+                "fa-thumbs-up"
+            );
+
+            const rect =
+                event.currentTarget
+                    .getBoundingClientRect();
+
+            createHeart(
+                rect.left +
+                    rect.width / 2,
+
+                rect.top
+            );
+
+        } else {
+
+            showToast(
+                "Opinião registrada",
+                "fa-thumbs-down"
+            );
+
+        }
+
+    }
+
+
+    setStorage(
+        "biaOpinions",
+        opinionsData
+    );
+
+    updateOpinionUI();
+
+}
+
+
+/* =========================================================
+   PERCENTUAIS
+========================================================= */
+
+function updateOpinionUI() {
+
+    const opinion =
+        opinionsData[
+            state.currentSeriesId
+        ];
+
+    likeButton.classList.toggle(
+        "active",
+        opinion === "like"
+    );
+
+    dislikeButton.classList.toggle(
+        "active",
+        opinion === "dislike"
+    );
+
+
+    /*
+       Percentual ilustrativo baseado
+       na nota do blog + voto local.
+    */
+
+    const series =
+        getCurrentSeries();
+
+    let like =
+        Math.round(
+            65 +
+            series.rating * 6
+        );
+
+    like =
+        Math.min(
+            98,
+            like
+        );
+
+
+    if (opinion === "like") {
+
+        like =
+            Math.min(
+                99,
+                like + 1
             );
 
     }
 
-    while (
-        randomIndex === currentSeriesIndex &&
-        seriesData.length > 1
-    );
+
+    if (
+        opinion === "dislike"
+    ) {
+
+        like =
+            Math.max(
+                1,
+                like - 3
+            );
+
+    }
 
 
-    selectSeries(randomIndex);
+    const dislike =
+        100 - like;
 
 
-    showToast(
-        `Sorteada: ${getCurrentSeries().title}`,
-        "fa-shuffle"
+    likePercentage.textContent =
+        `${like}%`;
+
+    dislikePercentage.textContent =
+        `${dislike}%`;
+
+    voteProgress.style.width =
+        `${like}%`;
+
+}
+
+
+/* =========================================================
+   REAÇÕES EMOJI
+========================================================= */
+
+$$("[data-reaction]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            event => {
+
+                const reaction =
+                    button.dataset.reaction;
+
+                const id =
+                    state.currentSeriesId;
+
+
+                if (
+                    !reactionsData[id]
+                ) {
+
+                    reactionsData[id] =
+                        {};
+
+                }
+
+
+                const current =
+                    reactionsData[id][
+                        reaction
+                    ] || false;
+
+
+                reactionsData[id][
+                    reaction
+                ] = !current;
+
+
+                setStorage(
+                    "biaReactions",
+                    reactionsData
+                );
+
+
+                updateReactionsUI();
+
+
+                if (!current) {
+
+                    const rect =
+                        event.currentTarget
+                            .getBoundingClientRect();
+
+                    createHeart(
+                        rect.left +
+                            rect.width / 2,
+
+                        rect.top
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+function updateReactionsUI() {
+
+    const data =
+        reactionsData[
+            state.currentSeriesId
+        ] || {};
+
+
+    $$("[data-reaction]")
+        .forEach(button => {
+
+            const reaction =
+                button.dataset.reaction;
+
+            const active =
+                Boolean(
+                    data[
+                        reaction
+                    ]
+                );
+
+            button.classList.toggle(
+                "active",
+                active
+            );
+
+
+            const counter =
+                $(
+                    `[data-reaction-count="${reaction}"]`,
+                    button
+                );
+
+
+            /*
+                Base decorativa +
+                reação deste navegador.
+            */
+
+            const baseCounts = {
+
+                love: 48,
+                cry: 21,
+                shock: 35,
+                laugh: 17,
+                angry: 8
+
+            };
+
+
+            counter.textContent =
+                baseCounts[
+                    reaction
+                ] +
+                (
+                    active
+                        ? 1
+                        : 0
+                );
+
+        });
+
+}
+
+
+/* =========================================================
+   COMENTÁRIOS
+========================================================= */
+
+function getCurrentComments() {
+
+    return (
+        commentsData[
+            state.currentSeriesId
+        ] || []
     );
 
 }
+
+
+commentInput.addEventListener(
+    "input",
+    () => {
+
+        characterCounter.textContent =
+            `${commentInput.value.length}/280`;
+
+    }
+);
+
+
+/* =========================================================
+   INSERIR EMOJI
+========================================================= */
+
+$$("[data-insert-emoji]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const emoji =
+                    button.dataset
+                        .insertEmoji;
+
+                const start =
+                    commentInput
+                        .selectionStart;
+
+                const end =
+                    commentInput
+                        .selectionEnd;
+
+                const value =
+                    commentInput.value;
+
+
+                commentInput.value =
+                    value.slice(
+                        0,
+                        start
+                    ) +
+                    emoji +
+                    value.slice(
+                        end
+                    );
+
+
+                commentInput.focus();
+
+                commentInput
+                    .selectionStart =
+                    commentInput
+                        .selectionEnd =
+                        start +
+                        emoji.length;
+
+
+                characterCounter
+                    .textContent =
+                    `${commentInput.value.length}/280`;
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   PUBLICAR COMENTÁRIO
+========================================================= */
+
+commentForm.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const text =
+            commentInput.value
+                .trim();
+
+        if (!text) {
+            return;
+        }
+
+
+        const id =
+            state.currentSeriesId;
+
+        if (!commentsData[id]) {
+
+            commentsData[id] = [];
+
+        }
+
+
+        commentsData[id]
+            .unshift({
+
+                id:
+                    Date.now()
+                    .toString(),
+
+                author:
+                    "Visitante",
+
+                text,
+
+                date:
+                    new Date()
+                        .toISOString(),
+
+                likes: 0,
+
+                liked: false,
+
+                replies: []
+
+            });
+
+
+        setStorage(
+            "biaComments",
+            commentsData
+        );
+
+
+        commentInput.value =
+            "";
+
+        characterCounter.textContent =
+            "0/280";
+
+
+        renderComments();
+
+        updateStatistics();
+
+
+        showToast(
+            "Comentário publicado ♡",
+            "fa-comment"
+        );
+
+        createHeart(
+            window.innerWidth / 2,
+            window.innerHeight / 2
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TEMPO DO COMENTÁRIO
+========================================================= */
+
+function formatCommentDate(
+    dateString
+) {
+
+    const date =
+        new Date(
+            dateString
+        );
+
+    const difference =
+        Date.now() -
+        date.getTime();
+
+    const minutes =
+        Math.floor(
+            difference /
+            60000
+        );
+
+
+    if (minutes < 1) {
+
+        return "agora";
+
+    }
+
+
+    if (minutes < 60) {
+
+        return `${minutes} min`;
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if (hours < 24) {
+
+        return `${hours} h`;
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if (days < 7) {
+
+        return `${days} d`;
+
+    }
+
+
+    return date
+        .toLocaleDateString(
+            "pt-BR"
+        );
+
+}
+
+
+/* =========================================================
+   RENDER COMENTÁRIOS
+========================================================= */
+
+function renderComments() {
+
+    const comments =
+        getCurrentComments();
+
+
+    commentCounter.textContent =
+        `${comments.length} ${
+            comments.length === 1
+                ? "comentário"
+                : "comentários"
+        }`;
+
+
+    if (!comments.length) {
+
+        commentsList.innerHTML = `
+            <div class="empty-state">
+                Ainda não tem comentário aqui.
+                Seja a primeira pessoa a comentar ♡
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    commentsList.innerHTML =
+        comments
+            .map(comment => {
+
+                const replies =
+                    comment.replies || [];
+
+                return `
+                    <article
+                        class="comment-card"
+                        data-comment-id="${comment.id}"
+                    >
+
+                        <div class="comment-card-avatar">
+                            ${escapeHTML(
+                                comment.author
+                                    .charAt(0)
+                                    .toUpperCase()
+                            )}
+                        </div>
+
+
+                        <div class="comment-card-content">
+
+                            <div class="comment-card-meta">
+
+                                <strong>
+                                    ${escapeHTML(comment.author)}
+                                </strong>
+
+                                <small>
+                                    ${formatCommentDate(comment.date)}
+                                </small>
+
+                            </div>
+
+
+                            <p>
+                                ${escapeHTML(comment.text)}
+                            </p>
+
+
+                            <div class="comment-card-actions">
+
+                                <button
+                                    class="
+                                        comment-action-button
+                                        comment-like-button
+                                        ${
+                                            comment.liked
+                                                ? "active"
+                                                : ""
+                                        }
+                                    "
+                                    data-comment-like="${comment.id}"
+                                >
+
+                                    <i
+                                        class="${
+                                            comment.liked
+                                                ? "fa-solid"
+                                                : "fa-regular"
+                                        } fa-heart"
+                                    ></i>
+
+                                    ${
+                                        comment.likes || 0
+                                    }
+
+                                </button>
+
+
+                                <button
+                                    class="comment-action-button"
+                                    data-comment-reply="${comment.id}"
+                                >
+
+                                    <i class="fa-regular fa-comment"></i>
+
+                                    responder
+
+                                </button>
+
+                            </div>
+
+
+                            <form
+                                class="reply-form"
+                                data-reply-form="${comment.id}"
+                            >
+
+                                <input
+                                    type="text"
+                                    maxlength="180"
+                                    placeholder="Escreva uma resposta..."
+                                    required
+                                >
+
+                                <button type="submit">
+                                    enviar
+                                </button>
+
+                            </form>
+
+
+                            ${
+                                replies.length
+                                    ? `
+                                        <div class="comment-replies">
+
+                                            ${
+                                                replies
+                                                    .map(
+                                                        reply => `
+                                                            <div class="comment-reply">
+
+                                                                <strong>
+                                                                    ${escapeHTML(reply.author)}
+                                                                </strong>
+
+                                                                <p>
+                                                                    ${escapeHTML(reply.text)}
+                                                                </p>
+
+                                                            </div>
+                                                        `
+                                                    )
+                                                    .join("")
+                                            }
+
+                                        </div>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <button
+                            class="delete-comment"
+                            data-comment-delete="${comment.id}"
+                            title="Excluir comentário"
+                        >
+
+                            <i class="fa-regular fa-trash-can"></i>
+
+                        </button>
+
+                    </article>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   AÇÕES DOS COMENTÁRIOS
+========================================================= */
+
+commentsList.addEventListener(
+    "click",
+    event => {
+
+        const like =
+            event.target.closest(
+                "[data-comment-like]"
+            );
+
+        const reply =
+            event.target.closest(
+                "[data-comment-reply]"
+            );
+
+        const remove =
+            event.target.closest(
+                "[data-comment-delete]"
+            );
+
+
+        /* CURTIR */
+
+        if (like) {
+
+            toggleCommentLike(
+                like.dataset
+                    .commentLike
+            );
+
+            return;
+
+        }
+
+
+        /* RESPONDER */
+
+        if (reply) {
+
+            const form =
+                $(
+                    `[data-reply-form="${reply.dataset.commentReply}"]`
+                );
+
+            if (form) {
+
+                form.classList.toggle(
+                    "open"
+                );
+
+                if (
+                    form.classList
+                        .contains(
+                            "open"
+                        )
+                ) {
+
+                    $("input", form)
+                        .focus();
+
+                }
+
+            }
+
+            return;
+
+        }
+
+
+        /* EXCLUIR */
+
+        if (remove) {
+
+            deleteComment(
+                remove.dataset
+                    .commentDelete
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RESPOSTAS
+========================================================= */
+
+commentsList.addEventListener(
+    "submit",
+    event => {
+
+        const form =
+            event.target.closest(
+                "[data-reply-form]"
+            );
+
+        if (!form) {
+            return;
+        }
+
+        event.preventDefault();
+
+
+        const input =
+            $("input", form);
+
+        const text =
+            input.value.trim();
+
+        if (!text) {
+            return;
+        }
+
+
+        const commentId =
+            form.dataset.replyForm;
+
+        const comments =
+            getCurrentComments();
+
+        const comment =
+            comments.find(
+                item =>
+                    item.id ===
+                    commentId
+            );
+
+
+        if (!comment) {
+            return;
+        }
+
+
+        if (!comment.replies) {
+
+            comment.replies = [];
+
+        }
+
+
+        comment.replies.push({
+
+            id:
+                Date.now()
+                    .toString(),
+
+            author:
+                "Visitante",
+
+            text,
+
+            date:
+                new Date()
+                    .toISOString()
+
+        });
+
+
+        commentsData[
+            state.currentSeriesId
+        ] = comments;
+
+
+        setStorage(
+            "biaComments",
+            commentsData
+        );
+
+
+        renderComments();
+
+        updateStatistics();
+
+
+        showToast(
+            "Resposta publicada ♡",
+            "fa-reply"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CURTIR COMENTÁRIO
+========================================================= */
+
+function toggleCommentLike(
+    commentId
+) {
+
+    const comments =
+        getCurrentComments();
+
+    const comment =
+        comments.find(
+            item =>
+                item.id ===
+                commentId
+        );
+
+    if (!comment) {
+        return;
+    }
+
+
+    comment.liked =
+        !comment.liked;
+
+
+    comment.likes =
+        Math.max(
+            0,
+            (
+                comment.likes ||
+                0
+            ) +
+            (
+                comment.liked
+                    ? 1
+                    : -1
+            )
+        );
+
+
+    commentsData[
+        state.currentSeriesId
+    ] = comments;
+
+
+    setStorage(
+        "biaComments",
+        commentsData
+    );
+
+
+    renderComments();
+
+}
+
+
+/* =========================================================
+   EXCLUIR COMENTÁRIO
+========================================================= */
+
+function deleteComment(
+    commentId
+) {
+
+    const comments =
+        getCurrentComments()
+            .filter(
+                comment =>
+                    comment.id !==
+                    commentId
+            );
+
+
+    commentsData[
+        state.currentSeriesId
+    ] = comments;
+
+
+    setStorage(
+        "biaComments",
+        commentsData
+    );
+
+
+    renderComments();
+
+    updateStatistics();
+
+
+    showToast(
+        "Comentário removido",
+        "fa-trash"
+    );
+
+}
+
+
+/* =========================================================
+   TRAILER
+========================================================= */
+
+function openTrailer() {
+
+    const series =
+        getCurrentSeries();
+
+    trailerModalTitle.textContent =
+        `${series.title} — trailer`;
+
+    trailerFrame.src =
+        `${series.trailer}?autoplay=1`;
+
+    openModal(
+        trailerModal
+    );
+
+}
+
+
+trailerButton.addEventListener(
+    "click",
+    openTrailer
+);
+
+
+posterTrailerButton.addEventListener(
+    "click",
+    openTrailer
+);
+
+
+/* =========================================================
+   ELENCO
+========================================================= */
+
+castButton.addEventListener(
+    "click",
+    () => {
+
+        const series =
+            getCurrentSeries();
+
+
+        castGrid.innerHTML =
+            series.cast
+                .map(person => {
+
+                    const initials =
+                        person.name
+                            .split(" ")
+                            .slice(0, 2)
+                            .map(
+                                word =>
+                                    word[0]
+                            )
+                            .join("");
+
+                    return `
+                        <div class="cast-card">
+
+                            <div class="cast-avatar">
+                                ${escapeHTML(initials)}
+                            </div>
+
+                            <strong>
+                                ${escapeHTML(person.name)}
+                            </strong>
+
+                            <small>
+                                ${escapeHTML(person.role)}
+                            </small>
+
+                        </div>
+                    `;
+
+                })
+                .join("");
+
+
+        openModal(
+            castModal
+        );
+
+    }
+);
+
+
+/* =========================================================
+   MODAIS
+========================================================= */
+
+function openModal(modal) {
+
+    modal.classList.add(
+        "open"
+    );
+
+    body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeModal(modal) {
+
+    modal.classList.remove(
+        "open"
+    );
+
+
+    if (
+        modal ===
+        trailerModal
+    ) {
+
+        trailerFrame.src = "";
+
+    }
+
+
+    if (
+        !$(".modal.open") &&
+        !settingsPanel.classList
+            .contains("open")
+    ) {
+
+        body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+$$("[data-close-modal]")
+    .forEach(element => {
+
+        element.addEventListener(
+            "click",
+            () => {
+
+                const modal =
+                    element.closest(
+                        ".modal"
+                    );
+
+                if (modal) {
+
+                    closeModal(
+                        modal
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            $$(".modal.open")
+                .forEach(
+                    closeModal
+                );
+
+            closeSettings();
+
+            $("#sidebar")
+                .classList.remove(
+                    "open"
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   COPIAR LINK
+========================================================= */
+
+copyLinkButton.addEventListener(
+    "click",
+    async () => {
+
+        const url =
+            `${window.location.href.split("#")[0]}#${state.currentSeriesId}`;
+
+
+        try {
+
+            await navigator
+                .clipboard
+                .writeText(url);
+
+            showToast(
+                "Link copiado ♡",
+                "fa-link"
+            );
+
+        } catch {
+
+            showToast(
+                "Não foi possível copiar automaticamente",
+                "fa-triangle-exclamation"
+            );
+
+        }
+
+    }
+);
 
 
 /* =========================================================
    COMPARTILHAR
 ========================================================= */
 
-async function shareSeries() {
+$("#shareButton")
+    .addEventListener(
+        "click",
+        async () => {
 
-    const series =
-        getCurrentSeries();
+            const series =
+                getCurrentSeries();
+
+            const data = {
+
+                title:
+                    `Blog da Bia — ${series.title}`,
+
+                text:
+                    `Olha essa série no Blog da Bia: ${series.title} ♡`,
+
+                url:
+                    window.location.href
+
+            };
 
 
-    const shareData = {
+            if (
+                navigator.share
+            ) {
 
-        title:
-            `${series.title} | Blog da Bia`,
+                try {
 
-        text:
-            `Olha o que eu achei de ${series.title} ♡`,
+                    await navigator
+                        .share(data);
 
-        url:
-            window.location.href
+                } catch {
+                    /* usuário cancelou */
+                }
 
-    };
+            } else {
 
+                try {
 
-    try {
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            window.location.href
+                        );
 
-        if (navigator.share) {
+                    showToast(
+                        "Link copiado para compartilhar ♡",
+                        "fa-share-nodes"
+                    );
 
-            await navigator.share(
-                shareData
-            );
+                } catch {
+
+                    showToast(
+                        "Compartilhamento não disponível",
+                        "fa-share-nodes"
+                    );
+
+                }
+
+            }
 
         }
+    );
 
-        else {
 
-            await navigator
-                .clipboard
-                .writeText(
-                    window.location.href
-                );
+/* =========================================================
+   PRÓXIMA SÉRIE
+========================================================= */
+
+function updateNextSeries() {
+
+    const currentIndex =
+        seriesData.findIndex(
+            series =>
+                series.id ===
+                state.currentSeriesId
+        );
+
+    const next =
+        seriesData[
+            (
+                currentIndex + 1
+            ) %
+            seriesData.length
+        ];
+
+    nextSeriesName.textContent =
+        next.title;
+
+}
+
+
+nextSeriesButton.addEventListener(
+    "click",
+    () => {
+
+        const currentIndex =
+            seriesData.findIndex(
+                series =>
+                    series.id ===
+                    state.currentSeriesId
+            );
+
+        const next =
+            seriesData[
+                (
+                    currentIndex + 1
+                ) %
+                seriesData.length
+            ];
+
+        selectSeries(
+            next.id
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SÉRIE ALEATÓRIA
+========================================================= */
+
+$("#randomButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            let random;
+
+            do {
+
+                random =
+                    seriesData[
+                        Math.floor(
+                            Math.random() *
+                            seriesData.length
+                        )
+                    ];
+
+            } while (
+                random.id ===
+                    state.currentSeriesId &&
+                seriesData.length > 1
+            );
+
+
+            selectSeries(
+                random.id
+            );
 
 
             showToast(
-                "Link copiado para a área de transferência!",
-                "fa-link"
+                `Que tal ${random.title}? ✦`,
+                "fa-shuffle"
             );
 
         }
+    );
+
+
+/* =========================================================
+   RANKING
+========================================================= */
+
+function renderRanking() {
+
+    const ranking =
+        [...seriesData]
+            .sort(
+                (a, b) =>
+                    b.rating -
+                    a.rating
+            )
+            .slice(
+                0,
+                5
+            );
+
+
+    rankingGrid.innerHTML =
+        ranking
+            .map(
+                (series, index) => `
+                    <article
+                        class="ranking-card"
+                        data-ranking-series="${series.id}"
+                    >
+
+                        <span class="ranking-position">
+                            ${index + 1}
+                        </span>
+
+                        <img
+                            src="${series.poster}"
+                            alt="${escapeHTML(series.title)}"
+                        >
+
+                        <div class="ranking-card-info">
+
+                            <strong>
+                                ${escapeHTML(series.title)}
+                            </strong>
+
+                            <span>
+
+                                <i class="fa-solid fa-star"></i>
+
+                                ${series.rating.toFixed(1)}
+
+                            </span>
+
+                        </div>
+
+                    </article>
+                `
+            )
+            .join("");
+
+}
+
+
+rankingGrid.addEventListener(
+    "click",
+    event => {
+
+        const card =
+            event.target.closest(
+                "[data-ranking-series]"
+            );
+
+        if (!card) {
+            return;
+        }
+
+        selectSeries(
+            card.dataset
+                .rankingSeries
+        );
+
+    }
+);
+
+
+/* =========================================================
+   RECOMENDAÇÕES
+========================================================= */
+
+function shuffleArray(array) {
+
+    const copy =
+        [...array];
+
+    for (
+        let i =
+            copy.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+        [
+            copy[i],
+            copy[j]
+        ] = [
+            copy[j],
+            copy[i]
+        ];
 
     }
 
-    catch (error) {
+    return copy;
 
-        console.log(
-            "Compartilhamento cancelado."
+}
+
+
+function renderRecommendations() {
+
+    const current =
+        getCurrentSeries();
+
+
+    let related =
+        seriesData.filter(
+            series =>
+                series.id !==
+                    current.id &&
+                series.genres.some(
+                    genre =>
+                        current.genres
+                            .includes(
+                                genre
+                            )
+                )
+        );
+
+
+    let others =
+        seriesData.filter(
+            series =>
+                series.id !==
+                    current.id &&
+                !related.some(
+                    item =>
+                        item.id ===
+                        series.id
+                )
+        );
+
+
+    related =
+        shuffleArray(
+            related
+        );
+
+    others =
+        shuffleArray(
+            others
+        );
+
+
+    const recommendations =
+        [
+            ...related,
+            ...others
+        ].slice(
+            0,
+            4
+        );
+
+
+    recommendationsGrid
+        .innerHTML =
+        recommendations
+            .map(
+                series => `
+                    <article
+                        class="recommendation-card"
+                        data-recommendation="${series.id}"
+                    >
+
+                        <img
+                            src="${series.backdrop || series.poster}"
+                            alt="${escapeHTML(series.title)}"
+                        >
+
+                        <div class="recommendation-overlay">
+
+                            <strong>
+                                ${escapeHTML(series.title)}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(series.genre)}
+                                ·
+                                ⭐ ${series.rating.toFixed(1)}
+                            </span>
+
+                        </div>
+
+                    </article>
+                `
+            )
+            .join("");
+
+}
+
+
+recommendationsGrid
+    .addEventListener(
+        "click",
+        event => {
+
+            const card =
+                event.target.closest(
+                    "[data-recommendation]"
+                );
+
+            if (!card) {
+                return;
+            }
+
+            selectSeries(
+                card.dataset
+                    .recommendation
+            );
+
+        }
+    );
+
+
+$("#refreshRecommendations")
+    .addEventListener(
+        "click",
+        () => {
+
+            renderRecommendations();
+
+            showToast(
+                "Novas sugestões para você ✦",
+                "fa-wand-magic-sparkles"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   HISTÓRICO
+========================================================= */
+
+function addToHistory(id) {
+
+    historyData =
+        historyData.filter(
+            item =>
+                item.id !== id
+        );
+
+
+    historyData.unshift({
+
+        id,
+
+        date:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    historyData =
+        historyData.slice(
+            0,
+            8
+        );
+
+
+    setStorage(
+        "biaHistory",
+        historyData
+    );
+
+}
+
+
+function renderHistory() {
+
+    if (!historyData.length) {
+
+        historyList.innerHTML = `
+            <div class="empty-state">
+                Seu histórico está vazio.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    historyList.innerHTML =
+        historyData
+            .map(item => {
+
+                const series =
+                    seriesData.find(
+                        series =>
+                            series.id ===
+                            item.id
+                    );
+
+                if (!series) {
+                    return "";
+                }
+
+
+                return `
+                    <button
+                        class="history-item"
+                        data-history-series="${series.id}"
+                    >
+
+                        <img
+                            src="${series.poster}"
+                            alt=""
+                        >
+
+                        <span class="history-item-info">
+
+                            <strong>
+                                ${escapeHTML(series.title)}
+                            </strong>
+
+                            <small>
+                                visto recentemente
+                            </small>
+
+                        </span>
+
+                    </button>
+                `;
+
+            })
+            .join("");
+
+}
+
+
+historyList.addEventListener(
+    "click",
+    event => {
+
+        const item =
+            event.target.closest(
+                "[data-history-series]"
+            );
+
+        if (!item) {
+            return;
+        }
+
+        selectSeries(
+            item.dataset
+                .historySeries
+        );
+
+    }
+);
+
+
+$("#clearHistoryButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            historyData = [];
+
+            setStorage(
+                "biaHistory",
+                historyData
+            );
+
+            renderHistory();
+
+            showToast(
+                "Histórico limpo",
+                "fa-trash"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   ESTATÍSTICAS
+========================================================= */
+
+function updateStatistics() {
+
+    const watched =
+        Object.values(
+            watchStatus
+        )
+            .filter(
+                status =>
+                    status ===
+                    "watched"
+            )
+            .length;
+
+
+    const comments =
+        Object.values(
+            commentsData
+        )
+            .reduce(
+                (
+                    total,
+                    seriesComments
+                ) => {
+
+                    const replies =
+                        seriesComments
+                            .reduce(
+                                (
+                                    sum,
+                                    comment
+                                ) =>
+                                    sum +
+                                    (
+                                        comment.replies
+                                            ?.length ||
+                                        0
+                                    ),
+                                0
+                            );
+
+                    return (
+                        total +
+                        seriesComments.length +
+                        replies
+                    );
+
+                },
+                0
+            );
+
+
+    $("#seriesCount")
+        .textContent =
+        seriesData.length;
+
+    $("#favoritesCount")
+        .textContent =
+        favorites.length;
+
+    $("#watchedCount")
+        .textContent =
+        watched;
+
+
+    $("#totalSeriesStat")
+        .textContent =
+        seriesData.length;
+
+    $("#totalFavoritesStat")
+        .textContent =
+        favorites.length;
+
+    $("#totalWatchedStat")
+        .textContent =
+        watched;
+
+    $("#totalCommentsStat")
+        .textContent =
+        comments;
+
+}
+
+
+/* =========================================================
+   CONTADOR DE VISITAS LOCAL
+========================================================= */
+
+function updateVisitCounter() {
+
+    const sessionKey =
+        "biaVisitSession";
+
+    let visits =
+        Number(
+            localStorage.getItem(
+                "biaVisits"
+            )
+        ) || 0;
+
+
+    if (
+        !sessionStorage.getItem(
+            sessionKey
+        )
+    ) {
+
+        visits++;
+
+        localStorage.setItem(
+            "biaVisits",
+            visits
+        );
+
+        sessionStorage.setItem(
+            sessionKey,
+            "true"
         );
 
     }
 
-}
 
-
-/* =========================================================
-   SIDEBAR MOBILE
-========================================================= */
-
-function openSidebar() {
-
-    sidebar.classList.add("open");
-
-}
-
-
-function closeSidebar() {
-
-    sidebar.classList.remove("open");
+    $("#visitCounter")
+        .textContent =
+        visits;
 
 }
 
 
 /* =========================================================
-   CONFIGURAÇÕES
+   PESQUISA MODAL
 ========================================================= */
+
+$("#searchButton")
+    .addEventListener(
+        "click",
+        () => {
+
+            openModal(
+                searchModal
+            );
+
+            modalSearchInput.value =
+                "";
+
+            renderModalSearch("");
+
+            setTimeout(
+                () =>
+                    modalSearchInput
+                        .focus(),
+                150
+            );
+
+        }
+    );
+
+
+modalSearchInput
+    .addEventListener(
+        "input",
+        () => {
+
+            renderModalSearch(
+                modalSearchInput.value
+            );
+
+        }
+    );
+
+
+function renderModalSearch(
+    term
+) {
+
+    const normalized =
+        term
+            .toLowerCase()
+            .trim();
+
+
+    const results =
+        seriesData.filter(
+            series => {
+
+                if (!normalized) {
+                    return true;
+                }
+
+                return `
+                    ${series.title}
+                    ${series.genre}
+                    ${series.genres.join(" ")}
+                `
+                    .toLowerCase()
+                    .includes(
+                        normalized
+                    );
+
+            }
+        );
+
+
+    if (!results.length) {
+
+        modalSearchResults
+            .innerHTML = `
+                <div class="empty-state">
+                    Nenhuma série encontrada ♡
+                </div>
+            `;
+
+        return;
+
+    }
+
+
+    modalSearchResults
+        .innerHTML =
+        results
+            .map(
+                series => `
+                    <button
+                        class="modal-search-result"
+                        data-modal-series="${series.id}"
+                    >
+
+                        <img
+                            src="${series.poster}"
+                            alt=""
+                        >
+
+                        <span>
+
+                            <strong>
+                                ${escapeHTML(series.title)}
+                            </strong>
+
+                            <small>
+                                ${escapeHTML(series.genre)}
+                                ·
+                                ${series.year}
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+                `
+            )
+            .join("");
+
+}
+
+
+modalSearchResults
+    .addEventListener(
+        "click",
+        event => {
+
+            const result =
+                event.target.closest(
+                    "[data-modal-series]"
+                );
+
+            if (!result) {
+                return;
+            }
+
+            closeModal(
+                searchModal
+            );
+
+            selectSeries(
+                result.dataset
+                    .modalSeries
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+$("#settingsButton")
+    .addEventListener(
+        "click",
+        openSettings
+    );
+
+
+$("#closeSettings")
+    .addEventListener(
+        "click",
+        closeSettings
+    );
+
+
+settingsOverlay.addEventListener(
+    "click",
+    closeSettings
+);
+
 
 function openSettings() {
 
-    settingsPanel.classList.add("open");
+    settingsPanel.classList.add(
+        "open"
+    );
 
     settingsOverlay.classList.add(
         "open"
     );
+
+    body.style.overflow =
+        "hidden";
 
 }
 
@@ -1957,433 +4380,343 @@ function closeSettings() {
         "open"
     );
 
+
+    if (!$(".modal.open")) {
+
+        body.style.overflow =
+            "";
+
+    }
+
 }
 
 
-function applyTheme(theme) {
+/* =========================================================
+   TEMA
+========================================================= */
 
-    document.body.dataset.theme =
-        theme;
+$$("[data-theme]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                settings.theme =
+                    button.dataset.theme;
+
+                saveSettings();
+
+                applySettings();
+
+                showToast(
+                    "Tema alterado ♡",
+                    "fa-palette"
+                );
+
+            }
+        );
+
+    });
 
 
-    preferences.theme =
-        theme;
+/* =========================================================
+   FONTE
+========================================================= */
+
+$$("[data-font]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                settings.font =
+                    button.dataset.font;
+
+                saveSettings();
+
+                applySettings();
+
+            }
+        );
+
+    });
 
 
-    document
-        .querySelectorAll(
-            ".theme-option"
-        )
+/* =========================================================
+   TOGGLES
+========================================================= */
+
+$("#animationToggle")
+    .addEventListener(
+        "change",
+        event => {
+
+            settings.animations =
+                event.target.checked;
+
+            saveSettings();
+
+            applySettings();
+
+        }
+    );
+
+
+$("#cursorToggle")
+    .addEventListener(
+        "change",
+        event => {
+
+            settings.cursor =
+                event.target.checked;
+
+            saveSettings();
+
+            applySettings();
+
+        }
+    );
+
+
+$("#effectsToggle")
+    .addEventListener(
+        "change",
+        event => {
+
+            settings.effects =
+                event.target.checked;
+
+            saveSettings();
+
+            applySettings();
+
+        }
+    );
+
+
+function saveSettings() {
+
+    setStorage(
+        "biaSettings",
+        settings
+    );
+
+}
+
+
+/* =========================================================
+   APLICAR SETTINGS
+========================================================= */
+
+function applySettings() {
+
+    /* TEMA */
+
+    if (
+        settings.theme ===
+        "lavender"
+    ) {
+
+        body.removeAttribute(
+            "data-theme"
+        );
+
+    } else {
+
+        body.dataset.theme =
+            settings.theme;
+
+    }
+
+
+    /* BOTÕES DE TEMA */
+
+    $$("[data-theme]")
         .forEach(button => {
 
             button.classList.toggle(
                 "active",
                 button.dataset.theme ===
-                    theme
+                    settings.theme
             );
 
         });
 
 
-    savePreferences();
-
-}
-
-
-function applyFontSize(size) {
+    /* FONTE */
 
     const sizes = {
+
         small: "14px",
         medium: "16px",
         large: "18px"
+
     };
 
 
-    document
-        .documentElement
-        .style
-        .setProperty(
+    document.documentElement
+        .style.setProperty(
             "--font-size",
-            sizes[size]
+            sizes[
+                settings.font
+            ] ||
+            "16px"
         );
 
 
-    preferences.font =
-        size;
-
-
-    document
-        .querySelectorAll(
-            "[data-font]"
-        )
+    $$("[data-font]")
         .forEach(button => {
 
             button.classList.toggle(
                 "active",
                 button.dataset.font ===
-                    size
+                    settings.font
             );
 
         });
 
 
-    savePreferences();
+    /* ANIMAÇÕES */
 
-}
-
-
-function applyAnimations(enabled) {
-
-    preferences.animations =
-        enabled;
-
-
-    document.body.classList.toggle(
+    body.classList.toggle(
         "no-animations",
-        !enabled
+        !settings.animations
     );
 
 
-    document.getElementById(
-        "animationToggle"
-    ).checked = enabled;
+    /* CURSOR */
 
-
-    savePreferences();
-
-}
-
-
-function loadPreferences() {
-
-    applyTheme(
-        preferences.theme ||
-        "lavender"
+    body.classList.toggle(
+        "no-cursor-glow",
+        !settings.cursor
     );
 
 
-    applyFontSize(
-        preferences.font ||
-        "medium"
-    );
+    /* CHECKBOX */
 
+    $("#animationToggle")
+        .checked =
+        settings.animations;
 
-    applyAnimations(
-        preferences.animations !== false
-    );
+    $("#cursorToggle")
+        .checked =
+        settings.cursor;
 
-}
-
-
-function resetPreferences() {
-
-    preferences = {
-        theme: "lavender",
-        font: "medium",
-        animations: true
-    };
-
-
-    loadPreferences();
-
-
-    showToast(
-        "Preferências restauradas ♡",
-        "fa-rotate-left"
-    );
+    $("#effectsToggle")
+        .checked =
+        settings.effects;
 
 }
 
 
 /* =========================================================
-   EVENTOS DOS BOTÕES
+   RESET SETTINGS
 ========================================================= */
 
-favoriteButton.addEventListener(
-    "click",
-    toggleFavorite
-);
-
-
-likeButton.addEventListener(
-    "click",
-    () => vote("like")
-);
-
-
-dislikeButton.addEventListener(
-    "click",
-    () => vote("dislike")
-);
-
-
-starsContainer
-    .querySelectorAll("button")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                rateSeries(
-                    Number(
-                        button.dataset.star
-                    )
-                );
-
-            }
-        );
-
-    });
-
-
-document
-    .getElementById(
-        "trailerButton"
-    )
+$("#resetSettingsButton")
     .addEventListener(
         "click",
-        openTrailer
-    );
+        () => {
+
+            settings = {
+
+                theme:
+                    "lavender",
+
+                font:
+                    "medium",
+
+                animations:
+                    true,
+
+                cursor:
+                    true,
+
+                effects:
+                    true
+
+            };
 
 
-document
-    .getElementById(
-        "posterTrailerButton"
-    )
-    .addEventListener(
-        "click",
-        openTrailer
-    );
+            saveSettings();
+
+            applySettings();
 
 
-document
-    .getElementById(
-        "castButton"
-    )
-    .addEventListener(
-        "click",
-        openCast
-    );
-
-
-document
-    .getElementById(
-        "nextSeriesButton"
-    )
-    .addEventListener(
-        "click",
-        nextSeries
-    );
-
-
-document
-    .getElementById(
-        "randomButton"
-    )
-    .addEventListener(
-        "click",
-        randomSeries
-    );
-
-
-document
-    .getElementById(
-        "shareButton"
-    )
-    .addEventListener(
-        "click",
-        shareSeries
-    );
-
-
-document
-    .getElementById(
-        "openSidebar"
-    )
-    .addEventListener(
-        "click",
-        openSidebar
-    );
-
-
-document
-    .getElementById(
-        "closeSidebar"
-    )
-    .addEventListener(
-        "click",
-        closeSidebar
-    );
-
-
-document
-    .getElementById(
-        "settingsButton"
-    )
-    .addEventListener(
-        "click",
-        openSettings
-    );
-
-
-document
-    .getElementById(
-        "closeSettings"
-    )
-    .addEventListener(
-        "click",
-        closeSettings
-    );
-
-
-settingsOverlay.addEventListener(
-    "click",
-    closeSettings
-);
-
-
-/* =========================================================
-   EVENTOS CONFIGURAÇÕES
-========================================================= */
-
-document
-    .querySelectorAll(
-        ".theme-option"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                applyTheme(
-                    button.dataset.theme
-                );
-
-            }
-        );
-
-    });
-
-
-document
-    .querySelectorAll(
-        "[data-font]"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                applyFontSize(
-                    button.dataset.font
-                );
-
-            }
-        );
-
-    });
-
-
-document
-    .getElementById(
-        "animationToggle"
-    )
-    .addEventListener(
-        "change",
-        event => {
-
-            applyAnimations(
-                event.target.checked
+            showToast(
+                "Preferências restauradas",
+                "fa-rotate-left"
             );
 
         }
     );
 
 
-document
-    .getElementById(
-        "resetButton"
-    )
-    .addEventListener(
-        "click",
-        resetPreferences
-    );
-
-
 /* =========================================================
-   EVENTOS DOS MODAIS
+   CURSOR
 ========================================================= */
 
-document
-    .querySelectorAll(
-        "[data-close-modal]"
-    )
-    .forEach(button => {
+document.addEventListener(
+    "mousemove",
+    event => {
 
-        button.addEventListener(
-            "click",
-            closeModals
-        );
+        if (!settings.cursor) {
+            return;
+        }
 
-    });
+        cursorGlow.style.left =
+            `${event.clientX}px`;
 
-
-document
-    .querySelectorAll(
-        ".modal-backdrop"
-    )
-    .forEach(backdrop => {
-
-        backdrop.addEventListener(
-            "click",
-            closeModals
-        );
-
-    });
-
-
-/* =========================================================
-   FORMULÁRIO DE COMENTÁRIO
-========================================================= */
-
-commentInput.addEventListener(
-    "input",
-    () => {
-
-        characterCounter.textContent =
-            `${commentInput.value.length}/280`;
+        cursorGlow.style.top =
+            `${event.clientY}px`;
 
     }
 );
 
 
-commentForm.addEventListener(
-    "submit",
-    event => {
+/* =========================================================
+   PROGRESSO DA PÁGINA
+========================================================= */
 
-        event.preventDefault();
+function updateReadingProgress() {
 
+    const scrollTop =
+        window.scrollY;
 
-        const text =
-            commentInput.value.trim();
-
-
-        if (!text) {
-            return;
-        }
-
-
-        addComment(text);
+    const height =
+        document.documentElement
+            .scrollHeight -
+        window.innerHeight;
 
 
-        commentInput.value = "";
+    const percentage =
+        height > 0
+            ? (
+                scrollTop /
+                height
+            ) * 100
+            : 0;
 
-        characterCounter.textContent =
-            "0/280";
 
+    readingProgress.style.width =
+        `${percentage}%`;
+
+
+    backToTop.classList.toggle(
+        "show",
+        scrollTop > 450
+    );
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateReadingProgress,
+    {
+        passive: true
     }
 );
 
@@ -2392,128 +4725,351 @@ commentForm.addEventListener(
    VOLTAR AO TOPO
 ========================================================= */
 
-window.addEventListener(
-    "scroll",
-    () => {
+function scrollToTop() {
 
-        backToTop.classList.toggle(
-            "show",
-            window.scrollY > 500
-        );
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-    }
-);
+}
 
 
 backToTop.addEventListener(
     "click",
-    () => {
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
+    scrollToTop
 );
 
 
+$("#footerTopButton")
+    .addEventListener(
+        "click",
+        scrollToTop
+    );
+
+
+$("#logoButton")
+    .addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+            scrollToTop();
+
+        }
+    );
+
+
 /* =========================================================
-   ATALHOS DO TECLADO
+   MENU MOBILE
+========================================================= */
+
+$("#openSidebar")
+    .addEventListener(
+        "click",
+        () => {
+
+            $("#sidebar")
+                .classList.add(
+                    "open"
+                );
+
+        }
+    );
+
+
+$("#closeSidebar")
+    .addEventListener(
+        "click",
+        () => {
+
+            $("#sidebar")
+                .classList.remove(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* =========================================================
+   NAVEGAÇÃO RÁPIDA
+========================================================= */
+
+$$("[data-scroll]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const target =
+                    document.getElementById(
+                        button.dataset.scroll
+                    );
+
+                if (!target) {
+                    return;
+                }
+
+
+                $$(".quick-nav-item")
+                    .forEach(item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                    );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   CORAÇÃO DOS DESENVOLVEDORES
+========================================================= */
+
+$("#sendHeartButton")
+    .addEventListener(
+        "click",
+        event => {
+
+            const rect =
+                event.currentTarget
+                    .getBoundingClientRect();
+
+
+            for (
+                let i = 0;
+                i < 8;
+                i++
+            ) {
+
+                setTimeout(
+                    () => {
+
+                        createHeart(
+                            rect.left +
+                                Math.random() *
+                                rect.width,
+
+                            rect.top +
+                                Math.random() *
+                                rect.height
+                        );
+
+                    },
+                    i * 80
+                );
+
+            }
+
+
+            showToast(
+                "Bayerlee e Beatriz receberam seu coração ♡",
+                "fa-heart"
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   REVEAL AO ROLAR
+========================================================= */
+
+function initializeReveal() {
+
+    const elements =
+        $$(".reveal");
+
+
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        elements.forEach(
+            element =>
+                element.classList.add(
+                    "visible"
+                )
+        );
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList.add(
+                                    "visible"
+                                );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold: 0.08
+            }
+        );
+
+
+    elements.forEach(
+        element =>
+            observer.observe(
+                element
+            )
+    );
+
+}
+
+
+/* =========================================================
+   HASH DA URL
+========================================================= */
+
+function loadSeriesFromHash() {
+
+    const hash =
+        window.location.hash
+            .replace(
+                "#",
+                ""
+            );
+
+    if (!hash) {
+        return;
+    }
+
+
+    const exists =
+        seriesData.some(
+            series =>
+                series.id === hash
+        );
+
+
+    if (exists) {
+
+        state.currentSeriesId =
+            hash;
+
+    }
+
+}
+
+
+/* =========================================================
+   ATALHOS
 ========================================================= */
 
 document.addEventListener(
     "keydown",
     event => {
 
-        /*
-            ESC
-            Fecha modal/configurações/menu.
-        */
+        const target =
+            event.target;
 
-        if (event.key === "Escape") {
+        const typing =
+            target.matches(
+                "input, textarea, select"
+            );
 
-            closeModals();
 
-            closeSettings();
-
-            closeSidebar();
-
+        if (typing) {
+            return;
         }
 
 
         /*
-            CTRL + K
-            Abre a pesquisa.
+            "/" abre pesquisa
         */
 
         if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "k"
+            event.key === "/"
         ) {
 
             event.preventDefault();
 
-            if (
-                window.innerWidth <= 850
-            ) {
-                openSidebar();
-            }
-
-            searchInput.focus();
+            $("#searchButton")
+                .click();
 
         }
 
 
         /*
-            SETA DIREITA
-            Próxima série.
-
-            Não funciona quando estiver
-            digitando em input/textarea.
+            F = favoritar
         */
 
-        const typing =
-            ["INPUT", "TEXTAREA"]
-                .includes(
-                    document.activeElement.tagName
-                );
-
-
         if (
-            event.key === "ArrowRight" &&
-            !typing &&
-            !document
-                .querySelector(".modal.open")
+            event.key
+                .toLowerCase() ===
+            "f"
         ) {
 
-            nextSeries();
+            favoriteButton.click();
 
         }
 
 
         /*
-            SETA ESQUERDA
-            Série anterior.
+            R = aleatória
         */
 
         if (
-            event.key === "ArrowLeft" &&
-            !typing &&
-            !document
-                .querySelector(".modal.open")
+            event.key
+                .toLowerCase() ===
+            "r"
         ) {
 
-            const previousIndex =
-                (
-                    currentSeriesIndex - 1 +
-                    seriesData.length
-                ) % seriesData.length;
+            $("#randomButton")
+                .click();
+
+        }
 
 
-            selectSeries(
-                previousIndex
-            );
+        /*
+            SETA DIREITA =
+            próxima série
+        */
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            nextSeriesButton.click();
 
         }
 
@@ -2522,87 +5078,97 @@ document.addEventListener(
 
 
 /* =========================================================
-   ABRIR SÉRIE PELO HASH DA URL
-========================================================= */
-
-function loadSeriesFromHash() {
-
-    const id =
-        window.location.hash
-            .replace("#", "");
-
-
-    if (!id) {
-        return;
-    }
-
-
-    const index =
-        seriesData.findIndex(
-            series =>
-                series.id === id
-        );
-
-
-    if (index !== -1) {
-
-        currentSeriesIndex =
-            index;
-
-    }
-
-}
-
-
-/* =========================================================
-   FALLBACK PARA IMAGENS
+   DUPLO CLIQUE = CORAÇÃO
 ========================================================= */
 
 document.addEventListener(
-    "error",
+    "dblclick",
     event => {
 
         if (
-            event.target.tagName === "IMG"
+            event.target.closest(
+                "button, input, textarea, select"
+            )
         ) {
-
-            event.target.src =
-                "https://placehold.co/500x750/e9d7f5/6d4d7d?text=Blog+da+Bia";
-
+            return;
         }
 
-    },
-    true
+        createHeart(
+            event.clientX,
+            event.clientY
+        );
+
+    }
 );
+
+
+/* =========================================================
+   RECOMENDAÇÕES AO TROCAR SÉRIE
+========================================================= */
+
+const originalRenderCurrentSeries =
+    renderCurrentSeries;
+
+
+renderCurrentSeries =
+    function () {
+
+        originalRenderCurrentSeries();
+
+        renderRecommendations();
+
+    };
 
 
 /* =========================================================
    INICIALIZAÇÃO
 ========================================================= */
 
-function initialize() {
+function init() {
 
     loadSeriesFromHash();
 
-    loadPreferences();
+    populateGenres();
 
-    renderSeriesList();
+    applySettings();
+
+    renderRanking();
 
     renderCurrentSeries();
 
-    updateCounters();
+    renderRecommendations();
+
+    renderHistory();
+
+    updateStatistics();
+
+    updateVisitCounter();
+
+    updateReadingProgress();
+
+    initializeReveal();
 
 
-    console.log(
-        "%c♡ Blog da Bia carregado com sucesso!",
-        "color:#a968d5;font-size:16px;font-weight:bold;"
-    );
+    setTimeout(
+        () => {
 
-    console.log(
-        "Atalhos: Ctrl + K = pesquisa | ← → = trocar série | Esc = fechar"
+            showToast(
+                "Bem-vindo ao Blog da Bia ♡",
+                "fa-heart"
+            );
+
+        },
+        700
     );
 
 }
 
 
-initialize();
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
