@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,21 +11,17 @@
 
     <meta
         name="description"
-        content="Blog da Bia - séries, opiniões, avaliações, favoritos e recomendações."
+        content="Blog da Bia - séries, opiniões, avaliações e recomendações."
     >
 
     <meta
         name="theme-color"
-        content="#b879dc"
+        content="#b86ee8"
     >
 
-    <title>Blog da Bia ♡ | Séries</title>
+    <title>Blog da Bia ♡</title>
 
-
-    <!-- =====================================================
-         FONTES
-    ====================================================== -->
-
+    <!-- GOOGLE FONTS -->
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -43,137 +38,113 @@
         rel="stylesheet"
     >
 
-
-    <!-- =====================================================
-         FONT AWESOME
-    ====================================================== -->
-
+    <!-- FONT AWESOME -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-
-    <!-- =====================================================
-         CSS
-    ====================================================== -->
-
     <link
         rel="stylesheet"
         href="style.css"
     >
-
 </head>
-
 
 <body>
 
-
-    <!-- =====================================================
+    <!-- ======================================================
          BARRA DE PROGRESSO
-    ====================================================== -->
+    ======================================================= -->
 
     <div
-        class="reading-progress"
         id="readingProgress"
+        class="reading-progress"
     ></div>
 
 
-    <!-- =====================================================
-         FUNDO DECORATIVO
-    ====================================================== -->
+    <!-- ======================================================
+         CURSOR DE CORAÇÃO
+    ======================================================= -->
 
-    <div class="background-effects">
+    <div
+        id="heartCursor"
+        class="heart-cursor"
+    ></div>
 
-        <div class="background-blob blob-1"></div>
 
-        <div class="background-blob blob-2"></div>
+    <!-- ======================================================
+         EFEITOS
+    ======================================================= -->
 
-        <div class="background-blob blob-3"></div>
+    <div
+        id="effectsContainer"
+        class="effects-container"
+    ></div>
 
-        <div class="background-blob blob-4"></div>
 
-        <div class="background-stars">
+    <!-- ======================================================
+         FUNDO
+    ======================================================= -->
 
-            <span>✦</span>
-            <span>♡</span>
-            <span>✧</span>
-            <span>♡</span>
-            <span>✦</span>
+    <div class="page-background">
 
-        </div>
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+
+        <span class="background-symbol symbol-1">♡</span>
+        <span class="background-symbol symbol-2">✦</span>
+        <span class="background-symbol symbol-3">♡</span>
+        <span class="background-symbol symbol-4">✧</span>
+        <span class="background-symbol symbol-5">♡</span>
 
     </div>
 
 
-    <!-- =====================================================
-         EFEITO DO CURSOR
-    ====================================================== -->
+    <!-- ======================================================
+         TOAST
+    ======================================================= -->
 
     <div
-        class="cursor-glow"
-        id="cursorGlow"
-    ></div>
-
-
-    <!-- =====================================================
-         CORAÇÕES / CONFETE
-    ====================================================== -->
-
-    <div
-        class="effects-container"
-        id="effectsContainer"
-    ></div>
-
-
-    <!-- =====================================================
-         TOASTS
-    ====================================================== -->
-
-    <div
-        class="toast-container"
         id="toastContainer"
+        class="toast-container"
     ></div>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          HEADER
-    ====================================================== -->
+    ======================================================= -->
 
     <header
         class="header reveal"
         id="header"
     >
 
+        <!-- DONA DO BLOG -->
 
-        <!-- PERFIL -->
+        <div class="owner-area">
 
-        <div class="profile-area">
-
-            <div class="profile-picture-wrapper">
+            <div class="owner-photo-wrapper">
 
                 <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300"
-                    alt="Foto de perfil"
-                    class="profile-picture"
+                    src="Beatriz.jpg"
+                    alt="Beatriz"
+                    class="owner-photo"
                 >
 
-                <span
-                    class="profile-online"
-                    title="online"
-                ></span>
+                <span class="online-dot"></span>
 
             </div>
 
-
-            <div class="profile-information">
+            <div class="owner-info">
 
                 <span>
-                    meu cantinho ♡
+                    criadora do blog
                 </span>
 
                 <strong>
-                    @bia
+                    Beatriz ♡
                 </strong>
 
             </div>
@@ -185,20 +156,23 @@
 
         <div class="logo-area">
 
-            <a
-                href="#"
-                class="logo"
+            <button
+                class="logo-button"
                 id="logoButton"
             >
 
-                blog da bia
+                <span class="logo-main">
+                    blog da bia
+                </span>
 
-                <span>♡</span>
+                <span class="logo-heart">
+                    ♡
+                </span>
 
-            </a>
+            </button>
 
             <p>
-                séries, opiniões e um pouquinho de obsessão
+                séries, surtos, opiniões e maratonas
             </p>
 
         </div>
@@ -206,10 +180,10 @@
 
         <!-- AÇÕES -->
 
-        <nav class="header-actions">
+        <div class="header-actions">
 
             <button
-                class="header-button"
+                class="header-action"
                 id="searchButton"
                 title="Pesquisar"
             >
@@ -224,7 +198,7 @@
 
 
             <button
-                class="header-button"
+                class="header-action"
                 id="randomButton"
                 title="Série aleatória"
             >
@@ -232,14 +206,14 @@
                 <i class="fa-solid fa-shuffle"></i>
 
                 <span>
-                    aleatório
+                    aleatória
                 </span>
 
             </button>
 
 
             <button
-                class="header-button"
+                class="header-action"
                 id="shareButton"
                 title="Compartilhar"
             >
@@ -254,7 +228,7 @@
 
 
             <button
-                class="header-button"
+                class="header-action"
                 id="settingsButton"
                 title="Configurações"
             >
@@ -267,20 +241,20 @@
 
             </button>
 
-        </nav>
+        </div>
 
     </header>
 
 
-    <!-- =====================================================
-         NAVEGAÇÃO RÁPIDA
-    ====================================================== -->
+    <!-- ======================================================
+         MENU RÁPIDO
+    ======================================================= -->
 
-    <nav class="quick-navigation reveal">
+    <nav class="quick-nav reveal">
 
         <button
-            class="quick-nav-item active"
-            data-scroll="mainContent"
+            class="quick-nav-button active"
+            data-scroll-target="mainArea"
         >
 
             <i class="fa-solid fa-house"></i>
@@ -293,8 +267,8 @@
 
 
         <button
-            class="quick-nav-item"
-            data-scroll="rankingSection"
+            class="quick-nav-button"
+            data-scroll-target="rankingSection"
         >
 
             <i class="fa-solid fa-ranking-star"></i>
@@ -307,8 +281,8 @@
 
 
         <button
-            class="quick-nav-item"
-            data-scroll="recommendationsSection"
+            class="quick-nav-button"
+            data-scroll-target="recommendationsSection"
         >
 
             <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -321,8 +295,8 @@
 
 
         <button
-            class="quick-nav-item"
-            data-scroll="historySection"
+            class="quick-nav-button"
+            data-scroll-target="historySection"
         >
 
             <i class="fa-solid fa-clock-rotate-left"></i>
@@ -335,14 +309,14 @@
 
 
         <button
-            class="quick-nav-item"
-            data-scroll="developersSection"
+            class="quick-nav-button"
+            data-scroll-target="developersSection"
         >
 
             <i class="fa-solid fa-code"></i>
 
             <span>
-                sobre
+                criadores
             </span>
 
         </button>
@@ -350,48 +324,43 @@
     </nav>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          CONTEÚDO PRINCIPAL
-    ====================================================== -->
+    ======================================================= -->
 
     <main
-        class="page-layout"
-        id="mainContent"
+        class="main-layout"
+        id="mainArea"
     >
 
 
-        <!-- =================================================
+        <!-- ==================================================
              SIDEBAR
-        ================================================== -->
+        =================================================== -->
 
         <aside
             class="sidebar reveal"
             id="sidebar"
         >
 
-
-            <!-- HEADER SIDEBAR -->
-
-            <div class="sidebar-header">
+            <div class="sidebar-heading">
 
                 <div>
 
-                    <span class="small-label">
+                    <span class="mini-label">
                         explorar
                     </span>
 
                     <h2>
-                        tópicos
+                        séries
                         <span>♡</span>
                     </h2>
 
                 </div>
 
-
                 <button
-                    class="sidebar-close"
                     id="closeSidebar"
-                    aria-label="Fechar menu"
+                    class="sidebar-close"
                 >
 
                     <i class="fa-solid fa-xmark"></i>
@@ -401,11 +370,11 @@
             </div>
 
 
-            <!-- PESQUISA -->
+            <!-- BUSCA -->
 
             <div
-                class="search-box"
-                id="searchBox"
+                class="sidebar-search"
+                id="sidebarSearch"
             >
 
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -413,13 +382,13 @@
                 <input
                     type="text"
                     id="searchInput"
-                    placeholder="Buscar série ou gênero..."
+                    placeholder="Buscar série..."
                     autocomplete="off"
                 >
 
                 <button
                     id="clearSearch"
-                    aria-label="Limpar pesquisa"
+                    aria-label="Limpar busca"
                 >
 
                     <i class="fa-solid fa-xmark"></i>
@@ -431,17 +400,14 @@
 
             <!-- FILTROS -->
 
-            <div class="sidebar-filters">
+            <div class="filter-buttons">
 
                 <button
                     class="filter-button active"
                     data-filter="all"
                 >
-
                     todas
-
                 </button>
-
 
                 <button
                     class="filter-button"
@@ -451,9 +417,7 @@
                     <i class="fa-solid fa-heart"></i>
 
                     favoritas
-
                 </button>
-
 
                 <button
                     class="filter-button"
@@ -463,26 +427,23 @@
                     <i class="fa-solid fa-check"></i>
 
                     assistidas
-
                 </button>
 
             </div>
 
 
-            <!-- FILTRO GÊNERO -->
+            <!-- GÊNEROS -->
 
-            <div class="genre-filter">
+            <div class="genre-box">
 
                 <label for="genreSelect">
-
-                    gênero
-
+                    filtrar por gênero
                 </label>
 
                 <select id="genreSelect">
 
                     <option value="all">
-                        Todos os gêneros
+                        todos
                     </option>
 
                 </select>
@@ -493,14 +454,14 @@
             <!-- LISTA -->
 
             <div
-                class="series-list"
                 id="seriesList"
+                class="series-list"
             ></div>
 
 
-            <!-- ESTATÍSTICAS -->
+            <!-- STATS -->
 
-            <div class="sidebar-statistics">
+            <div class="sidebar-stats">
 
                 <div>
 
@@ -514,7 +475,6 @@
 
                 </div>
 
-
                 <div>
 
                     <strong id="favoritesCount">
@@ -526,7 +486,6 @@
                     </span>
 
                 </div>
-
 
                 <div>
 
@@ -545,19 +504,18 @@
         </aside>
 
 
-        <!-- =================================================
+        <!-- ==================================================
              CONTEÚDO DA SÉRIE
-        ================================================== -->
+        =================================================== -->
 
         <article
             class="content-card reveal"
             id="contentCard"
         >
 
-
             <!-- MOBILE -->
 
-            <div class="mobile-content-header">
+            <div class="mobile-header">
 
                 <button
                     id="openSidebar"
@@ -570,7 +528,6 @@
 
                 </button>
 
-
                 <span>
                     blog da bia ♡
                 </span>
@@ -578,24 +535,19 @@
             </div>
 
 
-            <!-- =================================================
-                 HERO DA SÉRIE
-            ================================================== -->
+            <!-- HERO -->
 
             <section class="series-hero">
 
+                <div class="series-intro">
 
-                <!-- INFORMAÇÕES -->
-
-                <div class="series-main-information">
-
-                    <div class="series-label">
+                    <span class="series-badge">
 
                         <i class="fa-solid fa-clapperboard"></i>
 
                         série da vez
 
-                    </div>
+                    </span>
 
 
                     <div class="series-title-row">
@@ -606,9 +558,9 @@
 
 
                         <button
-                            class="favorite-button"
                             id="favoriteButton"
-                            title="Adicionar aos favoritos"
+                            class="favorite-button"
+                            title="Favoritar"
                         >
 
                             <i class="fa-regular fa-heart"></i>
@@ -618,22 +570,19 @@
                     </div>
 
 
-                    <!-- METADADOS -->
-
                     <div
-                        class="series-metadata"
                         id="seriesMetadata"
+                        class="series-metadata"
                     ></div>
 
 
-                    <!-- STATUS PESSOAL -->
+                    <!-- LISTA PESSOAL -->
 
-                    <div class="watch-status-area">
+                    <div class="watch-status-section">
 
                         <span>
-                            minha lista:
+                            minha lista
                         </span>
-
 
                         <div class="watch-status-buttons">
 
@@ -678,7 +627,7 @@
 
                 <!-- NOTA -->
 
-                <div class="blog-rating-card">
+                <div class="blog-rating">
 
                     <div>
 
@@ -699,54 +648,37 @@
             </section>
 
 
-            <!-- =================================================
-                 CORPO DA SÉRIE
-            ================================================== -->
+            <!-- ==================================================
+                 CONTEÚDO
+            =================================================== -->
 
-            <section class="series-body">
-
-
-                <!-- TEXTO -->
+            <section class="series-content">
 
                 <div class="series-text-column">
 
                     <div
-                        class="series-description"
                         id="seriesDescription"
+                        class="series-description"
                     ></div>
 
-
-                    <!-- TAGS -->
 
                     <div
-                        class="tags-container"
                         id="tagsContainer"
+                        class="tags-container"
                     ></div>
 
 
-                    <!-- FRASE -->
-
                     <blockquote
-                        class="series-quote"
                         id="seriesQuote"
-                    >
-
-                        <i class="fa-solid fa-quote-left"></i>
-
-                        <span>
-                            uma das minhas favoritas!
-                        </span>
-
-                    </blockquote>
+                        class="series-quote"
+                    ></blockquote>
 
 
-                    <!-- AÇÕES -->
-
-                    <div class="main-action-buttons">
+                    <div class="series-actions">
 
                         <button
-                            class="primary-action"
                             id="trailerButton"
+                            class="primary-button"
                         >
 
                             <i class="fa-solid fa-play"></i>
@@ -757,20 +689,20 @@
 
 
                         <button
-                            class="secondary-action"
                             id="castButton"
+                            class="secondary-button"
                         >
 
                             <i class="fa-solid fa-users"></i>
 
-                            ver elenco
+                            elenco
 
                         </button>
 
 
                         <button
-                            class="secondary-action"
                             id="copyLinkButton"
+                            class="secondary-button"
                         >
 
                             <i class="fa-solid fa-link"></i>
@@ -782,13 +714,11 @@
                     </div>
 
 
-                    <!-- =================================================
-                         PROGRESSO DA SÉRIE
-                    ================================================== -->
+                    <!-- PROGRESSO -->
 
-                    <div class="series-progress-card">
+                    <div class="watch-progress-card">
 
-                        <div class="progress-card-header">
+                        <div class="watch-progress-heading">
 
                             <div>
 
@@ -796,16 +726,15 @@
                                     seu progresso
                                 </small>
 
-                                <h3>
+                                <strong>
                                     quanto você já assistiu?
-                                </h3>
+                                </strong>
 
                             </div>
 
-
-                            <strong id="episodeProgressText">
+                            <span id="episodeProgressText">
                                 0%
-                            </strong>
+                            </span>
 
                         </div>
 
@@ -820,14 +749,14 @@
                         >
 
 
-                        <div class="progress-labels">
+                        <div class="watch-progress-labels">
 
                             <span>
                                 comecei
                             </span>
 
                             <span>
-                                maratonando...
+                                maratonando
                             </span>
 
                             <span>
@@ -841,13 +770,14 @@
                 </div>
 
 
-                <!-- =================================================
-                     POSTER
-                ================================================== -->
+                <!-- POSTER -->
 
                 <div class="poster-column">
 
-                    <div class="poster-card">
+                    <div
+                        class="poster-card tilt-card"
+                        id="posterCard"
+                    >
 
                         <img
                             src=""
@@ -855,37 +785,32 @@
                             id="seriesPoster"
                         >
 
+                        <div class="poster-overlay"></div>
 
-                        <div class="poster-gradient"></div>
+
+                        <button
+                            id="posterFavoriteButton"
+                            class="poster-favorite"
+                        >
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </button>
 
 
-                        <div class="poster-actions">
+                        <div class="poster-play">
 
-                            <button
-                                id="posterTrailerButton"
-                                title="Assistir trailer"
-                            >
+                            <button id="posterTrailerButton">
 
                                 <i class="fa-solid fa-play"></i>
 
                             </button>
 
                             <span>
-                                ver trailer
+                                assistir trailer
                             </span>
 
                         </div>
-
-
-                        <button
-                            class="poster-heart"
-                            id="posterFavoriteButton"
-                            title="Favoritar"
-                        >
-
-                            <i class="fa-regular fa-heart"></i>
-
-                        </button>
 
                     </div>
 
@@ -895,7 +820,7 @@
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
 
                         <span id="seriesPhrase">
-                            uma das minhas favoritas!
+                            uma das favoritas ♡
                         </span>
 
                     </div>
@@ -905,9 +830,9 @@
             </section>
 
 
-            <!-- =================================================
+            <!-- ==================================================
                  DIVISOR
-            ================================================== -->
+            =================================================== -->
 
             <div class="pretty-divider">
 
@@ -922,83 +847,59 @@
             </div>
 
 
-            <!-- =================================================
-                 REAÇÕES
-            ================================================== -->
+            <!-- ==================================================
+                 AVALIAÇÃO
+            =================================================== -->
 
-            <section class="reaction-section">
+            <section class="rating-section">
 
-                <div class="section-title centered">
+                <div class="section-heading centered">
 
-                    <span>
-                        ✦
-                    </span>
+                    <small>
+                        sua opinião importa
+                    </small>
 
-                    <div>
-
-                        <small>
-                            sua opinião importa
-                        </small>
-
-                        <h2>
-                            o que você achou?
-                        </h2>
-
-                    </div>
-
-                    <span>
-                        ✦
-                    </span>
+                    <h2>
+                        o que você achou?
+                    </h2>
 
                 </div>
 
 
                 <!-- ESTRELAS -->
 
-                <div class="user-star-rating">
+                <div class="stars-area">
 
                     <span>
-                        sua nota:
+                        sua nota
                     </span>
 
-
                     <div
-                        class="stars"
                         id="starsContainer"
+                        class="stars"
                     >
 
                         <button data-star="1">
-
                             <i class="fa-regular fa-star"></i>
-
                         </button>
 
                         <button data-star="2">
-
                             <i class="fa-regular fa-star"></i>
-
                         </button>
 
                         <button data-star="3">
-
                             <i class="fa-regular fa-star"></i>
-
                         </button>
 
                         <button data-star="4">
-
                             <i class="fa-regular fa-star"></i>
-
                         </button>
 
                         <button data-star="5">
-
                             <i class="fa-regular fa-star"></i>
-
                         </button>
 
                     </div>
-
 
                     <strong id="userRatingText">
                         ainda não avaliado
@@ -1009,153 +910,94 @@
 
                 <!-- LIKE / DISLIKE -->
 
-                <div class="like-dislike-container">
+                <div class="opinion-buttons">
 
                     <button
-                        class="opinion-button like"
                         id="likeButton"
+                        class="opinion-button"
                     >
 
-                        <span class="opinion-icon">
+                        <i class="fa-regular fa-thumbs-up"></i>
 
-                            <i class="fa-regular fa-thumbs-up"></i>
-
-                        </span>
-
-
-                        <span class="opinion-information">
+                        <div>
 
                             <strong>
                                 gostei
                             </strong>
 
-                            <small id="likePercentage">
+                            <span id="likePercentage">
                                 0%
-                            </small>
+                            </span>
 
-                        </span>
+                        </div>
 
                     </button>
 
 
                     <button
-                        class="opinion-button dislike"
                         id="dislikeButton"
+                        class="opinion-button"
                     >
 
-                        <span class="opinion-icon">
+                        <i class="fa-regular fa-thumbs-down"></i>
 
-                            <i class="fa-regular fa-thumbs-down"></i>
-
-                        </span>
-
-
-                        <span class="opinion-information">
+                        <div>
 
                             <strong>
                                 não gostei
                             </strong>
 
-                            <small id="dislikePercentage">
+                            <span id="dislikePercentage">
                                 0%
-                            </small>
+                            </span>
 
-                        </span>
+                        </div>
 
                     </button>
 
                 </div>
 
 
-                <div class="vote-progress-bar">
+                <div class="opinion-progress">
 
-                    <div
-                        id="voteProgress"
-                    ></div>
+                    <div id="voteProgress"></div>
 
                 </div>
 
 
-                <!-- =================================================
-                     REAÇÕES EMOJI
-                ================================================== -->
+                <!-- REAÇÕES -->
 
                 <div class="emoji-reactions">
 
-                    <span class="emoji-title">
-                        reação rápida:
+                    <span>
+                        reação rápida
                     </span>
 
+                    <div>
 
-                    <div class="emoji-buttons">
-
-                        <button
-                            data-reaction="love"
-                            title="Amei"
-                        >
-
-                            <span>😍</span>
-
-                            <small data-reaction-count="love">
-                                0
-                            </small>
-
+                        <button data-reaction="love">
+                            😍
+                            <small data-reaction-count="love">0</small>
                         </button>
 
-
-                        <button
-                            data-reaction="cry"
-                            title="Chorei"
-                        >
-
-                            <span>😭</span>
-
-                            <small data-reaction-count="cry">
-                                0
-                            </small>
-
+                        <button data-reaction="cry">
+                            😭
+                            <small data-reaction-count="cry">0</small>
                         </button>
 
-
-                        <button
-                            data-reaction="shock"
-                            title="Chocado"
-                        >
-
-                            <span>😱</span>
-
-                            <small data-reaction-count="shock">
-                                0
-                            </small>
-
+                        <button data-reaction="shock">
+                            😱
+                            <small data-reaction-count="shock">0</small>
                         </button>
 
-
-                        <button
-                            data-reaction="laugh"
-                            title="Ri muito"
-                        >
-
-                            <span>😂</span>
-
-                            <small data-reaction-count="laugh">
-                                0
-                            </small>
-
+                        <button data-reaction="laugh">
+                            😂
+                            <small data-reaction-count="laugh">0</small>
                         </button>
 
-
-                        <button
-                            data-reaction="angry"
-                            title="Passei raiva"
-                        >
-
-                            <span>😤</span>
-
-                            <small data-reaction-count="angry">
-                                0
-                            </small>
-
+                        <button data-reaction="angry">
+                            😤
+                            <small data-reaction-count="angry">0</small>
                         </button>
 
                     </div>
@@ -1165,13 +1007,13 @@
             </section>
 
 
-            <!-- =================================================
+            <!-- ==================================================
                  COMENTÁRIOS
-            ================================================== -->
+            =================================================== -->
 
             <section class="comments-section">
 
-                <div class="comments-header">
+                <div class="comments-heading">
 
                     <div>
 
@@ -1186,23 +1028,16 @@
 
                     </div>
 
-
-                    <div class="comments-information">
-
-                        <span id="commentCounter">
-                            0 comentários
-                        </span>
-
-                    </div>
+                    <span id="commentCounter">
+                        0 comentários
+                    </span>
 
                 </div>
 
 
-                <!-- FORM -->
-
                 <form
-                    class="comment-form"
                     id="commentForm"
+                    class="comment-form"
                 >
 
                     <div class="comment-avatar">
@@ -1215,37 +1050,34 @@
                         <textarea
                             id="commentInput"
                             maxlength="280"
-                            placeholder="Conta o que você achou dessa série..."
+                            placeholder="Conta o que você achou..."
                             required
                         ></textarea>
 
 
                         <div class="comment-editor-footer">
 
-                            <div class="comment-tools">
+                            <div>
 
                                 <button
                                     type="button"
                                     data-insert-emoji="♡"
-                                    title="Adicionar coração"
                                 >
                                     ♡
                                 </button>
 
                                 <button
                                     type="button"
-                                    data-insert-emoji="😭"
-                                    title="Adicionar emoji"
+                                    data-insert-emoji="😍"
                                 >
-                                    😭
+                                    😍
                                 </button>
 
                                 <button
                                     type="button"
-                                    data-insert-emoji="😍"
-                                    title="Adicionar emoji"
+                                    data-insert-emoji="😭"
                                 >
-                                    😍
+                                    😭
                                 </button>
 
                                 <span id="characterCounter">
@@ -1256,8 +1088,8 @@
 
 
                             <button
+                                class="publish-button"
                                 type="submit"
-                                class="publish-comment"
                             >
 
                                 publicar
@@ -1273,21 +1105,17 @@
                 </form>
 
 
-                <!-- LISTA -->
-
                 <div
-                    class="comments-list"
                     id="commentsList"
+                    class="comments-list"
                 ></div>
 
             </section>
 
 
-            <!-- =================================================
-                 PRÓXIMA
-            ================================================== -->
+            <!-- PRÓXIMA -->
 
-            <section class="next-series-area">
+            <section class="next-series">
 
                 <div>
 
@@ -1300,7 +1128,6 @@
                     </strong>
 
                 </div>
-
 
                 <button id="nextSeriesButton">
 
@@ -1317,20 +1144,20 @@
     </main>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          RANKING
-    ====================================================== -->
+    ======================================================= -->
 
     <section
-        class="extra-section ranking-section reveal"
         id="rankingSection"
+        class="extra-section reveal"
     >
 
-        <div class="extra-section-heading">
+        <div class="extra-heading">
 
             <div>
 
-                <span class="small-label">
+                <span class="mini-label">
                     as queridinhas
                 </span>
 
@@ -1341,50 +1168,47 @@
 
             </div>
 
-
             <p>
-                As séries com as maiores notas do nosso cantinho.
+                as maiores notas entre as séries do blog.
             </p>
 
         </div>
 
-
         <div
-            class="ranking-grid"
             id="rankingGrid"
+            class="ranking-grid"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          RECOMENDAÇÕES
-    ====================================================== -->
+    ======================================================= -->
 
     <section
-        class="extra-section recommendations-section reveal"
         id="recommendationsSection"
+        class="extra-section reveal"
     >
 
-        <div class="extra-section-heading">
+        <div class="extra-heading">
 
             <div>
 
-                <span class="small-label">
+                <span class="mini-label">
                     talvez você goste
                 </span>
 
                 <h2>
-                    para assistir depois
+                    recomendações
                     <span>✦</span>
                 </h2>
 
             </div>
 
-
             <button
-                class="refresh-recommendations"
                 id="refreshRecommendations"
+                class="small-action-button"
             >
 
                 <i class="fa-solid fa-rotate"></i>
@@ -1397,27 +1221,27 @@
 
 
         <div
-            class="recommendations-grid"
             id="recommendationsGrid"
+            class="recommendations-grid"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          HISTÓRICO
-    ====================================================== -->
+    ======================================================= -->
 
     <section
-        class="extra-section history-section reveal"
         id="historySection"
+        class="extra-section reveal"
     >
 
-        <div class="extra-section-heading">
+        <div class="extra-heading">
 
             <div>
 
-                <span class="small-label">
+                <span class="mini-label">
                     por onde você passou
                 </span>
 
@@ -1428,10 +1252,9 @@
 
             </div>
 
-
             <button
-                class="clear-history-button"
                 id="clearHistoryButton"
+                class="small-action-button"
             >
 
                 <i class="fa-regular fa-trash-can"></i>
@@ -1444,83 +1267,67 @@
 
 
         <div
-            class="history-list"
             id="historyList"
+            class="history-list"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          ESTATÍSTICAS
-    ====================================================== -->
+    ======================================================= -->
 
-    <section class="blog-stats-section reveal">
+    <section class="stats-section reveal">
 
-        <div class="blog-stat-card">
+        <article class="stat-card">
 
-            <div class="blog-stat-icon">
-
-                <i class="fa-solid fa-tv"></i>
-
-            </div>
+            <i class="fa-solid fa-tv"></i>
 
             <strong id="totalSeriesStat">
                 0
             </strong>
 
             <span>
-                séries no blog
+                séries
             </span>
 
-        </div>
+        </article>
 
 
-        <div class="blog-stat-card">
+        <article class="stat-card">
 
-            <div class="blog-stat-icon">
-
-                <i class="fa-solid fa-heart"></i>
-
-            </div>
+            <i class="fa-solid fa-heart"></i>
 
             <strong id="totalFavoritesStat">
                 0
             </strong>
 
             <span>
-                suas favoritas
+                favoritas
             </span>
 
-        </div>
+        </article>
 
 
-        <div class="blog-stat-card">
+        <article class="stat-card">
 
-            <div class="blog-stat-icon">
-
-                <i class="fa-solid fa-check"></i>
-
-            </div>
+            <i class="fa-solid fa-check"></i>
 
             <strong id="totalWatchedStat">
                 0
             </strong>
 
             <span>
-                já assistidas
+                assistidas
             </span>
 
-        </div>
+        </article>
 
 
-        <div class="blog-stat-card">
+        <article class="stat-card">
 
-            <div class="blog-stat-icon">
-
-                <i class="fa-solid fa-comment"></i>
-
-            </div>
+            <i class="fa-solid fa-comment"></i>
 
             <strong id="totalCommentsStat">
                 0
@@ -1530,60 +1337,51 @@
                 comentários
             </span>
 
-        </div>
+        </article>
 
 
-        <div class="blog-stat-card">
+        <article class="stat-card">
 
-            <div class="blog-stat-icon">
-
-                <i class="fa-solid fa-eye"></i>
-
-            </div>
+            <i class="fa-solid fa-eye"></i>
 
             <strong id="visitCounter">
                 0
             </strong>
 
             <span>
-                visitas neste navegador
+                visitas locais
             </span>
 
-        </div>
+        </article>
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          DESENVOLVIDO POR
-    ====================================================== -->
+    ======================================================= -->
 
     <section
         class="developers-section reveal"
         id="developersSection"
     >
 
-
-        <!-- DECORAÇÕES -->
-
-        <span class="developer-decoration decoration-heart-one">
+        <span class="dev-decoration dev-decoration-1">
             ♡
         </span>
 
-        <span class="developer-decoration decoration-star-one">
+        <span class="dev-decoration dev-decoration-2">
             ✦
         </span>
 
-        <span class="developer-decoration decoration-heart-two">
+        <span class="dev-decoration dev-decoration-3">
             ♡
         </span>
 
 
-        <!-- TÍTULO -->
-
         <div class="developers-heading">
 
-            <span class="small-label">
+            <span class="mini-label">
                 quem fez esse cantinho
             </span>
 
@@ -1593,52 +1391,42 @@
             </h2>
 
             <p>
-                feito com carinho, código, criatividade
-                e muitas horas escolhendo séries.
+                código, séries, criatividade e muitas ideias.
             </p>
 
         </div>
 
 
-        <!-- PERFIS -->
-
         <div class="developers-grid">
 
 
-            <!-- =================================================
-                 BAYERLEE
-            ================================================== -->
+            <!-- BAYERLEE -->
 
-            <article class="developer-card">
+            <article class="developer-card tilt-card">
 
-                <div class="developer-card-glow"></div>
+                <div class="developer-glow"></div>
 
 
                 <div class="developer-photo-wrapper">
 
                     <img
-                        src="images/bayerlee.jpg"
-                        alt="Foto de Bayerlee"
+                        src="Bayerlee.jpg"
+                        alt="Bayerlee"
                         class="developer-photo"
-                        onerror="this.src='https://placehold.co/400x400/e7d1f5/70488a?text=Bayerlee'"
                     >
 
-                    <span
-                        class="developer-online"
-                        title="online"
-                    ></span>
+                    <span class="developer-online"></span>
 
                 </div>
 
 
-                <div class="developer-information">
+                <div class="developer-info">
 
                     <span class="developer-role">
 
                         <i class="fa-solid fa-code"></i>
 
                         desenvolvedor
-
                     </span>
 
 
@@ -1649,36 +1437,26 @@
 
 
                     <p>
-                        Transformando ideias, efeitos e detalhes
-                        em código para deixar o blog cada vez
-                        mais completo.
+                        responsável pelo desenvolvimento,
+                        interações, efeitos e estrutura do blog.
                     </p>
 
 
-                    <div class="developer-skills">
+                    <div class="developer-tags">
 
                         <span>
-
                             <i class="fa-brands fa-html5"></i>
-
                             HTML
-
                         </span>
 
                         <span>
-
                             <i class="fa-brands fa-css3-alt"></i>
-
                             CSS
-
                         </span>
 
                         <span>
-
                             <i class="fa-brands fa-js"></i>
-
                             JavaScript
-
                         </span>
 
                     </div>
@@ -1688,51 +1466,38 @@
             </article>
 
 
-            <!-- + -->
-
             <div class="developers-plus">
-
-                <span>
-                    +
-                </span>
-
+                +
             </div>
 
 
-            <!-- =================================================
-                 BEATRIZ
-            ================================================== -->
+            <!-- BEATRIZ -->
 
-            <article class="developer-card">
+            <article class="developer-card tilt-card">
 
-                <div class="developer-card-glow"></div>
+                <div class="developer-glow"></div>
 
 
                 <div class="developer-photo-wrapper">
 
                     <img
-                        src="images/beatriz.jpg"
-                        alt="Foto de Beatriz"
+                        src="Beatriz.jpg"
+                        alt="Beatriz"
                         class="developer-photo"
-                        onerror="this.src='https://placehold.co/400x400/f2d6eb/8c4e7d?text=Beatriz'"
                     >
 
-                    <span
-                        class="developer-online"
-                        title="online"
-                    ></span>
+                    <span class="developer-online"></span>
 
                 </div>
 
 
-                <div class="developer-information">
+                <div class="developer-info">
 
                     <span class="developer-role">
 
                         <i class="fa-solid fa-heart"></i>
 
                         criadora
-
                     </span>
 
 
@@ -1743,36 +1508,26 @@
 
 
                     <p>
-                        Séries, opiniões, ideias e toda a
-                        personalidade que transforma esse espaço
-                        em um verdadeiro cantinho.
+                        criadora do blog, responsável pelas
+                        séries, opiniões, ideias e personalidade.
                     </p>
 
 
-                    <div class="developer-skills">
+                    <div class="developer-tags">
 
                         <span>
-
                             <i class="fa-solid fa-tv"></i>
-
-                            Séries
-
+                            séries
                         </span>
 
                         <span>
-
                             <i class="fa-solid fa-pen"></i>
-
-                            Conteúdo
-
+                            conteúdo
                         </span>
 
                         <span>
-
                             <i class="fa-solid fa-palette"></i>
-
-                            Design
-
+                            estilo
                         </span>
 
                     </div>
@@ -1784,20 +1539,11 @@
         </div>
 
 
-        <!-- MENSAGEM FINAL -->
+        <div class="developer-message">
 
-        <div class="developer-final-message">
-
-            <div>
-
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                <p>
-                    obrigada por visitar nosso cantinho ♡
-                </p>
-
-            </div>
-
+            <p>
+                obrigada por visitar nosso cantinho ♡
+            </p>
 
             <button id="sendHeartButton">
 
@@ -1812,42 +1558,31 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          FOOTER
-    ====================================================== -->
+    ======================================================= -->
 
     <footer class="footer reveal">
 
-        <div class="footer-brand">
+        <div>
 
             <strong>
                 blog da bia ♡
             </strong>
 
-            <p>
-                séries, surtos e maratonas.
-            </p>
-
-        </div>
-
-
-        <div class="footer-center">
-
             <span>
-                feito por
+                séries, opiniões e maratonas.
             </span>
 
-            <strong>
-                Bayerlee + Beatriz
-            </strong>
-
         </div>
 
 
-        <button
-            id="footerTopButton"
-            class="footer-top-button"
-        >
+        <p>
+            Bayerlee + Beatriz
+        </p>
+
+
+        <button id="footerTopButton">
 
             voltar ao topo
 
@@ -1858,14 +1593,13 @@
     </footer>
 
 
-    <!-- =====================================================
-         BOTÃO VOLTAR AO TOPO
-    ====================================================== -->
+    <!-- ======================================================
+         VOLTAR AO TOPO
+    ======================================================= -->
 
     <button
-        class="back-to-top"
         id="backToTop"
-        aria-label="Voltar ao topo"
+        class="back-to-top"
     >
 
         <i class="fa-solid fa-arrow-up"></i>
@@ -1873,9 +1607,9 @@
     </button>
 
 
-    <!-- =====================================================
-         MODAL TRAILER
-    ====================================================== -->
+    <!-- ======================================================
+         TRAILER MODAL
+    ======================================================= -->
 
     <div
         class="modal"
@@ -1888,12 +1622,11 @@
         ></div>
 
 
-        <div class="modal-content trailer-modal-content">
+        <div class="modal-content trailer-modal">
 
             <button
                 class="modal-close"
                 data-close-modal
-                aria-label="Fechar"
             >
 
                 <i class="fa-solid fa-xmark"></i>
@@ -1903,12 +1636,12 @@
 
             <div class="modal-heading">
 
-                <span>
+                <small>
                     agora assistindo
-                </span>
+                </small>
 
                 <h2 id="trailerModalTitle">
-                    Trailer
+                    trailer
                 </h2>
 
             </div>
@@ -1931,9 +1664,9 @@
     </div>
 
 
-    <!-- =====================================================
-         MODAL ELENCO
-    ====================================================== -->
+    <!-- ======================================================
+         ELENCO MODAL
+    ======================================================= -->
 
     <div
         class="modal"
@@ -1960,9 +1693,9 @@
 
             <div class="modal-heading">
 
-                <span>
+                <small>
                     quem faz acontecer
-                </span>
+                </small>
 
                 <h2>
                     elenco principal ♡
@@ -1972,8 +1705,8 @@
 
 
             <div
-                class="cast-grid"
                 id="castGrid"
+                class="cast-grid"
             ></div>
 
         </div>
@@ -1981,9 +1714,9 @@
     </div>
 
 
-    <!-- =====================================================
-         MODAL PESQUISA RÁPIDA
-    ====================================================== -->
+    <!-- ======================================================
+         PESQUISA MODAL
+    ======================================================= -->
 
     <div
         class="modal"
@@ -1996,7 +1729,7 @@
         ></div>
 
 
-        <div class="modal-content search-modal-content">
+        <div class="modal-content search-modal">
 
             <button
                 class="modal-close"
@@ -2010,12 +1743,12 @@
 
             <div class="modal-heading">
 
-                <span>
+                <small>
                     encontre rapidinho
-                </span>
+                </small>
 
                 <h2>
-                    procurar série ♡
+                    pesquisar série ♡
                 </h2>
 
             </div>
@@ -2028,16 +1761,15 @@
                 <input
                     type="text"
                     id="modalSearchInput"
-                    placeholder="Digite o nome de uma série..."
-                    autocomplete="off"
+                    placeholder="Digite o nome..."
                 >
 
             </div>
 
 
             <div
-                class="modal-search-results"
                 id="modalSearchResults"
+                class="modal-search-results"
             ></div>
 
         </div>
@@ -2045,29 +1777,28 @@
     </div>
 
 
-    <!-- =====================================================
+    <!-- ======================================================
          CONFIGURAÇÕES
-    ====================================================== -->
+    ======================================================= -->
 
     <div
-        class="settings-overlay"
         id="settingsOverlay"
+        class="settings-overlay"
     ></div>
 
 
     <aside
-        class="settings-panel"
         id="settingsPanel"
+        class="settings-panel"
     >
 
-
-        <div class="settings-header">
+        <div class="settings-heading">
 
             <div>
 
-                <span>
+                <small>
                     personalize
-                </span>
+                </small>
 
                 <h2>
                     configurações ♡
@@ -2090,69 +1821,50 @@
         <div class="settings-group">
 
             <h3>
-                tema do blog
+                tema
             </h3>
 
 
-            <div class="theme-options">
+            <div class="theme-grid">
 
                 <button
-                    class="theme-option active"
+                    class="theme-button active"
                     data-theme="lavender"
                 >
-
-                    <span class="theme-circle lavender"></span>
-
+                    <span class="theme-preview lavender"></span>
                     lavanda
-
                 </button>
 
-
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="pink"
                 >
-
-                    <span class="theme-circle pink"></span>
-
+                    <span class="theme-preview pink"></span>
                     rosa
-
                 </button>
 
-
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="blue"
                 >
-
-                    <span class="theme-circle blue"></span>
-
+                    <span class="theme-preview blue"></span>
                     céu
-
                 </button>
 
-
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="sunset"
                 >
-
-                    <span class="theme-circle sunset"></span>
-
+                    <span class="theme-preview sunset"></span>
                     sunset
-
                 </button>
 
-
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="dark"
                 >
-
-                    <span class="theme-circle dark"></span>
-
+                    <span class="theme-preview dark"></span>
                     noite
-
                 </button>
 
             </div>
@@ -2169,26 +1881,20 @@
             </h3>
 
 
-            <div class="font-size-options">
+            <div class="font-buttons">
 
-                <button
-                    data-font="small"
-                >
+                <button data-font="small">
                     A
                 </button>
 
-
                 <button
-                    class="active"
                     data-font="medium"
+                    class="active"
                 >
                     A
                 </button>
 
-
-                <button
-                    data-font="large"
-                >
+                <button data-font="large">
                     A
                 </button>
 
@@ -2201,7 +1907,7 @@
 
         <div class="settings-group">
 
-            <label class="switch-setting">
+            <label class="switch-row">
 
                 <div>
 
@@ -2210,15 +1916,14 @@
                     </strong>
 
                     <small>
-                        movimentos e transições
+                        movimentos da página
                     </small>
 
                 </div>
 
-
                 <input
-                    type="checkbox"
                     id="animationToggle"
+                    type="checkbox"
                     checked
                 >
 
@@ -2233,24 +1938,54 @@
 
         <div class="settings-group">
 
-            <label class="switch-setting">
+            <label class="switch-row">
 
                 <div>
 
                     <strong>
-                        brilho do cursor
+                        cursor de coração
                     </strong>
 
                     <small>
-                        efeito que acompanha o mouse
+                        coração seguindo o mouse
                     </small>
 
                 </div>
 
+                <input
+                    id="cursorToggle"
+                    type="checkbox"
+                    checked
+                >
+
+                <span class="switch"></span>
+
+            </label>
+
+        </div>
+
+
+        <!-- RASTRO -->
+
+        <div class="settings-group">
+
+            <label class="switch-row">
+
+                <div>
+
+                    <strong>
+                        rastro de corações
+                    </strong>
+
+                    <small>
+                        efeitos enquanto movimenta
+                    </small>
+
+                </div>
 
                 <input
+                    id="trailToggle"
                     type="checkbox"
-                    id="cursorToggle"
                     checked
                 >
 
@@ -2265,24 +2000,23 @@
 
         <div class="settings-group">
 
-            <label class="switch-setting">
+            <label class="switch-row">
 
                 <div>
 
                     <strong>
-                        efeitos de coração
+                        efeitos especiais
                     </strong>
 
                     <small>
-                        corações e confetes
+                        confetes e explosões
                     </small>
 
                 </div>
 
-
                 <input
-                    type="checkbox"
                     id="effectsToggle"
+                    type="checkbox"
                     checked
                 >
 
@@ -2293,25 +2027,19 @@
         </div>
 
 
-        <!-- RESET -->
-
         <button
-            class="reset-settings-button"
             id="resetSettingsButton"
+            class="reset-settings"
         >
 
             <i class="fa-solid fa-rotate-left"></i>
 
-            restaurar preferências
+            restaurar configurações
 
         </button>
 
     </aside>
 
-
-    <!-- =====================================================
-         SCRIPT
-    ====================================================== -->
 
     <script src="script.js"></script>
 
