@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
 
@@ -11,229 +10,157 @@
 
     <meta
         name="description"
-        content="Blog da Bia - séries, avaliações, comentários, favoritos e recomendações."
+        content="Blog da Bia - Descubra séries, avaliações, elenco, trailers e muito mais."
     >
 
-    <meta
-        name="theme-color"
-        content="#a65be0"
-    >
+    <meta name="theme-color" content="#b45cff">
 
-    <title>Blog da Bia ♡</title>
+    <title>Blog da Bia ♡ | Séries Netflix</title>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Patrick+Hand&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- PROGRESSO -->
-    <div
-        id="readingProgress"
-        class="reading-progress"
-    ></div>
-
-
     <!-- CURSOR -->
+    <div id="heartCursor">♡</div>
+
+    <!-- EFEITO DE CLIQUE -->
+    <div id="clickEffects"></div>
+
+    <!-- PROGRESSO DO SCROLL -->
+    <div id="scrollProgress"></div>
+
+
+    <!-- =====================================================
+         LOADER
+    ====================================================== -->
+
+    <div id="loader">
+        <div class="loader-content">
+
+            <div class="loader-heart">
+                ♡
+            </div>
+
+            <h1>
+                blog da bia
+            </h1>
+
+            <p>
+                carregando seu próximo vício...
+            </p>
+
+            <div class="loader-line">
+                <span></span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
     <div
-        id="heartCursor"
-        class="heart-cursor"
+        id="toast"
+        class="toast"
     >
-        ♡
+        <span id="toastIcon">♡</span>
+        <span id="toastText">Mensagem</span>
     </div>
-
-
-    <!-- EFEITOS -->
-    <div
-        id="effectsLayer"
-        class="effects-layer"
-    ></div>
-
-
-    <!-- FUNDO -->
-    <div class="background-effects">
-
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
-
-        <span class="floating-decoration decoration-1">
-            ♡
-        </span>
-
-        <span class="floating-decoration decoration-2">
-            ✦
-        </span>
-
-        <span class="floating-decoration decoration-3">
-            ♡
-        </span>
-
-        <span class="floating-decoration decoration-4">
-            ✧
-        </span>
-
-        <span class="floating-decoration decoration-5">
-            ♡
-        </span>
-
-    </div>
-
-
-    <!-- TOAST -->
-    <div
-        id="toastContainer"
-        class="toast-container"
-    ></div>
 
 
     <!-- =====================================================
          HEADER
     ====================================================== -->
 
-    <header
-        class="header reveal"
-        id="header"
-    >
+    <header id="header">
 
-        <div class="owner">
+        <div class="header-blur"></div>
 
-            <div class="owner-image-box">
+        <div class="header-container">
 
-                <img
-                    src="./img/Beatriz.jpg"
-                    alt="Foto de Beatriz"
-                    id="ownerPhoto"
-                    class="owner-photo"
+            <button
+                class="mobile-menu-btn"
+                id="mobileMenuBtn"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+
+
+            <!-- DONA DO BLOG -->
+
+            <div class="owner">
+
+                <div class="owner-photo-wrapper">
+
+                    <img
+                        src="./img/Beatriz.jpg"
+                        alt="Beatriz"
+                        class="owner-photo"
+                        onerror="this.src='https://placehold.co/120x120?text=Bia'"
+                    >
+
+                    <span class="online-dot"></span>
+
+                </div>
+
+                <div class="owner-info">
+                    <strong>Beatriz</strong>
+                    <small>criadora do blog ♡</small>
+                </div>
+
+            </div>
+
+
+            <!-- LOGO -->
+
+            <a
+                href="#inicio"
+                class="logo"
+            >
+                <span>blog da bia</span>
+                <b>♡</b>
+            </a>
+
+
+            <!-- AÇÕES -->
+
+            <div class="header-actions">
+
+                <button
+                    class="header-btn"
+                    id="searchOpenBtn"
+                    title="Pesquisar"
                 >
+                    <span>⌕</span>
+                    <small>buscar</small>
+                </button>
 
-                <span class="online-dot"></span>
+
+                <button
+                    class="header-btn"
+                    id="shareBlogBtn"
+                    title="Compartilhar"
+                >
+                    <span>↗</span>
+                    <small>compartilhar</small>
+                </button>
+
+
+                <button
+                    class="header-btn"
+                    id="themeBtn"
+                    title="Alterar tema"
+                >
+                    <span id="themeIcon">☾</span>
+                    <small>tema</small>
+                </button>
 
             </div>
-
-            <div class="owner-text">
-
-                <span>
-                    criadora do blog
-                </span>
-
-                <strong>
-                    Beatriz ♡
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div class="brand">
-
-            <button
-                id="logoButton"
-                class="brand-button"
-            >
-
-                <span>
-                    blog da bia
-                </span>
-
-                <b>
-                    ♡
-                </b>
-
-            </button>
-
-            <p>
-                séries, opiniões, surtos e maratonas
-            </p>
-
-        </div>
-
-
-        <div class="header-actions">
-
-            <button
-                id="searchButton"
-                class="header-action"
-                title="Pesquisar"
-            >
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-                <span>
-                    pesquisar
-                </span>
-
-            </button>
-
-
-            <button
-                id="randomButton"
-                class="header-action"
-                title="Série aleatória"
-            >
-
-                <i class="fa-solid fa-shuffle"></i>
-
-                <span>
-                    aleatória
-                </span>
-
-            </button>
-
-
-            <button
-                id="shareButton"
-                class="header-action"
-                title="Compartilhar"
-            >
-
-                <i class="fa-solid fa-share-nodes"></i>
-
-                <span>
-                    compartilhar
-                </span>
-
-            </button>
-
-
-            <button
-                id="settingsButton"
-                class="header-action"
-                title="Configurações"
-            >
-
-                <i class="fa-solid fa-gear"></i>
-
-                <span>
-                    opções
-                </span>
-
-            </button>
 
         </div>
 
@@ -241,176 +168,579 @@
 
 
     <!-- =====================================================
-         NAVEGAÇÃO RÁPIDA
+         MENU MOBILE
     ====================================================== -->
 
-    <nav class="quick-nav reveal">
+    <div
+        id="mobileMenu"
+        class="mobile-menu"
+    >
 
         <button
-            class="quick-button active"
-            data-scroll="mainContent"
+            id="mobileMenuClose"
+            class="mobile-close"
         >
-
-            <i class="fa-solid fa-house"></i>
-
-            início
-
+            ×
         </button>
 
+        <h2>
+            blog da bia ♡
+        </h2>
 
-        <button
-            class="quick-button"
-            data-scroll="rankingSection"
-        >
+        <a href="#inicio">Início</a>
+        <a href="#series">Séries</a>
+        <a href="#ranking">Ranking</a>
+        <a href="#comentarios">Comentários</a>
+        <a href="#sobre">Sobre</a>
 
-            <i class="fa-solid fa-ranking-star"></i>
+    </div>
 
-            ranking
-
-        </button>
-
-
-        <button
-            class="quick-button"
-            data-scroll="recommendationsSection"
-        >
-
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-            recomendações
-
-        </button>
-
-
-        <button
-            class="quick-button"
-            data-scroll="historySection"
-        >
-
-            <i class="fa-solid fa-clock-rotate-left"></i>
-
-            histórico
-
-        </button>
-
-
-        <button
-            class="quick-button"
-            data-scroll="developersSection"
-        >
-
-            <i class="fa-solid fa-code"></i>
-
-            criadores
-
-        </button>
-
-    </nav>
+    <div
+        id="menuOverlay"
+        class="menu-overlay"
+    ></div>
 
 
     <!-- =====================================================
-         CONTEÚDO PRINCIPAL
+         PESQUISA FLUTUANTE
     ====================================================== -->
 
-    <main
-        class="main-layout"
-        id="mainContent"
+    <div
+        id="searchOverlay"
+        class="search-overlay"
     >
 
-        <!-- SIDEBAR -->
+        <div class="search-modal">
 
-        <aside
-            id="sidebar"
-            class="sidebar reveal"
-        >
+            <button
+                id="searchClose"
+                class="modal-close"
+            >
+                ×
+            </button>
 
-            <div class="sidebar-heading">
+            <div class="search-title">
+                <span>⌕</span>
 
                 <div>
-
-                    <small>
-                        explore
-                    </small>
-
-                    <h2>
-                        séries
-                        <span>♡</span>
-                    </h2>
-
+                    <h2>O que vamos assistir?</h2>
+                    <p>Pesquise uma série do blog</p>
                 </div>
+            </div>
 
 
-                <button
-                    id="closeSidebar"
-                    class="close-sidebar"
+            <div class="big-search">
+
+                <input
+                    id="globalSearch"
+                    type="text"
+                    placeholder="Digite Stranger Things, Dark..."
+                    autocomplete="off"
                 >
 
-                    <i class="fa-solid fa-xmark"></i>
-
+                <button id="clearSearch">
+                    ×
                 </button>
 
             </div>
 
 
             <div
-                class="sidebar-search"
-                id="searchField"
-            >
+                id="searchResults"
+                class="search-results"
+            ></div>
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Buscar série..."
-                    autocomplete="off"
+    </div>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main>
+
+        <section
+            id="inicio"
+            class="hero"
+        >
+
+            <div
+                id="heroBackdrop"
+                class="hero-backdrop"
+            ></div>
+
+            <div class="hero-overlay"></div>
+
+
+            <div class="hero-content">
+
+                <div class="hero-text">
+
+                    <span class="hero-tag">
+                        ♡ DESTAQUE DA BIA
+                    </span>
+
+                    <h1 id="heroTitle">
+                        Stranger Things
+                    </h1>
+
+
+                    <div class="hero-meta">
+
+                        <span id="heroRating">
+                            ★ 4.9
+                        </span>
+
+                        <span id="heroYear">
+                            2016
+                        </span>
+
+                        <span id="heroSeasons">
+                            5 temporadas
+                        </span>
+
+                        <span class="age-rating">
+                            16
+                        </span>
+
+                    </div>
+
+
+                    <p id="heroDescription">
+                        Quando um garoto desaparece, uma pequena
+                        cidade descobre experimentos secretos,
+                        forças sobrenaturais e uma garota muito
+                        especial.
+                    </p>
+
+
+                    <div class="hero-buttons">
+
+                        <button
+                            class="btn btn-primary"
+                            id="watchTrailerBtn"
+                        >
+                            ▶ Ver trailer
+                        </button>
+
+                        <button
+                            class="btn btn-glass"
+                            id="heroFavoriteBtn"
+                        >
+                            ♡ Favoritar
+                        </button>
+
+                        <button
+                            class="btn btn-glass"
+                            id="heroWatchedBtn"
+                        >
+                            ✓ Assistida
+                        </button>
+
+                    </div>
+
+
+                    <div class="hero-mini-actions">
+
+                        <button id="randomSeriesBtn">
+                            ✦ Surpreenda-me
+                        </button>
+
+                        <button id="copySeriesBtn">
+                            ⧉ Copiar nome
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-poster-area">
+
+                    <div class="poster-glow"></div>
+
+                    <div
+                        class="hero-poster-card"
+                        id="heroPosterCard"
+                    >
+
+                        <img
+                            id="heroPoster"
+                            src="./img/stranger-things.jpg"
+                            alt="Stranger Things"
+                        >
+
+                        <div class="poster-shine"></div>
+
+                    </div>
+
+
+                    <div class="hero-floating-card">
+
+                        <span>★</span>
+
+                        <div>
+                            <small>nota da comunidade</small>
+                            <strong id="communityRating">
+                                4.9 / 5
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="heroDots"
+                class="hero-dots"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             NAVEGAÇÃO
+        ================================================== -->
+
+        <nav class="page-nav">
+
+            <a href="#series" class="active">
+                ♡ Séries
+            </a>
+
+            <a href="#minha-lista">
+                + Minha lista
+            </a>
+
+            <a href="#ranking">
+                ★ Ranking
+            </a>
+
+            <a href="#comentarios">
+                ☁ Comunidade
+            </a>
+
+            <a href="#sobre">
+                ✦ Sobre
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             ESTATÍSTICAS
+        ================================================== -->
+
+        <section
+            id="minha-lista"
+            class="stats-section section-container"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-mini">
+                        SEU CANTINHO
+                    </span>
+
+                    <h2>
+                        Sua maratona ♡
+                    </h2>
+
+                    <p>
+                        Suas escolhas ficam salvas neste navegador.
+                    </p>
+                </div>
+
+                <button
+                    id="resetDataBtn"
+                    class="text-btn"
                 >
-
-                <button id="clearSearch">
-
-                    <i class="fa-solid fa-xmark"></i>
-
+                    redefinir dados
                 </button>
 
             </div>
 
+
+            <div class="stats-grid">
+
+                <article class="stat-card">
+                    <div class="stat-icon">♡</div>
+
+                    <div>
+                        <strong id="favoriteCount">
+                            0
+                        </strong>
+
+                        <span>
+                            favoritas
+                        </span>
+                    </div>
+                </article>
+
+
+                <article class="stat-card">
+                    <div class="stat-icon">✓</div>
+
+                    <div>
+                        <strong id="watchedCount">
+                            0
+                        </strong>
+
+                        <span>
+                            assistidas
+                        </span>
+                    </div>
+                </article>
+
+
+                <article class="stat-card">
+                    <div class="stat-icon">＋</div>
+
+                    <div>
+                        <strong id="watchlistCount">
+                            0
+                        </strong>
+
+                        <span>
+                            quero assistir
+                        </span>
+                    </div>
+                </article>
+
+
+                <article class="stat-card">
+                    <div class="stat-icon">★</div>
+
+                    <div>
+                        <strong id="ratingsCount">
+                            0
+                        </strong>
+
+                        <span>
+                            avaliações
+                        </span>
+                    </div>
+                </article>
+
+
+                <article class="stat-card">
+                    <div class="stat-icon">🔥</div>
+
+                    <div>
+                        <strong id="streakCount">
+                            1
+                        </strong>
+
+                        <span>
+                            dias explorando
+                        </span>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SÉRIE DO DIA
+        ================================================== -->
+
+        <section class="daily-section section-container">
+
+            <div class="daily-card">
+
+                <div class="daily-decoration">
+                    ✦
+                </div>
+
+                <div>
+
+                    <span class="section-mini">
+                        ESCOLHA DO DIA
+                    </span>
+
+                    <h2>
+                        Série do dia
+                    </h2>
+
+                    <p>
+                        Não sabe o que assistir?
+                        A gente escolheu uma para você.
+                    </p>
+
+                    <button
+                        id="dailySeriesBtn"
+                        class="btn btn-primary"
+                    >
+                        descobrir agora ♡
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="dailyPreview"
+                    class="daily-preview"
+                >
+
+                    <span>?</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SÉRIES
+        ================================================== -->
+
+        <section
+            id="series"
+            class="series-section section-container"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-mini">
+                        ESCOLHA SEU PRÓXIMO VÍCIO
+                    </span>
+
+                    <h2>
+                        Explore as séries
+                    </h2>
+
+                    <p>
+                        Histórias para todos os humores.
+                    </p>
+
+                </div>
+
+
+                <div class="series-search">
+
+                    <span>⌕</span>
+
+                    <input
+                        id="seriesSearch"
+                        type="text"
+                        placeholder="Buscar série..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTROS -->
 
             <div class="filters">
 
                 <button
-                    class="filter-button active"
+                    class="filter-btn active"
                     data-filter="all"
                 >
-                    todas
+                    Todas
                 </button>
 
                 <button
-                    class="filter-button"
-                    data-filter="favorite"
+                    class="filter-btn"
+                    data-filter="drama"
                 >
-                    ♡ favoritas
+                    Drama
                 </button>
 
                 <button
-                    class="filter-button"
-                    data-filter="watched"
+                    class="filter-btn"
+                    data-filter="misterio"
                 >
-                    ✓ assistidas
+                    Mistério
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="romance"
+                >
+                    Romance
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="acao"
+                >
+                    Ação
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="terror"
+                >
+                    Terror
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="comedia"
+                >
+                    Comédia
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="brasil"
+                >
+                    🇧🇷 Brasil
                 </button>
 
             </div>
 
 
-            <div class="genre-area">
+            <!-- ORDENAÇÃO -->
 
-                <label for="genreSelect">
-                    gênero
-                </label>
+            <div class="sort-row">
 
-                <select id="genreSelect">
+                <p>
+                    <strong id="seriesResultCount">
+                        20
+                    </strong>
+                    séries encontradas
+                </p>
 
-                    <option value="all">
-                        todos
+
+                <select id="seriesSort">
+
+                    <option value="default">
+                        Ordenar por
+                    </option>
+
+                    <option value="rating">
+                        Melhor avaliadas
+                    </option>
+
+                    <option value="az">
+                        A → Z
+                    </option>
+
+                    <option value="za">
+                        Z → A
+                    </option>
+
+                    <option value="year-new">
+                        Mais recentes
+                    </option>
+
+                    <option value="year-old">
+                        Mais antigas
                     </option>
 
                 </select>
@@ -418,1122 +748,745 @@
             </div>
 
 
+            <!-- GRID GERADO PELO JS -->
+
             <div
-                id="seriesList"
-                class="series-list"
+                id="seriesGrid"
+                class="series-grid"
             ></div>
 
 
-            <div class="sidebar-stats">
+            <div
+                id="emptySeries"
+                class="empty-state hidden"
+            >
 
-                <div>
+                <span>♡</span>
 
-                    <strong id="seriesCount">
-                        20
-                    </strong>
+                <h3>
+                    Nenhuma série encontrada
+                </h3>
 
-                    <span>
-                        séries
-                    </span>
-
-                </div>
-
-
-                <div>
-
-                    <strong id="favoritesCount">
-                        0
-                    </strong>
-
-                    <span>
-                        favoritas
-                    </span>
-
-                </div>
-
-
-                <div>
-
-                    <strong id="watchedCount">
-                        0
-                    </strong>
-
-                    <span>
-                        assistidas
-                    </span>
-
-                </div>
-
-            </div>
-
-        </aside>
-
-
-        <!-- CARD PRINCIPAL -->
-
-        <article
-            id="contentCard"
-            class="content-card reveal"
-        >
-
-            <div class="mobile-top">
+                <p>
+                    Tente pesquisar outro nome ou gênero.
+                </p>
 
                 <button
-                    id="openSidebar"
-                    class="mobile-menu-button"
+                    id="clearFiltersBtn"
+                    class="btn btn-primary"
                 >
-
-                    <i class="fa-solid fa-bars"></i>
-
-                    séries
-
+                    limpar filtros
                 </button>
 
-                <span>
-                    blog da bia ♡
-                </span>
-
             </div>
 
+        </section>
 
-            <!-- HERO -->
 
-            <section class="series-header">
+        <!-- =================================================
+             CONQUISTAS
+        ================================================== -->
+
+        <section class="achievements section-container">
+
+            <div class="section-heading">
 
                 <div>
-
-                    <span class="series-label">
-
-                        <i class="fa-solid fa-clapperboard"></i>
-
-                        série da vez
-
+                    <span class="section-mini">
+                        CONQUISTAS
                     </span>
 
+                    <h2>
+                        Seu mural de maratonista
+                    </h2>
 
-                    <div class="series-title-row">
-
-                        <h1 id="seriesTitle">
-                            Stranger Things
-                        </h1>
-
-
-                        <button
-                            id="favoriteButton"
-                            class="favorite-button"
-                            title="Favoritar"
-                        >
-
-                            <i class="fa-regular fa-heart"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="seriesMetadata"
-                        class="series-metadata"
-                    ></div>
-
-
-                    <div class="watch-status">
-
-                        <span>
-                            minha lista
-                        </span>
-
-
-                        <div>
-
-                            <button data-watch-status="want">
-
-                                <i class="fa-regular fa-bookmark"></i>
-
-                                quero assistir
-
-                            </button>
-
-
-                            <button data-watch-status="watching">
-
-                                <i class="fa-solid fa-play"></i>
-
-                                assistindo
-
-                            </button>
-
-
-                            <button data-watch-status="watched">
-
-                                <i class="fa-solid fa-check"></i>
-
-                                já assisti
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
+                    <p>
+                        Explore o blog para desbloquear.
+                    </p>
                 </div>
-
-
-                <div class="blog-rating">
-
-                    <div>
-
-                        <i class="fa-solid fa-star"></i>
-
-                        <strong id="seriesRating">
-                            4.9
-                        </strong>
-
-                    </div>
-
-                    <span>
-                        nota da Bia
-                    </span>
-
-                </div>
-
-            </section>
-
-
-            <!-- CORPO -->
-
-            <section class="series-content">
-
-                <div class="series-text-column">
-
-                    <div
-                        id="seriesDescription"
-                        class="series-description"
-                    ></div>
-
-
-                    <div
-                        id="tagsContainer"
-                        class="tags"
-                    ></div>
-
-
-                    <blockquote
-                        id="seriesQuote"
-                        class="series-quote"
-                    ></blockquote>
-
-
-                    <div class="series-actions">
-
-                        <button
-                            id="trailerButton"
-                            class="gradient-button"
-                        >
-
-                            <i class="fa-solid fa-play"></i>
-
-                            trailer
-
-                        </button>
-
-
-                        <button
-                            id="castButton"
-                            class="secondary-button"
-                        >
-
-                            <i class="fa-solid fa-users"></i>
-
-                            elenco
-
-                        </button>
-
-
-                        <button
-                            id="copyLinkButton"
-                            class="secondary-button"
-                        >
-
-                            <i class="fa-solid fa-link"></i>
-
-                            copiar link
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="progress-card">
-
-                        <div class="progress-title">
-
-                            <div>
-
-                                <small>
-                                    seu progresso
-                                </small>
-
-                                <strong>
-                                    quanto já assistiu?
-                                </strong>
-
-                            </div>
-
-
-                            <span id="episodeProgressText">
-                                0%
-                            </span>
-
-                        </div>
-
-
-                        <input
-                            type="range"
-                            id="episodeProgress"
-                            min="0"
-                            max="100"
-                            step="5"
-                            value="0"
-                        >
-
-
-                        <div class="progress-labels">
-
-                            <span>
-                                comecei
-                            </span>
-
-                            <span>
-                                maratonando
-                            </span>
-
-                            <span>
-                                terminei ♡
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- POSTER -->
-
-                <div class="poster-column">
-
-                    <div
-                        id="posterCard"
-                        class="poster-card tilt-card"
-                    >
-
-                        <div
-                            id="posterLoader"
-                            class="poster-loader"
-                        >
-
-                            <i class="fa-solid fa-spinner"></i>
-
-                        </div>
-
-
-                        <img
-                            id="seriesPoster"
-                            src=""
-                            alt=""
-                        >
-
-
-                        <div class="poster-gradient"></div>
-
-
-                        <button
-                            id="posterFavoriteButton"
-                            class="poster-favorite"
-                        >
-
-                            <i class="fa-regular fa-heart"></i>
-
-                        </button>
-
-
-                        <button
-                            id="posterTrailerButton"
-                            class="poster-play"
-                        >
-
-                            <span>
-
-                                <i class="fa-solid fa-play"></i>
-
-                            </span>
-
-                            ver trailer
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="poster-caption">
-
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-
-                        <span id="seriesPhrase">
-                            uma das favoritas ♡
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <div class="divider">
-
-                <span></span>
-
-                <b>
-                    ♡
-                </b>
-
-                <span></span>
 
             </div>
 
 
-            <!-- AVALIAÇÃO -->
+            <div
+                id="achievementGrid"
+                class="achievement-grid"
+            >
 
-            <section class="rating-section">
-
-                <div class="section-heading center">
-
-                    <small>
-                        sua opinião importa
-                    </small>
-
-                    <h2>
-                        o que você achou?
-                    </h2>
-
-                </div>
-
-
-                <div class="star-rating">
-
-                    <span>
-                        sua nota
-                    </span>
-
-
-                    <div id="starsContainer">
-
-                        <button data-star="1">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-
-                        <button data-star="2">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-
-                        <button data-star="3">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-
-                        <button data-star="4">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-
-                        <button data-star="5">
-                            <i class="fa-regular fa-star"></i>
-                        </button>
-
-                    </div>
-
-
-                    <strong id="userRatingText">
-                        ainda não avaliado
-                    </strong>
-
-                </div>
-
-
-                <div class="opinion-buttons">
-
-                    <button
-                        id="likeButton"
-                        class="opinion-button"
-                    >
-
-                        <i class="fa-regular fa-thumbs-up"></i>
-
-                        <span>
-
-                            <strong>
-                                gostei
-                            </strong>
-
-                            <small id="likePercentage">
-                                0%
-                            </small>
-
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        id="dislikeButton"
-                        class="opinion-button"
-                    >
-
-                        <i class="fa-regular fa-thumbs-down"></i>
-
-                        <span>
-
-                            <strong>
-                                não gostei
-                            </strong>
-
-                            <small id="dislikePercentage">
-                                0%
-                            </small>
-
-                        </span>
-
-                    </button>
-
-                </div>
-
-
-                <div class="vote-progress">
-
-                    <div id="voteProgress"></div>
-
-                </div>
-
-
-                <div class="reactions">
-
-                    <span>
-                        reação rápida
-                    </span>
-
+                <article
+                    class="achievement-card"
+                    data-achievement="firstFavorite"
+                >
+                    <span>♡</span>
 
                     <div>
-
-                        <button data-reaction="love">
-                            😍
-                            <small data-reaction-count="love">
-                                0
-                            </small>
-                        </button>
-
-
-                        <button data-reaction="cry">
-                            😭
-                            <small data-reaction-count="cry">
-                                0
-                            </small>
-                        </button>
-
-
-                        <button data-reaction="shock">
-                            😱
-                            <small data-reaction-count="shock">
-                                0
-                            </small>
-                        </button>
-
-
-                        <button data-reaction="laugh">
-                            😂
-                            <small data-reaction-count="laugh">
-                                0
-                            </small>
-                        </button>
-
-
-                        <button data-reaction="angry">
-                            😤
-                            <small data-reaction-count="angry">
-                                0
-                            </small>
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- COMENTÁRIOS -->
-
-            <section class="comments-section">
-
-                <div class="comments-heading">
-
-                    <div>
+                        <strong>
+                            Primeiro amor
+                        </strong>
 
                         <small>
-                            vamos conversar?
+                            Favorite sua primeira série
                         </small>
-
-                        <h2>
-                            comentários ♡
-                        </h2>
-
                     </div>
+                </article>
 
 
-                    <span id="commentCounter">
-                        0 comentários
+                <article
+                    class="achievement-card"
+                    data-achievement="fiveWatched"
+                >
+                    <span>🍿</span>
+
+                    <div>
+                        <strong>
+                            Maratonista
+                        </strong>
+
+                        <small>
+                            Marque 5 séries como assistidas
+                        </small>
+                    </div>
+                </article>
+
+
+                <article
+                    class="achievement-card"
+                    data-achievement="critic"
+                >
+                    <span>★</span>
+
+                    <div>
+                        <strong>
+                            Crítica de sofá
+                        </strong>
+
+                        <small>
+                            Avalie 3 séries
+                        </small>
+                    </div>
+                </article>
+
+
+                <article
+                    class="achievement-card"
+                    data-achievement="explorer"
+                >
+                    <span>✦</span>
+
+                    <div>
+                        <strong>
+                            Exploradora
+                        </strong>
+
+                        <small>
+                            Abra 10 séries
+                        </small>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RANKING
+        ================================================== -->
+
+        <section
+            id="ranking"
+            class="ranking-section section-container"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-mini">
+                        TOP DA BIA
                     </span>
 
+                    <h2>
+                        Ranking ♡
+                    </h2>
+
+                    <p>
+                        Algumas das favoritas do blog.
+                    </p>
                 </div>
 
+            </div>
+
+
+            <div
+                id="rankingList"
+                class="ranking-list"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             COMENTÁRIOS
+        ================================================== -->
+
+        <section
+            id="comentarios"
+            class="comments-section section-container"
+        >
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-mini">
+                        COMUNIDADE
+                    </span>
+
+                    <h2>
+                        Cantinho dos comentários
+                    </h2>
+
+                    <p>
+                        Conte para a gente qual série
+                        roubou seu coração.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="comment-layout">
 
                 <form
                     id="commentForm"
                     class="comment-form"
                 >
 
-                    <div class="comment-user-avatar">
-                        B
-                    </div>
+                    <h3>
+                        Deixe seu comentário ♡
+                    </h3>
 
 
-                    <div class="comment-editor">
+                    <label>
+                        Seu nome
+
+                        <input
+                            id="commentName"
+                            maxlength="30"
+                            placeholder="Como podemos te chamar?"
+                            required
+                        >
+                    </label>
+
+
+                    <label>
+                        Série
+
+                        <select
+                            id="commentSeries"
+                            required
+                        >
+                            <option value="">
+                                Escolha uma série
+                            </option>
+                        </select>
+                    </label>
+
+
+                    <label>
+                        Comentário
 
                         <textarea
-                            id="commentInput"
-                            maxlength="280"
-                            placeholder="Conta o que você achou..."
+                            id="commentText"
+                            maxlength="400"
+                            placeholder="O que você achou?"
                             required
                         ></textarea>
 
-
-                        <div class="comment-editor-footer">
-
-                            <div>
-
-                                <button
-                                    type="button"
-                                    data-insert-emoji="♡"
-                                >
-                                    ♡
-                                </button>
-
-                                <button
-                                    type="button"
-                                    data-insert-emoji="😍"
-                                >
-                                    😍
-                                </button>
-
-                                <button
-                                    type="button"
-                                    data-insert-emoji="😭"
-                                >
-                                    😭
-                                </button>
-
-                                <span id="characterCounter">
-                                    0/280
-                                </span>
-
-                            </div>
+                        <small>
+                            <span id="commentCharCount">
+                                0
+                            </span>/400
+                        </small>
+                    </label>
 
 
-                            <button
-                                type="submit"
-                                class="publish-button"
+                    <div class="spoiler-check">
+
+                        <input
+                            id="commentSpoiler"
+                            type="checkbox"
+                        >
+
+                        <label for="commentSpoiler">
+                            Este comentário contém spoiler
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary full-btn"
+                    >
+                        publicar comentário ♡
+                    </button>
+
+                </form>
+
+
+                <div class="comments-area">
+
+                    <div class="comments-toolbar">
+
+                        <strong>
+                            <span id="commentCount">
+                                0
+                            </span>
+                            comentários
+                        </strong>
+
+
+                        <select id="commentSort">
+
+                            <option value="new">
+                                Mais recentes
+                            </option>
+
+                            <option value="likes">
+                                Mais curtidos
+                            </option>
+
+                            <option value="old">
+                                Mais antigos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        id="commentsList"
+                        class="comments-list"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SOBRE
+        ================================================== -->
+
+        <section
+            id="sobre"
+            class="about-section"
+        >
+
+            <div class="about-glow"></div>
+
+
+            <div class="section-container">
+
+                <div class="about-title">
+
+                    <span>♡</span>
+
+                    <h2>
+                        quem está por trás do blog?
+                    </h2>
+
+                    <p>
+                        Um cantinho feito com carinho para
+                        quem ama uma boa maratona.
+                    </p>
+
+                </div>
+
+
+                <div class="people-grid">
+
+
+                    <!-- BEATRIZ -->
+
+                    <article class="person-card">
+
+                        <div class="person-photo">
+
+                            <img
+                                src="./img/Beatriz.jpg"
+                                alt="Beatriz"
+                                onerror="this.src='https://placehold.co/300x300?text=Beatriz'"
                             >
 
-                                publicar
+                        </div>
 
-                                <i class="fa-solid fa-paper-plane"></i>
+                        <div class="person-info">
 
+                            <span>
+                                CRIADORA
+                            </span>
+
+                            <h3>
+                                Beatriz
+                            </h3>
+
+                            <p>
+                                Apaixonada por séries,
+                                personagens inesquecíveis
+                                e histórias que fazem a gente
+                                esquecer da vida por algumas horas.
+                            </p>
+
+                            <div class="person-tags">
+                                <b>♡ séries</b>
+                                <b>🍿 maratona</b>
+                                <b>★ avaliações</b>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- BAYERLEE -->
+
+                    <article class="person-card">
+
+                        <div class="person-photo">
+
+                            <img
+                                src="./img/Bayerlee.jpg"
+                                alt="Bayerlee"
+                                onerror="this.src='https://placehold.co/300x300?text=Bayerlee'"
+                            >
+
+                        </div>
+
+                        <div class="person-info">
+
+                            <span>
+                                DESENVOLVEDOR
+                            </span>
+
+                            <h3>
+                                Bayerlee
+                            </h3>
+
+                            <p>
+                                Responsável por transformar
+                                as ideias do Blog da Bia em
+                                uma experiência interativa,
+                                moderna e cheia de detalhes.
+                            </p>
+
+                            <div class="person-tags">
+                                <b>⌘ código</b>
+                                <b>✦ design</b>
+                                <b>♡ criatividade</b>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            blog da bia ♡
+        </div>
+
+        <p>
+            feito com ♡, séries e algumas horas
+            de maratona.
+        </p>
+
+        <div class="footer-links">
+
+            <a href="#inicio">
+                início
+            </a>
+
+            <a href="#series">
+                séries
+            </a>
+
+            <a href="#comentarios">
+                comunidade
+            </a>
+
+            <a href="#sobre">
+                sobre
+            </a>
+
+        </div>
+
+        <small>
+            © <span id="currentYear"></span>
+            Blog da Bia
+        </small>
+
+    </footer>
+
+
+    <!-- =====================================================
+         MODAL DA SÉRIE
+    ====================================================== -->
+
+    <div
+        id="seriesModal"
+        class="modal-overlay"
+    >
+
+        <div
+            id="seriesModalContent"
+            class="series-modal"
+        >
+
+            <button
+                id="seriesModalClose"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-hero">
+
+                <div
+                    id="modalBackdrop"
+                    class="modal-backdrop"
+                ></div>
+
+                <div class="modal-dark"></div>
+
+
+                <div class="modal-hero-content">
+
+                    <img
+                        id="modalPoster"
+                        src=""
+                        alt=""
+                    >
+
+
+                    <div class="modal-info">
+
+                        <span
+                            id="modalBadge"
+                            class="modal-badge"
+                        >
+                            DESTAQUE
+                        </span>
+
+                        <h2 id="modalTitle">
+                            Série
+                        </h2>
+
+
+                        <div class="modal-meta">
+
+                            <span id="modalRating">
+                                ★ 5.0
+                            </span>
+
+                            <span id="modalYear">
+                                2020
+                            </span>
+
+                            <span id="modalSeasons">
+                                1 temporada
+                            </span>
+
+                        </div>
+
+
+                        <p id="modalDescription"></p>
+
+
+                        <div class="modal-actions">
+
+                            <button
+                                id="modalFavorite"
+                                class="btn btn-primary"
+                            >
+                                ♡ Favoritar
+                            </button>
+
+                            <button
+                                id="modalWatchlist"
+                                class="btn btn-glass"
+                            >
+                                ＋ Quero assistir
+                            </button>
+
+                            <button
+                                id="modalWatched"
+                                class="btn btn-glass"
+                            >
+                                ✓ Assistida
                             </button>
 
                         </div>
 
                     </div>
 
-                </form>
-
-
-                <div
-                    id="commentsList"
-                    class="comments-list"
-                ></div>
-
-            </section>
-
-
-            <!-- PRÓXIMA -->
-
-            <section class="next-series">
-
-                <div>
-
-                    <small>
-                        continue explorando
-                    </small>
-
-                    <strong id="nextSeriesName">
-                        próxima série
-                    </strong>
-
                 </div>
 
-
-                <button id="nextSeriesButton">
-
-                    próxima
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </button>
-
-            </section>
-
-        </article>
-
-    </main>
-
-
-    <!-- RANKING -->
-
-    <section
-        id="rankingSection"
-        class="extra-section reveal"
-    >
-
-        <div class="extra-heading">
-
-            <div>
-
-                <small>
-                    as queridinhas
-                </small>
-
-                <h2>
-                    ranking do blog ♡
-                </h2>
-
-            </div>
-
-            <p>
-                as maiores notas entre as séries.
-            </p>
-
-        </div>
-
-
-        <div
-            id="rankingGrid"
-            class="ranking-grid"
-        ></div>
-
-    </section>
-
-
-    <!-- RECOMENDAÇÕES -->
-
-    <section
-        id="recommendationsSection"
-        class="extra-section reveal"
-    >
-
-        <div class="extra-heading">
-
-            <div>
-
-                <small>
-                    talvez você goste
-                </small>
-
-                <h2>
-                    recomendações ✦
-                </h2>
-
             </div>
 
 
-            <button
-                id="refreshRecommendations"
-                class="small-button"
-            >
+            <div class="modal-body">
 
-                <i class="fa-solid fa-rotate"></i>
+                <!-- NOTA -->
 
-                trocar sugestões
+                <section class="rating-box">
 
-            </button>
+                    <div>
+                        <span class="section-mini">
+                            SUA NOTA
+                        </span>
 
-        </div>
+                        <h3>
+                            O que você achou?
+                        </h3>
+                    </div>
 
 
-        <div
-            id="recommendationsGrid"
-            class="recommendations-grid"
-        ></div>
-
-    </section>
-
-
-    <!-- HISTÓRICO -->
-
-    <section
-        id="historySection"
-        class="extra-section reveal"
-    >
-
-        <div class="extra-heading">
-
-            <div>
-
-                <small>
-                    por onde você passou
-                </small>
-
-                <h2>
-                    vistas recentemente ♡
-                </h2>
-
-            </div>
-
-
-            <button
-                id="clearHistoryButton"
-                class="small-button"
-            >
-
-                <i class="fa-regular fa-trash-can"></i>
-
-                limpar
-
-            </button>
-
-        </div>
-
-
-        <div
-            id="historyList"
-            class="history-list"
-        ></div>
-
-    </section>
-
-
-    <!-- ESTATÍSTICAS -->
-
-    <section class="statistics reveal">
-
-        <article>
-
-            <i class="fa-solid fa-tv"></i>
-
-            <strong id="totalSeriesStat">
-                20
-            </strong>
-
-            <span>
-                séries
-            </span>
-
-        </article>
-
-
-        <article>
-
-            <i class="fa-solid fa-heart"></i>
-
-            <strong id="totalFavoritesStat">
-                0
-            </strong>
-
-            <span>
-                favoritas
-            </span>
-
-        </article>
-
-
-        <article>
-
-            <i class="fa-solid fa-check"></i>
-
-            <strong id="totalWatchedStat">
-                0
-            </strong>
-
-            <span>
-                assistidas
-            </span>
-
-        </article>
-
-
-        <article>
-
-            <i class="fa-solid fa-comment"></i>
-
-            <strong id="totalCommentsStat">
-                0
-            </strong>
-
-            <span>
-                comentários
-            </span>
-
-        </article>
-
-
-        <article>
-
-            <i class="fa-solid fa-eye"></i>
-
-            <strong id="visitCounter">
-                0
-            </strong>
-
-            <span>
-                visitas
-            </span>
-
-        </article>
-
-    </section>
-
-
-    <!-- =====================================================
-         CRIADORES
-    ====================================================== -->
-
-    <section
-        id="developersSection"
-        class="developers-section reveal"
-    >
-
-        <span class="developer-decoration dev-decoration-1">
-            ♡
-        </span>
-
-        <span class="developer-decoration dev-decoration-2">
-            ✦
-        </span>
-
-        <span class="developer-decoration dev-decoration-3">
-            ♡
-        </span>
-
-
-        <div class="developers-heading">
-
-            <small>
-                quem fez esse cantinho
-            </small>
-
-            <h2>
-                desenvolvido por ♡
-            </h2>
-
-            <p>
-                código, criatividade, séries e muitos detalhes.
-            </p>
-
-        </div>
-
-
-        <div class="developers-grid">
-
-            <!-- BAYERLEE -->
-
-            <article class="developer-card tilt-card">
-
-                <div class="developer-card-glow"></div>
-
-
-                <div class="developer-image-box">
-
-                    <img
-                        src="./img/Bayerlee.jpg"
-                        alt="Foto de Bayerlee"
-                        id="bayerleePhoto"
-                        class="developer-photo"
+                    <div
+                        id="starRating"
+                        class="stars"
                     >
 
-                    <span></span>
-
-                </div>
-
-
-                <div class="developer-info">
-
-                    <span class="developer-role">
-
-                        <i class="fa-solid fa-code"></i>
-
-                        desenvolvedor
-
-                    </span>
-
-
-                    <h3>
-                        Bayerlee ♡
-                    </h3>
-
-
-                    <p>
-                        responsável pelo código, funcionamento,
-                        animações, efeitos e interações do blog.
-                    </p>
-
-
-                    <div class="developer-tags">
-
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>JavaScript</span>
+                        <button data-star="1">☆</button>
+                        <button data-star="2">☆</button>
+                        <button data-star="3">☆</button>
+                        <button data-star="4">☆</button>
+                        <button data-star="5">☆</button>
 
                     </div>
 
-                </div>
-
-            </article>
+                </section>
 
 
-            <div class="developers-plus">
-                +
-            </div>
+                <!-- ELENCO -->
 
+                <section class="cast-section">
 
-            <!-- BEATRIZ -->
+                    <div class="modal-section-title">
 
-            <article class="developer-card tilt-card">
+                        <div>
+                            <span class="section-mini">
+                                ELENCO
+                            </span>
 
-                <div class="developer-card-glow"></div>
-
-
-                <div class="developer-image-box">
-
-                    <img
-                        src="./img/Beatriz.jpg"
-                        alt="Foto de Beatriz"
-                        id="beatrizDeveloperPhoto"
-                        class="developer-photo"
-                    >
-
-                    <span></span>
-
-                </div>
-
-
-                <div class="developer-info">
-
-                    <span class="developer-role">
-
-                        <i class="fa-solid fa-heart"></i>
-
-                        criadora
-
-                    </span>
-
-
-                    <h3>
-                        Beatriz ♡
-                    </h3>
-
-
-                    <p>
-                        responsável pela ideia, personalidade,
-                        conteúdo, opiniões e séries do blog.
-                    </p>
-
-
-                    <div class="developer-tags">
-
-                        <span>séries</span>
-                        <span>conteúdo</span>
-                        <span>estilo</span>
+                            <h3>
+                                Quem dá vida à história
+                            </h3>
+                        </div>
 
                     </div>
 
-                </div>
 
-            </article>
+                    <div
+                        id="castGrid"
+                        class="cast-grid"
+                    >
+
+                        <div class="cast-loading">
+                            carregando elenco...
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PROGRESSO -->
+
+                <section class="progress-section">
+
+                    <div class="modal-section-title">
+
+                        <div>
+                            <span class="section-mini">
+                                MARATONA
+                            </span>
+
+                            <h3>
+                                Seu progresso
+                            </h3>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-control">
+
+                        <input
+                            id="episodeProgress"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                        >
+
+                        <strong id="episodeProgressText">
+                            0%
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RECOMENDAÇÕES -->
+
+                <section>
+
+                    <div class="modal-section-title">
+
+                        <div>
+                            <span class="section-mini">
+                                VOCÊ TAMBÉM PODE GOSTAR
+                            </span>
+
+                            <h3>
+                                Continue explorando
+                            </h3>
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="recommendations"
+                        class="recommendations"
+                    ></div>
+
+                </section>
+
+            </div>
 
         </div>
 
-
-        <div class="developer-message">
-
-            <p>
-                obrigada por visitar nosso cantinho ♡
-            </p>
-
-
-            <button id="sendHeartButton">
-
-                mandar um coração
-
-                <i class="fa-solid fa-heart"></i>
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- FOOTER -->
-
-    <footer class="footer reveal">
-
-        <div>
-
-            <strong>
-                blog da bia ♡
-            </strong>
-
-            <span>
-                séries, opiniões e maratonas
-            </span>
-
-        </div>
-
-
-        <p>
-            Bayerlee + Beatriz
-        </p>
-
-
-        <button id="footerTopButton">
-
-            voltar ao topo
-
-            <i class="fa-solid fa-arrow-up"></i>
-
-        </button>
-
-    </footer>
-
-
-    <!-- VOLTAR AO TOPO -->
-
-    <button
-        id="backToTop"
-        class="back-to-top"
-    >
-
-        <i class="fa-solid fa-arrow-up"></i>
-
-    </button>
+    </div>
 
 
     <!-- =====================================================
@@ -1542,156 +1495,39 @@
 
     <div
         id="trailerModal"
-        class="modal"
+        class="modal-overlay"
     >
 
-        <div
-            class="modal-background"
-            data-close-modal
-        ></div>
-
-
-        <div class="modal-box trailer-modal">
+        <div class="trailer-modal">
 
             <button
+                id="trailerClose"
                 class="modal-close"
-                data-close-modal
             >
-
-                <i class="fa-solid fa-xmark"></i>
-
+                ×
             </button>
 
+            <div class="trailer-placeholder">
 
-            <small>
-                agora assistindo
-            </small>
+                <span>▶</span>
 
+                <h2 id="trailerTitle">
+                    Trailer
+                </h2>
 
-            <h2 id="trailerModalTitle">
-                trailer
-            </h2>
+                <p>
+                    O trailer será aberto no YouTube
+                    em uma nova guia.
+                </p>
 
-
-            <div class="video-container">
-
-                <iframe
-                    id="trailerFrame"
-                    src=""
-                    title="Trailer"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         MODAL ELENCO
-    ====================================================== -->
-
-    <div
-        id="castModal"
-        class="modal"
-    >
-
-        <div
-            class="modal-background"
-            data-close-modal
-        ></div>
-
-
-        <div class="modal-box cast-modal">
-
-            <button
-                class="modal-close"
-                data-close-modal
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-
-            <small>
-                quem faz acontecer
-            </small>
-
-
-            <h2 id="castModalTitle">
-                elenco principal ♡
-            </h2>
-
-
-            <div
-                id="castGrid"
-                class="cast-grid"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         MODAL BUSCA
-    ====================================================== -->
-
-    <div
-        id="searchModal"
-        class="modal"
-    >
-
-        <div
-            class="modal-background"
-            data-close-modal
-        ></div>
-
-
-        <div class="modal-box search-modal">
-
-            <button
-                class="modal-close"
-                data-close-modal
-            >
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-
-            <small>
-                encontre rapidinho
-            </small>
-
-
-            <h2>
-                pesquisar série ♡
-            </h2>
-
-
-            <div class="modal-search">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-                <input
-                    id="modalSearchInput"
-                    type="text"
-                    placeholder="Digite o nome..."
-                    autocomplete="off"
+                <button
+                    id="openYoutubeTrailer"
+                    class="btn btn-primary"
                 >
+                    assistir no YouTube
+                </button>
 
             </div>
-
-
-            <div
-                id="modalSearchResults"
-                class="modal-search-results"
-            ></div>
 
         </div>
 
@@ -1702,10 +1538,13 @@
          CONFIGURAÇÕES
     ====================================================== -->
 
-    <div
-        id="settingsOverlay"
-        class="settings-overlay"
-    ></div>
+    <button
+        id="settingsFloating"
+        class="settings-floating"
+        title="Personalizar"
+    >
+        ⚙
+    </button>
 
 
     <aside
@@ -1713,181 +1552,82 @@
         class="settings-panel"
     >
 
-        <div class="settings-heading">
+        <button
+            id="settingsClose"
+            class="settings-close"
+        >
+            ×
+        </button>
+
+
+        <span class="section-mini">
+            PERSONALIZAÇÃO
+        </span>
+
+        <h2>
+            Deixe do seu jeito ♡
+        </h2>
+
+
+        <div class="setting-group">
+
+            <label>
+                Tema de cores
+            </label>
+
+
+            <div class="theme-options">
+
+                <button
+                    class="theme-color active"
+                    data-theme-color="bia"
+                    title="Bia"
+                >
+                    ♡
+                </button>
+
+                <button
+                    class="theme-color"
+                    data-theme-color="sunset"
+                    title="Sunset"
+                >
+                    ☀
+                </button>
+
+                <button
+                    class="theme-color"
+                    data-theme-color="ocean"
+                    title="Ocean"
+                >
+                    ≋
+                </button>
+
+                <button
+                    class="theme-color"
+                    data-theme-color="berry"
+                    title="Berry"
+                >
+                    ✦
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-row">
 
             <div>
+                <strong>
+                    Efeitos
+                </strong>
 
                 <small>
-                    personalize
+                    Corações e partículas
                 </small>
-
-                <h2>
-                    configurações ♡
-                </h2>
-
             </div>
 
-
-            <button id="closeSettings">
-
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-
-        <div class="settings-group">
-
-            <h3>
-                tema
-            </h3>
-
-
-            <div class="themes">
-
-                <button
-                    class="theme-button active"
-                    data-theme="lavender"
-                >
-                    lavanda
-                </button>
-
-                <button
-                    class="theme-button"
-                    data-theme="pink"
-                >
-                    rosa
-                </button>
-
-                <button
-                    class="theme-button"
-                    data-theme="blue"
-                >
-                    céu
-                </button>
-
-                <button
-                    class="theme-button"
-                    data-theme="sunset"
-                >
-                    sunset
-                </button>
-
-                <button
-                    class="theme-button"
-                    data-theme="dark"
-                >
-                    noite
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="settings-group">
-
-            <label class="setting-switch">
-
-                <div>
-
-                    <strong>
-                        cursor de coração
-                    </strong>
-
-                    <small>
-                        substitui o cursor normal
-                    </small>
-
-                </div>
-
-                <input
-                    id="cursorToggle"
-                    type="checkbox"
-                    checked
-                >
-
-                <span></span>
-
-            </label>
-
-        </div>
-
-
-        <div class="settings-group">
-
-            <label class="setting-switch">
-
-                <div>
-
-                    <strong>
-                        rastro de corações
-                    </strong>
-
-                    <small>
-                        pequenos corações seguindo o mouse
-                    </small>
-
-                </div>
-
-                <input
-                    id="trailToggle"
-                    type="checkbox"
-                    checked
-                >
-
-                <span></span>
-
-            </label>
-
-        </div>
-
-
-        <div class="settings-group">
-
-            <label class="setting-switch">
-
-                <div>
-
-                    <strong>
-                        animações
-                    </strong>
-
-                    <small>
-                        movimentos e transições
-                    </small>
-
-                </div>
-
-                <input
-                    id="animationToggle"
-                    type="checkbox"
-                    checked
-                >
-
-                <span></span>
-
-            </label>
-
-        </div>
-
-
-        <div class="settings-group">
-
-            <label class="setting-switch">
-
-                <div>
-
-                    <strong>
-                        efeitos especiais
-                    </strong>
-
-                    <small>
-                        confetes e corações
-                    </small>
-
-                </div>
+            <label class="switch">
 
                 <input
                     id="effectsToggle"
@@ -1902,22 +1642,47 @@
         </div>
 
 
-        <button
-            id="resetSettingsButton"
-            class="reset-settings"
-        >
+        <div class="setting-row">
 
-            <i class="fa-solid fa-rotate-left"></i>
+            <div>
+                <strong>
+                    Animações
+                </strong>
 
-            restaurar configurações
+                <small>
+                    Movimentos da interface
+                </small>
+            </div>
 
-        </button>
+            <label class="switch">
+
+                <input
+                    id="animationsToggle"
+                    type="checkbox"
+                    checked
+                >
+
+                <span></span>
+
+            </label>
+
+        </div>
 
     </aside>
+
+
+    <!-- VOLTAR AO TOPO -->
+
+    <button
+        id="backTop"
+        class="back-top"
+        title="Voltar ao topo"
+    >
+        ↑
+    </button>
 
 
     <script src="script.js"></script>
 
 </body>
-
 </html>
