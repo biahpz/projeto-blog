@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Blog da Bia - opiniões, avaliações e informações sobre séries."
+    >
+
+    <title>Blog da Bia | Séries</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Patrick+Hand&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         FUNDO DECORATIVO
+    ========================== -->
+
+    <div class="background-decoration decoration-1"></div>
+    <div class="background-decoration decoration-2"></div>
+    <div class="background-decoration decoration-3"></div>
+
+    <!-- =========================
+         NOTIFICAÇÕES
+    ========================== -->
+
+    <div id="toastContainer" class="toast-container"></div>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="profile-area">
+
+            <div class="profile-image-wrapper">
+                <img
+                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300"
+                    alt="Foto de perfil"
+                    class="profile-image"
+                >
+
+                <span class="online-dot"></span>
+            </div>
+
+            <div class="profile-text">
+                <span>meu cantinho ♡</span>
+                <strong>@bia</strong>
+            </div>
+
+        </div>
+
+
+        <div class="logo-area">
+
+            <div class="logo-title">
+                blog da bia
+                <span class="logo-heart">♡</span>
+            </div>
+
+            <p class="logo-subtitle">
+                séries, opiniões e um pouquinho de obsessão
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="icon-button"
+                id="randomButton"
+                title="Série aleatória"
+            >
+                <i class="fa-solid fa-shuffle"></i>
+                <span>aleatório</span>
+            </button>
+
+            <button
+                class="icon-button"
+                id="shareButton"
+                title="Compartilhar"
+            >
+                <i class="fa-solid fa-share-nodes"></i>
+                <span>compartilhar</span>
+            </button>
+
+            <button
+                class="icon-button"
+                id="settingsButton"
+                title="Configurações"
+            >
+                <i class="fa-solid fa-gear"></i>
+                <span>configurações</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+
+    <main class="page-layout">
+
+        <!-- =====================
+             SIDEBAR
+        ====================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-header">
+
+                <div>
+                    <span class="mini-label">explorar</span>
+
+                    <h2>
+                        tópicos
+                        <span>♡</span>
+                    </h2>
+                </div>
+
+                <button
+                    class="mobile-close"
+                    id="closeSidebar"
+                    aria-label="Fechar menu"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <!-- PESQUISA -->
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Buscar uma série..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="clearSearch"
+                    aria-label="Limpar pesquisa"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="filter-area">
+
+                <button
+                    class="filter-button active"
+                    data-filter="all"
+                >
+                    Todas
+                </button>
+
+                <button
+                    class="filter-button"
+                    data-filter="favorite"
+                >
+                    <i class="fa-solid fa-heart"></i>
+                    Favoritas
+                </button>
+
+            </div>
+
+
+            <!-- LISTA DE SÉRIES -->
+
+            <div
+                class="series-list"
+                id="seriesList"
+            ></div>
+
+
+            <div class="sidebar-footer">
+
+                <div class="sidebar-stat">
+                    <strong id="seriesCount">0</strong>
+                    <span>séries</span>
+                </div>
+
+                <div class="sidebar-stat">
+                    <strong id="favoritesCount">0</strong>
+                    <span>favoritas</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================
+             ARTIGO
+        ====================== -->
+
+        <article class="content-card" id="contentCard">
+
+            <!-- BARRA MOBILE -->
+
+            <div class="mobile-topbar">
+
+                <button
+                    id="openSidebar"
+                    class="mobile-menu-button"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                    Séries
+                </button>
+
+                <span>blog da bia ♡</span>
+
+            </div>
+
+
+            <!-- CABEÇALHO DA SÉRIE -->
+
+            <section class="series-header">
+
+                <div class="title-area">
+
+                    <div class="category-badge">
+                        <i class="fa-solid fa-clapperboard"></i>
+                        série da vez
+                    </div>
+
+                    <div class="title-row">
+
+                        <h1 id="seriesTitle">
+                            Stranger Things
+                        </h1>
+
+                        <button
+                            class="favorite-button"
+                            id="favoriteButton"
+                            aria-label="Adicionar aos favoritos"
+                        >
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="series-metadata"
+                        id="seriesMetadata"
+                    ></div>
+
+                </div>
+
+
+                <div class="rating-summary">
+
+                    <div class="rating-number">
+                        <i class="fa-solid fa-star"></i>
+
+                        <strong id="seriesRating">
+                            4.9
+                        </strong>
+                    </div>
+
+                    <span>minha nota</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- CONTEÚDO -->
+
+            <section class="series-content">
+
+                <div class="series-text">
+
+                    <div
+                        class="description"
+                        id="seriesDescription"
+                    ></div>
+
+
+                    <!-- TAGS -->
+
+                    <div
+                        class="tags-container"
+                        id="tagsContainer"
+                    ></div>
+
+
+                    <!-- BOTÕES -->
+
+                    <div class="action-buttons">
+
+                        <button
+                            class="primary-button"
+                            id="trailerButton"
+                        >
+                            <i class="fa-solid fa-play"></i>
+                            Ver trailer
+                        </button>
+
+                        <button
+                            class="secondary-button"
+                            id="castButton"
+                        >
+                            <i class="fa-solid fa-users"></i>
+                            Elenco
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- POSTER -->
+
+                <div class="poster-column">
+
+                    <div class="poster-wrapper">
+
+                        <img
+                            id="seriesPoster"
+                            src=""
+                            alt="Poster da série"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                id="posterTrailerButton"
+                                aria-label="Assistir trailer"
+                            >
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+
+                            <span>assistir trailer</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="poster-caption">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span id="seriesPhrase">
+                            uma das minhas favoritas!
+                        </span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================
+                 AVALIAÇÃO
+            ====================== -->
+
+            <section class="interaction-section">
+
+                <div class="section-divider">
+                    <span></span>
+
+                    <div>
+                        ♡
+                    </div>
+
+                    <span></span>
+                </div>
+
+
+                <div class="opinion-title">
+
+                    <span>✦</span>
+
+                    <div>
+                        <small>sua opinião importa</small>
+                        <h3>o que você achou?</h3>
+                    </div>
+
+                    <span>✦</span>
+
+                </div>
+
+
+                <!-- ESTRELAS -->
+
+                <div class="user-rating">
+
+                    <span>Sua nota:</span>
+
+                    <div
+                        class="stars"
+                        id="starsContainer"
+                    >
+                        <button data-star="1">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+
+                        <button data-star="2">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+
+                        <button data-star="3">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+
+                        <button data-star="4">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+
+                        <button data-star="5">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+                    </div>
+
+                    <strong id="userRatingText">
+                        ainda não avaliado
+                    </strong>
+
+                </div>
+
+
+                <!-- LIKE / DISLIKE -->
+
+                <div class="vote-buttons">
+
+                    <button
+                        class="vote-button like"
+                        id="likeButton"
+                    >
+                        <span class="vote-icon">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                        </span>
+
+                        <div>
+                            <strong>Gostei</strong>
+                            <small id="likePercentage">
+                                0%
+                            </small>
+                        </div>
+                    </button>
+
+
+                    <button
+                        class="vote-button dislike"
+                        id="dislikeButton"
+                    >
+                        <span class="vote-icon">
+                            <i class="fa-regular fa-thumbs-down"></i>
+                        </span>
+
+                        <div>
+                            <strong>Não gostei</strong>
+                            <small id="dislikePercentage">
+                                0%
+                            </small>
+                        </div>
+                    </button>
+
+                </div>
+
+
+                <div class="vote-bar">
+
+                    <div
+                        class="vote-progress"
+                        id="voteProgress"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =====================
+                 COMENTÁRIOS
+            ====================== -->
+
+            <section class="comments-section">
+
+                <div class="comments-header">
+
+                    <div>
+                        <small>vamos conversar?</small>
+
+                        <h2>
+                            comentários
+                            <span>♡</span>
+                        </h2>
+                    </div>
+
+                    <span
+                        class="comment-counter"
+                        id="commentCounter"
+                    >
+                        0 comentários
+                    </span>
+
+                </div>
+
+
+                <form
+                    class="comment-form"
+                    id="commentForm"
+                >
+
+                    <div class="comment-avatar">
+                        B
+                    </div>
+
+                    <div class="comment-input-area">
+
+                        <textarea
+                            id="commentInput"
+                            maxlength="280"
+                            placeholder="Escreva o que você achou dessa série..."
+                            required
+                        ></textarea>
+
+                        <div class="comment-form-footer">
+
+                            <span id="characterCounter">
+                                0/280
+                            </span>
+
+                            <button
+                                type="submit"
+                                class="comment-submit"
+                            >
+                                Publicar
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    class="comments-list"
+                    id="commentsList"
+                ></div>
+
+            </section>
+
+
+            <!-- =====================
+                 PRÓXIMA SÉRIE
+            ====================== -->
+
+            <section class="next-series">
+
+                <span>continue explorando</span>
+
+                <button id="nextSeriesButton">
+                    próxima série
+
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </section>
+
+        </article>
+
+    </main>
+
+
+    <!-- =========================
+         MODAL TRAILER
+    ========================== -->
+
+    <div
+        class="modal"
+        id="trailerModal"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="modal-content trailer-modal-content">
+
+            <button
+                class="modal-close"
+                data-close-modal
+                aria-label="Fechar"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-heading">
+
+                <small>agora assistindo</small>
+
+                <h2 id="trailerModalTitle">
+                    Trailer
+                </h2>
+
+            </div>
+
+            <div class="video-container">
+
+                <iframe
+                    id="trailerFrame"
+                    src=""
+                    title="Trailer da série"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MODAL ELENCO
+    ========================== -->
+
+    <div
+        class="modal"
+        id="castModal"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="modal-content">
+
+            <button
+                class="modal-close"
+                data-close-modal
+                aria-label="Fechar"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-heading">
+
+                <small>quem faz acontecer</small>
+
+                <h2>
+                    elenco principal ♡
+                </h2>
+
+            </div>
+
+            <div
+                class="cast-grid"
+                id="castGrid"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CONFIGURAÇÕES
+    ========================== -->
+
+    <div
+        class="settings-panel"
+        id="settingsPanel"
+    >
+
+        <div class="settings-header">
+
+            <div>
+                <small>personalize</small>
+                <h2>configurações ♡</h2>
+            </div>
+
+            <button id="closeSettings">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="settings-group">
+
+            <label>Tema</label>
+
+            <div class="theme-options">
+
+                <button
+                    class="theme-option active"
+                    data-theme="lavender"
+                >
+                    <span class="theme-preview lavender"></span>
+                    Lavanda
+                </button>
+
+                <button
+                    class="theme-option"
+                    data-theme="pink"
+                >
+                    <span class="theme-preview pink"></span>
+                    Rosa
+                </button>
+
+                <button
+                    class="theme-option"
+                    data-theme="blue"
+                >
+                    <span class="theme-preview blue"></span>
+                    Céu
+                </button>
+
+                <button
+                    class="theme-option"
+                    data-theme="dark"
+                >
+                    <span class="theme-preview dark"></span>
+                    Noite
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-group">
+
+            <label>Tamanho do texto</label>
+
+            <div class="font-controls">
+
+                <button data-font="small">
+                    A
+                </button>
+
+                <button
+                    data-font="medium"
+                    class="active"
+                >
+                    A
+                </button>
+
+                <button data-font="large">
+                    A
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-group">
+
+            <label class="switch-row">
+
+                <div>
+                    <strong>Animações</strong>
+                    <small>Movimentos e transições da página</small>
+                </div>
+
+                <input
+                    type="checkbox"
+                    id="animationToggle"
+                    checked
+                >
+
+                <span class="switch"></span>
+
+            </label>
+
+        </div>
+
+
+        <button
+            class="reset-button"
+            id="resetButton"
+        >
+            <i class="fa-solid fa-rotate-left"></i>
+            Restaurar preferências
+        </button>
+
+    </div>
+
+
+    <div
+        class="settings-overlay"
+        id="settingsOverlay"
+    ></div>
+
+
+    <!-- =========================
+         BOTÃO VOLTAR AO TOPO
+    ========================== -->
+
+    <button
+        class="back-to-top"
+        id="backToTop"
+        aria-label="Voltar ao topo"
+    >
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div>
+            <strong>blog da bia ♡</strong>
+
+            <p>
+                feito com carinho, café e muitas maratonas.
+            </p>
+        </div>
+
+        <p>
+            projeto desenvolvido com HTML, CSS e JavaScript
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
