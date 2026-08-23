@@ -24,10 +24,7 @@ const body =
 
 
 /* =========================================================
-   20 SÉRIES DO BLOG
-
-   apiName = nome usado para encontrar a série no TVMaze
-   expectedYear = evita pegar remake/série errada
+   20 SÉRIES
 ========================================================= */
 
 const seriesData = [
@@ -49,8 +46,8 @@ const seriesData = [
         rating: 4.9,
 
         description: [
-            "Em Hawkins, o desaparecimento de um garoto revela experimentos secretos, acontecimentos sobrenaturais e uma dimensão assustadora.",
-            "A amizade do grupo continua sendo uma das partes mais marcantes da série enquanto os perigos ficam cada vez maiores."
+            "Na pequena cidade de Hawkins, o desaparecimento de um garoto revela experimentos secretos, criaturas sobrenaturais e uma dimensão assustadora.",
+            "A série mistura amizade, aventura, suspense e nostalgia em uma história que fica cada vez maior."
         ],
 
         tags: [
@@ -88,8 +85,8 @@ const seriesData = [
         rating: 4.0,
 
         description: [
-            "Archie, Betty, Veronica e Jughead vivem em uma cidade onde praticamente todo mundo parece esconder alguma coisa.",
-            "Romances, crimes, investigações e acontecimentos cada vez mais estranhos transformam Riverdale em puro caos adolescente."
+            "Archie, Betty, Veronica e Jughead vivem em uma cidade aparentemente tranquila, mas cheia de segredos e crimes.",
+            "Riverdale mistura romance adolescente, investigação, suspense e acontecimentos cada vez mais inesperados."
         ],
 
         tags: [
@@ -126,8 +123,8 @@ const seriesData = [
         rating: 4.5,
 
         description: [
-            "No Upper East Side de Manhattan, jovens privilegiados têm seus segredos publicados por uma blogueira anônima.",
-            "Luxo, amizade, romance, traições e fofocas fizeram Gossip Girl se tornar uma das séries adolescentes mais lembradas."
+            "No Upper East Side de Manhattan, jovens privilegiados têm seus segredos revelados por uma blogueira anônima.",
+            "Luxo, romances, amizades, traições e muita fofoca transformaram Gossip Girl em um clássico adolescente."
         ],
 
         tags: [
@@ -165,8 +162,8 @@ const seriesData = [
         rating: 4.6,
 
         description: [
-            "Joe Goldberg parece inteligente e romântico, mas sua maneira de enxergar relacionamentos rapidamente revela um lado obsessivo.",
-            "A série coloca o espectador dentro de seus pensamentos enquanto Joe tenta justificar decisões cada vez mais perigosas."
+            "Joe Goldberg parece inteligente e romântico, mas sua maneira de enxergar relacionamentos rapidamente revela um lado obsessivo e perigoso.",
+            "A série coloca o espectador dentro dos pensamentos de Joe enquanto suas escolhas ficam cada vez mais absurdas."
         ],
 
         tags: [
@@ -204,8 +201,8 @@ const seriesData = [
         rating: 4.8,
 
         description: [
-            "O Professor reúne criminosos com diferentes habilidades para colocar em prática um plano extremamente ambicioso.",
-            "Estratégia, relacionamentos, ação e inúmeras reviravoltas tornam cada etapa ainda mais imprevisível."
+            "O Professor reúne um grupo de criminosos para executar um dos planos mais ambiciosos já imaginados.",
+            "Estratégia, ação, relacionamentos e inúmeras reviravoltas tornam cada parte do assalto ainda mais intensa."
         ],
 
         tags: [
@@ -243,7 +240,7 @@ const seriesData = [
         rating: 4.8,
 
         description: [
-            "Arisu vai parar em uma versão quase vazia de Tóquio onde precisa participar de jogos perigosos para sobreviver.",
+            "Arisu vai parar em uma versão quase vazia de Tóquio, onde precisa participar de jogos perigosos para sobreviver.",
             "Cada partida exige inteligência, coragem e decisões capazes de mudar completamente o destino dos participantes."
         ],
 
@@ -283,7 +280,7 @@ const seriesData = [
 
         description: [
             "John B e seus amigos encontram pistas relacionadas a um tesouro perdido e ao desaparecimento de seu pai.",
-            "A busca leva os Pogues para uma aventura cheia de perseguições, romances e perigos."
+            "A investigação leva os Pogues para uma aventura cheia de perseguições, romances e perigos."
         ],
 
         tags: [
@@ -361,7 +358,7 @@ const seriesData = [
 
         description: [
             "Wednesday Addams começa seus estudos na Academia Nevermore e rapidamente se envolve em uma investigação.",
-            "Seus poderes, segredos da escola e seu humor extremamente sarcástico fazem parte da história."
+            "Seus poderes, os segredos da escola e seu humor extremamente sarcástico fazem parte da história."
         ],
 
         tags: [
@@ -516,7 +513,7 @@ const seriesData = [
         rating: 4.7,
 
         description: [
-            "Lucifer Morningstar abandona o inferno e decide morar em Los Angeles.",
+            "Lucifer Morningstar abandona o inferno e decide viver em Los Angeles.",
             "Quando começa a ajudar a polícia, sua vida acaba ligada à detetive Chloe Decker."
         ],
 
@@ -556,7 +553,7 @@ const seriesData = [
 
         description: [
             "Décadas depois do famoso torneio de karatê, Johnny Lawrence e Daniel LaRusso voltam a se enfrentar.",
-            "Uma nova geração acaba envolvida na rivalidade entre diferentes dojos."
+            "Uma nova geração acaba envolvida na rivalidade entre os diferentes dojos."
         ],
 
         tags: [
@@ -813,7 +810,7 @@ const seriesData = [
 
 
 /* =========================================================
-   ESTADO
+   STATE
 ========================================================= */
 
 const state = {
@@ -824,21 +821,16 @@ const state = {
         ) ||
         "stranger-things",
 
-    filter: "all",
+    filter:
+        "all",
 
-    genre: "all",
+    genre:
+        "all",
 
-    search: ""
+    search:
+        ""
 
 };
-
-
-/* =========================================================
-   CACHE DA API
-========================================================= */
-
-const apiCache =
-    new Map();
 
 
 /* =========================================================
@@ -853,7 +845,10 @@ function getStorage(
     try {
 
         const value =
-            localStorage.getItem(key);
+            localStorage.getItem(
+                key
+            );
+
 
         return value
             ? JSON.parse(value)
@@ -870,7 +865,7 @@ function getStorage(
 }
 
 
-function setStorage(
+function saveStorage(
     key,
     value
 ) {
@@ -943,124 +938,54 @@ let settings =
     getStorage(
         "biaSettings",
         {
-
-            theme:
-                "lavender",
-
-            cursor:
-                true,
-
-            trail:
-                true,
-
-            animations:
-                true,
-
-            effects:
-                true
-
+            theme: "lavender",
+            cursor: true,
+            trail: true,
+            animations: true,
+            effects: true
         }
     );
 
 
 /* =========================================================
-   ELEMENTOS
+   API CACHE
 ========================================================= */
 
-const seriesTitle =
-    $("#seriesTitle");
-
-
-const seriesPoster =
-    $("#seriesPoster");
-
-
-const posterLoader =
-    $("#posterLoader");
-
-
-const seriesMetadata =
-    $("#seriesMetadata");
-
-
-const seriesDescription =
-    $("#seriesDescription");
-
-
-const tagsContainer =
-    $("#tagsContainer");
-
-
-const seriesQuote =
-    $("#seriesQuote");
-
-
-const seriesPhrase =
-    $("#seriesPhrase");
-
-
-const seriesRating =
-    $("#seriesRating");
-
-
-const seriesList =
-    $("#seriesList");
-
-
-const favoriteButton =
-    $("#favoriteButton");
-
-
-const posterFavoriteButton =
-    $("#posterFavoriteButton");
-
-
-const searchInput =
-    $("#searchInput");
-
-
-const genreSelect =
-    $("#genreSelect");
-
-
-const commentsList =
-    $("#commentsList");
-
-
-const commentInput =
-    $("#commentInput");
-
-
-const commentCounter =
-    $("#commentCounter");
-
-
-const characterCounter =
-    $("#characterCounter");
-
-
-const effectsLayer =
-    $("#effectsLayer");
-
-
-const heartCursor =
-    $("#heartCursor");
-
-
-const toastContainer =
-    $("#toastContainer");
+const apiCache =
+    new Map();
 
 
 /* =========================================================
-   FUNÇÕES BÁSICAS
+   ESCAPE
+========================================================= */
+
+function escapeHTML(text) {
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.textContent =
+        String(text);
+
+
+    return element.innerHTML;
+
+}
+
+
+/* =========================================================
+   SÉRIE ATUAL
 ========================================================= */
 
 function getCurrentSeries() {
 
     return (
         seriesData.find(
-            item =>
-                item.id ===
+            series =>
+                series.id ===
                 state.currentSeriesId
         ) ||
         seriesData[0]
@@ -1069,24 +994,11 @@ function getCurrentSeries() {
 }
 
 
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        String(text);
-
-    return div.innerHTML;
-
-}
-
-
 /* =========================================================
-   TVMAZE
+   TVMAZE - CAPAS + ELENCO
 ========================================================= */
 
-async function fetchSeriesApi(
+async function fetchSeriesData(
     series
 ) {
 
@@ -1105,17 +1017,13 @@ async function fetchSeriesApi(
 
     try {
 
-        const searchUrl =
-            `https://api.tvmaze.com/search/shows?q=${
-                encodeURIComponent(
-                    series.apiName
-                )
-            }`;
-
-
         const searchResponse =
             await fetch(
-                searchUrl
+                `https://api.tvmaze.com/search/shows?q=${
+                    encodeURIComponent(
+                        series.apiName
+                    )
+                }`
             );
 
 
@@ -1124,7 +1032,7 @@ async function fetchSeriesApi(
         ) {
 
             throw new Error(
-                "Busca indisponível"
+                "Erro na pesquisa"
             );
 
         }
@@ -1155,17 +1063,13 @@ async function fetchSeriesApi(
 
 
                     return (
-
                         show.name
                             .toLowerCase() ===
-                        series.apiName
-                            .toLowerCase()
-
+                            series.apiName
+                                .toLowerCase()
                         &&
-
                         year ===
-                        series.expectedYear
-
+                            series.expectedYear
                     );
 
                 }
@@ -1213,30 +1117,20 @@ async function fetchSeriesApi(
             );
 
 
-        let cast = [];
-
-
-        if (
+        const cast =
             castResponse.ok
-        ) {
-
-            cast =
-                await castResponse.json();
-
-        }
+                ? await castResponse.json()
+                : [];
 
 
         const data = {
-
-            showId:
-                show.id,
 
             image:
                 show.image?.original ||
                 show.image?.medium ||
                 "",
 
-            mediumImage:
+            thumb:
                 show.image?.medium ||
                 show.image?.original ||
                 "",
@@ -1249,12 +1143,11 @@ async function fetchSeriesApi(
                     )
                     .map(
                         item => ({
-
                             name:
                                 item.person?.name ||
                                 "Ator",
 
-                            character:
+                            role:
                                 item.character?.name ||
                                 "Personagem",
 
@@ -1266,7 +1159,6 @@ async function fetchSeriesApi(
                                     ?.image
                                     ?.medium ||
                                 ""
-
                         })
                     )
 
@@ -1279,91 +1171,30 @@ async function fetchSeriesApi(
         );
 
 
+        series.poster =
+            data.thumb ||
+            data.image;
+
+
         return data;
 
     }
 
     catch (error) {
 
-        console.warn(
-            `Não foi possível carregar ${series.title}:`,
+        console.error(
+            `Erro carregando ${series.title}`,
             error
         );
 
 
         return {
-
-            image:
-                "",
-
-            mediumImage:
-                "",
-
-            cast:
-                []
-
+            image: "",
+            thumb: "",
+            cast: []
         };
 
     }
-
-}
-
-
-/* =========================================================
-   PRÉ-CARREGAR AS 20 CAPAS
-========================================================= */
-
-async function preloadAllSeriesImages() {
-
-    const queue =
-        [...seriesData];
-
-
-    const workers =
-        Array.from(
-            {
-                length: 4
-            },
-            async () => {
-
-                while (
-                    queue.length
-                ) {
-
-                    const series =
-                        queue.shift();
-
-
-                    const api =
-                        await fetchSeriesApi(
-                            series
-                        );
-
-
-                    series.poster =
-                        api.mediumImage ||
-                        api.image ||
-                        "";
-
-
-                    renderSeriesList();
-
-                    renderRanking();
-
-                    renderHistory();
-
-                }
-
-            }
-        );
-
-
-    await Promise.all(
-        workers
-    );
-
-
-    renderRecommendations();
 
 }
 
@@ -1388,19 +1219,16 @@ function toast(
 
 
     element.innerHTML = `
-
         <i class="fa-solid ${icon}"></i>
 
         <span>
             ${escapeHTML(message)}
         </span>
-
     `;
 
 
-    toastContainer.appendChild(
-        element
-    );
+    $("#toastContainer")
+        .appendChild(element);
 
 
     setTimeout(
@@ -1410,24 +1238,20 @@ function toast(
                 "0";
 
         },
-        2400
+        2500
     );
 
 
     setTimeout(
-        () => {
-
-            element.remove();
-
-        },
-        2900
+        () => element.remove(),
+        2950
     );
 
 }
 
 
 /* =========================================================
-   CORAÇÕES
+   HEART EFFECT
 ========================================================= */
 
 function createHeart(
@@ -1445,50 +1269,41 @@ function createHeart(
     }
 
 
-    const element =
+    const heart =
         document.createElement(
             "span"
         );
 
 
-    element.className =
+    heart.className =
         small
             ? "trail-heart"
             : "pop-heart";
 
 
-    element.textContent =
-        Math.random() > .2
+    heart.textContent =
+        Math.random() > .25
             ? "♡"
             : "♥";
 
 
-    element.style.left =
+    heart.style.left =
         `${x}px`;
 
 
-    element.style.top =
+    heart.style.top =
         `${y}px`;
 
 
-    element.style.color =
-        Math.random() > .5
-            ? "var(--pink)"
-            : "var(--purple)";
-
-
-    effectsLayer.appendChild(
-        element
-    );
+    $("#effectsLayer")
+        .appendChild(heart);
 
 
     setTimeout(
-        () =>
-            element.remove(),
-
+        () => heart.remove(),
         small
-            ? 700
-            : 1100
+            ? 750
+            : 1200
     );
 
 }
@@ -1497,7 +1312,7 @@ function createHeart(
 function heartBurst(
     x,
     y,
-    amount = 9
+    amount = 8
 ) {
 
     for (
@@ -1510,7 +1325,6 @@ function heartBurst(
             () => {
 
                 createHeart(
-
                     x +
                     Math.random() *
                     60 -
@@ -1518,13 +1332,11 @@ function heartBurst(
 
                     y +
                     Math.random() *
-                    30 -
-                    15
-
+                    25 -
+                    12
                 );
 
             },
-
             i * 45
         );
 
@@ -1534,7 +1346,7 @@ function heartBurst(
 
 
 /* =========================================================
-   CONFETE
+   CONFETTI
 ========================================================= */
 
 function confetti(
@@ -1555,19 +1367,17 @@ function confetti(
 
 
     const colors = [
-
         "#a45bdd",
         "#ec6fb4",
         "#776fea",
         "#ffc660",
         "#dd8ae8"
-
     ];
 
 
     for (
         let i = 0;
-        i < 28;
+        i < 30;
         i++
     ) {
 
@@ -1578,7 +1388,7 @@ function confetti(
 
 
         piece.className =
-            "confetti";
+            "confetti-piece";
 
 
         piece.style.left =
@@ -1599,27 +1409,22 @@ function confetti(
 
 
         piece.style.setProperty(
-
             "--x",
-
             `${
                 Math.random() *
-                260 -
-                130
+                280 -
+                140
             }px`
-
         );
 
 
-        effectsLayer.appendChild(
-            piece
-        );
+        $("#effectsLayer")
+            .appendChild(piece);
 
 
         setTimeout(
-            () =>
-                piece.remove(),
-            1400
+            () => piece.remove(),
+            1500
         );
 
     }
@@ -1628,7 +1433,7 @@ function confetti(
 
 
 /* =========================================================
-   RENDER PRINCIPAL
+   RENDER CURRENT
 ========================================================= */
 
 async function renderCurrentSeries() {
@@ -1654,63 +1459,69 @@ async function renderCurrentSeries() {
         `${series.title} | Blog da Bia ♡`;
 
 
-    seriesTitle.textContent =
+    $("#seriesTitle")
+        .textContent =
         series.title;
 
 
-    seriesRating.textContent =
+    $("#seriesRating")
+        .textContent =
         series.rating.toFixed(1);
 
 
-    seriesPhrase.textContent =
+    $("#seriesPhrase")
+        .textContent =
         series.phrase;
 
 
-    seriesMetadata.innerHTML = `
+    $("#seriesMetadata")
+        .innerHTML = `
 
-        <span>
-            <i class="fa-regular fa-calendar"></i>
-            ${series.year}
-        </span>
+            <span>
+                <i class="fa-regular fa-calendar"></i>
+                ${series.year}
+            </span>
 
-        <span>
-            <i class="fa-solid fa-layer-group"></i>
-            ${series.seasons}
-            ${
-                series.seasons === 1
-                    ? "temporada"
-                    : "temporadas"
-            }
-        </span>
+            <span>
+                <i class="fa-solid fa-layer-group"></i>
 
-        <span>
-            <i class="fa-solid fa-film"></i>
-            ${escapeHTML(series.genre)}
-        </span>
+                ${series.seasons}
 
-        <span>
-            <i class="fa-solid fa-user-shield"></i>
-            ${series.age}+
-        </span>
+                ${
+                    series.seasons === 1
+                        ? "temporada"
+                        : "temporadas"
+                }
+            </span>
 
-    `;
+            <span>
+                <i class="fa-solid fa-film"></i>
+                ${escapeHTML(series.genre)}
+            </span>
+
+            <span>
+                <i class="fa-solid fa-user-shield"></i>
+                ${series.age}+
+            </span>
+
+        `;
 
 
-    seriesDescription.innerHTML =
+    $("#seriesDescription")
+        .innerHTML =
         series.description
             .map(
-                paragraph => `
+                text => `
                     <p>
-                        ${escapeHTML(
-                            paragraph
-                        )}
+                        ${escapeHTML(text)}
                     </p>
                 `
             )
             .join("");
 
 
-    tagsContainer.innerHTML =
+    $("#tagsContainer")
+        .innerHTML =
         series.tags
             .map(
                 tag => `
@@ -1722,8 +1533,26 @@ async function renderCurrentSeries() {
             .join("");
 
 
-    seriesQuote.textContent =
+    $("#seriesQuote")
+        .textContent =
         `“${series.quote}”`;
+
+
+    const card =
+        $("#contentCard");
+
+
+    card.classList.remove(
+        "content-changing"
+    );
+
+
+    void card.offsetWidth;
+
+
+    card.classList.add(
+        "content-changing"
+    );
 
 
     updateFavoriteUI();
@@ -1753,21 +1582,32 @@ async function renderCurrentSeries() {
     updateStats();
 
 
-    /*
-       CARREGA A CAPA CORRETA
-    */
+    /* CAPA */
 
-    posterLoader.style.display =
+    const loader =
+        $("#posterLoader");
+
+
+    const poster =
+        $("#seriesPoster");
+
+
+    loader.style.display =
         "grid";
 
 
-    seriesPoster.classList.remove(
+    loader.innerHTML = `
+        <i class="fa-solid fa-spinner"></i>
+    `;
+
+
+    poster.classList.remove(
         "loaded"
     );
 
 
     const api =
-        await fetchSeriesApi(
+        await fetchSeriesData(
             series
         );
 
@@ -1782,59 +1622,48 @@ async function renderCurrentSeries() {
     }
 
 
-    series.poster =
-        api.mediumImage ||
-        api.image ||
-        "";
-
-
     if (
         api.image
     ) {
 
-        seriesPoster.onload =
+        poster.onload =
             () => {
 
-                posterLoader.style.display =
+                loader.style.display =
                     "none";
 
 
-                seriesPoster.classList.add(
+                poster.classList.add(
                     "loaded"
                 );
 
             };
 
 
-        seriesPoster.src =
+        poster.src =
             api.image;
 
 
-        seriesPoster.alt =
+        poster.alt =
             `Capa de ${series.title}`;
 
     }
 
     else {
 
-        posterLoader.innerHTML = `
-
-            <div style="
-                text-align:center;
-                padding:20px;
-                color:var(--purple);
-            ">
-
+        loader.innerHTML = `
+            <div
+                style="
+                    text-align:center;
+                    padding:20px;
+                "
+            >
                 <i class="fa-solid fa-tv"></i>
 
                 <br><br>
 
-                ${escapeHTML(
-                    series.title
-                )}
-
+                ${escapeHTML(series.title)}
             </div>
-
         `;
 
     }
@@ -1842,28 +1671,28 @@ async function renderCurrentSeries() {
 
     renderSeriesList();
 
-    renderRecommendations();
-
     renderRanking();
+
+    renderRecommendations();
 
 }
 
 
 /* =========================================================
-   SELECIONAR
+   SELECT SERIES
 ========================================================= */
 
 function selectSeries(id) {
 
-    const exists =
-        seriesData.some(
+    if (
+        !seriesData.some(
             series =>
                 series.id === id
-        );
+        )
+    ) {
 
-
-    if (!exists) {
         return;
+
     }
 
 
@@ -1879,23 +1708,11 @@ function selectSeries(id) {
             "open"
         );
 
-
-    $("#contentCard")
-        .scrollIntoView({
-
-            behavior:
-                "smooth",
-
-            block:
-                "start"
-
-        });
-
 }
 
 
 /* =========================================================
-   LISTA
+   LIST
 ========================================================= */
 
 function renderSeriesList() {
@@ -1908,10 +1725,10 @@ function renderSeriesList() {
         state.search.trim()
     ) {
 
-        const term =
+        const search =
             state.search
-                .toLowerCase()
-                .trim();
+                .trim()
+                .toLowerCase();
 
 
         list =
@@ -1923,7 +1740,7 @@ function renderSeriesList() {
                         series.genres.join(" ")
                     )
                         .toLowerCase()
-                        .includes(term)
+                        .includes(search)
             );
 
     }
@@ -1978,24 +1795,22 @@ function renderSeriesList() {
     }
 
 
-    if (
-        !list.length
-    ) {
+    if (!list.length) {
 
-        seriesList.innerHTML = `
-
-            <div class="empty-state">
-                nenhuma série encontrada ♡
-            </div>
-
-        `;
+        $("#seriesList")
+            .innerHTML = `
+                <div class="empty-state">
+                    nenhuma série encontrada ♡
+                </div>
+            `;
 
         return;
 
     }
 
 
-    seriesList.innerHTML =
+    $("#seriesList")
+        .innerHTML =
         list
             .map(
                 series => `
@@ -2020,9 +1835,9 @@ function renderSeriesList() {
                             series.poster
                                 ? `
                                     <img
-                                        class="series-thumb"
                                         src="${series.poster}"
                                         alt=""
+                                        class="series-thumb"
                                     >
                                 `
                                 : `
@@ -2033,18 +1848,14 @@ function renderSeriesList() {
                         }
 
 
-                        <span class="series-item-info">
+                        <span class="series-info">
 
                             <strong>
-                                ${escapeHTML(
-                                    series.title
-                                )}
+                                ${escapeHTML(series.title)}
                             </strong>
 
                             <small>
-                                ${escapeHTML(
-                                    series.genre
-                                )}
+                                ${escapeHTML(series.genre)}
                                 ·
                                 ${series.year}
                             </small>
@@ -2061,7 +1872,7 @@ function renderSeriesList() {
                                         class="
                                             fa-solid
                                             fa-heart
-                                            item-heart
+                                            series-favorite-icon
                                         "
                                     ></i>
                                 `
@@ -2077,35 +1888,31 @@ function renderSeriesList() {
 }
 
 
-/* =========================================================
-   LIST CLICK
-========================================================= */
+$("#seriesList")
+    .addEventListener(
+        "click",
+        event => {
 
-seriesList.addEventListener(
-    "click",
-    event => {
-
-        const button =
-            event.target.closest(
-                "[data-series-id]"
-            );
+            const button =
+                event.target.closest(
+                    "[data-series-id]"
+                );
 
 
-        if (!button) {
-            return;
+            if (button) {
+
+                selectSeries(
+                    button.dataset.seriesId
+                );
+
+            }
+
         }
-
-
-        selectSeries(
-            button.dataset.seriesId
-        );
-
-    }
-);
+    );
 
 
 /* =========================================================
-   GÊNEROS
+   GENRES
 ========================================================= */
 
 function populateGenres() {
@@ -2118,57 +1925,60 @@ function populateGenres() {
                         series.genres
                 )
             )
-        ].sort();
+        ]
+            .sort();
 
 
-    genreSelect.innerHTML = `
+    $("#genreSelect")
+        .innerHTML = `
 
-        <option value="all">
-            todos
-        </option>
+            <option value="all">
+                todos
+            </option>
 
-        ${
-            genres
-                .map(
-                    genre => `
-                        <option value="${genre}">
-                            ${genre}
-                        </option>
-                    `
-                )
-                .join("")
-        }
+            ${
+                genres
+                    .map(
+                        genre => `
+                            <option value="${genre}">
+                                ${genre}
+                            </option>
+                        `
+                    )
+                    .join("")
+            }
 
-    `;
+        `;
 
 }
 
 
 /* =========================================================
-   PESQUISA
+   SEARCH
 ========================================================= */
 
-searchInput.addEventListener(
-    "input",
-    () => {
+$("#searchInput")
+    .addEventListener(
+        "input",
+        event => {
 
-        state.search =
-            searchInput.value;
-
-
-        $("#searchField")
-            .classList.toggle(
-                "has-text",
-                Boolean(
-                    state.search
-                )
-            );
+            state.search =
+                event.target.value;
 
 
-        renderSeriesList();
+            $("#searchField")
+                .classList.toggle(
+                    "has-text",
+                    Boolean(
+                        state.search
+                    )
+                );
 
-    }
-);
+
+            renderSeriesList();
+
+        }
+    );
 
 
 $("#clearSearch")
@@ -2176,7 +1986,8 @@ $("#clearSearch")
         "click",
         () => {
 
-            searchInput.value =
+            $("#searchInput")
+                .value =
                 "";
 
 
@@ -2197,7 +2008,7 @@ $("#clearSearch")
 
 
 /* =========================================================
-   FILTROS
+   FILTERS
 ========================================================= */
 
 $$(".filter-button")
@@ -2211,11 +2022,9 @@ $$(".filter-button")
                     $$(".filter-button")
                         .forEach(
                             item =>
-                                item
-                                    .classList
-                                    .remove(
-                                        "active"
-                                    )
+                                item.classList.remove(
+                                    "active"
+                                )
                         );
 
 
@@ -2237,22 +2046,23 @@ $$(".filter-button")
     );
 
 
-genreSelect.addEventListener(
-    "change",
-    () => {
+$("#genreSelect")
+    .addEventListener(
+        "change",
+        event => {
 
-        state.genre =
-            genreSelect.value;
+            state.genre =
+                event.target.value;
 
 
-        renderSeriesList();
+            renderSeriesList();
 
-    }
-);
+        }
+    );
 
 
 /* =========================================================
-   FAVORITOS
+   FAVORITES
 ========================================================= */
 
 function toggleFavorite(
@@ -2291,9 +2101,7 @@ function toggleFavorite(
         );
 
 
-        if (
-            event
-        ) {
+        if (event) {
 
             const rect =
                 event.currentTarget
@@ -2301,13 +2109,11 @@ function toggleFavorite(
 
 
             heartBurst(
-
                 rect.left +
                 rect.width / 2,
 
                 rect.top +
                 rect.height / 2
-
             );
 
         }
@@ -2315,7 +2121,7 @@ function toggleFavorite(
     }
 
 
-    setStorage(
+    saveStorage(
         "biaFavorites",
         favorites
     );
@@ -2330,16 +2136,18 @@ function toggleFavorite(
 }
 
 
-favoriteButton.addEventListener(
-    "click",
-    toggleFavorite
-);
+$("#favoriteButton")
+    .addEventListener(
+        "click",
+        toggleFavorite
+    );
 
 
-posterFavoriteButton.addEventListener(
-    "click",
-    toggleFavorite
-);
+$("#posterFavoriteButton")
+    .addEventListener(
+        "click",
+        toggleFavorite
+    );
 
 
 function updateFavoriteUI() {
@@ -2351,8 +2159,8 @@ function updateFavoriteUI() {
 
 
     [
-        favoriteButton,
-        posterFavoriteButton
+        $("#favoriteButton"),
+        $("#posterFavoriteButton")
     ]
         .forEach(
             button => {
@@ -2430,13 +2238,13 @@ $$("[data-watch-status]")
                     }
 
 
-                    setStorage(
+                    saveStorage(
                         "biaWatchStatus",
                         watchStatus
                     );
 
 
-                    setStorage(
+                    saveStorage(
                         "biaProgress",
                         progressData
                     );
@@ -2445,6 +2253,8 @@ $$("[data-watch-status]")
                     updateWatchUI();
 
                     updateProgressUI();
+
+                    renderSeriesList();
 
                     updateStats();
 
@@ -2468,13 +2278,10 @@ function updateWatchUI() {
             button => {
 
                 button.classList.toggle(
-
                     "active",
-
                     button.dataset
                         .watchStatus ===
                         status
-
                 );
 
             }
@@ -2484,7 +2291,7 @@ function updateWatchUI() {
 
 
 /* =========================================================
-   PROGRESSO
+   PROGRESS
 ========================================================= */
 
 $("#episodeProgress")
@@ -2527,13 +2334,13 @@ $("#episodeProgress")
             }
 
 
-            setStorage(
+            saveStorage(
                 "biaProgress",
                 progressData
             );
 
 
-            setStorage(
+            saveStorage(
                 "biaWatchStatus",
                 watchStatus
             );
@@ -2542,6 +2349,8 @@ $("#episodeProgress")
             updateProgressUI();
 
             updateWatchUI();
+
+            renderSeriesList();
 
             updateStats();
 
@@ -2597,8 +2406,35 @@ function updateProgressUI() {
 
 
 /* =========================================================
-   ESTRELAS
+   STARS
 ========================================================= */
+
+function paintStars(value) {
+
+    $$("[data-star]")
+        .forEach(
+            button => {
+
+                const star =
+                    Number(
+                        button.dataset.star
+                    );
+
+
+                button.innerHTML =
+                    star <= value
+                        ? `
+                            <i class="fa-solid fa-star"></i>
+                        `
+                        : `
+                            <i class="fa-regular fa-star"></i>
+                        `;
+
+            }
+        );
+
+}
+
 
 $$("[data-star]")
     .forEach(
@@ -2606,12 +2442,15 @@ $$("[data-star]")
 
             button.addEventListener(
                 "mouseenter",
-                () =>
+                () => {
+
                     paintStars(
                         Number(
                             button.dataset.star
                         )
-                    )
+                    );
+
+                }
             );
 
 
@@ -2631,7 +2470,7 @@ $$("[data-star]")
                         value;
 
 
-                    setStorage(
+                    saveStorage(
                         "biaRatings",
                         ratingsData
                     );
@@ -2676,35 +2515,6 @@ $("#starsContainer")
     );
 
 
-function paintStars(
-    value
-) {
-
-    $$("[data-star]")
-        .forEach(
-            button => {
-
-                const number =
-                    Number(
-                        button.dataset.star
-                    );
-
-
-                button.innerHTML =
-                    number <= value
-                        ? `
-                            <i class="fa-solid fa-star"></i>
-                        `
-                        : `
-                            <i class="fa-regular fa-star"></i>
-                        `;
-
-            }
-        );
-
-}
-
-
 function updateStars() {
 
     const value =
@@ -2733,26 +2543,32 @@ function updateStars() {
 $("#likeButton")
     .addEventListener(
         "click",
-        event =>
-            voteOpinion(
+        event => {
+
+            setOpinion(
                 "like",
                 event
-            )
+            );
+
+        }
     );
 
 
 $("#dislikeButton")
     .addEventListener(
         "click",
-        event =>
-            voteOpinion(
+        event => {
+
+            setOpinion(
                 "dislike",
                 event
-            )
+            );
+
+        }
     );
 
 
-function voteOpinion(
+function setOpinion(
     type,
     event
 ) {
@@ -2777,8 +2593,7 @@ function voteOpinion(
 
 
         if (
-            type ===
-            "like"
+            type === "like"
         ) {
 
             const rect =
@@ -2787,12 +2602,10 @@ function voteOpinion(
 
 
             heartBurst(
-
                 rect.left +
                 rect.width / 2,
 
                 rect.top
-
             );
 
         }
@@ -2800,7 +2613,7 @@ function voteOpinion(
     }
 
 
-    setStorage(
+    saveStorage(
         "biaOpinions",
         opinionsData
     );
@@ -2896,7 +2709,7 @@ function updateOpinions() {
 
 
 /* =========================================================
-   REAÇÕES
+   REACTIONS
 ========================================================= */
 
 $$("[data-reaction]")
@@ -2911,7 +2724,7 @@ $$("[data-reaction]")
                         state.currentSeriesId;
 
 
-                    const type =
+                    const reaction =
                         button.dataset.reaction;
 
 
@@ -2919,11 +2732,11 @@ $$("[data-reaction]")
                         {};
 
 
-                    reactionsData[id][type] =
-                        !reactionsData[id][type];
+                    reactionsData[id][reaction] =
+                        !reactionsData[id][reaction];
 
 
-                    setStorage(
+                    saveStorage(
                         "biaReactions",
                         reactionsData
                     );
@@ -2940,6 +2753,7 @@ $$("[data-reaction]")
                     createHeart(
                         rect.left +
                         rect.width / 2,
+
                         rect.top
                     );
 
@@ -2952,7 +2766,7 @@ $$("[data-reaction]")
 
 function updateReactions() {
 
-    const data =
+    const reactions =
         reactionsData[
             state.currentSeriesId
         ] ||
@@ -2960,22 +2774,11 @@ function updateReactions() {
 
 
     const base = {
-
-        love:
-            48,
-
-        cry:
-            22,
-
-        shock:
-            35,
-
-        laugh:
-            18,
-
-        angry:
-            9
-
+        love: 48,
+        cry: 22,
+        shock: 35,
+        laugh: 18,
+        angry: 9
     };
 
 
@@ -2989,7 +2792,7 @@ function updateReactions() {
 
                 const active =
                     Boolean(
-                        data[type]
+                        reactions[type]
                     );
 
 
@@ -2999,11 +2802,14 @@ function updateReactions() {
                 );
 
 
-                $(
-                    `[data-reaction-count="${type}"]`,
-                    button
-                )
-                    .textContent =
+                const count =
+                    $(
+                        `[data-reaction-count="${type}"]`,
+                        button
+                    );
+
+
+                count.textContent =
                     base[type] +
                     (
                         active
@@ -3018,7 +2824,7 @@ function updateReactions() {
 
 
 /* =========================================================
-   COMENTÁRIOS
+   COMMENTS
 ========================================================= */
 
 function getComments() {
@@ -3033,15 +2839,17 @@ function getComments() {
 }
 
 
-commentInput.addEventListener(
-    "input",
-    () => {
+$("#commentInput")
+    .addEventListener(
+        "input",
+        event => {
 
-        characterCounter.textContent =
-            `${commentInput.value.length}/280`;
+            $("#characterCounter")
+                .textContent =
+                `${event.target.value.length}/280`;
 
-    }
-);
+        }
+    );
 
 
 $$("[data-insert-emoji]")
@@ -3052,17 +2860,21 @@ $$("[data-insert-emoji]")
                 "click",
                 () => {
 
-                    commentInput.value +=
+                    const input =
+                        $("#commentInput");
+
+
+                    input.value +=
                         button.dataset
                             .insertEmoji;
 
 
-                    commentInput.dispatchEvent(
+                    input.dispatchEvent(
                         new Event("input")
                     );
 
 
-                    commentInput.focus();
+                    input.focus();
 
                 }
             );
@@ -3079,9 +2891,12 @@ $("#commentForm")
             event.preventDefault();
 
 
+            const input =
+                $("#commentInput");
+
+
             const text =
-                commentInput.value
-                    .trim();
+                input.value.trim();
 
 
             if (!text) {
@@ -3124,17 +2939,18 @@ $("#commentForm")
             });
 
 
-            setStorage(
+            saveStorage(
                 "biaComments",
                 commentsData
             );
 
 
-            commentInput.value =
+            input.value =
                 "";
 
 
-            characterCounter.textContent =
+            $("#characterCounter")
+                .textContent =
                 "0/280";
 
 
@@ -3152,11 +2968,11 @@ $("#commentForm")
     );
 
 
-function formatDate(
+function formatCommentDate(
     value
 ) {
 
-    const time =
+    const diff =
         Date.now() -
         new Date(value)
             .getTime();
@@ -3164,7 +2980,7 @@ function formatDate(
 
     const minutes =
         Math.floor(
-            time /
+            diff /
             60000
         );
 
@@ -3203,12 +3019,10 @@ function formatDate(
     }
 
 
-    return (
-        new Date(value)
-            .toLocaleDateString(
-                "pt-BR"
-            )
-    );
+    return new Date(value)
+        .toLocaleDateString(
+            "pt-BR"
+        );
 
 }
 
@@ -3219,7 +3033,8 @@ function renderComments() {
         getComments();
 
 
-    commentCounter.textContent =
+    $("#commentCounter")
+        .textContent =
         `${comments.length} ${
             comments.length === 1
                 ? "comentário"
@@ -3227,34 +3042,32 @@ function renderComments() {
         }`;
 
 
-    if (
-        !comments.length
-    ) {
+    if (!comments.length) {
 
-        commentsList.innerHTML = `
-
-            <div class="empty-state">
-                ainda não tem comentários ♡
-            </div>
-
-        `;
+        $("#commentsList")
+            .innerHTML = `
+                <div class="empty-state">
+                    ainda não tem comentários ♡
+                </div>
+            `;
 
         return;
 
     }
 
 
-    commentsList.innerHTML =
+    $("#commentsList")
+        .innerHTML =
         comments
             .map(
                 comment => `
 
-                    <article
-                        class="comment-card"
-                    >
+                    <article class="comment-card">
 
-                        <div class="comment-card-avatar">
-                            ${comment.author[0]}
+                        <div class="comment-avatar">
+                            ${escapeHTML(
+                                comment.author[0]
+                            )}
                         </div>
 
 
@@ -3269,7 +3082,7 @@ function renderComments() {
                                 </strong>
 
                                 <small>
-                                    ${formatDate(
+                                    ${formatCommentDate(
                                         comment.date
                                     )}
                                 </small>
@@ -3295,7 +3108,13 @@ function renderComments() {
                                     data-like-comment="${comment.id}"
                                 >
 
-                                    ♡
+                                    <i
+                                        class="${
+                                            comment.liked
+                                                ? "fa-solid"
+                                                : "fa-regular"
+                                        } fa-heart"
+                                    ></i>
 
                                     ${comment.likes || 0}
 
@@ -3305,7 +3124,11 @@ function renderComments() {
                                 <button
                                     data-reply-comment="${comment.id}"
                                 >
+
+                                    <i class="fa-regular fa-comment"></i>
+
                                     responder
+
                                 </button>
 
                             </div>
@@ -3322,7 +3145,7 @@ function renderComments() {
                                     required
                                 >
 
-                                <button>
+                                <button type="submit">
                                     enviar
                                 </button>
 
@@ -3383,45 +3206,181 @@ function renderComments() {
 }
 
 
-/* =========================================================
-   COMMENT ACTIONS
-========================================================= */
+$("#commentsList")
+    .addEventListener(
+        "click",
+        event => {
 
-commentsList.addEventListener(
-    "click",
-    event => {
-
-        const like =
-            event.target.closest(
-                "[data-like-comment]"
-            );
+            const comments =
+                getComments();
 
 
-        const reply =
-            event.target.closest(
-                "[data-reply-comment]"
-            );
+            const likeButton =
+                event.target.closest(
+                    "[data-like-comment]"
+                );
 
 
-        const remove =
-            event.target.closest(
-                "[data-delete-comment]"
-            );
+            if (likeButton) {
+
+                const comment =
+                    comments.find(
+                        item =>
+                            item.id ===
+                            likeButton.dataset
+                                .likeComment
+                    );
 
 
-        const comments =
-            getComments();
+                if (!comment) {
+                    return;
+                }
 
 
-        if (like) {
+                comment.liked =
+                    !comment.liked;
+
+
+                comment.likes =
+                    Math.max(
+                        0,
+                        (
+                            comment.likes ||
+                            0
+                        ) +
+                        (
+                            comment.liked
+                                ? 1
+                                : -1
+                        )
+                    );
+
+
+                saveStorage(
+                    "biaComments",
+                    commentsData
+                );
+
+
+                renderComments();
+
+                return;
+
+            }
+
+
+            const replyButton =
+                event.target.closest(
+                    "[data-reply-comment]"
+                );
+
+
+            if (replyButton) {
+
+                const form =
+                    $(
+                        `[data-reply-form="${replyButton.dataset.replyComment}"]`
+                    );
+
+
+                form?.classList.toggle(
+                    "open"
+                );
+
+
+                if (
+                    form?.classList
+                        .contains(
+                            "open"
+                        )
+                ) {
+
+                    $("input", form)
+                        ?.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            const deleteButton =
+                event.target.closest(
+                    "[data-delete-comment]"
+                );
+
+
+            if (deleteButton) {
+
+                commentsData[
+                    state.currentSeriesId
+                ] =
+                    comments.filter(
+                        item =>
+                            item.id !==
+                            deleteButton.dataset
+                                .deleteComment
+                    );
+
+
+                saveStorage(
+                    "biaComments",
+                    commentsData
+                );
+
+
+                renderComments();
+
+                updateStats();
+
+            }
+
+        }
+    );
+
+
+$("#commentsList")
+    .addEventListener(
+        "submit",
+        event => {
+
+            const form =
+                event.target.closest(
+                    "[data-reply-form]"
+                );
+
+
+            if (!form) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const input =
+                $("input", form);
+
+
+            const text =
+                input.value.trim();
+
+
+            if (!text) {
+                return;
+            }
+
 
             const comment =
-                comments.find(
-                    item =>
-                        item.id ===
-                        like.dataset
-                            .likeComment
-                );
+                getComments()
+                    .find(
+                        item =>
+                            item.id ===
+                            form.dataset
+                                .replyForm
+                    );
 
 
             if (!comment) {
@@ -3429,65 +3388,25 @@ commentsList.addEventListener(
             }
 
 
-            comment.liked =
-                !comment.liked;
+            comment.replies ??=
+                [];
 
 
-            comment.likes =
-                Math.max(
-                    0,
-                    (
-                        comment.likes ||
-                        0
-                    ) +
-                    (
-                        comment.liked
-                            ? 1
-                            : -1
-                    )
-                );
+            comment.replies.push({
+
+                author:
+                    "Visitante",
+
+                text,
+
+                date:
+                    new Date()
+                        .toISOString()
+
+            });
 
 
-            setStorage(
-                "biaComments",
-                commentsData
-            );
-
-
-            renderComments();
-
-        }
-
-
-        if (reply) {
-
-            const form =
-                $(
-                    `[data-reply-form="${reply.dataset.replyComment}"]`
-                );
-
-
-            form?.classList.toggle(
-                "open"
-            );
-
-        }
-
-
-        if (remove) {
-
-            commentsData[
-                state.currentSeriesId
-            ] =
-                comments.filter(
-                    comment =>
-                        comment.id !==
-                        remove.dataset
-                            .deleteComment
-                );
-
-
-            setStorage(
+            saveStorage(
                 "biaComments",
                 commentsData
             );
@@ -3497,93 +3416,21 @@ commentsList.addEventListener(
 
             updateStats();
 
-        }
 
-    }
-);
-
-
-commentsList.addEventListener(
-    "submit",
-    event => {
-
-        const form =
-            event.target.closest(
-                "[data-reply-form]"
+            toast(
+                "resposta publicada ♡",
+                "fa-reply"
             );
 
-
-        if (!form) {
-            return;
         }
-
-
-        event.preventDefault();
-
-
-        const input =
-            $("input", form);
-
-
-        const text =
-            input.value.trim();
-
-
-        if (!text) {
-            return;
-        }
-
-
-        const comment =
-            getComments()
-                .find(
-                    item =>
-                        item.id ===
-                        form.dataset
-                            .replyForm
-                );
-
-
-        if (!comment) {
-            return;
-        }
-
-
-        comment.replies ??=
-            [];
-
-
-        comment.replies.push({
-
-            author:
-                "Visitante",
-
-            text
-
-        });
-
-
-        setStorage(
-            "biaComments",
-            commentsData
-        );
-
-
-        renderComments();
-
-        updateStats();
-
-    }
-);
+    );
 
 
 /* =========================================================
-   MODAIS
+   MODALS
 ========================================================= */
 
-function openModal(
-    modal
-) {
+function openModal(modal) {
 
     modal.classList.add(
         "open"
@@ -3596,9 +3443,7 @@ function openModal(
 }
 
 
-function closeModal(
-    modal
-) {
+function closeModal(modal) {
 
     modal.classList.remove(
         "open"
@@ -3636,23 +3481,21 @@ function closeModal(
 
 $$("[data-close-modal]")
     .forEach(
-        element => {
+        button => {
 
-            element.addEventListener(
+            button.addEventListener(
                 "click",
                 () => {
 
                     const modal =
-                        element.closest(
+                        button.closest(
                             ".modal"
                         );
 
 
                     if (modal) {
 
-                        closeModal(
-                            modal
-                        );
+                        closeModal(modal);
 
                     }
 
@@ -3705,7 +3548,7 @@ $("#posterTrailerButton")
 
 
 /* =========================================================
-   ELENCO COM FOTOS REAIS
+   CAST COM FOTOS
 ========================================================= */
 
 $("#castButton")
@@ -3724,11 +3567,9 @@ $("#castButton")
 
             $("#castGrid")
                 .innerHTML = `
-
                     <div class="empty-state">
-                        carregando elenco...
+                        carregando fotos do elenco...
                     </div>
-
                 `;
 
 
@@ -3738,22 +3579,18 @@ $("#castButton")
 
 
             const api =
-                await fetchSeriesApi(
+                await fetchSeriesData(
                     series
                 );
 
 
-            if (
-                !api.cast.length
-            ) {
+            if (!api.cast.length) {
 
                 $("#castGrid")
                     .innerHTML = `
-
                         <div class="empty-state">
                             não foi possível carregar o elenco.
                         </div>
-
                     `;
 
                 return;
@@ -3765,35 +3602,27 @@ $("#castButton")
                 .innerHTML =
                 api.cast
                     .map(
-                        person => `
+                        actor => `
 
                             <article class="cast-card">
 
                                 <div class="cast-photo-wrapper">
 
                                     ${
-                                        person.photo
+                                        actor.photo
                                             ? `
-
                                                 <img
-                                                    src="${person.photo}"
-                                                    alt="${escapeHTML(person.name)}"
+                                                    src="${actor.photo}"
+                                                    alt="${escapeHTML(actor.name)}"
                                                     class="cast-photo"
                                                 >
-
                                             `
                                             : `
-
                                                 <div class="cast-placeholder">
-
-                                                    ${
-                                                        escapeHTML(
-                                                            person.name[0]
-                                                        )
-                                                    }
-
+                                                    ${escapeHTML(
+                                                        actor.name[0]
+                                                    )}
                                                 </div>
-
                                             `
                                     }
 
@@ -3804,13 +3633,13 @@ $("#castButton")
 
                                     <strong>
                                         ${escapeHTML(
-                                            person.name
+                                            actor.name
                                         )}
                                     </strong>
 
                                     <span>
                                         ${escapeHTML(
-                                            person.character
+                                            actor.role
                                         )}
                                     </span>
 
@@ -3827,7 +3656,7 @@ $("#castButton")
 
 
 /* =========================================================
-   COPIAR LINK
+   COPY / SHARE
 ========================================================= */
 
 $("#copyLinkButton")
@@ -3864,10 +3693,6 @@ $("#copyLinkButton")
     );
 
 
-/* =========================================================
-   COMPARTILHAR
-========================================================= */
-
 $("#shareButton")
     .addEventListener(
         "click",
@@ -3884,7 +3709,6 @@ $("#shareButton")
                 try {
 
                     await navigator.share({
-
                         title:
                             `${series.title} | Blog da Bia`,
 
@@ -3893,13 +3717,12 @@ $("#shareButton")
 
                         url:
                             window.location.href
-
                     });
 
                 }
 
                 catch {
-                    /* cancelou */
+                    /* cancelado */
                 }
 
             }
@@ -3916,7 +3739,7 @@ $("#shareButton")
 
 
 /* =========================================================
-   ALEATÓRIA
+   RANDOM
 ========================================================= */
 
 $("#randomButton")
@@ -3924,7 +3747,7 @@ $("#randomButton")
         "click",
         () => {
 
-            const possibilities =
+            const possible =
                 seriesData.filter(
                     series =>
                         series.id !==
@@ -3933,10 +3756,10 @@ $("#randomButton")
 
 
             const chosen =
-                possibilities[
+                possible[
                     Math.floor(
                         Math.random() *
-                        possibilities.length
+                        possible.length
                     )
                 ];
 
@@ -3959,7 +3782,7 @@ $("#randomButton")
    NEXT
 ========================================================= */
 
-function updateNextSeries() {
+function getNextSeries() {
 
     const index =
         seriesData.findIndex(
@@ -3969,18 +3792,22 @@ function updateNextSeries() {
         );
 
 
-    const next =
-        seriesData[
-            (
-                index + 1
-            ) %
-            seriesData.length
-        ];
+    return seriesData[
+        (
+            index + 1
+        ) %
+        seriesData.length
+    ];
 
+}
+
+
+function updateNextSeries() {
 
     $("#nextSeriesName")
         .textContent =
-        next.title;
+        getNextSeries()
+            .title;
 
 }
 
@@ -3990,23 +3817,9 @@ $("#nextSeriesButton")
         "click",
         () => {
 
-            const index =
-                seriesData.findIndex(
-                    series =>
-                        series.id ===
-                        state.currentSeriesId
-                );
-
-
             selectSeries(
-
-                seriesData[
-                    (
-                        index + 1
-                    ) %
-                    seriesData.length
-                ].id
-
+                getNextSeries()
+                    .id
             );
 
         }
@@ -4022,7 +3835,7 @@ function renderRanking() {
     const ranking =
         [...seriesData]
             .sort(
-                (a,b) =>
+                (a, b) =>
                     b.rating -
                     a.rating
             )
@@ -4046,7 +3859,7 @@ function renderRanking() {
                         data-ranking="${series.id}"
                     >
 
-                        <span class="ranking-number">
+                        <span class="ranking-position">
                             ${index + 1}
                         </span>
 
@@ -4056,25 +3869,28 @@ function renderRanking() {
                                 ? `
                                     <img
                                         src="${series.poster}"
-                                        alt="${series.title}"
+                                        alt="${escapeHTML(series.title)}"
                                     >
                                 `
                                 : `
                                     <div
                                         style="
+                                            width:100%;
                                             aspect-ratio:2/3;
                                             border-radius:12px;
-                                            background:var(--soft-gradient);
+                                            background:var(--gradient-soft);
                                         "
                                     ></div>
                                 `
                         }
 
 
-                        <div class="ranking-info">
+                        <div class="ranking-text">
 
                             <strong>
-                                ${series.title}
+                                ${escapeHTML(
+                                    series.title
+                                )}
                             </strong>
 
                             <span>
@@ -4097,16 +3913,16 @@ $("#rankingGrid")
         "click",
         event => {
 
-            const button =
+            const item =
                 event.target.closest(
                     "[data-ranking]"
                 );
 
 
-            if (button) {
+            if (item) {
 
                 selectSeries(
-                    button.dataset.ranking
+                    item.dataset.ranking
                 );
 
             }
@@ -4116,19 +3932,42 @@ $("#rankingGrid")
 
 
 /* =========================================================
-   RECOMENDAÇÕES
+   RECOMMENDATIONS
 ========================================================= */
 
-function shuffle(
-    array
-) {
+function shuffle(array) {
 
-    return [...array]
-        .sort(
-            () =>
-                Math.random() -
-                .5
-        );
+    const copy =
+        [...array];
+
+
+    for (
+        let i =
+            copy.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
+
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+
+    return copy;
 
 }
 
@@ -4140,36 +3979,35 @@ function renderRecommendations() {
 
 
     const related =
-        seriesData
-            .filter(
-                series =>
-                    series.id !==
-                        current.id &&
-                    series.genres.some(
-                        genre =>
-                            current.genres.includes(
+        seriesData.filter(
+            series =>
+                series.id !==
+                    current.id &&
+                series.genres.some(
+                    genre =>
+                        current.genres
+                            .includes(
                                 genre
                             )
-                    )
-            );
+                )
+        );
 
 
-    const remaining =
-        seriesData
-            .filter(
-                series =>
-                    series.id !==
-                        current.id &&
-                    !related.includes(
-                        series
-                    )
-            );
+    const others =
+        seriesData.filter(
+            series =>
+                series.id !==
+                    current.id &&
+                !related.includes(
+                    series
+                )
+        );
 
 
     const selected =
         [
             ...shuffle(related),
-            ...shuffle(remaining)
+            ...shuffle(others)
         ]
             .slice(
                 0,
@@ -4193,7 +4031,7 @@ function renderRecommendations() {
                                 ? `
                                     <img
                                         src="${series.poster}"
-                                        alt=""
+                                        alt="${escapeHTML(series.title)}"
                                     >
                                 `
                                 : ""
@@ -4203,11 +4041,15 @@ function renderRecommendations() {
                         <div class="recommendation-overlay">
 
                             <strong>
-                                ${series.title}
+                                ${escapeHTML(
+                                    series.title
+                                )}
                             </strong>
 
                             <span>
-                                ${series.genre}
+                                ${escapeHTML(
+                                    series.genre
+                                )}
                                 ·
                                 ⭐ ${series.rating}
                             </span>
@@ -4265,7 +4107,7 @@ $("#refreshRecommendations")
 
 
 /* =========================================================
-   HISTÓRICO
+   HISTORY
 ========================================================= */
 
 function addHistory(id) {
@@ -4287,7 +4129,7 @@ function addHistory(id) {
         );
 
 
-    setStorage(
+    saveStorage(
         "biaHistory",
         historyData
     );
@@ -4296,6 +4138,20 @@ function addHistory(id) {
 
 
 function renderHistory() {
+
+    if (!historyData.length) {
+
+        $("#historyList")
+            .innerHTML = `
+                <div class="empty-state">
+                    seu histórico está vazio ♡
+                </div>
+            `;
+
+        return;
+
+    }
+
 
     $("#historyList")
         .innerHTML =
@@ -4336,7 +4192,9 @@ function renderHistory() {
                             <span>
 
                                 <strong>
-                                    ${series.title}
+                                    ${escapeHTML(
+                                        series.title
+                                    )}
                                 </strong>
 
                                 <small>
@@ -4361,16 +4219,16 @@ $("#historyList")
         "click",
         event => {
 
-            const button =
+            const item =
                 event.target.closest(
                     "[data-history]"
                 );
 
 
-            if (button) {
+            if (item) {
 
                 selectSeries(
-                    button.dataset.history
+                    item.dataset.history
                 );
 
             }
@@ -4384,16 +4242,23 @@ $("#clearHistoryButton")
         "click",
         () => {
 
-            historyData = [];
+            historyData =
+                [];
 
 
-            setStorage(
+            saveStorage(
                 "biaHistory",
                 []
             );
 
 
             renderHistory();
+
+
+            toast(
+                "histórico limpo",
+                "fa-trash"
+            );
 
         }
     );
@@ -4425,9 +4290,31 @@ function updateStats() {
                 (
                     total,
                     list
-                ) =>
-                    total +
-                    list.length,
+                ) => {
+
+                    const replies =
+                        list.reduce(
+                            (
+                                subtotal,
+                                comment
+                            ) =>
+                                subtotal +
+                                (
+                                    comment.replies
+                                        ?.length ||
+                                    0
+                                ),
+                            0
+                        );
+
+
+                    return (
+                        total +
+                        list.length +
+                        replies
+                    );
+
+                },
                 0
             );
 
@@ -4470,7 +4357,7 @@ function updateStats() {
 
 
 /* =========================================================
-   VISITAS
+   VISITS
 ========================================================= */
 
 function registerVisit() {
@@ -4522,7 +4409,7 @@ function renderModalSearch(
     value = ""
 ) {
 
-    const term =
+    const search =
         value
             .trim()
             .toLowerCase();
@@ -4531,10 +4418,10 @@ function renderModalSearch(
     const results =
         seriesData.filter(
             series =>
-                !term ||
+                !search ||
                 series.title
                     .toLowerCase()
-                    .includes(term)
+                    .includes(search)
         );
 
 
@@ -4563,7 +4450,7 @@ function renderModalSearch(
                                             width:42px;
                                             height:52px;
                                             border-radius:7px;
-                                            background:var(--soft-gradient);
+                                            background:var(--gradient-soft);
                                         "
                                     ></div>
                                 `
@@ -4573,16 +4460,21 @@ function renderModalSearch(
                         <span>
 
                             <strong>
-                                ${series.title}
+                                ${escapeHTML(
+                                    series.title
+                                )}
                             </strong>
 
                             <small>
-                                ${series.genre}
+                                ${escapeHTML(
+                                    series.genre
+                                )}
                                 ·
                                 ${series.year}
                             </small>
 
                         </span>
+
 
                         <i class="fa-solid fa-arrow-right"></i>
 
@@ -4614,9 +4506,12 @@ $("#searchButton")
 
 
             setTimeout(
-                () =>
+                () => {
+
                     $("#modalSearchInput")
-                        .focus(),
+                        .focus();
+
+                },
                 100
             );
 
@@ -4627,10 +4522,13 @@ $("#searchButton")
 $("#modalSearchInput")
     .addEventListener(
         "input",
-        event =>
+        event => {
+
             renderModalSearch(
                 event.target.value
-            )
+            );
+
+        }
     );
 
 
@@ -4639,25 +4537,26 @@ $("#modalSearchResults")
         "click",
         event => {
 
-            const button =
+            const item =
                 event.target.closest(
                     "[data-modal-series]"
                 );
 
 
-            if (button) {
-
-                closeModal(
-                    $("#searchModal")
-                );
-
-
-                selectSeries(
-                    button.dataset
-                        .modalSeries
-                );
-
+            if (!item) {
+                return;
             }
+
+
+            closeModal(
+                $("#searchModal")
+            );
+
+
+            selectSeries(
+                item.dataset
+                    .modalSeries
+            );
 
         }
     );
@@ -4666,6 +4565,73 @@ $("#modalSearchResults")
 /* =========================================================
    SETTINGS
 ========================================================= */
+
+function openSettings() {
+
+    $("#settingsPanel")
+        .classList.add(
+            "open"
+        );
+
+
+    $("#settingsOverlay")
+        .classList.add(
+            "open"
+        );
+
+
+    body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeSettings() {
+
+    $("#settingsPanel")
+        .classList.remove(
+            "open"
+        );
+
+
+    $("#settingsOverlay")
+        .classList.remove(
+            "open"
+        );
+
+
+    if (
+        !$(".modal.open")
+    ) {
+
+        body.style.overflow =
+            "";
+
+    }
+
+}
+
+
+$("#settingsButton")
+    .addEventListener(
+        "click",
+        openSettings
+    );
+
+
+$("#closeSettings")
+    .addEventListener(
+        "click",
+        closeSettings
+    );
+
+
+$("#settingsOverlay")
+    .addEventListener(
+        "click",
+        closeSettings
+    );
+
 
 function applySettings() {
 
@@ -4688,14 +4654,17 @@ function applySettings() {
     }
 
 
-    $$(".theme-option")
+    $$(".theme-button")
         .forEach(
-            button =>
+            button => {
+
                 button.classList.toggle(
                     "active",
                     button.dataset.theme ===
                         settings.theme
-                )
+                );
+
+            }
         );
 
 
@@ -4739,74 +4708,7 @@ function applySettings() {
 }
 
 
-$(".settings-panel");
-
-
-$("#settingsButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            $("#settingsPanel")
-                .classList.add(
-                    "open"
-                );
-
-
-            $("#settingsOverlay")
-                .classList.add(
-                    "open"
-                );
-
-
-            body.style.overflow =
-                "hidden";
-
-        }
-    );
-
-
-function closeSettings() {
-
-    $("#settingsPanel")
-        .classList.remove(
-            "open"
-        );
-
-
-    $("#settingsOverlay")
-        .classList.remove(
-            "open"
-        );
-
-
-    if (
-        !$(".modal.open")
-    ) {
-
-        body.style.overflow =
-            "";
-
-    }
-
-}
-
-
-$("#closeSettings")
-    .addEventListener(
-        "click",
-        closeSettings
-    );
-
-
-$("#settingsOverlay")
-    .addEventListener(
-        "click",
-        closeSettings
-    );
-
-
-$$(".theme-option")
+$$(".theme-button")
     .forEach(
         button => {
 
@@ -4818,13 +4720,19 @@ $$(".theme-option")
                         button.dataset.theme;
 
 
-                    setStorage(
+                    saveStorage(
                         "biaSettings",
                         settings
                     );
 
 
                     applySettings();
+
+
+                    toast(
+                        "tema alterado ♡",
+                        "fa-palette"
+                    );
 
                 }
             );
@@ -4834,34 +4742,13 @@ $$(".theme-option")
 
 
 [
-    [
-        "cursorToggle",
-        "cursor"
-    ],
-
-    [
-        "trailToggle",
-        "trail"
-    ],
-
-    [
-        "animationToggle",
-        "animations"
-    ],
-
-    [
-        "effectsToggle",
-        "effects"
-    ]
-
+    ["cursorToggle", "cursor"],
+    ["trailToggle", "trail"],
+    ["animationToggle", "animations"],
+    ["effectsToggle", "effects"]
 ]
     .forEach(
-        (
-            [
-                id,
-                property
-            ]
-        ) => {
+        ([id, property]) => {
 
             $(`#${id}`)
                 .addEventListener(
@@ -4872,7 +4759,7 @@ $$(".theme-option")
                             event.target.checked;
 
 
-                        setStorage(
+                        saveStorage(
                             "biaSettings",
                             settings
                         );
@@ -4893,26 +4780,15 @@ $("#resetSettingsButton")
         () => {
 
             settings = {
-
-                theme:
-                    "lavender",
-
-                cursor:
-                    true,
-
-                trail:
-                    true,
-
-                animations:
-                    true,
-
-                effects:
-                    true
-
+                theme: "lavender",
+                cursor: true,
+                trail: true,
+                animations: true,
+                effects: true
             };
 
 
-            setStorage(
+            saveStorage(
                 "biaSettings",
                 settings
             );
@@ -4945,43 +4821,48 @@ document.addEventListener(
             settings.cursor
         ) {
 
-            heartCursor.style.left =
+            $("#heartCursor")
+                .style.left =
                 `${event.clientX}px`;
 
 
-            heartCursor.style.top =
+            $("#heartCursor")
+                .style.top =
                 `${event.clientY}px`;
 
         }
 
 
         if (
-            settings.cursor &&
-            settings.trail &&
-            settings.effects
+            !settings.cursor ||
+            !settings.trail ||
+            !settings.effects
         ) {
 
-            const now =
-                Date.now();
+            return;
+
+        }
 
 
-            if (
-                now -
-                lastTrail >
-                55
-            ) {
-
-                lastTrail =
-                    now;
+        const now =
+            Date.now();
 
 
-                createHeart(
-                    event.clientX,
-                    event.clientY,
-                    true
-                );
+        if (
+            now -
+            lastTrail >
+            55
+        ) {
 
-            }
+            lastTrail =
+                now;
+
+
+            createHeart(
+                event.clientX,
+                event.clientY,
+                true
+            );
 
         }
 
@@ -4999,7 +4880,7 @@ document.addEventListener(
             )
         ) {
 
-            heartCursor
+            $("#heartCursor")
                 .classList.add(
                     "hover"
                 );
@@ -5020,7 +4901,7 @@ document.addEventListener(
             )
         ) {
 
-            heartCursor
+            $("#heartCursor")
                 .classList.remove(
                     "hover"
                 );
@@ -5115,15 +4996,10 @@ function initializeTilt() {
 
 
             card.style.transform = `
-
                 perspective(900px)
-
                 rotateX(${rotateX}deg)
-
                 rotateY(${rotateY}deg)
-
                 translateY(-3px)
-
             `;
 
         }
@@ -5159,22 +5035,22 @@ function initializeTilt() {
 
 
 /* =========================================================
-   SCROLL
+   SCROLL PROGRESS
 ========================================================= */
 
 function updateScroll() {
 
-    const max =
+    const maximum =
         document.documentElement
             .scrollHeight -
         window.innerHeight;
 
 
-    const percent =
-        max > 0
+    const percentage =
+        maximum > 0
             ? (
                 window.scrollY /
-                max
+                maximum
             ) *
             100
             : 0;
@@ -5182,7 +5058,7 @@ function updateScroll() {
 
     $("#readingProgress")
         .style.width =
-        `${percent}%`;
+        `${percentage}%`;
 
 
     $("#backToTop")
@@ -5199,8 +5075,7 @@ window.addEventListener(
     "scroll",
     updateScroll,
     {
-        passive:
-            true
+        passive: true
     }
 );
 
@@ -5212,13 +5087,8 @@ window.addEventListener(
 function goTop() {
 
     window.scrollTo({
-
-        top:
-            0,
-
-        behavior:
-            "smooth"
-
+        top: 0,
+        behavior: "smooth"
     });
 
 }
@@ -5246,28 +5116,34 @@ $("#logoButton")
 
 
 /* =========================================================
-   MOBILE
+   MOBILE SIDEBAR
 ========================================================= */
 
 $("#openSidebar")
     .addEventListener(
         "click",
-        () =>
+        () => {
+
             $("#sidebar")
                 .classList.add(
                     "open"
-                )
+                );
+
+        }
     );
 
 
 $("#closeSidebar")
     .addEventListener(
         "click",
-        () =>
+        () => {
+
             $("#sidebar")
                 .classList.remove(
                     "open"
-                )
+                );
+
+        }
     );
 
 
@@ -5289,24 +5165,23 @@ $$("[data-scroll]")
                         );
 
 
-                    target?.scrollIntoView({
+                    if (!target) {
+                        return;
+                    }
 
-                        behavior:
-                            "smooth",
 
-                        block:
-                            "start"
-
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
                     });
 
 
                     $$(".quick-button")
                         .forEach(
                             item =>
-                                item
-                                    .classList.remove(
-                                        "active"
-                                    )
+                                item.classList.remove(
+                                    "active"
+                                )
                         );
 
 
@@ -5322,7 +5197,7 @@ $$("[data-scroll]")
 
 
 /* =========================================================
-   CORAÇÃO FINAL
+   DEVELOPER HEART
 ========================================================= */
 
 $("#sendHeartButton")
@@ -5336,24 +5211,20 @@ $("#sendHeartButton")
 
 
             heartBurst(
-
                 rect.left +
                 rect.width / 2,
 
                 rect.top,
 
                 14
-
             );
 
 
             confetti(
-
                 rect.left +
                 rect.width / 2,
 
                 rect.top
-
             );
 
 
@@ -5371,9 +5242,29 @@ $("#sendHeartButton")
 
 function initializeReveal() {
 
+    if (
+        !(
+            "IntersectionObserver"
+            in window
+        )
+    ) {
+
+        $$(".reveal")
+            .forEach(
+                element =>
+                    element.classList.add(
+                        "visible"
+                    )
+            );
+
+
+        return;
+
+    }
+
+
     const observer =
         new IntersectionObserver(
-
             entries => {
 
                 entries.forEach(
@@ -5399,12 +5290,9 @@ function initializeReveal() {
                 );
 
             },
-
             {
-                threshold:
-                    .06
+                threshold: .06
             }
-
         );
 
 
@@ -5420,69 +5308,131 @@ function initializeReveal() {
 
 
 /* =========================================================
-   FOTOS LOCAIS DOS CRIADORES
+   LOCAL PHOTOS
 ========================================================= */
 
-function checkLocalPhotos() {
+function verifyLocalPhotos() {
 
-    [
-        [
-            $("#ownerPhoto"),
-            "Beatriz.jpg"
-        ],
+    const photos = [
 
-        [
-            $("#beatrizDeveloperPhoto"),
-            "Beatriz.jpg"
-        ],
+        {
+            element:
+                $("#ownerPhoto"),
 
-        [
-            $("#bayerleePhoto"),
-            "Bayerlee.jpg"
-        ]
+            path:
+                "./img/Beatriz.jpg"
+        },
 
-    ]
-        .forEach(
-            (
-                [
-                    image,
-                    filename
-                ]
-            ) => {
+        {
+            element:
+                $("#beatrizDeveloperPhoto"),
 
-                if (!image) {
-                    return;
+            path:
+                "./img/Beatriz.jpg"
+        },
+
+        {
+            element:
+                $("#bayerleePhoto"),
+
+            path:
+                "./img/Bayerlee.jpg"
+        }
+
+    ];
+
+
+    photos.forEach(
+        photo => {
+
+            if (
+                !photo.element
+            ) {
+
+                return;
+
+            }
+
+
+            photo.element.addEventListener(
+                "error",
+                () => {
+
+                    console.error(
+                        `Imagem não encontrada: ${photo.path}`
+                    );
+
+
+                    toast(
+                        `Confira ${photo.path}`,
+                        "fa-image"
+                    );
+
+                },
+                {
+                    once: true
                 }
+            );
+
+        }
+    );
+
+}
 
 
-                image.addEventListener(
-                    "error",
-                    () => {
+/* =========================================================
+   PRELOAD CAPAS
+========================================================= */
 
-                        console.error(
-                            `A foto ${filename} não foi encontrada.`
-                        );
+async function preloadSeries() {
 
-
-                        image.style.opacity =
-                            ".25";
+    const queue =
+        [...seriesData];
 
 
-                        toast(
-                            `Confira o arquivo ${filename}`,
-                            "fa-image"
-                        );
+    const workers =
+        Array.from(
+            {
+                length: 4
+            },
+            async () => {
 
-                    },
+                while (
+                    queue.length
+                ) {
 
-                    {
-                        once:
-                            true
+                    const series =
+                        queue.shift();
+
+
+                    if (!series) {
+                        break;
                     }
-                );
+
+
+                    await fetchSeriesData(
+                        series
+                    );
+
+
+                    renderSeriesList();
+
+                }
 
             }
         );
+
+
+    await Promise.all(
+        workers
+    );
+
+
+    renderRanking();
+
+    renderRecommendations();
+
+    renderHistory();
 
 }
 
@@ -5494,10 +5444,11 @@ function checkLocalPhotos() {
 function loadHash() {
 
     const hash =
-        location.hash.replace(
-            "#",
-            ""
-        );
+        location.hash
+            .replace(
+                "#",
+                ""
+            );
 
 
     if (
@@ -5516,7 +5467,7 @@ function loadHash() {
 
 
 /* =========================================================
-   ESC
+   ESC + SHORTCUTS
 ========================================================= */
 
 document.addEventListener(
@@ -5545,6 +5496,68 @@ document.addEventListener(
                     "open"
                 );
 
+
+            return;
+
+        }
+
+
+        if (
+            event.target.matches(
+                "input,textarea,select"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            event.key === "/"
+        ) {
+
+            event.preventDefault();
+
+
+            $("#searchButton")
+                .click();
+
+        }
+
+
+        if (
+            event.key
+                .toLowerCase() ===
+            "f"
+        ) {
+
+            $("#favoriteButton")
+                .click();
+
+        }
+
+
+        if (
+            event.key
+                .toLowerCase() ===
+            "r"
+        ) {
+
+            $("#randomButton")
+                .click();
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            $("#nextSeriesButton")
+                .click();
+
         }
 
     }
@@ -5552,7 +5565,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   INITIALIZE
 ========================================================= */
 
 async function initialize() {
@@ -5563,7 +5576,7 @@ async function initialize() {
 
     applySettings();
 
-    checkLocalPhotos();
+    verifyLocalPhotos();
 
     renderSeriesList();
 
@@ -5584,19 +5597,10 @@ async function initialize() {
     updateScroll();
 
 
-    /*
-       SÉRIE ATUAL PRIMEIRO
-    */
-
     await renderCurrentSeries();
 
 
-    /*
-       DEPOIS CARREGA AS OUTRAS
-       SEM TRAVAR A PÁGINA
-    */
-
-    preloadAllSeriesImages();
+    preloadSeries();
 
 
     setTimeout(
@@ -5608,6 +5612,11 @@ async function initialize() {
 
         },
         650
+    );
+
+
+    console.log(
+        "♡ Blog da Bia carregado"
     );
 
 }

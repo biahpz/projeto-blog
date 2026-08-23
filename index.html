@@ -11,17 +11,16 @@
 
     <meta
         name="description"
-        content="Blog da Bia - séries, opiniões, avaliações, comentários e recomendações."
+        content="Blog da Bia - séries, avaliações, comentários, favoritos e recomendações."
     >
 
     <meta
         name="theme-color"
-        content="#a75fe6"
+        content="#a65be0"
     >
 
     <title>Blog da Bia ♡</title>
 
-    <!-- FONTES -->
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -38,7 +37,6 @@
         rel="stylesheet"
     >
 
-    <!-- ÍCONES -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -50,82 +48,66 @@
     >
 </head>
 
-
 <body>
 
-    <!-- =====================================================
-         PROGRESSO DA PÁGINA
-    ====================================================== -->
-
+    <!-- PROGRESSO -->
     <div
-        class="reading-progress"
         id="readingProgress"
+        class="reading-progress"
     ></div>
 
 
-    <!-- =====================================================
-         CURSOR DE CORAÇÃO
-    ====================================================== -->
-
+    <!-- CURSOR -->
     <div
-        class="heart-cursor"
         id="heartCursor"
+        class="heart-cursor"
     >
         ♡
     </div>
 
 
-    <!-- =====================================================
-         EFEITOS
-    ====================================================== -->
-
+    <!-- EFEITOS -->
     <div
-        class="effects-layer"
         id="effectsLayer"
+        class="effects-layer"
     ></div>
 
 
-    <!-- =====================================================
-         FUNDO ANIMADO
-    ====================================================== -->
-
+    <!-- FUNDO -->
     <div class="background-effects">
 
-        <div class="orb orb-one"></div>
-        <div class="orb orb-two"></div>
-        <div class="orb orb-three"></div>
-        <div class="orb orb-four"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
 
-        <span class="floating-symbol symbol-one">
+        <span class="floating-decoration decoration-1">
             ♡
         </span>
 
-        <span class="floating-symbol symbol-two">
+        <span class="floating-decoration decoration-2">
             ✦
         </span>
 
-        <span class="floating-symbol symbol-three">
+        <span class="floating-decoration decoration-3">
             ♡
         </span>
 
-        <span class="floating-symbol symbol-four">
+        <span class="floating-decoration decoration-4">
             ✧
         </span>
 
-        <span class="floating-symbol symbol-five">
+        <span class="floating-decoration decoration-5">
             ♡
         </span>
 
     </div>
 
 
-    <!-- =====================================================
-         TOAST
-    ====================================================== -->
-
+    <!-- TOAST -->
     <div
-        class="toast-container"
         id="toastContainer"
+        class="toast-container"
     ></div>
 
 
@@ -138,25 +120,22 @@
         id="header"
     >
 
-        <!-- BEATRIZ -->
+        <div class="owner">
 
-        <div class="owner-profile">
-
-            <div class="owner-photo-border">
+            <div class="owner-image-box">
 
                 <img
-                    src="./Beatriz.jpg"
+                    src="./img/Beatriz.jpg"
                     alt="Foto de Beatriz"
-                    class="owner-photo"
                     id="ownerPhoto"
+                    class="owner-photo"
                 >
 
-                <span class="online-status"></span>
+                <span class="online-dot"></span>
 
             </div>
 
-
-            <div class="owner-data">
+            <div class="owner-text">
 
                 <span>
                     criadora do blog
@@ -171,13 +150,11 @@
         </div>
 
 
-        <!-- LOGO -->
-
-        <div class="logo-area">
+        <div class="brand">
 
             <button
                 id="logoButton"
-                class="logo"
+                class="brand-button"
             >
 
                 <span>
@@ -197,13 +174,12 @@
         </div>
 
 
-        <!-- BOTÕES HEADER -->
-
-        <nav class="header-actions">
+        <div class="header-actions">
 
             <button
                 id="searchButton"
                 class="header-action"
+                title="Pesquisar"
             >
 
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -218,6 +194,7 @@
             <button
                 id="randomButton"
                 class="header-action"
+                title="Série aleatória"
             >
 
                 <i class="fa-solid fa-shuffle"></i>
@@ -232,6 +209,7 @@
             <button
                 id="shareButton"
                 class="header-action"
+                title="Compartilhar"
             >
 
                 <i class="fa-solid fa-share-nodes"></i>
@@ -246,6 +224,7 @@
             <button
                 id="settingsButton"
                 class="header-action"
+                title="Configurações"
             >
 
                 <i class="fa-solid fa-gear"></i>
@@ -256,16 +235,16 @@
 
             </button>
 
-        </nav>
+        </div>
 
     </header>
 
 
     <!-- =====================================================
-         MENU RÁPIDO
+         NAVEGAÇÃO RÁPIDA
     ====================================================== -->
 
-    <nav class="quick-navigation reveal">
+    <nav class="quick-nav reveal">
 
         <button
             class="quick-button active"
@@ -298,7 +277,7 @@
 
             <i class="fa-solid fa-wand-magic-sparkles"></i>
 
-            sugestões
+            recomendações
 
         </button>
 
@@ -330,7 +309,7 @@
 
 
     <!-- =====================================================
-         CONTEÚDO
+         CONTEÚDO PRINCIPAL
     ====================================================== -->
 
     <main
@@ -338,17 +317,14 @@
         id="mainContent"
     >
 
-
-        <!-- =================================================
-             SIDEBAR
-        ================================================== -->
+        <!-- SIDEBAR -->
 
         <aside
-            class="sidebar reveal"
             id="sidebar"
+            class="sidebar reveal"
         >
 
-            <div class="sidebar-title">
+            <div class="sidebar-heading">
 
                 <div>
 
@@ -365,8 +341,8 @@
 
 
                 <button
-                    class="sidebar-close"
                     id="closeSidebar"
+                    class="close-sidebar"
                 >
 
                     <i class="fa-solid fa-xmark"></i>
@@ -376,10 +352,8 @@
             </div>
 
 
-            <!-- BUSCA -->
-
             <div
-                class="search-field"
+                class="sidebar-search"
                 id="searchField"
             >
 
@@ -401,9 +375,7 @@
             </div>
 
 
-            <!-- FILTROS -->
-
-            <div class="filter-buttons">
+            <div class="filters">
 
                 <button
                     class="filter-button active"
@@ -429,9 +401,7 @@
             </div>
 
 
-            <!-- GÊNEROS -->
-
-            <div class="genre-filter">
+            <div class="genre-area">
 
                 <label for="genreSelect">
                     gênero
@@ -448,15 +418,11 @@
             </div>
 
 
-            <!-- LISTA DAS SÉRIES -->
-
             <div
-                class="series-list"
                 id="seriesList"
+                class="series-list"
             ></div>
 
-
-            <!-- CONTADORES -->
 
             <div class="sidebar-stats">
 
@@ -503,18 +469,14 @@
         </aside>
 
 
-        <!-- =================================================
-             CARD PRINCIPAL
-        ================================================== -->
+        <!-- CARD PRINCIPAL -->
 
         <article
-            class="content-card reveal"
             id="contentCard"
+            class="content-card reveal"
         >
 
-            <!-- MOBILE -->
-
-            <div class="mobile-content-header">
+            <div class="mobile-top">
 
                 <button
                     id="openSidebar"
@@ -536,7 +498,7 @@
 
             <!-- HERO -->
 
-            <section class="series-hero">
+            <section class="series-header">
 
                 <div>
 
@@ -549,7 +511,7 @@
                     </span>
 
 
-                    <div class="title-and-heart">
+                    <div class="series-title-row">
 
                         <h1 id="seriesTitle">
                             Stranger Things
@@ -559,6 +521,7 @@
                         <button
                             id="favoriteButton"
                             class="favorite-button"
+                            title="Favoritar"
                         >
 
                             <i class="fa-regular fa-heart"></i>
@@ -569,18 +532,17 @@
 
 
                     <div
-                        class="metadata"
                         id="seriesMetadata"
+                        class="series-metadata"
                     ></div>
 
 
-                    <!-- STATUS -->
-
-                    <div class="watch-area">
+                    <div class="watch-status">
 
                         <span>
                             minha lista
                         </span>
+
 
                         <div>
 
@@ -617,8 +579,6 @@
                 </div>
 
 
-                <!-- NOTA -->
-
                 <div class="blog-rating">
 
                     <div>
@@ -640,13 +600,11 @@
             </section>
 
 
-            <!-- =================================================
-                 CORPO
-            ================================================== -->
+            <!-- CORPO -->
 
-            <section class="series-body">
+            <section class="series-content">
 
-                <div class="series-text">
+                <div class="series-text-column">
 
                     <div
                         id="seriesDescription"
@@ -656,7 +614,7 @@
 
                     <div
                         id="tagsContainer"
-                        class="tags-container"
+                        class="tags"
                     ></div>
 
 
@@ -666,13 +624,11 @@
                     ></blockquote>
 
 
-                    <!-- BOTÕES -->
-
                     <div class="series-actions">
 
                         <button
                             id="trailerButton"
-                            class="main-button"
+                            class="gradient-button"
                         >
 
                             <i class="fa-solid fa-play"></i>
@@ -684,7 +640,7 @@
 
                         <button
                             id="castButton"
-                            class="soft-button"
+                            class="secondary-button"
                         >
 
                             <i class="fa-solid fa-users"></i>
@@ -696,7 +652,7 @@
 
                         <button
                             id="copyLinkButton"
-                            class="soft-button"
+                            class="secondary-button"
                         >
 
                             <i class="fa-solid fa-link"></i>
@@ -708,11 +664,9 @@
                     </div>
 
 
-                    <!-- PROGRESSO -->
+                    <div class="progress-card">
 
-                    <div class="watch-progress-card">
-
-                        <div class="progress-heading">
+                        <div class="progress-title">
 
                             <div>
 
@@ -726,6 +680,7 @@
 
                             </div>
 
+
                             <span id="episodeProgressText">
                                 0%
                             </span>
@@ -735,11 +690,11 @@
 
                         <input
                             type="range"
+                            id="episodeProgress"
                             min="0"
                             max="100"
                             step="5"
                             value="0"
-                            id="episodeProgress"
                         >
 
 
@@ -769,31 +724,33 @@
                 <div class="poster-column">
 
                     <div
-                        class="poster-card tilt-card"
                         id="posterCard"
+                        class="poster-card tilt-card"
                     >
 
                         <div
-                            class="poster-loader"
                             id="posterLoader"
+                            class="poster-loader"
                         >
+
                             <i class="fa-solid fa-spinner"></i>
+
                         </div>
 
 
                         <img
+                            id="seriesPoster"
                             src=""
                             alt=""
-                            id="seriesPoster"
                         >
 
 
-                        <div class="poster-overlay"></div>
+                        <div class="poster-gradient"></div>
 
 
                         <button
-                            class="poster-favorite"
                             id="posterFavoriteButton"
+                            class="poster-favorite"
                         >
 
                             <i class="fa-regular fa-heart"></i>
@@ -834,9 +791,7 @@
             </section>
 
 
-            <!-- DIVISOR -->
-
-            <div class="pretty-divider">
+            <div class="divider">
 
                 <span></span>
 
@@ -849,16 +804,14 @@
             </div>
 
 
-            <!-- =================================================
-                 AVALIAÇÃO
-            ================================================== -->
+            <!-- AVALIAÇÃO -->
 
             <section class="rating-section">
 
-                <div class="section-title">
+                <div class="section-heading center">
 
                     <small>
-                        conta pra gente
+                        sua opinião importa
                     </small>
 
                     <h2>
@@ -868,17 +821,14 @@
                 </div>
 
 
-                <div class="user-rating">
+                <div class="star-rating">
 
                     <span>
                         sua nota
                     </span>
 
 
-                    <div
-                        class="stars"
-                        id="starsContainer"
-                    >
+                    <div id="starsContainer">
 
                         <button data-star="1">
                             <i class="fa-regular fa-star"></i>
@@ -909,8 +859,6 @@
 
                 </div>
 
-
-                <!-- LIKE -->
 
                 <div class="opinion-buttons">
 
@@ -960,16 +908,14 @@
                 </div>
 
 
-                <div class="vote-bar">
+                <div class="vote-progress">
 
                     <div id="voteProgress"></div>
 
                 </div>
 
 
-                <!-- EMOJIS -->
-
-                <div class="emoji-reactions">
+                <div class="reactions">
 
                     <span>
                         reação rápida
@@ -1024,13 +970,11 @@
             </section>
 
 
-            <!-- =================================================
-                 COMENTÁRIOS
-            ================================================== -->
+            <!-- COMENTÁRIOS -->
 
             <section class="comments-section">
 
-                <div class="comments-header">
+                <div class="comments-heading">
 
                     <div>
 
@@ -1057,7 +1001,7 @@
                     class="comment-form"
                 >
 
-                    <div class="comment-avatar">
+                    <div class="comment-user-avatar">
                         B
                     </div>
 
@@ -1067,8 +1011,8 @@
                         <textarea
                             id="commentInput"
                             maxlength="280"
+                            placeholder="Conta o que você achou..."
                             required
-                            placeholder="Conta o que você achou dessa série..."
                         ></textarea>
 
 
@@ -1123,8 +1067,8 @@
 
 
                 <div
-                    class="comments-list"
                     id="commentsList"
+                    class="comments-list"
                 ></div>
 
             </section>
@@ -1141,7 +1085,7 @@
                     </small>
 
                     <strong id="nextSeriesName">
-                        próxima
+                        próxima série
                     </strong>
 
                 </div>
@@ -1162,13 +1106,11 @@
     </main>
 
 
-    <!-- =====================================================
-         RANKING
-    ====================================================== -->
+    <!-- RANKING -->
 
     <section
-        class="extra-section reveal"
         id="rankingSection"
+        class="extra-section reveal"
     >
 
         <div class="extra-heading">
@@ -1186,27 +1128,25 @@
             </div>
 
             <p>
-                as séries mais bem avaliadas pela Bia.
+                as maiores notas entre as séries.
             </p>
 
         </div>
 
 
         <div
-            class="ranking-grid"
             id="rankingGrid"
+            class="ranking-grid"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
-         RECOMENDAÇÕES
-    ====================================================== -->
+    <!-- RECOMENDAÇÕES -->
 
     <section
-        class="extra-section reveal"
         id="recommendationsSection"
+        class="extra-section reveal"
     >
 
         <div class="extra-heading">
@@ -1239,20 +1179,18 @@
 
 
         <div
-            class="recommendations-grid"
             id="recommendationsGrid"
+            class="recommendations-grid"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
-         HISTÓRICO
-    ====================================================== -->
+    <!-- HISTÓRICO -->
 
     <section
-        class="extra-section reveal"
         id="historySection"
+        class="extra-section reveal"
     >
 
         <div class="extra-heading">
@@ -1285,18 +1223,16 @@
 
 
         <div
-            class="history-list"
             id="historyList"
+            class="history-list"
         ></div>
 
     </section>
 
 
-    <!-- =====================================================
-         ESTATÍSTICAS
-    ====================================================== -->
+    <!-- ESTATÍSTICAS -->
 
-    <section class="statistics-section reveal">
+    <section class="statistics reveal">
 
         <article>
 
@@ -1376,23 +1312,23 @@
 
 
     <!-- =====================================================
-         DESENVOLVIDO POR
+         CRIADORES
     ====================================================== -->
 
     <section
-        class="developers-section reveal"
         id="developersSection"
+        class="developers-section reveal"
     >
 
-        <span class="dev-heart dev-heart-one">
+        <span class="developer-decoration dev-decoration-1">
             ♡
         </span>
 
-        <span class="dev-heart dev-heart-two">
+        <span class="developer-decoration dev-decoration-2">
             ✦
         </span>
 
-        <span class="dev-heart dev-heart-three">
+        <span class="developer-decoration dev-decoration-3">
             ♡
         </span>
 
@@ -1408,7 +1344,7 @@
             </h2>
 
             <p>
-                séries, criatividade, código e muitos detalhes.
+                código, criatividade, séries e muitos detalhes.
             </p>
 
         </div>
@@ -1416,21 +1352,20 @@
 
         <div class="developers-grid">
 
-
             <!-- BAYERLEE -->
 
             <article class="developer-card tilt-card">
 
-                <div class="developer-glow"></div>
+                <div class="developer-card-glow"></div>
 
 
-                <div class="developer-photo-border">
+                <div class="developer-image-box">
 
                     <img
-                        src="./Bayerlee.jpg"
+                        src="./img/Bayerlee.jpg"
                         alt="Foto de Bayerlee"
-                        class="developer-photo"
                         id="bayerleePhoto"
+                        class="developer-photo"
                     >
 
                     <span></span>
@@ -1440,13 +1375,13 @@
 
                 <div class="developer-info">
 
-                    <div class="developer-role">
+                    <span class="developer-role">
 
                         <i class="fa-solid fa-code"></i>
 
                         desenvolvedor
 
-                    </div>
+                    </span>
 
 
                     <h3>
@@ -1455,24 +1390,16 @@
 
 
                     <p>
-                        responsável pelo desenvolvimento,
-                        funcionamento, animações e interações do blog.
+                        responsável pelo código, funcionamento,
+                        animações, efeitos e interações do blog.
                     </p>
 
 
                     <div class="developer-tags">
 
-                        <span>
-                            HTML
-                        </span>
-
-                        <span>
-                            CSS
-                        </span>
-
-                        <span>
-                            JavaScript
-                        </span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
 
                     </div>
 
@@ -1490,16 +1417,16 @@
 
             <article class="developer-card tilt-card">
 
-                <div class="developer-glow"></div>
+                <div class="developer-card-glow"></div>
 
 
-                <div class="developer-photo-border">
+                <div class="developer-image-box">
 
                     <img
-                        src="./Beatriz.jpg"
+                        src="./img/Beatriz.jpg"
                         alt="Foto de Beatriz"
-                        class="developer-photo"
                         id="beatrizDeveloperPhoto"
+                        class="developer-photo"
                     >
 
                     <span></span>
@@ -1509,13 +1436,13 @@
 
                 <div class="developer-info">
 
-                    <div class="developer-role">
+                    <span class="developer-role">
 
                         <i class="fa-solid fa-heart"></i>
 
                         criadora
 
-                    </div>
+                    </span>
 
 
                     <h3>
@@ -1524,24 +1451,16 @@
 
 
                     <p>
-                        responsável pela ideia, séries,
-                        opiniões e personalidade do blog.
+                        responsável pela ideia, personalidade,
+                        conteúdo, opiniões e séries do blog.
                     </p>
 
 
                     <div class="developer-tags">
 
-                        <span>
-                            séries
-                        </span>
-
-                        <span>
-                            conteúdo
-                        </span>
-
-                        <span>
-                            estilo
-                        </span>
+                        <span>séries</span>
+                        <span>conteúdo</span>
+                        <span>estilo</span>
 
                     </div>
 
@@ -1552,11 +1471,12 @@
         </div>
 
 
-        <div class="developers-message">
+        <div class="developer-message">
 
             <p>
                 obrigada por visitar nosso cantinho ♡
             </p>
+
 
             <button id="sendHeartButton">
 
@@ -1571,9 +1491,7 @@
     </section>
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+    <!-- FOOTER -->
 
     <footer class="footer reveal">
 
@@ -1606,9 +1524,7 @@
     </footer>
 
 
-    <!-- =====================================================
-         VOLTAR TOPO
-    ====================================================== -->
+    <!-- VOLTAR AO TOPO -->
 
     <button
         id="backToTop"
@@ -1630,7 +1546,7 @@
     >
 
         <div
-            class="modal-backdrop"
+            class="modal-background"
             data-close-modal
         ></div>
 
@@ -1650,6 +1566,7 @@
             <small>
                 agora assistindo
             </small>
+
 
             <h2 id="trailerModalTitle">
                 trailer
@@ -1674,7 +1591,7 @@
 
 
     <!-- =====================================================
-         MODAL ELENCO COM FOTOS
+         MODAL ELENCO
     ====================================================== -->
 
     <div
@@ -1683,7 +1600,7 @@
     >
 
         <div
-            class="modal-backdrop"
+            class="modal-background"
             data-close-modal
         ></div>
 
@@ -1704,6 +1621,7 @@
                 quem faz acontecer
             </small>
 
+
             <h2 id="castModalTitle">
                 elenco principal ♡
             </h2>
@@ -1720,7 +1638,7 @@
 
 
     <!-- =====================================================
-         PESQUISA MODAL
+         MODAL BUSCA
     ====================================================== -->
 
     <div
@@ -1729,7 +1647,7 @@
     >
 
         <div
-            class="modal-backdrop"
+            class="modal-background"
             data-close-modal
         ></div>
 
@@ -1750,19 +1668,20 @@
                 encontre rapidinho
             </small>
 
+
             <h2>
-                procurar série ♡
+                pesquisar série ♡
             </h2>
 
 
-            <div class="modal-search-field">
+            <div class="modal-search">
 
                 <i class="fa-solid fa-magnifying-glass"></i>
 
                 <input
                     id="modalSearchInput"
                     type="text"
-                    placeholder="Digite o nome da série..."
+                    placeholder="Digite o nome..."
                     autocomplete="off"
                 >
 
@@ -1780,7 +1699,7 @@
 
 
     <!-- =====================================================
-         SETTINGS
+         CONFIGURAÇÕES
     ====================================================== -->
 
     <div
@@ -1794,7 +1713,7 @@
         class="settings-panel"
     >
 
-        <div class="settings-header">
+        <div class="settings-heading">
 
             <div>
 
@@ -1825,38 +1744,38 @@
             </h3>
 
 
-            <div class="theme-options">
+            <div class="themes">
 
                 <button
-                    class="theme-option active"
+                    class="theme-button active"
                     data-theme="lavender"
                 >
                     lavanda
                 </button>
 
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="pink"
                 >
                     rosa
                 </button>
 
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="blue"
                 >
                     céu
                 </button>
 
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="sunset"
                 >
                     sunset
                 </button>
 
                 <button
-                    class="theme-option"
+                    class="theme-button"
                     data-theme="dark"
                 >
                     noite
@@ -1869,7 +1788,7 @@
 
         <div class="settings-group">
 
-            <label class="toggle-row">
+            <label class="setting-switch">
 
                 <div>
 
@@ -1884,8 +1803,8 @@
                 </div>
 
                 <input
-                    type="checkbox"
                     id="cursorToggle"
+                    type="checkbox"
                     checked
                 >
 
@@ -1898,7 +1817,7 @@
 
         <div class="settings-group">
 
-            <label class="toggle-row">
+            <label class="setting-switch">
 
                 <div>
 
@@ -1907,14 +1826,14 @@
                     </strong>
 
                     <small>
-                        corações enquanto movimenta
+                        pequenos corações seguindo o mouse
                     </small>
 
                 </div>
 
                 <input
-                    type="checkbox"
                     id="trailToggle"
+                    type="checkbox"
                     checked
                 >
 
@@ -1927,7 +1846,7 @@
 
         <div class="settings-group">
 
-            <label class="toggle-row">
+            <label class="setting-switch">
 
                 <div>
 
@@ -1942,8 +1861,8 @@
                 </div>
 
                 <input
-                    type="checkbox"
                     id="animationToggle"
+                    type="checkbox"
                     checked
                 >
 
@@ -1956,7 +1875,7 @@
 
         <div class="settings-group">
 
-            <label class="toggle-row">
+            <label class="setting-switch">
 
                 <div>
 
@@ -1965,14 +1884,14 @@
                     </strong>
 
                     <small>
-                        corações e confete
+                        confetes e corações
                     </small>
 
                 </div>
 
                 <input
-                    type="checkbox"
                     id="effectsToggle"
+                    type="checkbox"
                     checked
                 >
 
