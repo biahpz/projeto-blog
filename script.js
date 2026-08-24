@@ -1,9 +1,8 @@
 "use strict";
 
-
 /* =========================================================
    BLOG DA BIA — SCRIPT.JS
-   ========================================================= */
+========================================================= */
 
 
 /* =========================================================
@@ -18,201 +17,409 @@ const $$ = (selector, parent = document) =>
 
 const body = document.body;
 
-const STORAGE_KEY = "blogDaBiaDataV4";
+const safeJSON = (value, fallback) => {
+    try {
+        return JSON.parse(value) ?? fallback;
+    } catch {
+        return fallback;
+    }
+};
+
+const storage = {
+    get(key, fallback = null) {
+        const value = localStorage.getItem(key);
+
+        if (value === null) {
+            return fallback;
+        }
+
+        return safeJSON(value, fallback);
+    },
+
+    set(key, value) {
+        localStorage.setItem(
+            key,
+            JSON.stringify(value)
+        );
+    }
+};
 
 
 /* =========================================================
-   ELEMENTOS PRINCIPAIS
+   ESTADO
 ========================================================= */
 
-const loader = $("#loader");
-const toast = $("#toast");
-const toastIcon = $("#toastIcon");
-const toastText = $("#toastText");
+const state = {
+    language:
+        storage.get("bia_language", "pt"),
 
-const scrollProgress = $("#scrollProgress");
-const backTop = $("#backTop");
+    theme:
+        storage.get("bia_theme", "bia"),
 
-const heartCursor = $("#heartCursor");
-const clickEffects = $("#clickEffects");
+    darkMode:
+        storage.get("bia_dark", false),
 
-const mobileMenuBtn = $("#mobileMenuBtn");
-const mobileMenu = $("#mobileMenu");
-const mobileMenuClose = $("#mobileMenuClose");
-const menuOverlay = $("#menuOverlay");
+    animations:
+        storage.get("bia_animations", true),
 
-const searchOpenBtn = $("#searchOpenBtn");
-const searchOverlay = $("#searchOverlay");
-const searchClose = $("#searchClose");
-const globalSearch = $("#globalSearch");
-const clearSearch = $("#clearSearch");
-const searchResults = $("#searchResults");
+    particles:
+        storage.get("bia_particles", true),
 
-const themeBtn = $("#themeBtn");
-const themeIcon = $("#themeIcon");
-const shareBlogBtn = $("#shareBlogBtn");
+    cursor:
+        storage.get("bia_cursor", true),
 
-const heroBackdrop = $("#heroBackdrop");
-const heroPoster = $("#heroPoster");
-const heroPosterCard = $("#heroPosterCard");
-const heroTitle = $("#heroTitle");
-const heroRating = $("#heroRating");
-const heroYear = $("#heroYear");
-const heroSeasons = $("#heroSeasons");
-const heroDescription = $("#heroDescription");
-const communityRating = $("#communityRating");
+    favorites:
+        storage.get("bia_favorites", []),
 
-const heroFavoriteBtn = $("#heroFavoriteBtn");
-const heroWatchedBtn = $("#heroWatchedBtn");
-const watchTrailerBtn = $("#watchTrailerBtn");
-const randomSeriesBtn = $("#randomSeriesBtn");
-const copySeriesBtn = $("#copySeriesBtn");
-const heroDots = $("#heroDots");
+    watchlist:
+        storage.get("bia_watchlist", []),
 
-const favoriteCount = $("#favoriteCount");
-const watchedCount = $("#watchedCount");
-const watchlistCount = $("#watchlistCount");
-const ratingsCount = $("#ratingsCount");
-const streakCount = $("#streakCount");
+    watched:
+        storage.get("bia_watched", []),
 
-const resetDataBtn = $("#resetDataBtn");
+    likes:
+        storage.get("bia_likes", []),
 
-const dailySeriesBtn = $("#dailySeriesBtn");
-const dailyPreview = $("#dailyPreview");
+    ratings:
+        storage.get("bia_ratings", {}),
 
-const seriesSearch = $("#seriesSearch");
-const seriesSort = $("#seriesSort");
-const seriesGrid = $("#seriesGrid");
-const seriesResultCount = $("#seriesResultCount");
-const emptySeries = $("#emptySeries");
-const clearFiltersBtn = $("#clearFiltersBtn");
+    progress:
+        storage.get("bia_progress", {}),
 
-const rankingList = $("#rankingList");
-const achievementGrid = $("#achievementGrid");
+    comments:
+        storage.get("bia_comments", []),
 
-const commentForm = $("#commentForm");
-const commentName = $("#commentName");
-const commentSeries = $("#commentSeries");
-const commentText = $("#commentText");
-const commentSpoiler = $("#commentSpoiler");
-const commentCharCount = $("#commentCharCount");
-const commentCount = $("#commentCount");
-const commentSort = $("#commentSort");
-const commentsList = $("#commentsList");
+    profile:
+        storage.get(
+            "bia_profile",
+            {
+                name: "Visitante",
+                avatar: "💜"
+            }
+        ),
 
-const seriesModal = $("#seriesModal");
-const seriesModalClose = $("#seriesModalClose");
-const modalBackdrop = $("#modalBackdrop");
-const modalPoster = $("#modalPoster");
-const modalBadge = $("#modalBadge");
-const modalTitle = $("#modalTitle");
-const modalRating = $("#modalRating");
-const modalYear = $("#modalYear");
-const modalSeasons = $("#modalSeasons");
-const modalDescription = $("#modalDescription");
+    currentSeries: null,
 
-const modalFavorite = $("#modalFavorite");
-const modalWatchlist = $("#modalWatchlist");
-const modalWatched = $("#modalWatched");
+    currentFilter: "all",
 
-const starRating = $("#starRating");
-const castGrid = $("#castGrid");
+    currentSearch: "",
 
-const episodeProgress = $("#episodeProgress");
-const episodeProgressText = $("#episodeProgressText");
+    sort: "featured",
 
-const recommendations = $("#recommendations");
+    year: "all",
 
-const trailerModal = $("#trailerModal");
-const trailerClose = $("#trailerClose");
-const trailerTitle = $("#trailerTitle");
-const openYoutubeTrailer = $("#openYoutubeTrailer");
+    ratingFilter: "all",
 
-const settingsFloating = $("#settingsFloating");
-const settingsPanel = $("#settingsPanel");
-const settingsClose = $("#settingsClose");
+    heroIndex: 0,
 
-const effectsToggle = $("#effectsToggle");
-const animationsToggle = $("#animationsToggle");
+    heroTimer: null,
 
-const currentYear = $("#currentYear");
+    quizIndex: 0,
+
+    quizAnswers: []
+};
+
+
+/* =========================================================
+   TRADUÇÕES
+========================================================= */
+
+const translations = {
+    pt: {
+        home: "Início",
+        series: "Séries",
+        brazil: "Brasil",
+        ranking: "Ranking",
+        community: "Comunidade",
+        team: "Equipe",
+
+        search: "Pesquisar",
+        favorites: "Favoritos",
+        settings: "Configurações",
+
+        watchNow: "Conhecer série",
+        trailer: "Trailer",
+        addList: "Minha lista",
+        removeList: "Remover da lista",
+
+        catalogTitle: "Explore as séries",
+        catalogText:
+            "Descubra romances, dramas, mistérios e histórias inesquecíveis disponíveis na Netflix.",
+
+        brazilTitle:
+            "Produções brasileiras",
+
+        brazilText:
+            "Séries brasileiras que conquistaram espaço na Netflix.",
+
+        rankingTitle:
+            "As favoritas do blog",
+
+        rankingText:
+            "Um ranking baseado nas avaliações e destaques do Blog da Bia.",
+
+        communityTitle:
+            "Comunidade",
+
+        communityText:
+            "Comente, curta e compartilhe sua opinião sobre suas séries favoritas.",
+
+        teamTitle:
+            "Quem faz acontecer",
+
+        creator:
+            "Criadora do blog",
+
+        developer:
+            "Desenvolvedor",
+
+        comments:
+            "Comentários",
+
+        noResults:
+            "Nenhuma série encontrada.",
+
+        searchPlaceholder:
+            "Digite o nome de uma série...",
+
+        saved:
+            "Salvo!",
+
+        removed:
+            "Removido!",
+
+        favoriteAdded:
+            "Adicionado aos favoritos 💗",
+
+        favoriteRemoved:
+            "Removido dos favoritos.",
+
+        listAdded:
+            "Adicionado à sua lista.",
+
+        listRemoved:
+            "Removido da sua lista.",
+
+        watchedAdded:
+            "Marcado como assistido.",
+
+        commentPublished:
+            "Comentário publicado!",
+
+        copied:
+            "Link copiado!",
+
+        profileSaved:
+            "Perfil atualizado!",
+
+        dataCleared:
+            "Dados locais apagados.",
+
+        random:
+            "Série sorteada!",
+
+        daily:
+            "Série do dia",
+
+        recommendation:
+            "Recomendação especial para hoje.",
+
+        cast:
+            "Elenco principal",
+
+        recommendations:
+            "Você também pode gostar",
+
+        yourRating:
+            "Sua avaliação",
+
+        progress:
+            "Progresso",
+
+        seasons:
+            "temporadas",
+
+        episodes:
+            "episódios",
+
+        year:
+            "Ano",
+
+        country:
+            "País",
+
+        genre:
+            "Gênero",
+
+        close:
+            "Fechar"
+    },
+
+    en: {
+        home: "Home",
+        series: "Series",
+        brazil: "Brazil",
+        ranking: "Ranking",
+        community: "Community",
+        team: "Team",
+
+        search: "Search",
+        favorites: "Favorites",
+        settings: "Settings",
+
+        watchNow: "Discover series",
+        trailer: "Trailer",
+        addList: "My list",
+        removeList: "Remove from list",
+
+        catalogTitle: "Explore series",
+        catalogText:
+            "Discover romances, dramas, mysteries and unforgettable stories available on Netflix.",
+
+        brazilTitle:
+            "Brazilian productions",
+
+        brazilText:
+            "Brazilian series that found their audience on Netflix.",
+
+        rankingTitle:
+            "Blog favorites",
+
+        rankingText:
+            "A ranking based on ratings and highlights from Bia's Blog.",
+
+        communityTitle:
+            "Community",
+
+        communityText:
+            "Comment, like and share your opinion about your favorite series.",
+
+        teamTitle:
+            "Meet the team",
+
+        creator:
+            "Blog creator",
+
+        developer:
+            "Developer",
+
+        comments:
+            "Comments",
+
+        noResults:
+            "No series found.",
+
+        searchPlaceholder:
+            "Type a series name...",
+
+        saved:
+            "Saved!",
+
+        removed:
+            "Removed!",
+
+        favoriteAdded:
+            "Added to favorites 💗",
+
+        favoriteRemoved:
+            "Removed from favorites.",
+
+        listAdded:
+            "Added to your list.",
+
+        listRemoved:
+            "Removed from your list.",
+
+        watchedAdded:
+            "Marked as watched.",
+
+        commentPublished:
+            "Comment published!",
+
+        copied:
+            "Link copied!",
+
+        profileSaved:
+            "Profile updated!",
+
+        dataCleared:
+            "Local data cleared.",
+
+        random:
+            "Random series selected!",
+
+        daily:
+            "Series of the day",
+
+        recommendation:
+            "A special recommendation for today.",
+
+        cast:
+            "Main cast",
+
+        recommendations:
+            "You may also like",
+
+        yourRating:
+            "Your rating",
+
+        progress:
+            "Progress",
+
+        seasons:
+            "seasons",
+
+        episodes:
+            "episodes",
+
+        year:
+            "Year",
+
+        country:
+            "Country",
+
+        genre:
+            "Genre",
+
+        close:
+            "Close"
+    }
+};
+
+const t = key =>
+    translations[state.language]?.[key]
+    ?? translations.pt[key]
+    ?? key;
 
 
 /* =========================================================
    BANCO DE SÉRIES
-
-   Coloque as capas em:
-   img/series/
-
-   Exemplo:
-   img/series/stranger-things.jpg
-
-   Se a imagem local não existir, o sistema tenta buscar
-   uma capa automaticamente.
 ========================================================= */
 
-const seriesData = [
+const series = [
 
     {
         id: "stranger-things",
         title: "Stranger Things",
         year: 2016,
-        seasons: "5 temporadas",
-        rating: 4.9,
-        genre: ["misterio", "terror", "drama"],
+        genre: "Mistério",
         country: "Estados Unidos",
-        image: "./img/series/stranger-things.jpg",
-        query: "Stranger Things",
-        description:
-            "O desaparecimento de um garoto revela experimentos secretos, forças sobrenaturais e uma garota com poderes extraordinários.",
+        rating: 9.1,
+        seasons: 4,
+        episodes: 34,
+        poster: "stranger-things.jpg",
+        backdrop: "stranger-things-bg.jpg",
+        descriptionPT:
+            "Em Hawkins, acontecimentos sobrenaturais, experimentos secretos e amizades inseparáveis transformam a vida de um grupo de jovens.",
+        descriptionEN:
+            "In Hawkins, supernatural events, secret experiments and inseparable friendships transform the lives of a group of young people.",
+        featured: true,
+        brazil: false,
         cast: [
-            ["Millie Bobby Brown", "Eleven"],
-            ["Finn Wolfhard", "Mike Wheeler"],
-            ["Noah Schnapp", "Will Byers"],
-            ["Sadie Sink", "Max Mayfield"],
-            ["Gaten Matarazzo", "Dustin Henderson"],
-            ["Caleb McLaughlin", "Lucas Sinclair"]
-        ]
-    },
-
-    {
-        id: "wednesday",
-        title: "Wednesday",
-        year: 2022,
-        seasons: "2 temporadas",
-        rating: 4.8,
-        genre: ["misterio", "comedia", "terror"],
-        country: "Estados Unidos",
-        image: "./img/series/wednesday.jpg",
-        query: "Wednesday",
-        description:
-            "Wednesday Addams investiga uma onda de mistérios enquanto tenta se adaptar à excêntrica Academia Nevermore.",
-        cast: [
-            ["Jenna Ortega", "Wednesday Addams"],
-            ["Emma Myers", "Enid Sinclair"],
-            ["Joy Sunday", "Bianca Barclay"],
-            ["Hunter Doohan", "Tyler Galpin"],
-            ["Catherine Zeta-Jones", "Morticia Addams"]
-        ]
-    },
-
-    {
-        id: "dark",
-        title: "Dark",
-        year: 2017,
-        seasons: "3 temporadas",
-        rating: 4.9,
-        genre: ["misterio", "drama"],
-        country: "Alemanha",
-        image: "./img/series/dark.jpg",
-        query: "Dark",
-        description:
-            "O desaparecimento de crianças em uma cidade alemã revela segredos familiares e um complexo mistério envolvendo o tempo.",
-        cast: [
-            ["Louis Hofmann", "Jonas Kahnwald"],
-            ["Lisa Vicari", "Martha Nielsen"],
-            ["Andreas Pietschmann", "Jonas adulto"],
-            ["Maja Schöne", "Hannah Kahnwald"]
+            ["Millie Bobby Brown", "Eleven", "millie-bobby-brown.jpg"],
+            ["Finn Wolfhard", "Mike", "finn-wolfhard.jpg"],
+            ["Sadie Sink", "Max", "sadie-sink.jpg"],
+            ["Caleb McLaughlin", "Lucas", "caleb-mclaughlin.jpg"]
         ]
     },
 
@@ -220,19 +427,24 @@ const seriesData = [
         id: "bridgerton",
         title: "Bridgerton",
         year: 2020,
-        seasons: "3+ temporadas",
-        rating: 4.7,
-        genre: ["romance", "drama"],
-        country: "Reino Unido",
-        image: "./img/series/bridgerton.jpg",
-        query: "Bridgerton",
-        description:
-            "Romances, escândalos e segredos movimentam a alta sociedade londrina em uma temporada cheia de paixões.",
+        genre: "Romance",
+        country: "Estados Unidos",
+        rating: 8.7,
+        seasons: 3,
+        episodes: 24,
+        poster: "bridgerton.jpg",
+        backdrop: "bridgerton-bg.jpg",
+        descriptionPT:
+            "Romances, escândalos e segredos movimentam a alta sociedade londrina enquanto famílias disputam prestígio e grandes paixões.",
+        descriptionEN:
+            "Romance, scandals and secrets shake London's high society as families pursue prestige and great love stories.",
+        featured: true,
+        brazil: false,
         cast: [
-            ["Nicola Coughlan", "Penelope Featherington"],
-            ["Luke Newton", "Colin Bridgerton"],
-            ["Jonathan Bailey", "Anthony Bridgerton"],
-            ["Simone Ashley", "Kate Sharma"]
+            ["Nicola Coughlan", "Penelope", "nicola-coughlan.jpg"],
+            ["Luke Newton", "Colin", "luke-newton.jpg"],
+            ["Simone Ashley", "Kate", "simone-ashley.jpg"],
+            ["Jonathan Bailey", "Anthony", "jonathan-bailey.jpg"]
         ]
     },
 
@@ -240,40 +452,74 @@ const seriesData = [
         id: "outer-banks",
         title: "Outer Banks",
         year: 2020,
-        seasons: "4+ temporadas",
-        rating: 4.6,
-        genre: ["acao", "drama", "romance"],
+        genre: "Aventura",
         country: "Estados Unidos",
-        image: "./img/series/outer-banks.jpg",
-        query: "Outer Banks",
-        description:
-            "Um grupo de amigos parte em busca de um tesouro lendário enquanto enfrenta perigos, romances e grandes segredos.",
+        rating: 8.5,
+        seasons: 4,
+        episodes: 40,
+        poster: "outer-banks.jpg",
+        backdrop: "outer-banks-bg.jpg",
+        descriptionPT:
+            "Um grupo de amigos parte em busca de um tesouro perdido e acaba entrando em uma aventura cheia de perigos, romances e segredos.",
+        descriptionEN:
+            "A group of friends searches for a lost treasure and becomes involved in an adventure filled with danger, romance and secrets.",
+        featured: true,
+        brazil: false,
         cast: [
-            ["Chase Stokes", "John B"],
-            ["Madelyn Cline", "Sarah Cameron"],
-            ["Madison Bailey", "Kiara"],
-            ["Jonathan Daviss", "Pope"],
-            ["Rudy Pankow", "JJ"]
+            ["Chase Stokes", "John B", "chase-stokes.jpg"],
+            ["Madelyn Cline", "Sarah", "madelyn-cline.jpg"],
+            ["Madison Bailey", "Kiara", "madison-bailey.jpg"],
+            ["Jonathan Daviss", "Pope", "jonathan-daviss.jpg"]
         ]
     },
 
     {
-        id: "cobra-kai",
-        title: "Cobra Kai",
-        year: 2018,
-        seasons: "6 temporadas",
-        rating: 4.7,
-        genre: ["acao", "comedia", "drama"],
+        id: "wednesday",
+        title: "Wednesday",
+        year: 2022,
+        genre: "Mistério",
         country: "Estados Unidos",
-        image: "./img/series/cobra-kai.jpg",
-        query: "Cobra Kai",
-        description:
-            "Décadas depois do torneio que mudou suas vidas, Johnny Lawrence e Daniel LaRusso voltam a se enfrentar.",
+        rating: 8.8,
+        seasons: 2,
+        episodes: 16,
+        poster: "wednesday.jpg",
+        backdrop: "wednesday-bg.jpg",
+        descriptionPT:
+            "Wednesday Addams investiga mistérios, crimes e segredos enquanto tenta se adaptar à Academia Nevermore.",
+        descriptionEN:
+            "Wednesday Addams investigates mysteries, crimes and secrets while trying to adapt to Nevermore Academy.",
+        featured: true,
+        brazil: false,
         cast: [
-            ["Ralph Macchio", "Daniel LaRusso"],
-            ["William Zabka", "Johnny Lawrence"],
-            ["Xolo Maridueña", "Miguel Diaz"],
-            ["Mary Mouser", "Samantha LaRusso"]
+            ["Jenna Ortega", "Wednesday", "jenna-ortega.jpg"],
+            ["Emma Myers", "Enid", "emma-myers.jpg"],
+            ["Joy Sunday", "Bianca", "joy-sunday.jpg"],
+            ["Hunter Doohan", "Tyler", "hunter-doohan.jpg"]
+        ]
+    },
+
+    {
+        id: "ginny-georgia",
+        title: "Ginny & Georgia",
+        year: 2021,
+        genre: "Drama",
+        country: "Estados Unidos",
+        rating: 8.4,
+        seasons: 3,
+        episodes: 30,
+        poster: "ginny-georgia.jpg",
+        backdrop: "ginny-georgia-bg.jpg",
+        descriptionPT:
+            "Ginny tenta viver uma adolescência normal enquanto descobre que sua mãe Georgia esconde um passado cheio de segredos.",
+        descriptionEN:
+            "Ginny tries to live a normal teenage life while discovering that her mother Georgia hides a past full of secrets.",
+        featured: false,
+        brazil: false,
+        cast: [
+            ["Antonia Gentry", "Ginny", "antonia-gentry.jpg"],
+            ["Brianne Howey", "Georgia", "brianne-howey.jpg"],
+            ["Felix Mallard", "Marcus", "felix-mallard.jpg"],
+            ["Sara Waisglass", "Max", "sara-waisglass.jpg"]
         ]
     },
 
@@ -281,18 +527,46 @@ const seriesData = [
         id: "you",
         title: "You",
         year: 2018,
-        seasons: "5 temporadas",
-        rating: 4.6,
-        genre: ["drama", "misterio"],
+        genre: "Suspense",
         country: "Estados Unidos",
-        image: "./img/series/you.jpg",
-        query: "You",
-        description:
-            "Um homem aparentemente encantador transforma paixão em obsessão enquanto tenta controlar a vida das pessoas que ama.",
+        rating: 8.6,
+        seasons: 5,
+        episodes: 50,
+        poster: "you.jpg",
+        backdrop: "you-bg.jpg",
+        descriptionPT:
+            "Joe Goldberg transforma obsessões amorosas em relações perigosas enquanto tenta esconder sua verdadeira personalidade.",
+        descriptionEN:
+            "Joe Goldberg turns romantic obsessions into dangerous relationships while trying to hide his true personality.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Penn Badgley", "Joe Goldberg"],
-            ["Charlotte Ritchie", "Kate"],
-            ["Victoria Pedretti", "Love Quinn"]
+            ["Penn Badgley", "Joe", "penn-badgley.jpg"],
+            ["Charlotte Ritchie", "Kate", "charlotte-ritchie.jpg"]
+        ]
+    },
+
+    {
+        id: "cobra-kai",
+        title: "Cobra Kai",
+        year: 2018,
+        genre: "Drama",
+        country: "Estados Unidos",
+        rating: 8.5,
+        seasons: 6,
+        episodes: 65,
+        poster: "cobra-kai.jpg",
+        backdrop: "cobra-kai-bg.jpg",
+        descriptionPT:
+            "Décadas depois de Karate Kid, antigas rivalidades retornam quando Johnny Lawrence decide reabrir o dojo Cobra Kai.",
+        descriptionEN:
+            "Decades after The Karate Kid, old rivalries return when Johnny Lawrence decides to reopen the Cobra Kai dojo.",
+        featured: false,
+        brazil: false,
+        cast: [
+            ["Ralph Macchio", "Daniel", "ralph-macchio.jpg"],
+            ["William Zabka", "Johnny", "william-zabka.jpg"],
+            ["Xolo Maridueña", "Miguel", "xolo-mariduena.jpg"]
         ]
     },
 
@@ -300,79 +574,45 @@ const seriesData = [
         id: "lucifer",
         title: "Lucifer",
         year: 2016,
-        seasons: "6 temporadas",
-        rating: 4.8,
-        genre: ["drama", "comedia", "misterio"],
+        genre: "Drama",
         country: "Estados Unidos",
-        image: "./img/series/lucifer.jpg",
-        query: "Lucifer",
-        description:
-            "Cansado de governar o inferno, Lucifer Morningstar decide viver em Los Angeles e ajudar a polícia a resolver crimes.",
+        rating: 8.7,
+        seasons: 6,
+        episodes: 93,
+        poster: "lucifer.jpg",
+        backdrop: "lucifer-bg.jpg",
+        descriptionPT:
+            "Cansado do inferno, Lucifer Morningstar vai para Los Angeles e passa a ajudar a polícia a investigar crimes.",
+        descriptionEN:
+            "Tired of Hell, Lucifer Morningstar moves to Los Angeles and begins helping the police investigate crimes.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Tom Ellis", "Lucifer Morningstar"],
-            ["Lauren German", "Chloe Decker"],
-            ["D. B. Woodside", "Amenadiel"],
-            ["Lesley-Ann Brandt", "Mazikeen"]
+            ["Tom Ellis", "Lucifer", "tom-ellis.jpg"],
+            ["Lauren German", "Chloe", "lauren-german.jpg"]
         ]
     },
 
     {
-        id: "the-witcher",
-        title: "The Witcher",
-        year: 2019,
-        seasons: "4+ temporadas",
-        rating: 4.5,
-        genre: ["acao", "drama"],
-        country: "Estados Unidos",
-        image: "./img/series/the-witcher.jpg",
-        query: "The Witcher",
-        description:
-            "Geralt de Rívia, um caçador de monstros, percorre um continente onde humanos podem ser mais perigosos que criaturas.",
-        cast: [
-            ["Henry Cavill", "Geralt"],
-            ["Anya Chalotra", "Yennefer"],
-            ["Freya Allan", "Ciri"],
-            ["Joey Batey", "Jaskier"]
-        ]
-    },
-
-    {
-        id: "sex-education",
-        title: "Sex Education",
-        year: 2019,
-        seasons: "4 temporadas",
-        rating: 4.7,
-        genre: ["comedia", "drama", "romance"],
+        id: "one-day",
+        title: "One Day",
+        year: 2024,
+        genre: "Romance",
         country: "Reino Unido",
-        image: "./img/series/sex-education.jpg",
-        query: "Sex Education",
-        description:
-            "Um adolescente inseguro usa o conhecimento da mãe terapeuta para criar uma clínica de aconselhamento entre estudantes.",
+        rating: 8.9,
+        seasons: 1,
+        episodes: 14,
+        poster: "one-day.jpg",
+        backdrop: "one-day-bg.jpg",
+        descriptionPT:
+            "Emma e Dexter se reencontram no mesmo dia ao longo dos anos, enquanto amizade e amor transformam suas vidas.",
+        descriptionEN:
+            "Emma and Dexter meet again on the same day over the years as friendship and love transform their lives.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Asa Butterfield", "Otis"],
-            ["Emma Mackey", "Maeve"],
-            ["Ncuti Gatwa", "Eric"],
-            ["Aimee Lou Wood", "Aimee"]
-        ]
-    },
-
-    {
-        id: "anne-with-an-e",
-        title: "Anne with an E",
-        year: 2017,
-        seasons: "3 temporadas",
-        rating: 4.9,
-        genre: ["drama"],
-        country: "Canadá",
-        image: "./img/series/anne-with-an-e.jpg",
-        query: "Anne with an E",
-        description:
-            "Uma jovem órfã cheia de imaginação transforma a vida de uma pequena comunidade com sua personalidade intensa e sonhadora.",
-        cast: [
-            ["Amybeth McNulty", "Anne Shirley"],
-            ["Lucas Jade Zumann", "Gilbert Blythe"],
-            ["Geraldine James", "Marilla Cuthbert"],
-            ["R. H. Thomson", "Matthew Cuthbert"]
+            ["Ambika Mod", "Emma", "ambika-mod.jpg"],
+            ["Leo Woodall", "Dexter", "leo-woodall.jpg"]
         ]
     },
 
@@ -380,195 +620,161 @@ const seriesData = [
         id: "heartstopper",
         title: "Heartstopper",
         year: 2022,
-        seasons: "3+ temporadas",
-        rating: 4.8,
-        genre: ["romance", "drama"],
+        genre: "Romance",
         country: "Reino Unido",
-        image: "./img/series/heartstopper.jpg",
-        query: "Heartstopper",
-        description:
+        rating: 9.0,
+        seasons: 3,
+        episodes: 24,
+        poster: "heartstopper.jpg",
+        backdrop: "heartstopper-bg.jpg",
+        descriptionPT:
             "Charlie e Nick descobrem que uma amizade inesperada pode se transformar em algo muito maior.",
+        descriptionEN:
+            "Charlie and Nick discover that an unexpected friendship can turn into something much bigger.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Kit Connor", "Nick Nelson"],
-            ["Joe Locke", "Charlie Spring"],
-            ["William Gao", "Tao Xu"],
-            ["Yasmin Finney", "Elle Argent"]
+            ["Kit Connor", "Nick", "kit-connor.jpg"],
+            ["Joe Locke", "Charlie", "joe-locke.jpg"]
         ]
     },
 
     {
-        id: "the-queens-gambit",
-        title: "O Gambito da Rainha",
-        year: 2020,
-        seasons: "Minissérie",
-        rating: 4.9,
-        genre: ["drama"],
-        country: "Estados Unidos",
-        image: "./img/series/o-gambito-da-rainha.jpg",
-        query: "The Queen's Gambit",
-        description:
-            "Uma jovem prodígio do xadrez enfrenta adversários, fama e seus próprios conflitos enquanto busca se tornar a melhor do mundo.",
+        id: "elite",
+        title: "Elite",
+        year: 2018,
+        genre: "Drama",
+        country: "Espanha",
+        rating: 8.2,
+        seasons: 8,
+        episodes: 64,
+        poster: "elite.jpg",
+        backdrop: "elite-bg.jpg",
+        descriptionPT:
+            "Conflitos entre estudantes de uma escola de elite desencadeiam romances, rivalidades e crimes.",
+        descriptionEN:
+            "Conflicts among students at an elite school trigger romance, rivalries and crimes.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Anya Taylor-Joy", "Beth Harmon"],
-            ["Thomas Brodie-Sangster", "Benny Watts"],
-            ["Harry Melling", "Harry Beltik"]
+            ["Omar Ayuso", "Omar", "omar-ayuso.jpg"],
+            ["Valentina Zenere", "Isadora", "valentina-zenere.jpg"]
+        ]
+    },
+
+    {
+        id: "never-have-i-ever",
+        title: "Never Have I Ever",
+        year: 2020,
+        genre: "Romance",
+        country: "Estados Unidos",
+        rating: 8.5,
+        seasons: 4,
+        episodes: 40,
+        poster: "never-have-i-ever.jpg",
+        backdrop: "never-have-i-ever-bg.jpg",
+        descriptionPT:
+            "Devi enfrenta escola, família, amizades e romances enquanto tenta mudar sua vida.",
+        descriptionEN:
+            "Devi faces school, family, friendships and romance while trying to change her life.",
+        featured: false,
+        brazil: false,
+        cast: [
+            ["Maitreyi Ramakrishnan", "Devi", "maitreyi.jpg"],
+            ["Darren Barnet", "Paxton", "darren-barnet.jpg"]
         ]
     },
 
     {
         id: "the-night-agent",
-        title: "O Agente Noturno",
+        title: "The Night Agent",
         year: 2023,
-        seasons: "2+ temporadas",
-        rating: 4.6,
-        genre: ["acao", "drama", "misterio"],
+        genre: "Suspense",
         country: "Estados Unidos",
-        image: "./img/series/o-agente-noturno.jpg",
-        query: "The Night Agent",
-        description:
-            "Um agente do FBI atende uma ligação que o coloca no centro de uma perigosa conspiração política.",
+        rating: 8.4,
+        seasons: 2,
+        episodes: 20,
+        poster: "the-night-agent.jpg",
+        backdrop: "the-night-agent-bg.jpg",
+        descriptionPT:
+            "Um agente do FBI atende uma ligação que o coloca no centro de uma conspiração política.",
+        descriptionEN:
+            "An FBI agent answers a call that puts him at the center of a political conspiracy.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Gabriel Basso", "Peter Sutherland"],
-            ["Luciane Buchanan", "Rose Larkin"],
-            ["Hong Chau", "Diane Farr"]
+            ["Gabriel Basso", "Peter", "gabriel-basso.jpg"],
+            ["Luciane Buchanan", "Rose", "luciane-buchanan.jpg"]
         ]
     },
 
     {
-        id: "one-piece",
-        title: "One Piece",
-        year: 2023,
-        seasons: "2+ temporadas",
-        rating: 4.8,
-        genre: ["acao", "comedia"],
-        country: "Estados Unidos",
-        image: "./img/series/one-piece.jpg",
-        query: "One Piece 2023",
-        description:
-            "Monkey D. Luffy reúne uma tripulação para explorar os mares e encontrar o lendário tesouro One Piece.",
+        id: "the-gentlemen",
+        title: "The Gentlemen",
+        year: 2024,
+        genre: "Crime",
+        country: "Reino Unido",
+        rating: 8.5,
+        seasons: 1,
+        episodes: 8,
+        poster: "the-gentlemen.jpg",
+        backdrop: "the-gentlemen-bg.jpg",
+        descriptionPT:
+            "Um aristocrata herda uma propriedade e descobre que ela faz parte de um império criminoso.",
+        descriptionEN:
+            "An aristocrat inherits an estate and discovers that it is part of a criminal empire.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Iñaki Godoy", "Monkey D. Luffy"],
-            ["Mackenyu", "Roronoa Zoro"],
-            ["Emily Rudd", "Nami"],
-            ["Jacob Romero", "Usopp"]
+            ["Theo James", "Eddie", "theo-james.jpg"],
+            ["Kaya Scodelario", "Susie", "kaya-scodelario.jpg"]
         ]
     },
 
     {
-        id: "alice-in-borderland",
-        title: "Alice in Borderland",
+        id: "blood-water",
+        title: "Blood & Water",
         year: 2020,
-        seasons: "3 temporadas",
-        rating: 4.8,
-        genre: ["acao", "misterio", "drama"],
-        country: "Japão",
-        image: "./img/series/alice-in-borderland.jpg",
-        query: "Alice in Borderland",
-        description:
-            "Um jovem e seus amigos ficam presos em uma versão vazia de Tóquio onde precisam vencer jogos mortais.",
+        genre: "Drama",
+        country: "África do Sul",
+        rating: 8.1,
+        seasons: 4,
+        episodes: 25,
+        poster: "blood-water.jpg",
+        backdrop: "blood-water-bg.jpg",
+        descriptionPT:
+            "Uma adolescente investiga se uma famosa nadadora de sua escola pode ser sua irmã desaparecida.",
+        descriptionEN:
+            "A teenager investigates whether a famous swimmer at her school could be her missing sister.",
+        featured: false,
+        brazil: false,
         cast: [
-            ["Kento Yamazaki", "Arisu"],
-            ["Tao Tsuchiya", "Usagi"],
-            ["Nijirō Murakami", "Chishiya"]
+            ["Ama Qamata", "Puleng", "ama-qamata.jpg"],
+            ["Khosi Ngema", "Fikile", "khosi-ngema.jpg"]
         ]
     },
-
-    {
-        id: "squid-game",
-        title: "Round 6",
-        year: 2021,
-        seasons: "3 temporadas",
-        rating: 4.8,
-        genre: ["acao", "drama", "misterio"],
-        country: "Coreia do Sul",
-        image: "./img/series/round-6.jpg",
-        query: "Squid Game",
-        description:
-            "Pessoas endividadas recebem uma proposta para participar de jogos infantis em troca de um prêmio gigantesco.",
-        cast: [
-            ["Lee Jung-jae", "Seong Gi-hun"],
-            ["Lee Byung-hun", "Front Man"],
-            ["Wi Ha-jun", "Hwang Jun-ho"]
-        ]
-    },
-
-    {
-        id: "all-of-us-are-dead",
-        title: "All of Us Are Dead",
-        year: 2022,
-        seasons: "2+ temporadas",
-        rating: 4.6,
-        genre: ["terror", "acao", "drama"],
-        country: "Coreia do Sul",
-        image: "./img/series/all-of-us-are-dead.jpg",
-        query: "All of Us Are Dead",
-        description:
-            "Estudantes ficam presos em uma escola durante um surto zumbi e precisam encontrar uma maneira de sobreviver.",
-        cast: [
-            ["Park Ji-hu", "Nam On-jo"],
-            ["Yoon Chan-young", "Lee Cheong-san"],
-            ["Cho Yi-hyun", "Choi Nam-ra"]
-        ]
-    },
-
-    {
-        id: "sweet-home",
-        title: "Sweet Home",
-        year: 2020,
-        seasons: "3 temporadas",
-        rating: 4.5,
-        genre: ["terror", "acao", "drama"],
-        country: "Coreia do Sul",
-        image: "./img/series/sweet-home.jpg",
-        query: "Sweet Home",
-        description:
-            "Quando pessoas começam a se transformar em monstros, moradores de um prédio lutam para sobreviver.",
-        cast: [
-            ["Song Kang", "Cha Hyun-su"],
-            ["Lee Jin-wook", "Pyeon Sang-wook"],
-            ["Lee Si-young", "Seo Yi-kyung"]
-        ]
-    },
-
-    {
-        id: "the-glory",
-        title: "A Lição",
-        year: 2022,
-        seasons: "1 temporada",
-        rating: 4.8,
-        genre: ["drama", "misterio"],
-        country: "Coreia do Sul",
-        image: "./img/series/a-licao.jpg",
-        query: "The Glory",
-        description:
-            "Anos depois de sofrer violência escolar, uma mulher coloca em prática um elaborado plano de vingança.",
-        cast: [
-            ["Song Hye-kyo", "Moon Dong-eun"],
-            ["Lee Do-hyun", "Joo Yeo-jeong"],
-            ["Lim Ji-yeon", "Park Yeon-jin"]
-        ]
-    },
-
-    /* =====================================================
-       PRODUÇÕES BRASILEIRAS
-    ===================================================== */
 
     {
         id: "sintonia",
         title: "Sintonia",
         year: 2019,
-        seasons: "5 temporadas",
-        rating: 4.7,
-        genre: ["brasil", "drama"],
+        genre: "Drama",
         country: "Brasil",
-        image: "./img/series/sintonia.jpg",
-        query: "Sintonia",
-        description:
-            "Três amigos de infância tentam conquistar seus sonhos enquanto música, religião e crime cruzam seus caminhos em São Paulo.",
+        rating: 8.6,
+        seasons: 5,
+        episodes: 32,
+        poster: "sintonia.jpg",
+        backdrop: "sintonia-bg.jpg",
+        descriptionPT:
+            "Três amigos da periferia de São Paulo seguem caminhos diferentes entre música, crime e fé.",
+        descriptionEN:
+            "Three friends from São Paulo's outskirts follow different paths involving music, crime and faith.",
+        featured: false,
+        brazil: true,
         cast: [
-            ["Christian Malheiros", "Nando"],
-            ["Jottapê", "Doni"],
-            ["Bruna Mascarenhas", "Rita"]
+            ["Christian Malheiros", "Nando", "christian-malheiros.jpg"],
+            ["Jottapê", "Doni", "jottape.jpg"],
+            ["Bruna Mascarenhas", "Rita", "bruna-mascarenhas.jpg"]
         ]
     },
 
@@ -576,37 +782,22 @@ const seriesData = [
         id: "bom-dia-veronica",
         title: "Bom Dia, Verônica",
         year: 2020,
-        seasons: "3 temporadas",
-        rating: 4.7,
-        genre: ["brasil", "drama", "misterio"],
+        genre: "Suspense",
         country: "Brasil",
-        image: "./img/series/bom-dia-veronica.jpg",
-        query: "Good Morning Veronica",
-        description:
-            "Uma escrivã da polícia começa a investigar casos de violência e descobre uma rede muito mais perigosa do que imaginava.",
+        rating: 8.7,
+        seasons: 3,
+        episodes: 17,
+        poster: "bom-dia-veronica.jpg",
+        backdrop: "bom-dia-veronica-bg.jpg",
+        descriptionPT:
+            "Uma escrivã investiga crimes violentos e descobre uma rede muito mais perigosa do que imaginava.",
+        descriptionEN:
+            "A police clerk investigates violent crimes and discovers a network far more dangerous than she imagined.",
+        featured: false,
+        brazil: true,
         cast: [
-            ["Tainá Müller", "Verônica Torres"],
-            ["Reynaldo Gianecchini", "Matias"],
-            ["Klara Castanho", "Ângela"]
-        ]
-    },
-
-    {
-        id: "cidade-invisivel",
-        title: "Cidade Invisível",
-        year: 2021,
-        seasons: "2 temporadas",
-        rating: 4.5,
-        genre: ["brasil", "misterio", "drama"],
-        country: "Brasil",
-        image: "./img/series/cidade-invisivel.jpg",
-        query: "Invisible City",
-        description:
-            "Um investigador descobre criaturas do folclore brasileiro vivendo escondidas entre os humanos.",
-        cast: [
-            ["Marco Pigossi", "Eric"],
-            ["Alessandra Negrini", "Inês"],
-            ["Manu Dieguez", "Luna"]
+            ["Tainá Müller", "Verônica", "taina-muller.jpg"],
+            ["Reynaldo Gianecchini", "Matias", "reynaldo-gianecchini.jpg"]
         ]
     },
 
@@ -614,18 +805,45 @@ const seriesData = [
         id: "dna-do-crime",
         title: "DNA do Crime",
         year: 2023,
-        seasons: "2+ temporadas",
-        rating: 4.7,
-        genre: ["brasil", "acao", "drama"],
+        genre: "Crime",
         country: "Brasil",
-        image: "./img/series/dna-do-crime.jpg",
-        query: "Criminal Code Netflix",
-        description:
-            "Agentes federais usam pistas de DNA para investigar uma complexa rede criminosa na fronteira brasileira.",
+        rating: 8.5,
+        seasons: 2,
+        episodes: 16,
+        poster: "dna-do-crime.jpg",
+        backdrop: "dna-do-crime-bg.jpg",
+        descriptionPT:
+            "Policiais federais usam pistas de DNA para investigar uma organização criminosa após um grande assalto.",
+        descriptionEN:
+            "Federal police use DNA evidence to investigate a criminal organization after a major robbery.",
+        featured: false,
+        brazil: true,
         cast: [
-            ["Maeve Jinkings", "Suellen"],
-            ["Rômulo Braga", "Benício"],
-            ["Thomás Aquino", "Sem Alma"]
+            ["Maeve Jinkings", "Suellen", "maeve-jinkings.jpg"],
+            ["Rômulo Braga", "Benício", "romulo-braga.jpg"]
+        ]
+    },
+
+    {
+        id: "cidade-invisivel",
+        title: "Cidade Invisível",
+        year: 2021,
+        genre: "Mistério",
+        country: "Brasil",
+        rating: 8.3,
+        seasons: 2,
+        episodes: 12,
+        poster: "cidade-invisivel.jpg",
+        backdrop: "cidade-invisivel-bg.jpg",
+        descriptionPT:
+            "Um investigador descobre criaturas do folclore brasileiro escondidas entre os humanos.",
+        descriptionEN:
+            "An investigator discovers creatures from Brazilian folklore hidden among humans.",
+        featured: false,
+        brazil: true,
+        cast: [
+            ["Marco Pigossi", "Eric", "marco-pigossi.jpg"],
+            ["Alessandra Negrini", "Inês", "alessandra-negrini.jpg"]
         ]
     },
 
@@ -633,75 +851,22 @@ const seriesData = [
         id: "de-volta-aos-15",
         title: "De Volta aos 15",
         year: 2022,
-        seasons: "3 temporadas",
-        rating: 4.5,
-        genre: ["brasil", "comedia", "romance"],
+        genre: "Romance",
         country: "Brasil",
-        image: "./img/series/de-volta-aos-15.jpg",
-        query: "Back to 15",
-        description:
-            "Uma mulher de 30 anos volta misteriosamente aos 15 e ganha a chance de tentar mudar seu passado.",
+        rating: 8.2,
+        seasons: 3,
+        episodes: 18,
+        poster: "de-volta-aos-15.jpg",
+        backdrop: "de-volta-aos-15-bg.jpg",
+        descriptionPT:
+            "Uma mulher de 30 anos volta misteriosamente à adolescência e tenta corrigir escolhas do passado.",
+        descriptionEN:
+            "A 30-year-old woman mysteriously returns to her teenage years and tries to fix choices from the past.",
+        featured: false,
+        brazil: true,
         cast: [
-            ["Maisa Silva", "Anita jovem"],
-            ["Camila Queiroz", "Anita adulta"],
-            ["Klara Castanho", "Carol"]
-        ]
-    },
-
-    {
-        id: "coisa-mais-linda",
-        title: "Coisa Mais Linda",
-        year: 2019,
-        seasons: "2 temporadas",
-        rating: 4.5,
-        genre: ["brasil", "drama", "romance"],
-        country: "Brasil",
-        image: "./img/series/coisa-mais-linda.jpg",
-        query: "Most Beautiful Thing Netflix",
-        description:
-            "No Rio de Janeiro dos anos 1950, uma mulher transforma sua vida ao abrir um clube de bossa nova.",
-        cast: [
-            ["Maria Casadevall", "Malu"],
-            ["Pathy Dejesus", "Adélia"],
-            ["Mel Lisboa", "Thereza"]
-        ]
-    },
-
-    {
-        id: "3-percent",
-        title: "3%",
-        year: 2016,
-        seasons: "4 temporadas",
-        rating: 4.5,
-        genre: ["brasil", "drama", "acao"],
-        country: "Brasil",
-        image: "./img/series/3-percent.jpg",
-        query: "3 Percent Netflix",
-        description:
-            "Em um futuro desigual, jovens enfrentam um processo brutal para conquistar uma vida privilegiada.",
-        cast: [
-            ["Bianca Comparato", "Michele"],
-            ["Vaneza Oliveira", "Joana"],
-            ["Rodolfo Valente", "Rafael"]
-        ]
-    },
-
-    {
-        id: "irmandade",
-        title: "Irmandade",
-        year: 2019,
-        seasons: "2 temporadas",
-        rating: 4.5,
-        genre: ["brasil", "drama", "acao"],
-        country: "Brasil",
-        image: "./img/series/irmandade.jpg",
-        query: "Brotherhood Netflix Brazil",
-        description:
-            "Uma advogada é obrigada a atuar como informante contra o próprio irmão, líder de uma facção criminosa.",
-        cast: [
-            ["Naruna Costa", "Cristina"],
-            ["Seu Jorge", "Edson"],
-            ["Hermila Guedes", "Darlene"]
+            ["Maisa Silva", "Anita jovem", "maisa.jpg"],
+            ["Camila Queiroz", "Anita adulta", "camila-queiroz.jpg"]
         ]
     },
 
@@ -709,127 +874,65 @@ const seriesData = [
         id: "pedaço-de-mim",
         title: "Pedaço de Mim",
         year: 2024,
-        seasons: "1 temporada",
-        rating: 4.6,
-        genre: ["brasil", "drama"],
+        genre: "Drama",
         country: "Brasil",
-        image: "./img/series/pedaco-de-mim.jpg",
-        query: "Desperate Lies Netflix",
-        description:
-            "Uma mulher enfrenta uma situação familiar extraordinária que transforma completamente sua vida.",
+        rating: 8.1,
+        seasons: 1,
+        episodes: 17,
+        poster: "pedaco-de-mim.jpg",
+        backdrop: "pedaco-de-mim-bg.jpg",
+        descriptionPT:
+            "Uma descoberta inesperada transforma completamente a vida de uma mulher e de sua família.",
+        descriptionEN:
+            "An unexpected discovery completely transforms a woman's life and her family.",
+        featured: false,
+        brazil: true,
         cast: [
-            ["Juliana Paes", "Liana"],
-            ["Vladimir Brichta", "Tomás"],
-            ["Felipe Abib", "Oscar"]
+            ["Juliana Paes", "Liana", "juliana-paes.jpg"],
+            ["Vladimir Brichta", "Tomás", "vladimir-brichta.jpg"]
         ]
-    },
-
-    {
-        id: "os-donos-do-jogo",
-        title: "Os Donos do Jogo",
-        year: 2025,
-        seasons: "1 temporada",
-        rating: 4.5,
-        genre: ["brasil", "drama", "acao"],
-        country: "Brasil",
-        image: "./img/series/os-donos-do-jogo.jpg",
-        query: "Os Donos do Jogo Netflix",
-        description:
-            "Ambição, poder e conflitos familiares se misturam em uma disputa pelo controle de um império clandestino.",
-        cast: []
     }
 
 ];
 
 
 /* =========================================================
-   ESTADO
+   FALLBACK DE IMAGENS
 ========================================================= */
 
-const defaultState = {
-    favorites: [],
-    watched: [],
-    watchlist: [],
-    ratings: {},
-    progress: {},
-    comments: [],
-    opened: {},
-    theme: "light",
-    colorTheme: "bia",
-    effects: true,
-    animations: true,
-    lastVisit: null,
-    streak: 1
-};
+const fallbackPoster =
+    "https://placehold.co/600x900/7d4ea3/ffffff?text=Blog+da+Bia";
 
-let state = loadState();
+const fallbackActor =
+    "https://placehold.co/400x500/9c69b8/ffffff?text=Elenco";
 
-let activeFilter = "all";
-
-let activeSeriesId =
-    seriesData[0].id;
-
-let heroIndex = 0;
-
-let currentTrailerSeries = null;
-
-let toastTimer = null;
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-function loadState() {
-
-    try {
-
-        const saved =
-            JSON.parse(
-                localStorage.getItem(
-                    STORAGE_KEY
-                )
-            );
-
-        return {
-            ...defaultState,
-            ...(saved || {})
-        };
-
-    } catch (error) {
-
-        return {
-            ...defaultState
-        };
-
-    }
-
-}
-
-
-function saveState() {
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(state)
+function imageFallback(img, fallback = fallbackPoster) {
+    img.addEventListener(
+        "error",
+        () => {
+            if (img.src !== fallback) {
+                img.src = fallback;
+            }
+        },
+        { once: true }
     );
+}
 
+function applyImageFallbacks() {
+    $$("img").forEach(img =>
+        imageFallback(img)
+    );
 }
 
 
 /* =========================================================
-   TEXTO SEGURO
+   DESCRIÇÃO
 ========================================================= */
 
-function escapeHTML(value = "") {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
+function getDescription(item) {
+    return state.language === "en"
+        ? item.descriptionEN
+        : item.descriptionPT;
 }
 
 
@@ -837,250 +940,592 @@ function escapeHTML(value = "") {
    TOAST
 ========================================================= */
 
-function showToast(
-    message,
-    icon = "♡"
-) {
+let toastTimeout;
 
-    if (!toast) return;
+function showToast(message, icon = "♥") {
+    const toast = $("#toast");
 
-    toastIcon.textContent =
-        icon;
+    if (!toast) {
+        return;
+    }
 
-    toastText.textContent =
-        message;
+    const iconElement =
+        $(".toast-icon", toast);
 
-    toast.classList.add(
-        "show"
-    );
+    const textElement =
+        $(".toast-text", toast);
 
-    clearTimeout(
-        toastTimer
-    );
+    if (iconElement) {
+        iconElement.textContent = icon;
+    }
 
-    toastTimer =
-        setTimeout(() => {
+    if (textElement) {
+        textElement.textContent = message;
+    }
 
-            toast.classList.remove(
-                "show"
-            );
+    toast.classList.add("show");
 
-        }, 2400);
+    clearTimeout(toastTimeout);
 
+    toastTimeout =
+        setTimeout(
+            () =>
+                toast.classList.remove("show"),
+            2500
+        );
 }
 
 
 /* =========================================================
-   CAPAS
-
-   1. tenta arquivo JPG local
-   2. se falhar, consulta TVMaze
-   3. se falhar novamente, gera placeholder
+   CONFETE
 ========================================================= */
 
-const imageCache = {};
-
-
-async function resolvePoster(series) {
-
-    if (
-        imageCache[series.id]
-    ) {
-        return imageCache[
-            series.id
-        ];
+function confetti(x, y) {
+    if (!state.animations) {
+        return;
     }
 
-    const cached =
-        localStorage.getItem(
-            `poster_${series.id}`
+    const container =
+        $("#clickEffects")
+        || document.body;
+
+    const symbols =
+        ["♥", "✦", "✧", "★", "♡"];
+
+    for (let i = 0; i < 12; i++) {
+        const particle =
+            document.createElement("span");
+
+        particle.className =
+            "confetti-piece";
+
+        particle.textContent =
+            symbols[
+                Math.floor(
+                    Math.random()
+                    * symbols.length
+                )
+            ];
+
+        particle.style.left =
+            `${x}px`;
+
+        particle.style.top =
+            `${y}px`;
+
+        particle.style.setProperty(
+            "--x",
+            `${
+                Math.random() * 180 - 90
+            }px`
         );
 
-    if (cached) {
-
-        imageCache[series.id] =
-            cached;
-
-        return cached;
-
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                `https://api.tvmaze.com/singlesearch/shows?q=${
-                    encodeURIComponent(
-                        series.query
-                    )
-                }`
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                "Imagem não encontrada"
-            );
-        }
-
-        const data =
-            await response.json();
-
-        const image =
-            data?.image?.original ||
-            data?.image?.medium;
-
-        if (image) {
-
-            imageCache[series.id] =
-                image;
-
-            localStorage.setItem(
-                `poster_${series.id}`,
-                image
-            );
-
-            return image;
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            `Não foi possível buscar capa de ${series.title}`
+        particle.style.setProperty(
+            "--y",
+            `${
+                Math.random() * 130 + 40
+            }px`
         );
 
+        particle.style.setProperty(
+            "--rotation",
+            `${
+                Math.random() * 360
+            }deg`
+        );
+
+        container.appendChild(
+            particle
+        );
+
+        setTimeout(
+            () => particle.remove(),
+            1400
+        );
     }
-
-    return createPlaceholder(
-        series.title
-    );
-
-}
-
-
-function createPlaceholder(title) {
-
-    return (
-        "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(`
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="500"
-                height="750"
-            >
-                <defs>
-                    <linearGradient
-                        id="g"
-                        x1="0"
-                        y1="0"
-                        x2="1"
-                        y2="1"
-                    >
-                        <stop
-                            offset="0%"
-                            stop-color="#9256d4"
-                        />
-                        <stop
-                            offset="50%"
-                            stop-color="#dc6ab9"
-                        />
-                        <stop
-                            offset="100%"
-                            stop-color="#6f6bdc"
-                        />
-                    </linearGradient>
-                </defs>
-
-                <rect
-                    width="100%"
-                    height="100%"
-                    fill="url(#g)"
-                />
-
-                <text
-                    x="50%"
-                    y="47%"
-                    fill="white"
-                    text-anchor="middle"
-                    font-size="30"
-                    font-family="Arial"
-                >
-                    ♡
-                </text>
-
-                <text
-                    x="50%"
-                    y="54%"
-                    fill="white"
-                    text-anchor="middle"
-                    font-size="23"
-                    font-family="Arial"
-                >
-                    ${
-                        escapeHTML(
-                            title
-                        )
-                    }
-                </text>
-            </svg>
-        `)
-    );
-
 }
 
 
 /* =========================================================
-   IMAGEM COM FALLBACK
+   CLIQUE COM CORAÇÃO
 ========================================================= */
 
-async function loadImageForElement(
-    img,
-    series
-) {
+function setupClickHearts() {
+    document.addEventListener(
+        "click",
+        event => {
+            if (!state.animations) {
+                return;
+            }
 
-    if (!img) return;
+            const heart =
+                document.createElement("span");
 
-    img.src =
-        series.image;
+            heart.className =
+                "click-heart";
 
-    img.onerror =
-        async () => {
+            heart.textContent = "♥";
 
-            img.onerror = null;
+            heart.style.left =
+                `${event.clientX}px`;
 
-            img.src =
-                await resolvePoster(
-                    series
+            heart.style.top =
+                `${event.clientY}px`;
+
+            (
+                $("#clickEffects")
+                || document.body
+            ).appendChild(heart);
+
+            setTimeout(
+                () => heart.remove(),
+                1100
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   CURSOR CORAÇÃO
+========================================================= */
+
+function setupHeartCursor() {
+    const cursor =
+        $("#heartCursor");
+
+    if (!cursor) {
+        return;
+    }
+
+    function updateCursorMode() {
+        const enabled =
+            state.cursor
+            && window.matchMedia(
+                "(pointer: fine)"
+            ).matches;
+
+        body.classList.toggle(
+            "custom-heart-cursor",
+            enabled
+        );
+
+        cursor.style.display =
+            enabled
+                ? "block"
+                : "none";
+    }
+
+    updateCursorMode();
+
+    document.addEventListener(
+        "mousemove",
+        event => {
+            if (!state.cursor) {
+                return;
+            }
+
+            cursor.style.left =
+                `${event.clientX}px`;
+
+            cursor.style.top =
+                `${event.clientY}px`;
+        }
+    );
+
+    document.addEventListener(
+        "mouseover",
+        event => {
+            if (
+                event.target.closest(
+                    "button, a, input, textarea, select, .series-card"
+                )
+            ) {
+                cursor.classList.add(
+                    "hover"
                 );
+            }
+        }
+    );
 
-        };
+    document.addEventListener(
+        "mouseout",
+        event => {
+            if (
+                event.target.closest(
+                    "button, a, input, textarea, select, .series-card"
+                )
+            ) {
+                cursor.classList.remove(
+                    "hover"
+                );
+            }
+        }
+    );
 
+    window.addEventListener(
+        "resize",
+        updateCursorMode
+    );
 }
 
 
 /* =========================================================
-   DATA
+   RASTRO DO CURSOR
 ========================================================= */
 
-function getSeries(id) {
+let lastTrail = 0;
 
-    return seriesData.find(
-        series =>
-            series.id === id
+function setupCursorTrail() {
+    document.addEventListener(
+        "mousemove",
+        event => {
+            if (
+                !state.cursor
+                || !state.animations
+            ) {
+                return;
+            }
+
+            const now = Date.now();
+
+            if (now - lastTrail < 45) {
+                return;
+            }
+
+            lastTrail = now;
+
+            const trail =
+                document.createElement("span");
+
+            trail.className =
+                "cursor-trail";
+
+            trail.textContent = "♥";
+
+            trail.style.left =
+                `${event.clientX}px`;
+
+            trail.style.top =
+                `${event.clientY}px`;
+
+            (
+                $("#clickEffects")
+                || document.body
+            ).appendChild(trail);
+
+            setTimeout(
+                () => trail.remove(),
+                700
+            );
+        }
     );
-
 }
 
 
-function randomItem(array) {
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
 
-    return array[
-        Math.floor(
-            Math.random() *
-            array.length
+function createParticles() {
+    const container =
+        $("#particles");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (!state.particles) {
+        return;
+    }
+
+    const symbols =
+        ["♥", "♡", "✦", "✧"];
+
+    for (let i = 0; i < 18; i++) {
+        const particle =
+            document.createElement("span");
+
+        particle.className =
+            "background-particle";
+
+        particle.textContent =
+            symbols[
+                Math.floor(
+                    Math.random()
+                    * symbols.length
+                )
+            ];
+
+        particle.style.left =
+            `${Math.random() * 100}%`;
+
+        particle.style.fontSize =
+            `${
+                Math.random() * 13 + 8
+            }px`;
+
+        particle.style.animationDelay =
+            `-${Math.random() * 15}s`;
+
+        particle.style.setProperty(
+            "--particle-speed",
+            `${
+                Math.random() * 10 + 10
+            }s`
+        );
+
+        container.appendChild(
+            particle
+        );
+    }
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+function setupLoader() {
+    const loader = $("#loader");
+
+    if (!loader) {
+        return;
+    }
+
+    window.addEventListener(
+        "load",
+        () => {
+            setTimeout(
+                () =>
+                    loader.classList.add(
+                        "hidden"
+                    ),
+                450
+            );
+        }
+    );
+
+    setTimeout(
+        () =>
+            loader.classList.add(
+                "hidden"
+            ),
+        2500
+    );
+}
+
+
+/* =========================================================
+   HEADER / SCROLL
+========================================================= */
+
+function setupScroll() {
+    const header = $("#header");
+
+    const progress =
+        $("#scrollProgress");
+
+    const backTop =
+        $("#backTop");
+
+    function update() {
+        const scrollTop =
+            window.scrollY;
+
+        const max =
+            document.documentElement
+                .scrollHeight
+            - window.innerHeight;
+
+        const percentage =
+            max > 0
+                ? (scrollTop / max) * 100
+                : 0;
+
+        if (progress) {
+            progress.style.width =
+                `${percentage}%`;
+        }
+
+        if (header) {
+            header.classList.toggle(
+                "scrolled",
+                scrollTop > 30
+            );
+        }
+
+        if (backTop) {
+            backTop.classList.toggle(
+                "show",
+                scrollTop > 500
+            );
+        }
+    }
+
+    window.addEventListener(
+        "scroll",
+        update,
+        { passive: true }
+    );
+
+    update();
+
+    backTop?.addEventListener(
+        "click",
+        () =>
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+    );
+}
+
+
+/* =========================================================
+   MENU MOBILE
+========================================================= */
+
+function setupMobileMenu() {
+    const menu =
+        $("#mobileMenu");
+
+    const overlay =
+        $("#menuOverlay");
+
+    const openButton =
+        $("#mobileMenuBtn");
+
+    const closeButton =
+        $("#closeMobileMenu");
+
+    function open() {
+        menu?.classList.add("open");
+        overlay?.classList.add("show");
+
+        body.style.overflow = "hidden";
+    }
+
+    function close() {
+        menu?.classList.remove("open");
+        overlay?.classList.remove("show");
+
+        body.style.overflow = "";
+    }
+
+    openButton?.addEventListener(
+        "click",
+        open
+    );
+
+    closeButton?.addEventListener(
+        "click",
+        close
+    );
+
+    overlay?.addEventListener(
+        "click",
+        close
+    );
+
+    $$("a", menu).forEach(link =>
+        link.addEventListener(
+            "click",
+            close
         )
-    ];
+    );
+}
 
+
+/* =========================================================
+   IDIOMA
+========================================================= */
+
+function setLanguage(language) {
+    state.language = language;
+
+    storage.set(
+        "bia_language",
+        language
+    );
+
+    document.documentElement.lang =
+        language === "en"
+            ? "en"
+            : "pt-BR";
+
+    $$(".language-btn").forEach(
+        button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.lang
+                === language
+            );
+        }
+    );
+
+    $$("[data-i18n]").forEach(
+        element => {
+            const key =
+                element.dataset.i18n;
+
+            if (
+                translations[language]?.[
+                    key
+                ]
+            ) {
+                element.textContent =
+                    translations[language][
+                        key
+                    ];
+            }
+        }
+    );
+
+    $$("[data-i18n-placeholder]")
+        .forEach(element => {
+            const key =
+                element.dataset
+                    .i18nPlaceholder;
+
+            if (
+                translations[language]?.[
+                    key
+                ]
+            ) {
+                element.placeholder =
+                    translations[language][
+                        key
+                    ];
+            }
+        });
+
+    renderSeries();
+    renderBrazil();
+    renderRanking();
+    renderComments();
+    renderDailySeries();
+    updateHero();
+}
+
+function setupLanguage() {
+    $$("[data-lang]").forEach(
+        button => {
+            button.addEventListener(
+                "click",
+                () =>
+                    setLanguage(
+                        button.dataset.lang
+                    )
+            );
+        }
+    );
+
+    setLanguage(
+        state.language
+    );
 }
 
 
@@ -1088,108 +1533,910 @@ function randomItem(array) {
    HERO
 ========================================================= */
 
-const heroSeries =
-    seriesData.slice(
-        0,
-        6
+const featuredSeries =
+    series.filter(
+        item => item.featured
     );
 
+function updateHero() {
+    if (!featuredSeries.length) {
+        return;
+    }
 
-function createHeroDots() {
-
-    if (!heroDots) return;
-
-    heroDots.innerHTML =
-        heroSeries
-            .map(
-                (_, index) => `
-                    <button
-                        class="hero-dot ${
-                            index === 0
-                                ? "active"
-                                : ""
-                        }"
-                        data-hero-index="${index}"
-                        aria-label="Destaque ${
-                            index + 1
-                        }"
-                    ></button>
-                `
-            )
-            .join("");
-
-}
-
-
-async function updateHero(index) {
-
-    heroIndex =
-        (
-            index +
-            heroSeries.length
-        ) %
-        heroSeries.length;
-
-    const series =
-        heroSeries[
-            heroIndex
+    const item =
+        featuredSeries[
+            state.heroIndex
+            % featuredSeries.length
         ];
 
-    activeSeriesId =
-        series.id;
+    const title =
+        $("#heroTitle");
 
-    heroTitle.textContent =
-        series.title;
-
-    heroRating.textContent =
-        `★ ${series.rating}`;
-
-    heroYear.textContent =
-        series.year;
-
-    heroSeasons.textContent =
-        series.seasons;
-
-    heroDescription.textContent =
-        series.description;
-
-    communityRating.textContent =
-        `${series.rating} / 5`;
-
-    await loadImageForElement(
-        heroPoster,
-        series
-    );
+    const description =
+        $("#heroDescription");
 
     const poster =
-        await resolvePoster(
-            series
+        $("#heroPoster");
+
+    const backdrop =
+        $("#heroBackdrop");
+
+    const rating =
+        $("#heroRating");
+
+    const year =
+        $("#heroYear");
+
+    const genre =
+        $("#heroGenre");
+
+    if (title) {
+        title.textContent =
+            item.title;
+    }
+
+    if (description) {
+        description.textContent =
+            getDescription(item);
+    }
+
+    if (poster) {
+        poster.src =
+            item.poster;
+
+        poster.alt =
+            item.title;
+
+        imageFallback(
+            poster
         );
+    }
 
-    heroBackdrop.style.backgroundImage =
-        `
-        linear-gradient(
-            rgba(30,15,36,.18),
-            rgba(30,15,36,.18)
-        ),
-        url("${poster}")
-        `;
+    if (backdrop) {
+        backdrop.style.backgroundImage =
+            `url("${item.backdrop}")`;
+    }
 
-    updateHeroButtons(
-        series.id
-    );
+    if (rating) {
+        rating.textContent =
+            `★ ${item.rating}`;
+    }
 
-    $$(".hero-dot").forEach(
-        (dot, i) => {
+    if (year) {
+        year.textContent =
+            item.year;
+    }
 
-            dot.classList.toggle(
-                "active",
-                i === heroIndex
+    if (genre) {
+        genre.textContent =
+            item.genre;
+    }
+
+    const detailsButton =
+        $("#heroDetails");
+
+    if (detailsButton) {
+        detailsButton.dataset.id =
+            item.id;
+    }
+
+    const favoriteButton =
+        $("#heroFavorite");
+
+    if (favoriteButton) {
+        favoriteButton.dataset.id =
+            item.id;
+
+        favoriteButton.classList.toggle(
+            "active",
+            state.favorites.includes(
+                item.id
+            )
+        );
+    }
+
+    const watchlistButton =
+        $("#heroWatchlist");
+
+    if (watchlistButton) {
+        watchlistButton.dataset.id =
+            item.id;
+
+        watchlistButton.classList.toggle(
+            "active",
+            state.watchlist.includes(
+                item.id
+            )
+        );
+    }
+
+    renderHeroDots();
+}
+
+function renderHeroDots() {
+    const dots =
+        $("#heroDots");
+
+    if (!dots) {
+        return;
+    }
+
+    dots.innerHTML = "";
+
+    featuredSeries.forEach(
+        (_, index) => {
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "hero-dot";
+
+            if (
+                index
+                === state.heroIndex
+            ) {
+                button.classList.add(
+                    "active"
+                );
+            }
+
+            button.addEventListener(
+                "click",
+                () => {
+                    state.heroIndex =
+                        index;
+
+                    updateHero();
+
+                    restartHeroTimer();
+                }
             );
 
+            dots.appendChild(
+                button
+            );
+        }
+    );
+}
+
+function nextHero() {
+    state.heroIndex =
+        (
+            state.heroIndex + 1
+        )
+        % featuredSeries.length;
+
+    updateHero();
+}
+
+function previousHero() {
+    state.heroIndex =
+        (
+            state.heroIndex
+            - 1
+            + featuredSeries.length
+        )
+        % featuredSeries.length;
+
+    updateHero();
+}
+
+function restartHeroTimer() {
+    clearInterval(
+        state.heroTimer
+    );
+
+    state.heroTimer =
+        setInterval(
+            nextHero,
+            7500
+        );
+}
+
+function setupHero() {
+    updateHero();
+
+    restartHeroTimer();
+
+    $("#heroNext")?.addEventListener(
+        "click",
+        () => {
+            nextHero();
+            restartHeroTimer();
         }
     );
 
+    $("#heroPrev")?.addEventListener(
+        "click",
+        () => {
+            previousHero();
+            restartHeroTimer();
+        }
+    );
+
+    $("#heroDetails")?.addEventListener(
+        "click",
+        event =>
+            openSeries(
+                event.currentTarget
+                    .dataset.id
+            )
+    );
+
+    $("#heroFavorite")
+        ?.addEventListener(
+            "click",
+            event =>
+                toggleFavorite(
+                    event.currentTarget
+                        .dataset.id,
+                    event.currentTarget
+                )
+        );
+
+    $("#heroWatchlist")
+        ?.addEventListener(
+            "click",
+            event =>
+                toggleWatchlist(
+                    event.currentTarget
+                        .dataset.id,
+                    event.currentTarget
+                )
+        );
+
+    setupHeroTilt();
+}
+
+function setupHeroTilt() {
+    const card =
+        $(".hero-poster-card");
+
+    if (!card) {
+        return;
+    }
+
+    card.addEventListener(
+        "mousemove",
+        event => {
+            if (!state.animations) {
+                return;
+            }
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                event.clientX
+                - rect.left;
+
+            const y =
+                event.clientY
+                - rect.top;
+
+            const rotateY =
+                (
+                    x
+                    / rect.width
+                    - 0.5
+                )
+                * 10;
+
+            const rotateX =
+                (
+                    0.5
+                    - y
+                    / rect.height
+                )
+                * 10;
+
+            card.style.transform =
+                `perspective(900px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+        }
+    );
+
+    card.addEventListener(
+        "mouseleave",
+        () => {
+            card.style.transform = "";
+        }
+    );
+}
+
+
+/* =========================================================
+   FILTRAGEM
+========================================================= */
+
+function filteredSeries() {
+    let result = [...series];
+
+    const search =
+        state.currentSearch
+            .trim()
+            .toLowerCase();
+
+    if (search) {
+        result =
+            result.filter(item =>
+                [
+                    item.title,
+                    item.genre,
+                    item.country,
+                    getDescription(item)
+                ]
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(search)
+            );
+    }
+
+    switch (
+        state.currentFilter
+    ) {
+        case "favorites":
+            result =
+                result.filter(item =>
+                    state.favorites
+                        .includes(
+                            item.id
+                        )
+                );
+            break;
+
+        case "watchlist":
+            result =
+                result.filter(item =>
+                    state.watchlist
+                        .includes(
+                            item.id
+                        )
+                );
+            break;
+
+        case "watched":
+            result =
+                result.filter(item =>
+                    state.watched
+                        .includes(
+                            item.id
+                        )
+                );
+            break;
+
+        case "brazil":
+            result =
+                result.filter(
+                    item => item.brazil
+                );
+            break;
+
+        case "romance":
+            result =
+                result.filter(
+                    item =>
+                        item.genre
+                        === "Romance"
+                );
+            break;
+
+        case "drama":
+            result =
+                result.filter(
+                    item =>
+                        item.genre
+                        === "Drama"
+                );
+            break;
+
+        case "mystery":
+            result =
+                result.filter(
+                    item =>
+                        [
+                            "Mistério",
+                            "Suspense",
+                            "Crime"
+                        ].includes(
+                            item.genre
+                        )
+                );
+            break;
+    }
+
+    if (
+        state.year !== "all"
+    ) {
+        result =
+            result.filter(
+                item =>
+                    String(item.year)
+                    === state.year
+            );
+    }
+
+    if (
+        state.ratingFilter
+        !== "all"
+    ) {
+        result =
+            result.filter(
+                item =>
+                    item.rating
+                    >= Number(
+                        state.ratingFilter
+                    )
+            );
+    }
+
+    switch (state.sort) {
+        case "rating":
+            result.sort(
+                (a, b) =>
+                    b.rating
+                    - a.rating
+            );
+            break;
+
+        case "newest":
+            result.sort(
+                (a, b) =>
+                    b.year
+                    - a.year
+            );
+            break;
+
+        case "oldest":
+            result.sort(
+                (a, b) =>
+                    a.year
+                    - b.year
+            );
+            break;
+
+        case "az":
+            result.sort(
+                (a, b) =>
+                    a.title.localeCompare(
+                        b.title
+                    )
+            );
+            break;
+
+        case "za":
+            result.sort(
+                (a, b) =>
+                    b.title.localeCompare(
+                        a.title
+                    )
+            );
+            break;
+
+        default:
+            result.sort(
+                (a, b) =>
+                    Number(b.featured)
+                    - Number(a.featured)
+            );
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+function createSeriesCard(item) {
+    const card =
+        document.createElement(
+            "article"
+        );
+
+    card.className =
+        "series-card";
+
+    card.dataset.id =
+        item.id;
+
+    const isFavorite =
+        state.favorites.includes(
+            item.id
+        );
+
+    card.innerHTML = `
+        <div class="series-poster">
+
+            <img
+                src="${item.poster}"
+                alt="${item.title}"
+                loading="lazy"
+            >
+
+            <div class="series-card-shine"></div>
+
+            <div class="card-top-actions">
+
+                <span class="card-badge">
+                    ${item.genre}
+                </span>
+
+                <button
+                    class="card-heart ${
+                        isFavorite
+                            ? "active"
+                            : ""
+                    }"
+                    type="button"
+                    aria-label="Favoritar"
+                >
+                    ${
+                        isFavorite
+                            ? "♥"
+                            : "♡"
+                    }
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="series-card-body">
+
+            <h3>${item.title}</h3>
+
+            <div class="series-card-meta">
+                <span>${item.year}</span>
+                <span>${item.country}</span>
+            </div>
+
+            <p class="series-card-description">
+                ${getDescription(item)}
+            </p>
+
+            <div class="series-card-footer">
+
+                <span class="series-rating">
+                    ★ ${item.rating}
+                </span>
+
+                <button
+                    class="open-series-btn"
+                    type="button"
+                >
+                    ${
+                        state.language
+                        === "en"
+                            ? "Details"
+                            : "Detalhes"
+                    }
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    const img =
+        $("img", card);
+
+    imageFallback(img);
+
+    $(".card-heart", card)
+        .addEventListener(
+            "click",
+            event => {
+                event.stopPropagation();
+
+                toggleFavorite(
+                    item.id,
+                    event.currentTarget
+                );
+            }
+        );
+
+    $(".open-series-btn", card)
+        .addEventListener(
+            "click",
+            event => {
+                event.stopPropagation();
+
+                openSeries(
+                    item.id
+                );
+            }
+        );
+
+    card.addEventListener(
+        "click",
+        event => {
+            if (
+                !event.target.closest(
+                    "button"
+                )
+            ) {
+                openSeries(
+                    item.id
+                );
+            }
+        }
+    );
+
+    setupCardTilt(card);
+
+    return card;
+}
+
+function renderSeries() {
+    const grid =
+        $("#seriesGrid");
+
+    if (!grid) {
+        return;
+    }
+
+    const result =
+        filteredSeries();
+
+    grid.innerHTML = "";
+
+    result.forEach(item =>
+        grid.appendChild(
+            createSeriesCard(item)
+        )
+    );
+
+    const counter =
+        $("#resultCount");
+
+    if (counter) {
+        counter.textContent =
+            result.length;
+    }
+
+    const empty =
+        $("#emptyState");
+
+    empty?.classList.toggle(
+        "hidden",
+        result.length > 0
+    );
+}
+
+
+/* =========================================================
+   CARD TILT
+========================================================= */
+
+function setupCardTilt(card) {
+    card.addEventListener(
+        "mousemove",
+        event => {
+            if (!state.animations) {
+                return;
+            }
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                event.clientX
+                - rect.left;
+
+            const y =
+                event.clientY
+                - rect.top;
+
+            const rotateY =
+                (
+                    x
+                    / rect.width
+                    - 0.5
+                )
+                * 5;
+
+            const rotateX =
+                (
+                    0.5
+                    - y
+                    / rect.height
+                )
+                * 5;
+
+            card.style.transform =
+                `perspective(800px)
+                 translateY(-8px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+        }
+    );
+
+    card.addEventListener(
+        "mouseleave",
+        () => {
+            card.style.transform = "";
+        }
+    );
+}
+
+
+/* =========================================================
+   CATÁLOGO
+========================================================= */
+
+function setupCatalog() {
+    const search =
+        $("#catalogSearch");
+
+    search?.addEventListener(
+        "input",
+        event => {
+            state.currentSearch =
+                event.target.value;
+
+            renderSeries();
+        }
+    );
+
+    $$(".filter-btn")
+        .forEach(button => {
+            button.addEventListener(
+                "click",
+                () => {
+                    $$(".filter-btn")
+                        .forEach(btn =>
+                            btn.classList
+                                .remove(
+                                    "active"
+                                )
+                        );
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    state.currentFilter =
+                        button.dataset.filter
+                        || "all";
+
+                    renderSeries();
+                }
+            );
+        });
+
+    $("#sortSeries")
+        ?.addEventListener(
+            "change",
+            event => {
+                state.sort =
+                    event.target.value;
+
+                renderSeries();
+            }
+        );
+
+    $("#yearFilter")
+        ?.addEventListener(
+            "change",
+            event => {
+                state.year =
+                    event.target.value;
+
+                renderSeries();
+            }
+        );
+
+    $("#ratingFilter")
+        ?.addEventListener(
+            "change",
+            event => {
+                state.ratingFilter =
+                    event.target.value;
+
+                renderSeries();
+            }
+        );
+
+    $("#advancedFilterBtn")
+        ?.addEventListener(
+            "click",
+            () =>
+                $("#advancedFilters")
+                    ?.classList.toggle(
+                        "open"
+                    )
+        );
+
+    $("#clearFilters")
+        ?.addEventListener(
+            "click",
+            clearFilters
+        );
+
+    populateYears();
+
+    renderSeries();
+}
+
+function populateYears() {
+    const select =
+        $("#yearFilter");
+
+    if (!select) {
+        return;
+    }
+
+    const years =
+        [
+            ...new Set(
+                series.map(
+                    item =>
+                        item.year
+                )
+            )
+        ].sort(
+            (a, b) => b - a
+        );
+
+    years.forEach(year => {
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            year;
+
+        option.textContent =
+            year;
+
+        select.appendChild(
+            option
+        );
+    });
+}
+
+function clearFilters() {
+    state.currentFilter = "all";
+    state.currentSearch = "";
+    state.year = "all";
+    state.ratingFilter = "all";
+    state.sort = "featured";
+
+    if ($("#catalogSearch")) {
+        $("#catalogSearch").value = "";
+    }
+
+    if ($("#yearFilter")) {
+        $("#yearFilter").value =
+            "all";
+    }
+
+    if ($("#ratingFilter")) {
+        $("#ratingFilter").value =
+            "all";
+    }
+
+    if ($("#sortSeries")) {
+        $("#sortSeries").value =
+            "featured";
+    }
+
+    $$(".filter-btn").forEach(
+        button =>
+            button.classList.toggle(
+                "active",
+                button.dataset.filter
+                === "all"
+            )
+    );
+
+    renderSeries();
 }
 
 
@@ -1197,679 +2444,159 @@ async function updateHero(index) {
    FAVORITOS
 ========================================================= */
 
-function isFavorite(id) {
+function toggleFavorite(
+    id,
+    button = null
+) {
+    const index =
+        state.favorites.indexOf(id);
 
-    return state.favorites
-        .includes(id);
+    let added;
 
-}
-
-
-function toggleFavorite(id) {
-
-    if (isFavorite(id)) {
-
-        state.favorites =
-            state.favorites.filter(
-                item => item !== id
-            );
-
-        showToast(
-            "Removida dos favoritos",
-            "♡"
-        );
-
+    if (index === -1) {
+        state.favorites.push(id);
+        added = true;
     } else {
-
-        state.favorites.push(
-            id
+        state.favorites.splice(
+            index,
+            1
         );
 
-        showToast(
-            "Adicionada aos favoritos!",
-            "♥"
-        );
-
-        burstConfetti();
-
+        added = false;
     }
 
-    saveState();
+    storage.set(
+        "bia_favorites",
+        state.favorites
+    );
 
-    updateEverything();
+    if (button) {
+        button.classList.toggle(
+            "active",
+            added
+        );
 
+        if (
+            button.classList.contains(
+                "card-heart"
+            )
+        ) {
+            button.textContent =
+                added
+                    ? "♥"
+                    : "♡";
+        }
+    }
+
+    showToast(
+        added
+            ? t("favoriteAdded")
+            : t("favoriteRemoved"),
+        added ? "♥" : "♡"
+    );
+
+    updateStats();
+    updateHero();
+
+    if (
+        state.currentFilter
+        === "favorites"
+    ) {
+        renderSeries();
+    }
 }
 
 
 /* =========================================================
-   ASSISTIDAS
+   WATCHLIST
 ========================================================= */
 
-function isWatched(id) {
+function toggleWatchlist(
+    id,
+    button = null
+) {
+    const index =
+        state.watchlist.indexOf(id);
 
-    return state.watched
-        .includes(id);
+    let added;
 
+    if (index === -1) {
+        state.watchlist.push(id);
+        added = true;
+    } else {
+        state.watchlist.splice(
+            index,
+            1
+        );
+
+        added = false;
+    }
+
+    storage.set(
+        "bia_watchlist",
+        state.watchlist
+    );
+
+    button?.classList.toggle(
+        "active",
+        added
+    );
+
+    showToast(
+        added
+            ? t("listAdded")
+            : t("listRemoved"),
+        added ? "+" : "✓"
+    );
+
+    updateStats();
+
+    if (
+        state.currentSeries
+        === id
+    ) {
+        updateModalButtons(id);
+    }
 }
 
+
+/* =========================================================
+   ASSISTIDO
+========================================================= */
 
 function toggleWatched(id) {
+    const index =
+        state.watched.indexOf(id);
 
-    if (isWatched(id)) {
+    let added;
 
-        state.watched =
-            state.watched.filter(
-                item => item !== id
-            );
-
-        showToast(
-            "Removida das assistidas",
-            "✓"
-        );
-
+    if (index === -1) {
+        state.watched.push(id);
+        added = true;
     } else {
-
-        state.watched.push(
-            id
+        state.watched.splice(
+            index,
+            1
         );
 
-        state.progress[id] =
-            100;
-
-        showToast(
-            "Maratona concluída!",
-            "🍿"
-        );
-
-        burstConfetti();
-
+        added = false;
     }
 
-    saveState();
-
-    updateEverything();
-
-}
-
-
-/* =========================================================
-   QUERO ASSISTIR
-========================================================= */
-
-function isWatchlisted(id) {
-
-    return state.watchlist
-        .includes(id);
-
-}
-
-
-function toggleWatchlist(id) {
-
-    if (
-        isWatchlisted(id)
-    ) {
-
-        state.watchlist =
-            state.watchlist.filter(
-                item => item !== id
-            );
-
-        showToast(
-            "Removida da sua lista",
-            "−"
-        );
-
-    } else {
-
-        state.watchlist.push(
-            id
-        );
-
-        showToast(
-            "Adicionada à sua lista!",
-            "＋"
-        );
-
-    }
-
-    saveState();
-
-    updateEverything();
-
-}
-
-
-/* =========================================================
-   BOTÕES DO HERO
-========================================================= */
-
-function updateHeroButtons(id) {
-
-    if (
-        isFavorite(id)
-    ) {
-
-        heroFavoriteBtn.innerHTML =
-            "♥ Favoritada";
-
-        heroFavoriteBtn.classList.add(
-            "active"
-        );
-
-    } else {
-
-        heroFavoriteBtn.innerHTML =
-            "♡ Favoritar";
-
-        heroFavoriteBtn.classList.remove(
-            "active"
-        );
-
-    }
-
-    if (
-        isWatched(id)
-    ) {
-
-        heroWatchedBtn.innerHTML =
-            "✓ Assistida";
-
-        heroWatchedBtn.classList.add(
-            "active"
-        );
-
-    } else {
-
-        heroWatchedBtn.innerHTML =
-            "✓ Marcar assistida";
-
-        heroWatchedBtn.classList.remove(
-            "active"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   GRID DAS SÉRIES
-========================================================= */
-
-function getFilteredSeries() {
-
-    const search =
-        seriesSearch
-            ?.value
-            .trim()
-            .toLowerCase() ||
-        "";
-
-    let list =
-        [...seriesData];
-
-    if (
-        activeFilter !== "all"
-    ) {
-
-        list =
-            list.filter(
-                series =>
-                    series.genre.includes(
-                        activeFilter
-                    )
-            );
-
-    }
-
-    if (search) {
-
-        list =
-            list.filter(
-                series =>
-                    series.title
-                        .toLowerCase()
-                        .includes(search) ||
-
-                    series.country
-                        .toLowerCase()
-                        .includes(search) ||
-
-                    series.genre
-                        .join(" ")
-                        .includes(search)
-            );
-
-    }
-
-    const sort =
-        seriesSort?.value;
-
-    if (
-        sort === "rating"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                b.rating -
-                a.rating
-        );
-
-    }
-
-    if (
-        sort === "az"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                a.title.localeCompare(
-                    b.title
-                )
-        );
-
-    }
-
-    if (
-        sort === "za"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                b.title.localeCompare(
-                    a.title
-                )
-        );
-
-    }
-
-    if (
-        sort === "year-new"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                b.year -
-                a.year
-        );
-
-    }
-
-    if (
-        sort === "year-old"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                a.year -
-                b.year
-        );
-
-    }
-
-    return list;
-
-}
-
-
-function renderSeries() {
-
-    if (!seriesGrid) return;
-
-    const list =
-        getFilteredSeries();
-
-    seriesResultCount.textContent =
-        list.length;
-
-    emptySeries.classList.toggle(
-        "hidden",
-        list.length !== 0
+    storage.set(
+        "bia_watched",
+        state.watched
     );
 
-    seriesGrid.innerHTML =
-        list
-            .map(
-                series => `
-                    <article
-                        class="series-card"
-                        data-id="${
-                            series.id
-                        }"
-                    >
-
-                        <div
-                            class="series-poster"
-                        >
-
-                            <img
-                                src="${
-                                    series.image
-                                }"
-                                alt="${
-                                    escapeHTML(
-                                        series.title
-                                    )
-                                }"
-                                loading="lazy"
-                                data-series-image="${
-                                    series.id
-                                }"
-                            >
-
-                            <div
-                                class="card-top-actions"
-                            >
-
-                                <span
-                                    class="card-badge"
-                                >
-                                    ${
-                                        series.country ===
-                                        "Brasil"
-                                            ? "🇧🇷 BRASIL"
-                                            : series.genre[0]
-                                                .toUpperCase()
-                                    }
-                                </span>
-
-                                <button
-                                    class="card-heart ${
-                                        isFavorite(
-                                            series.id
-                                        )
-                                            ? "active"
-                                            : ""
-                                    }"
-                                    data-favorite="${
-                                        series.id
-                                    }"
-                                    title="Favoritar"
-                                >
-                                    ${
-                                        isFavorite(
-                                            series.id
-                                        )
-                                            ? "♥"
-                                            : "♡"
-                                    }
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="series-card-body"
-                        >
-
-                            <h3>
-                                ${
-                                    escapeHTML(
-                                        series.title
-                                    )
-                                }
-                            </h3>
-
-
-                            <div
-                                class="series-card-meta"
-                            >
-
-                                <span>
-                                    ${
-                                        series.year
-                                    }
-                                </span>
-
-                                <span>
-                                    ${
-                                        series.seasons
-                                    }
-                                </span>
-
-                                ${
-                                    isWatched(
-                                        series.id
-                                    )
-                                        ? `
-                                            <span>
-                                                ✓ assistida
-                                            </span>
-                                        `
-                                        : ""
-                                }
-
-                            </div>
-
-
-                            <p
-                                class="series-card-description"
-                            >
-                                ${
-                                    escapeHTML(
-                                        series.description
-                                    )
-                                }
-                            </p>
-
-
-                            <div
-                                class="series-card-footer"
-                            >
-
-                                <span
-                                    class="series-rating"
-                                >
-                                    ★ ${
-                                        series.rating
-                                    }
-                                </span>
-
-                                <button
-                                    class="open-series-btn"
-                                    data-open-series="${
-                                        series.id
-                                    }"
-                                >
-                                    conhecer ♡
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-                `
-            )
-            .join("");
-
-    $$(
-        "[data-series-image]"
-    ).forEach(
-        img => {
-
-            const series =
-                getSeries(
-                    img.dataset
-                        .seriesImage
-                );
-
-            img.onerror =
-                async () => {
-
-                    img.onerror =
-                        null;
-
-                    img.src =
-                        await resolvePoster(
-                            series
-                        );
-
-                };
-
-        }
+    showToast(
+        added
+            ? t("watchedAdded")
+            : t("removed"),
+        "✓"
     );
 
-}
-
-
-/* =========================================================
-   FILTROS
-========================================================= */
-
-$$(".filter-btn").forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                $$(".filter-btn")
-                    .forEach(
-                        btn =>
-                            btn.classList
-                                .remove(
-                                    "active"
-                                )
-                    );
-
-                button.classList.add(
-                    "active"
-                );
-
-                activeFilter =
-                    button.dataset
-                        .filter;
-
-                renderSeries();
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   RANKING
-========================================================= */
-
-function renderRanking() {
-
-    if (!rankingList) return;
-
-    const ranking =
-        [...seriesData]
-            .sort(
-                (a, b) =>
-                    b.rating -
-                    a.rating
-            )
-            .slice(
-                0,
-                10
-            );
-
-    rankingList.innerHTML =
-        ranking
-            .map(
-                (
-                    series,
-                    index
-                ) => `
-                    <button
-                        class="ranking-item"
-                        data-open-series="${
-                            series.id
-                        }"
-                    >
-
-                        <span
-                            class="ranking-position"
-                        >
-                            ${
-                                index + 1
-                            }
-                        </span>
-
-                        <img
-                            src="${
-                                series.image
-                            }"
-                            alt="${
-                                escapeHTML(
-                                    series.title
-                                )
-                            }"
-                            data-series-image="${
-                                series.id
-                            }"
-                        >
-
-                        <span
-                            class="ranking-info"
-                        >
-                            <strong>
-                                ${
-                                    escapeHTML(
-                                        series.title
-                                    )
-                                }
-                            </strong>
-
-                            <small>
-                                ${
-                                    series.country
-                                }
-                                •
-                                ${
-                                    series.year
-                                }
-                            </small>
-                        </span>
-
-                        <span
-                            class="ranking-score"
-                        >
-                            ★ ${
-                                series.rating
-                            }
-                        </span>
-
-                    </button>
-                `
-            )
-            .join("");
-
-    $$(
-        "#rankingList [data-series-image]"
-    ).forEach(
-        img => {
-
-            const series =
-                getSeries(
-                    img.dataset
-                        .seriesImage
-                );
-
-            img.onerror =
-                async () => {
-
-                    img.onerror = null;
-
-                    img.src =
-                        await resolvePoster(
-                            series
-                        );
-
-                };
-
-        }
-    );
-
+    updateModalButtons(id);
+    updateStats();
+    renderContinueWatching();
 }
 
 
@@ -1878,24 +2605,142 @@ function renderRanking() {
 ========================================================= */
 
 function updateStats() {
+    const values = {
+        statSeries:
+            series.length,
 
-    favoriteCount.textContent =
-        state.favorites.length;
+        statFavorites:
+            state.favorites.length,
 
-    watchedCount.textContent =
-        state.watched.length;
+        statWatchlist:
+            state.watchlist.length,
 
-    watchlistCount.textContent =
-        state.watchlist.length;
+        statWatched:
+            state.watched.length,
 
-    ratingsCount.textContent =
-        Object.keys(
+        statComments:
+            state.comments.length
+    };
+
+    Object.entries(values)
+        .forEach(
+            ([id, value]) => {
+                const element =
+                    $(`#${id}`);
+
+                if (element) {
+                    animateNumber(
+                        element,
+                        value
+                    );
+                }
+            }
+        );
+
+    updateLevel();
+}
+
+function animateNumber(
+    element,
+    target
+) {
+    const current =
+        Number(
+            element.textContent
+        ) || 0;
+
+    if (!state.animations) {
+        element.textContent =
+            target;
+
+        return;
+    }
+
+    const difference =
+        target - current;
+
+    const steps = 15;
+
+    let step = 0;
+
+    const timer =
+        setInterval(
+            () => {
+                step++;
+
+                element.textContent =
+                    Math.round(
+                        current
+                        + difference
+                        * (
+                            step
+                            / steps
+                        )
+                    );
+
+                if (
+                    step >= steps
+                ) {
+                    clearInterval(
+                        timer
+                    );
+
+                    element.textContent =
+                        target;
+                }
+            },
+            20
+        );
+}
+
+
+/* =========================================================
+   NÍVEL
+========================================================= */
+
+function calculateXP() {
+    return (
+        state.favorites.length * 8
+        + state.watchlist.length * 5
+        + state.watched.length * 20
+        + state.comments.length * 15
+        + Object.keys(
             state.ratings
-        ).length;
+        ).length * 10
+    );
+}
 
-    streakCount.textContent =
-        state.streak || 1;
+function updateLevel() {
+    const xp =
+        calculateXP();
 
+    const level =
+        Math.floor(
+            xp / 100
+        ) + 1;
+
+    const progress =
+        xp % 100;
+
+    if ($("#profileLevel")) {
+        $("#profileLevel")
+            .textContent =
+            level;
+    }
+
+    if ($("#levelProgress")) {
+        $("#levelProgress")
+            .style.width =
+            `${progress}%`;
+    }
+
+    if ($("#levelText")) {
+        $("#levelText")
+            .textContent =
+            `${progress}/100 XP`;
+    }
+
+    updateAchievements();
 }
 
 
@@ -1904,506 +2749,375 @@ function updateStats() {
 ========================================================= */
 
 function updateAchievements() {
-
-    const openedTotal =
-        Object.keys(
-            state.opened
-        ).length;
-
-    const achievements = {
-        firstFavorite:
-            state.favorites.length >= 1,
-
-        fiveWatched:
-            state.watched.length >= 5,
-
-        critic:
-            Object.keys(
-                state.ratings
-            ).length >= 3,
-
-        explorer:
-            openedTotal >= 10
-    };
-
-    $$(
-        ".achievement-card"
-    ).forEach(
-        card => {
-
-            const id =
+    $$("[data-achievement]")
+        .forEach(card => {
+            const type =
                 card.dataset
                     .achievement;
 
+            let unlocked =
+                false;
+
+            switch (type) {
+                case "favorite":
+                    unlocked =
+                        state.favorites
+                            .length >= 1;
+                    break;
+
+                case "watchlist":
+                    unlocked =
+                        state.watchlist
+                            .length >= 3;
+                    break;
+
+                case "watched":
+                    unlocked =
+                        state.watched
+                            .length >= 3;
+                    break;
+
+                case "critic":
+                    unlocked =
+                        Object.keys(
+                            state.ratings
+                        ).length >= 3;
+                    break;
+
+                case "community":
+                    unlocked =
+                        state.comments
+                            .length >= 2;
+                    break;
+
+                case "expert":
+                    unlocked =
+                        calculateXP()
+                        >= 300;
+                    break;
+            }
+
             card.classList.toggle(
                 "unlocked",
-                !!achievements[id]
+                unlocked
             );
-
-        }
-    );
-
+        });
 }
 
 
 /* =========================================================
-   MODAL DA SÉRIE
+   MODAL SÉRIE
 ========================================================= */
 
-async function openSeries(id) {
-
-    const series =
-        getSeries(id);
-
-    if (!series) return;
-
-    activeSeriesId =
-        id;
-
-    state.opened[id] =
-        (
-            state.opened[id] ||
-            0
-        ) + 1;
-
-    saveState();
-
-    modalTitle.textContent =
-        series.title;
-
-    modalRating.textContent =
-        `★ ${series.rating}`;
-
-    modalYear.textContent =
-        series.year;
-
-    modalSeasons.textContent =
-        series.seasons;
-
-    modalDescription.textContent =
-        series.description;
-
-    modalBadge.textContent =
-        series.country ===
-        "Brasil"
-            ? "🇧🇷 PRODUÇÃO BRASILEIRA"
-            : series.country
-                .toUpperCase();
-
-    await loadImageForElement(
-        modalPoster,
-        series
-    );
-
-    const poster =
-        await resolvePoster(
-            series
+function openSeries(id) {
+    const item =
+        series.find(
+            serie =>
+                serie.id === id
         );
 
-    modalBackdrop.style
-        .backgroundImage =
-            `url("${poster}")`;
+    if (!item) {
+        return;
+    }
 
-    updateModalButtons(id);
+    state.currentSeries =
+        item.id;
 
-    renderStars(id);
+    const modal =
+        $("#seriesModal");
 
-    renderRecommendations(id);
+    if (!modal) {
+        return;
+    }
 
-    renderCast(series);
+    const backdrop =
+        $("#modalBackdrop");
 
-    episodeProgress.value =
-        state.progress[id] ||
-        0;
+    if (backdrop) {
+        backdrop.style
+            .backgroundImage =
+            `url("${item.backdrop}")`;
+    }
 
-    episodeProgressText.textContent =
-        `${
-            state.progress[id] ||
-            0
-        }%`;
+    const poster =
+        $("#modalPoster");
 
-    seriesModal.classList.add(
+    if (poster) {
+        poster.src =
+            item.poster;
+
+        poster.alt =
+            item.title;
+
+        imageFallback(
+            poster
+        );
+    }
+
+    if ($("#modalTitle")) {
+        $("#modalTitle")
+            .textContent =
+            item.title;
+    }
+
+    if ($("#modalDescription")) {
+        $("#modalDescription")
+            .textContent =
+            getDescription(item);
+    }
+
+    if ($("#modalRating")) {
+        $("#modalRating")
+            .textContent =
+            `★ ${item.rating}`;
+    }
+
+    if ($("#modalYear")) {
+        $("#modalYear")
+            .textContent =
+            item.year;
+    }
+
+    if ($("#modalGenre")) {
+        $("#modalGenre")
+            .textContent =
+            item.genre;
+    }
+
+    if ($("#modalCountry")) {
+        $("#modalCountry")
+            .textContent =
+            item.country;
+    }
+
+    if ($("#modalSeasons")) {
+        $("#modalSeasons")
+            .textContent =
+            `${item.seasons} ${t(
+                "seasons"
+            )}`;
+    }
+
+    if ($("#modalEpisodes")) {
+        $("#modalEpisodes")
+            .textContent =
+            `${item.episodes} ${t(
+                "episodes"
+            )}`;
+    }
+
+    if ($("#modalBadge")) {
+        $("#modalBadge")
+            .textContent =
+            item.brazil
+                ? "🇧🇷 Brasil"
+                : "Netflix";
+    }
+
+    renderCast(item);
+
+    renderRecommendations(
+        item
+    );
+
+    renderStarRating(
+        item.id
+    );
+
+    renderProgress(
+        item.id
+    );
+
+    updateModalButtons(
+        item.id
+    );
+
+    modal.classList.add(
         "open"
     );
 
     body.style.overflow =
         "hidden";
-
-    updateAchievements();
-
 }
 
-
-/* =========================================================
-   BOTÕES DO MODAL
-========================================================= */
-
-function updateModalButtons(id) {
-
-    modalFavorite.innerHTML =
-        isFavorite(id)
-            ? "♥ Favoritada"
-            : "♡ Favoritar";
-
-    modalFavorite.classList.toggle(
-        "active",
-        isFavorite(id)
-    );
-
-    modalWatchlist.innerHTML =
-        isWatchlisted(id)
-            ? "✓ Na minha lista"
-            : "＋ Quero assistir";
-
-    modalWatchlist.classList.toggle(
-        "active",
-        isWatchlisted(id)
-    );
-
-    modalWatched.innerHTML =
-        isWatched(id)
-            ? "✓ Assistida"
-            : "✓ Marcar assistida";
-
-    modalWatched.classList.toggle(
-        "active",
-        isWatched(id)
-    );
-
-}
-
-
-/* =========================================================
-   ESTRELAS
-========================================================= */
-
-function renderStars(id) {
-
-    const rating =
-        Number(
-            state.ratings[id] ||
-            0
+function closeSeries() {
+    $("#seriesModal")
+        ?.classList.remove(
+            "open"
         );
 
-    $$(
-        "#starRating button"
-    ).forEach(
-        button => {
+    body.style.overflow = "";
 
-            const star =
-                Number(
-                    button.dataset.star
-                );
-
-            button.textContent =
-                star <= rating
-                    ? "★"
-                    : "☆";
-
-        }
-    );
-
+    state.currentSeries =
+        null;
 }
 
+function setupSeriesModal() {
+    $("#closeSeriesModal")
+        ?.addEventListener(
+            "click",
+            closeSeries
+        );
 
-function rateSeries(
-    id,
-    value
-) {
+    $("#seriesModal")
+        ?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    === "seriesModal"
+                ) {
+                    closeSeries();
+                }
+            }
+        );
 
-    state.ratings[id] =
-        Number(value);
+    $("#modalFavorite")
+        ?.addEventListener(
+            "click",
+            () => {
+                if (
+                    state.currentSeries
+                ) {
+                    toggleFavorite(
+                        state.currentSeries,
+                        $("#modalFavorite")
+                    );
 
-    saveState();
+                    updateModalButtons(
+                        state.currentSeries
+                    );
+                }
+            }
+        );
 
-    renderStars(id);
+    $("#modalWatchlist")
+        ?.addEventListener(
+            "click",
+            () => {
+                if (
+                    state.currentSeries
+                ) {
+                    toggleWatchlist(
+                        state.currentSeries,
+                        $("#modalWatchlist")
+                    );
+                }
+            }
+        );
 
-    updateStats();
+    $("#modalWatched")
+        ?.addEventListener(
+            "click",
+            () => {
+                if (
+                    state.currentSeries
+                ) {
+                    toggleWatched(
+                        state.currentSeries
+                    );
+                }
+            }
+        );
 
-    updateAchievements();
+    $("#modalShare")
+        ?.addEventListener(
+            "click",
+            shareCurrentSeries
+        );
 
-    showToast(
-        `Você deu ${value} estrela${
-            value > 1
-                ? "s"
-                : ""
-        }!`,
-        "★"
-    );
+    $("#modalTrailer")
+        ?.addEventListener(
+            "click",
+            openTrailer
+        );
+}
 
-    if (
-        Number(value) === 5
-    ) {
+function updateModalButtons(id) {
+    $("#modalFavorite")
+        ?.classList.toggle(
+            "active",
+            state.favorites.includes(
+                id
+            )
+        );
 
-        burstConfetti();
+    $("#modalWatchlist")
+        ?.classList.toggle(
+            "active",
+            state.watchlist.includes(
+                id
+            )
+        );
 
-    }
-
+    $("#modalWatched")
+        ?.classList.toggle(
+            "active",
+            state.watched.includes(
+                id
+            )
+        );
 }
 
 
 /* =========================================================
    ELENCO
-
-   Busca automaticamente as fotos pelo TVMaze.
 ========================================================= */
 
-async function renderCast(series) {
+function renderCast(item) {
+    const grid =
+        $("#castGrid");
 
-    castGrid.innerHTML =
-        `
-        <div class="cast-loading">
-            carregando elenco...
-        </div>
-        `;
+    if (!grid) {
+        return;
+    }
 
-    let cast =
-        [];
+    grid.innerHTML = "";
 
-    try {
+    item.cast.forEach(
+        actor => {
+            const [
+                name,
+                character,
+                image
+            ] = actor;
 
-        const showResponse =
-            await fetch(
-                `https://api.tvmaze.com/singlesearch/shows?q=${
-                    encodeURIComponent(
-                        series.query
-                    )
-                }`
-            );
-
-        if (
-            showResponse.ok
-        ) {
-
-            const show =
-                await showResponse
-                    .json();
-
-            const castResponse =
-                await fetch(
-                    `https://api.tvmaze.com/shows/${
-                        show.id
-                    }/cast`
+            const card =
+                document.createElement(
+                    "article"
                 );
 
-            if (
-                castResponse.ok
-            ) {
+            card.className =
+                "cast-card";
 
-                const result =
-                    await castResponse
-                        .json();
+            card.innerHTML = `
+                <img
+                    src="${image}"
+                    alt="${name}"
+                    loading="lazy"
+                >
 
-                cast =
-                    result
-                        .slice(
-                            0,
-                            8
-                        )
-                        .map(
-                            item => ({
-                                name:
-                                    item.person
-                                        ?.name ||
-                                    "Ator",
+                <div class="cast-card-info">
+                    <strong>
+                        ${name}
+                    </strong>
 
-                                character:
-                                    item.character
-                                        ?.name ||
-                                    "Personagem",
-
-                                image:
-                                    item.person
-                                        ?.image
-                                        ?.medium ||
-                                    item.person
-                                        ?.image
-                                        ?.original ||
-                                    ""
-                            })
-                        );
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "Falha ao buscar elenco:",
-            error
-        );
-
-    }
-
-    if (
-        cast.length === 0
-    ) {
-
-        cast =
-            series.cast.map(
-                item => ({
-                    name:
-                        item[0],
-
-                    character:
-                        item[1],
-
-                    image: ""
-                })
-            );
-
-    }
-
-    if (
-        cast.length === 0
-    ) {
-
-        castGrid.innerHTML =
-            `
-            <div class="cast-loading">
-                Elenco ainda não cadastrado.
-            </div>
+                    <small>
+                        ${character}
+                    </small>
+                </div>
             `;
 
-        return;
+            imageFallback(
+                $("img", card),
+                fallbackActor
+            );
 
-    }
-
-    castGrid.innerHTML =
-        cast
-            .map(
-                person => `
-                    <article
-                        class="cast-card"
-                    >
-
-                        <img
-                            src="${
-                                person.image ||
-                                createActorPlaceholder(
-                                    person.name
-                                )
-                            }"
-                            alt="${
-                                escapeHTML(
-                                    person.name
-                                )
-                            }"
-                        >
-
-                        <div
-                            class="cast-card-info"
-                        >
-
-                            <strong>
-                                ${
-                                    escapeHTML(
-                                        person.name
-                                    )
-                                }
-                            </strong>
-
-                            <small>
-                                ${
-                                    escapeHTML(
-                                        person.character
-                                    )
-                                }
-                            </small>
-
-                        </div>
-
-                    </article>
-                `
-            )
-            .join("");
-
-}
-
-
-/* =========================================================
-   PLACEHOLDER DE ATOR
-========================================================= */
-
-function createActorPlaceholder(name) {
-
-    const initials =
-        name
-            .split(" ")
-            .slice(0, 2)
-            .map(
-                word =>
-                    word[0] || ""
-            )
-            .join("")
-            .toUpperCase();
-
-    return (
-        "data:image/svg+xml;charset=UTF-8," +
-        encodeURIComponent(`
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="400"
-                height="500"
-            >
-                <defs>
-                    <linearGradient
-                        id="actor"
-                        x1="0"
-                        y1="0"
-                        x2="1"
-                        y2="1"
-                    >
-                        <stop
-                            offset="0%"
-                            stop-color="#a95ade"
-                        />
-                        <stop
-                            offset="100%"
-                            stop-color="#ec73b7"
-                        />
-                    </linearGradient>
-                </defs>
-
-                <rect
-                    width="100%"
-                    height="100%"
-                    fill="url(#actor)"
-                />
-
-                <circle
-                    cx="200"
-                    cy="190"
-                    r="80"
-                    fill="rgba(255,255,255,.25)"
-                />
-
-                <text
-                    x="50%"
-                    y="42%"
-                    text-anchor="middle"
-                    font-family="Arial"
-                    font-size="58"
-                    fill="white"
-                >
-                    ${initials}
-                </text>
-
-                <text
-                    x="50%"
-                    y="78%"
-                    text-anchor="middle"
-                    font-family="Arial"
-                    font-size="20"
-                    fill="white"
-                >
-                    ${escapeHTML(name)}
-                </text>
-            </svg>
-        `)
+            grid.appendChild(
+                card
+            );
+        }
     );
-
 }
 
 
@@ -2411,130 +3125,357 @@ function createActorPlaceholder(name) {
    RECOMENDAÇÕES
 ========================================================= */
 
-function renderRecommendations(id) {
+function renderRecommendations(
+    current
+) {
+    const container =
+        $("#recommendations");
 
-    const current =
-        getSeries(id);
+    if (!container) {
+        return;
+    }
 
-    if (!current) return;
-
-    let related =
-        seriesData.filter(
-            series =>
-                series.id !== id &&
-                series.genre.some(
-                    genre =>
-                        current.genre
-                            .includes(
-                                genre
-                            )
+    let recommended =
+        series.filter(
+            item =>
+                item.id
+                !== current.id
+                && (
+                    item.genre
+                    === current.genre
+                    || item.country
+                    === current.country
                 )
         );
 
-    related =
-        related
+    recommended =
+        recommended
             .sort(
                 () =>
-                    Math.random() -
-                    0.5
+                    Math.random()
+                    - 0.5
             )
-            .slice(
-                0,
-                4
-            );
+            .slice(0, 4);
 
-    recommendations.innerHTML =
-        related
-            .map(
-                series => `
-                    <button
-                        class="recommendation-card"
-                        data-open-series="${
-                            series.id
-                        }"
-                    >
+    container.innerHTML = "";
 
-                        <img
-                            src="${
-                                series.image
-                            }"
-                            alt="${
-                                escapeHTML(
-                                    series.title
-                                )
-                            }"
-                            data-series-image="${
-                                series.id
-                            }"
-                        >
-
-                        <span>
-                            ${
-                                escapeHTML(
-                                    series.title
-                                )
-                            }
-                        </span>
-
-                    </button>
-                `
-            )
-            .join("");
-
-    $$(
-        "#recommendations [data-series-image]"
-    ).forEach(
-        img => {
-
-            const series =
-                getSeries(
-                    img.dataset
-                        .seriesImage
+    recommended.forEach(
+        item => {
+            const button =
+                document.createElement(
+                    "button"
                 );
 
-            img.onerror =
-                async () => {
+            button.className =
+                "recommendation-card";
 
-                    img.onerror = null;
+            button.innerHTML = `
+                <img
+                    src="${item.poster}"
+                    alt="${item.title}"
+                >
 
-                    img.src =
-                        await resolvePoster(
-                            series
-                        );
+                <span>
+                    ${item.title}
+                </span>
+            `;
 
-                };
+            imageFallback(
+                $("img", button)
+            );
 
+            button.addEventListener(
+                "click",
+                () =>
+                    openSeries(
+                        item.id
+                    )
+            );
+
+            container.appendChild(
+                button
+            );
         }
     );
-
 }
 
 
 /* =========================================================
-   FECHAR MODAIS
+   AVALIAÇÃO
 ========================================================= */
 
-function closeSeriesModal() {
+function renderStarRating(id) {
+    const container =
+        $("#starRating");
 
-    seriesModal.classList.remove(
-        "open"
-    );
+    if (!container) {
+        return;
+    }
 
-    body.style.overflow =
-        "";
+    const current =
+        state.ratings[id]
+        || 0;
 
+    container.innerHTML = "";
+
+    for (
+        let star = 1;
+        star <= 5;
+        star++
+    ) {
+        const button =
+            document.createElement(
+                "button"
+            );
+
+        button.type =
+            "button";
+
+        button.textContent =
+            star <= current
+                ? "★"
+                : "☆";
+
+        button.addEventListener(
+            "click",
+            () => {
+                state.ratings[id] =
+                    star;
+
+                storage.set(
+                    "bia_ratings",
+                    state.ratings
+                );
+
+                renderStarRating(
+                    id
+                );
+
+                showToast(
+                    `${star}/5 ★`,
+                    "★"
+                );
+
+                updateLevel();
+            }
+        );
+
+        container.appendChild(
+            button
+        );
+    }
 }
 
 
-function closeTrailerModal() {
+/* =========================================================
+   PROGRESSO
+========================================================= */
 
-    trailerModal.classList.remove(
-        "open"
+function renderProgress(id) {
+    const input =
+        $("#seriesProgress");
+
+    const text =
+        $("#seriesProgressText");
+
+    if (!input) {
+        return;
+    }
+
+    const value =
+        state.progress[id]
+        || 0;
+
+    input.value =
+        value;
+
+    if (text) {
+        text.textContent =
+            `${value}%`;
+    }
+
+    input.oninput =
+        event => {
+            const progress =
+                Number(
+                    event.target.value
+                );
+
+            state.progress[id] =
+                progress;
+
+            storage.set(
+                "bia_progress",
+                state.progress
+            );
+
+            if (text) {
+                text.textContent =
+                    `${progress}%`;
+            }
+
+            if (
+                progress >= 100
+                && !state.watched
+                    .includes(id)
+            ) {
+                state.watched.push(
+                    id
+                );
+
+                storage.set(
+                    "bia_watched",
+                    state.watched
+                );
+
+                updateStats();
+            }
+
+            renderContinueWatching();
+        };
+}
+
+
+/* =========================================================
+   CONTINUAR ASSISTINDO
+========================================================= */
+
+function renderContinueWatching() {
+    const section =
+        $("#continueSection");
+
+    const grid =
+        $("#continueGrid");
+
+    if (
+        !section
+        || !grid
+    ) {
+        return;
+    }
+
+    const items =
+        series.filter(
+            item => {
+                const value =
+                    state.progress[
+                        item.id
+                    ];
+
+                return (
+                    value > 0
+                    && value < 100
+                );
+            }
+        );
+
+    section.classList.toggle(
+        "show",
+        items.length > 0
     );
 
-    body.style.overflow =
-        "";
+    grid.innerHTML = "";
 
+    items.forEach(
+        item => {
+            const progress =
+                state.progress[
+                    item.id
+                ];
+
+            const card =
+                document.createElement(
+                    "button"
+                );
+
+            card.className =
+                "continue-card";
+
+            card.innerHTML = `
+                <img
+                    src="${item.backdrop}"
+                    alt="${item.title}"
+                >
+
+                <div class="continue-content">
+
+                    <strong>
+                        ${item.title}
+                    </strong>
+
+                    <div class="continue-progress">
+                        <span
+                            style="width:${progress}%"
+                        ></span>
+                    </div>
+
+                    <small>
+                        ${progress}%
+                    </small>
+
+                </div>
+            `;
+
+            imageFallback(
+                $("img", card)
+            );
+
+            card.addEventListener(
+                "click",
+                () =>
+                    openSeries(
+                        item.id
+                    )
+            );
+
+            grid.appendChild(
+                card
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   COMPARTILHAR
+========================================================= */
+
+async function shareCurrentSeries() {
+    const item =
+        series.find(
+            serie =>
+                serie.id
+                === state.currentSeries
+        );
+
+    if (!item) {
+        return;
+    }
+
+    const text =
+        `${item.title} — Blog da Bia`;
+
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: item.title,
+                text,
+                url: location.href
+            });
+        } else {
+            await navigator.clipboard
+                .writeText(
+                    location.href
+                );
+
+            showToast(
+                t("copied"),
+                "↗"
+            );
+        }
+    } catch {
+        // compartilhamento cancelado
+    }
 }
 
 
@@ -2542,83 +3483,200 @@ function closeTrailerModal() {
    TRAILER
 ========================================================= */
 
-function openTrailer(series) {
+function openTrailer() {
+    const item =
+        series.find(
+            serie =>
+                serie.id
+                === state.currentSeries
+        );
 
-    currentTrailerSeries =
-        series;
+    if (!item) {
+        return;
+    }
 
-    trailerTitle.textContent =
-        `Trailer — ${series.title}`;
+    if ($("#trailerTitle")) {
+        $("#trailerTitle")
+            .textContent =
+            item.title;
+    }
 
-    trailerModal.classList.add(
-        "open"
-    );
-
-    body.style.overflow =
-        "hidden";
-
+    $("#trailerModal")
+        ?.classList.add(
+            "open"
+        );
 }
 
+function closeTrailer() {
+    $("#trailerModal")
+        ?.classList.remove(
+            "open"
+        );
+}
 
-function launchYoutubeTrailer() {
+function setupTrailer() {
+    $("#closeTrailer")
+        ?.addEventListener(
+            "click",
+            closeTrailer
+        );
 
-    if (
-        !currentTrailerSeries
-    ) return;
-
-    const query =
-        `${currentTrailerSeries.title} Netflix trailer oficial`;
-
-    window.open(
-        `https://www.youtube.com/results?search_query=${
-            encodeURIComponent(
-                query
-            )
-        }`,
-        "_blank",
-        "noopener,noreferrer"
-    );
-
+    $("#trailerModal")
+        ?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    === "trailerModal"
+                ) {
+                    closeTrailer();
+                }
+            }
+        );
 }
 
 
 /* =========================================================
-   SÉRIE ALEATÓRIA
+   SÉRIES BRASILEIRAS
 ========================================================= */
 
-function surpriseMe() {
+function renderBrazil() {
+    const carousel =
+        $("#brazilCarousel");
 
-    let series =
-        randomItem(
-            seriesData
-        );
-
-    if (
-        series.id ===
-        activeSeriesId &&
-        seriesData.length > 1
-    ) {
-
-        series =
-            randomItem(
-                seriesData.filter(
-                    item =>
-                        item.id !==
-                        activeSeriesId
-                )
-            );
-
+    if (!carousel) {
+        return;
     }
 
-    showToast(
-        `Sua escolha: ${series.title}`,
-        "✦"
-    );
+    carousel.innerHTML = "";
 
-    openSeries(
-        series.id
-    );
+    series
+        .filter(
+            item => item.brazil
+        )
+        .forEach(item => {
+            const card =
+                document.createElement(
+                    "button"
+                );
 
+            card.className =
+                "brazil-card";
+
+            card.innerHTML = `
+                <img
+                    src="${item.poster}"
+                    alt="${item.title}"
+                    loading="lazy"
+                >
+
+                <div class="brazil-card-content">
+                    <strong>
+                        ${item.title}
+                    </strong>
+
+                    <small>
+                        🇧🇷 ${item.year}
+                        · ★ ${item.rating}
+                    </small>
+                </div>
+            `;
+
+            imageFallback(
+                $("img", card)
+            );
+
+            card.addEventListener(
+                "click",
+                () =>
+                    openSeries(
+                        item.id
+                    )
+            );
+
+            carousel.appendChild(
+                card
+            );
+        });
+}
+
+
+/* =========================================================
+   RANKING
+========================================================= */
+
+function renderRanking() {
+    const list =
+        $("#rankingList");
+
+    if (!list) {
+        return;
+    }
+
+    const ranking =
+        [...series]
+            .sort(
+                (a, b) =>
+                    b.rating
+                    - a.rating
+            )
+            .slice(0, 8);
+
+    list.innerHTML = "";
+
+    ranking.forEach(
+        (item, index) => {
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "ranking-item";
+
+            button.innerHTML = `
+                <span class="ranking-position">
+                    ${index + 1}
+                </span>
+
+                <img
+                    src="${item.poster}"
+                    alt="${item.title}"
+                >
+
+                <span class="ranking-info">
+                    <strong>
+                        ${item.title}
+                    </strong>
+
+                    <small>
+                        ${item.genre}
+                        · ${item.year}
+                    </small>
+                </span>
+
+                <span class="ranking-score">
+                    ★ ${item.rating}
+                </span>
+            `;
+
+            imageFallback(
+                $("img", button)
+            );
+
+            button.addEventListener(
+                "click",
+                () =>
+                    openSeries(
+                        item.id
+                    )
+            );
+
+            list.appendChild(
+                button
+            );
+        }
+    );
 }
 
 
@@ -2627,56 +3685,102 @@ function surpriseMe() {
 ========================================================= */
 
 function getDailySeries() {
-
     const today =
         new Date();
 
-    const value =
+    const key =
         Number(
-            `${today.getFullYear()}${
-                today.getMonth() + 1
-            }${today.getDate()}`
+            `${today.getFullYear()}${today.getMonth() + 1}${today.getDate()}`
         );
 
-    return seriesData[
-        value %
-        seriesData.length
+    return series[
+        key % series.length
     ];
+}
 
+function renderDailySeries() {
+    const item =
+        getDailySeries();
+
+    if ($("#dailyTitle")) {
+        $("#dailyTitle")
+            .textContent =
+            item.title;
+    }
+
+    if ($("#dailyDescription")) {
+        $("#dailyDescription")
+            .textContent =
+            getDescription(item);
+    }
+
+    const image =
+        $("#dailyImage");
+
+    if (image) {
+        image.src =
+            item.poster;
+
+        image.alt =
+            item.title;
+
+        imageFallback(
+            image
+        );
+    }
+
+    const button =
+        $("#dailyButton");
+
+    if (button) {
+        button.onclick =
+            () =>
+                openSeries(
+                    item.id
+                );
+    }
 }
 
 
-async function prepareDailySeries() {
+/* =========================================================
+   SORTEIO
+========================================================= */
 
-    const series =
-        getDailySeries();
+function randomSeries() {
+    const item =
+        series[
+            Math.floor(
+                Math.random()
+                * series.length
+            )
+        ];
 
-    dailyPreview.innerHTML =
-        `
-        <img
-            src="${series.image}"
-            alt="${escapeHTML(
-                series.title
-            )}"
-        >
-        `;
+    showToast(
+        t("random"),
+        "✦"
+    );
 
-    const img =
-        $("img", dailyPreview);
+    setTimeout(
+        () =>
+            openSeries(
+                item.id
+            ),
+        250
+    );
+}
 
-    img.onerror =
-        async () => {
+function setupRandom() {
+    $("#randomSeries")
+        ?.addEventListener(
+            "click",
+            randomSeries
+        );
 
-            img.onerror =
-                null;
-
-            img.src =
-                await resolvePoster(
-                    series
-                );
-
-        };
-
+    $("#randomSeriesMobile")
+        ?.addEventListener(
+            "click",
+            randomSeries
+        );
 }
 
 
@@ -2684,126 +3788,171 @@ async function prepareDailySeries() {
    PESQUISA GLOBAL
 ========================================================= */
 
-function renderGlobalSearch() {
+function setupSearch() {
+    const overlay =
+        $("#searchOverlay");
 
-    const value =
-        globalSearch.value
-            .trim()
-            .toLowerCase();
-
-    if (!value) {
-
-        searchResults.innerHTML =
-            `
-            <div
-                style="
-                    padding:20px;
-                    text-align:center;
-                    opacity:.6;
-                    font-size:.7rem;
-                "
-            >
-                Digite o nome de uma série ♡
-            </div>
-            `;
-
-        return;
-
-    }
+    const input =
+        $("#globalSearch");
 
     const results =
-        seriesData
-            .filter(
-                series =>
-                    series.title
-                        .toLowerCase()
-                        .includes(value) ||
+        $("#searchResults");
 
-                    series.country
-                        .toLowerCase()
-                        .includes(value)
-            )
-            .slice(
-                0,
-                8
-            );
+    function open() {
+        overlay?.classList.add(
+            "open"
+        );
 
-    if (
-        results.length === 0
-    ) {
+        body.style.overflow =
+            "hidden";
 
-        searchResults.innerHTML =
-            `
-            <div
-                style="
-                    padding:20px;
-                    text-align:center;
-                    opacity:.6;
-                    font-size:.7rem;
-                "
-            >
-                Nenhuma série encontrada.
-            </div>
-            `;
+        setTimeout(
+            () => input?.focus(),
+            150
+        );
 
-        return;
-
+        renderSearchResults("");
     }
 
-    searchResults.innerHTML =
-        results
-            .map(
-                series => `
-                    <button
-                        class="search-result"
-                        data-search-open="${
-                            series.id
-                        }"
+    function close() {
+        overlay?.classList.remove(
+            "open"
+        );
+
+        body.style.overflow = "";
+    }
+
+    $("#searchBtn")
+        ?.addEventListener(
+            "click",
+            open
+        );
+
+    $("#closeSearch")
+        ?.addEventListener(
+            "click",
+            close
+        );
+
+    overlay?.addEventListener(
+        "click",
+        event => {
+            if (
+                event.target
+                === overlay
+            ) {
+                close();
+            }
+        }
+    );
+
+    input?.addEventListener(
+        "input",
+        event =>
+            renderSearchResults(
+                event.target.value
+            )
+    );
+
+    $("#clearGlobalSearch")
+        ?.addEventListener(
+            "click",
+            () => {
+                if (input) {
+                    input.value = "";
+                    input.focus();
+                }
+
+                renderSearchResults(
+                    ""
+                );
+            }
+        );
+
+    function renderSearchResults(
+        query
+    ) {
+        if (!results) {
+            return;
+        }
+
+        const normalized =
+            query
+                .trim()
+                .toLowerCase();
+
+        const matches =
+            series
+                .filter(item =>
+                    !normalized
+                    || item.title
+                        .toLowerCase()
+                        .includes(
+                            normalized
+                        )
+                    || item.genre
+                        .toLowerCase()
+                        .includes(
+                            normalized
+                        )
+                )
+                .slice(0, 8);
+
+        results.innerHTML = "";
+
+        matches.forEach(
+            item => {
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.className =
+                    "search-result";
+
+                button.innerHTML = `
+                    <img
+                        src="${item.poster}"
+                        alt="${item.title}"
                     >
 
-                        <img
-                            src="${
-                                series.image
-                            }"
-                            alt="${
-                                escapeHTML(
-                                    series.title
-                                )
-                            }"
-                            data-series-image="${
-                                series.id
-                            }"
-                        >
+                    <span>
+                        <strong>
+                            ${item.title}
+                        </strong>
 
-                        <span>
-                            <strong>
-                                ${
-                                    escapeHTML(
-                                        series.title
-                                    )
-                                }
-                            </strong>
+                        <small>
+                            ${item.genre}
+                            · ${item.year}
+                        </small>
+                    </span>
 
-                            <small>
-                                ${
-                                    series.year
-                                }
-                                •
-                                ${
-                                    series.country
-                                }
-                            </small>
-                        </span>
+                    <span>
+                        ★ ${item.rating}
+                    </span>
+                `;
 
-                        <span>
-                            →
-                        </span>
+                imageFallback(
+                    $("img", button)
+                );
 
-                    </button>
-                `
-            )
-            .join("");
+                button.addEventListener(
+                    "click",
+                    () => {
+                        close();
 
+                        openSeries(
+                            item.id
+                        );
+                    }
+                );
+
+                results.appendChild(
+                    button
+                );
+            }
+        );
+    }
 }
 
 
@@ -2811,2452 +3960,1732 @@ function renderGlobalSearch() {
    COMENTÁRIOS
 ========================================================= */
 
-function populateCommentSeries() {
+function setupComments() {
+    const form =
+        $("#commentForm");
 
-    const options =
-        [...seriesData]
-            .sort(
-                (a, b) =>
-                    a.title.localeCompare(
-                        b.title
-                    )
-            )
-            .map(
-                series => `
-                    <option
-                        value="${
-                            series.id
-                        }"
-                    >
-                        ${
-                            escapeHTML(
-                                series.title
-                            )
-                        }
-                    </option>
-                `
-            )
-            .join("");
+    const textarea =
+        $("#commentText");
 
-    commentSeries.insertAdjacentHTML(
-        "beforeend",
-        options
+    const counter =
+        $("#commentCharacters");
+
+    textarea?.addEventListener(
+        "input",
+        () => {
+            if (counter) {
+                counter.textContent =
+                    `${textarea.value.length}/500`;
+            }
+        }
     );
 
-}
+    populateCommentSeries();
 
+    form?.addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
 
-function addComment(event) {
+            const name =
+                $("#commentName")
+                    ?.value
+                    .trim()
+                || state.profile.name
+                || "Visitante";
 
-    event.preventDefault();
+            const text =
+                $("#commentText")
+                    ?.value
+                    .trim();
 
-    const name =
-        commentName.value
-            .trim();
+            const seriesId =
+                $("#commentSeries")
+                    ?.value
+                || "";
 
-    const text =
-        commentText.value
-            .trim();
+            const spoiler =
+                Boolean(
+                    $("#commentSpoiler")
+                        ?.checked
+                );
 
-    const seriesId =
-        commentSeries.value;
+            if (!text) {
+                return;
+            }
 
-    if (
-        !name ||
-        !text ||
-        !seriesId
-    ) {
+            const comment = {
+                id:
+                    Date.now()
+                    .toString(),
 
-        showToast(
-            "Preencha todos os campos.",
-            "!"
+                name,
+                text,
+
+                seriesId,
+
+                spoiler,
+
+                likes: 0,
+
+                liked: false,
+
+                createdAt:
+                    Date.now(),
+
+                replies: []
+            };
+
+            state.comments.unshift(
+                comment
+            );
+
+            storage.set(
+                "bia_comments",
+                state.comments
+            );
+
+            form.reset();
+
+            if (counter) {
+                counter.textContent =
+                    "0/500";
+            }
+
+            renderComments();
+
+            updateStats();
+
+            showToast(
+                t("commentPublished"),
+                "♥"
+            );
+        }
+    );
+
+    $("#commentSort")
+        ?.addEventListener(
+            "change",
+            renderComments
         );
 
-        return;
-
-    }
-
-    const comment = {
-        id:
-            Date.now(),
-
-        name,
-        text,
-        seriesId,
-
-        spoiler:
-            commentSpoiler.checked,
-
-        likes: 0,
-
-        liked: false,
-
-        replies: [],
-
-        createdAt:
-            new Date()
-                .toISOString()
-    };
-
-    state.comments.unshift(
-        comment
-    );
-
-    saveState();
-
-    commentForm.reset();
-
-    commentCharCount.textContent =
-        "0";
-
     renderComments();
-
-    showToast(
-        "Comentário publicado!",
-        "♡"
-    );
-
 }
 
+function populateCommentSeries() {
+    const select =
+        $("#commentSeries");
 
-/* =========================================================
-   RENDER COMENTÁRIOS
-========================================================= */
+    if (!select) {
+        return;
+    }
+
+    const existing =
+        new Set(
+            [...select.options]
+                .map(
+                    option =>
+                        option.value
+                )
+        );
+
+    series.forEach(
+        item => {
+            if (
+                existing.has(
+                    item.id
+                )
+            ) {
+                return;
+            }
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                item.id;
+
+            option.textContent =
+                item.title;
+
+            select.appendChild(
+                option
+            );
+        }
+    );
+}
 
 function renderComments() {
+    const list =
+        $("#commentsList");
+
+    if (!list) {
+        return;
+    }
 
     let comments =
         [...state.comments];
 
-    if (
-        commentSort.value ===
-        "likes"
-    ) {
+    const sort =
+        $("#commentSort")
+            ?.value
+        || "newest";
 
+    if (sort === "oldest") {
         comments.sort(
             (a, b) =>
-                b.likes -
-                a.likes
+                a.createdAt
+                - b.createdAt
         );
-
     } else if (
-        commentSort.value ===
-        "old"
+        sort === "likes"
     ) {
-
         comments.sort(
             (a, b) =>
-                new Date(
-                    a.createdAt
-                ) -
-                new Date(
-                    b.createdAt
-                )
+                b.likes
+                - a.likes
         );
-
     } else {
-
         comments.sort(
             (a, b) =>
-                new Date(
-                    b.createdAt
-                ) -
-                new Date(
-                    a.createdAt
-                )
+                b.createdAt
+                - a.createdAt
         );
-
     }
 
-    commentCount.textContent =
-        comments.length;
-
-    if (
-        comments.length === 0
-    ) {
-
-        commentsList.innerHTML =
-            `
-            <div
-                style="
-                    padding:35px;
-                    text-align:center;
-                    opacity:.65;
-                "
-            >
-                <div
-                    style="
-                        font-size:2.5rem;
-                        margin-bottom:8px;
-                    "
-                >
-                    ♡
-                </div>
-
-                <p
-                    style="
-                        font-size:.7rem;
-                    "
-                >
-                    Seja a primeira pessoa
-                    a comentar.
-                </p>
-            </div>
-            `;
-
-        return;
-
-    }
-
-    commentsList.innerHTML =
-        comments
-            .map(
-                comment => {
-
-                    const series =
-                        getSeries(
-                            comment.seriesId
-                        );
-
-                    const initials =
-                        comment.name
-                            .split(" ")
-                            .slice(0, 2)
-                            .map(
-                                item =>
-                                    item[0] || ""
-                            )
-                            .join("")
-                            .toUpperCase();
-
-                    return `
-                        <article
-                            class="comment-card"
-                        >
-
-                            <div
-                                class="comment-top"
-                            >
-
-                                <div
-                                    class="comment-author"
-                                >
-
-                                    <span
-                                        class="comment-avatar"
-                                    >
-                                        ${
-                                            escapeHTML(
-                                                initials
-                                            )
-                                        }
-                                    </span>
-
-                                    <div>
-
-                                        <strong>
-                                            ${
-                                                escapeHTML(
-                                                    comment.name
-                                                )
-                                            }
-                                        </strong>
-
-                                        <small>
-                                            ${
-                                                formatDate(
-                                                    comment.createdAt
-                                                )
-                                            }
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-
-                                <span
-                                    class="comment-series-badge"
-                                >
-                                    ${
-                                        escapeHTML(
-                                            series
-                                                ?.title ||
-                                            "Série"
-                                        )
-                                    }
-                                </span>
-
-                            </div>
-
-
-                            <p
-                                class="comment-text ${
-                                    comment.spoiler
-                                        ? "spoiler"
-                                        : ""
-                                }"
-                                data-comment-text="${
-                                    comment.id
-                                }"
-                            >
-                                ${
-                                    escapeHTML(
-                                        comment.text
-                                    )
-                                }
-                            </p>
-
-
-                            ${
-                                comment.spoiler
-                                    ? `
-                                        <button
-                                            class="spoiler-button"
-                                            data-spoiler="${
-                                                comment.id
-                                            }"
-                                        >
-                                            👁 revelar spoiler
-                                        </button>
-                                    `
-                                    : ""
-                            }
-
-
-                            <div
-                                class="comment-actions"
-                            >
-
-                                <button
-                                    class="${
-                                        comment.liked
-                                            ? "active"
-                                            : ""
-                                    }"
-                                    data-like-comment="${
-                                        comment.id
-                                    }"
-                                >
-                                    ${
-                                        comment.liked
-                                            ? "♥"
-                                            : "♡"
-                                    }
-                                    ${
-                                        comment.likes
-                                    }
-                                </button>
-
-                                <button
-                                    data-reply-toggle="${
-                                        comment.id
-                                    }"
-                                >
-                                    ↩ responder
-                                </button>
-
-                                <button
-                                    data-delete-comment="${
-                                        comment.id
-                                    }"
-                                >
-                                    × excluir
-                                </button>
-
-                            </div>
-
-
-                            <div
-                                class="comment-reply-box"
-                                data-reply-box="${
-                                    comment.id
-                                }"
-                            >
-
-                                <input
-                                    maxlength="180"
-                                    placeholder="Escreva uma resposta..."
-                                >
-
-                                <button
-                                    data-send-reply="${
-                                        comment.id
-                                    }"
-                                >
-                                    enviar
-                                </button>
-
-                            </div>
-
-
-                            <div
-                                class="reply-list"
-                            >
-
-                                ${
-                                    (
-                                        comment.replies ||
-                                        []
-                                    )
-                                        .map(
-                                            reply => `
-                                                <div
-                                                    class="reply"
-                                                >
-                                                    <strong>
-                                                        ${
-                                                            escapeHTML(
-                                                                reply.name
-                                                            )
-                                                        }
-                                                    </strong>
-
-                                                    <p>
-                                                        ${
-                                                            escapeHTML(
-                                                                reply.text
-                                                            )
-                                                        }
-                                                    </p>
-                                                </div>
-                                            `
-                                        )
-                                        .join("")
-                                }
-
-                            </div>
-
-                        </article>
-                    `;
-
-                }
-            )
-            .join("");
-
-}
-
-
-/* =========================================================
-   DATA DO COMENTÁRIO
-========================================================= */
-
-function formatDate(date) {
-
-    const value =
-        new Date(date);
-
-    return value
-        .toLocaleDateString(
-            "pt-BR",
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-            }
-        );
-
-}
-
-
-/* =========================================================
-   CURTIR COMENTÁRIO
-========================================================= */
-
-function toggleCommentLike(id) {
-
-    const comment =
-        state.comments.find(
-            item =>
-                item.id === id
-        );
-
-    if (!comment) return;
-
-    comment.liked =
-        !comment.liked;
-
-    comment.likes +=
-        comment.liked
-            ? 1
-            : -1;
-
-    comment.likes =
-        Math.max(
-            0,
-            comment.likes
-        );
-
-    saveState();
-
-    renderComments();
-
-}
-
-
-/* =========================================================
-   RESPOSTAS
-========================================================= */
-
-function sendReply(id) {
-
-    const box =
-        document.querySelector(
-            `[data-reply-box="${id}"]`
-        );
-
-    if (!box) return;
-
-    const input =
-        $("input", box);
-
-    const text =
-        input.value
-            .trim();
-
-    if (!text) return;
-
-    const comment =
-        state.comments.find(
-            item =>
-                item.id === id
-        );
-
-    if (!comment) return;
-
-    if (
-        !Array.isArray(
-            comment.replies
-        )
-    ) {
-
-        comment.replies = [];
-
-    }
-
-    comment.replies.push({
-        name:
-            commentName.value
-                .trim() ||
-            "Visitante",
-
-        text,
-
-        createdAt:
-            new Date()
-                .toISOString()
-    });
-
-    saveState();
-
-    renderComments();
-
-    showToast(
-        "Resposta publicada!",
-        "↩"
-    );
-
-}
-
-
-/* =========================================================
-   EXCLUIR COMENTÁRIO
-========================================================= */
-
-function deleteComment(id) {
-
-    const confirmed =
-        confirm(
-            "Excluir este comentário?"
-        );
-
-    if (!confirmed) return;
-
-    state.comments =
-        state.comments.filter(
-            item =>
-                item.id !== id
-        );
-
-    saveState();
-
-    renderComments();
-
-    showToast(
-        "Comentário excluído.",
-        "×"
-    );
-
-}
-
-
-/* =========================================================
-   PROGRESSO DA SÉRIE
-========================================================= */
-
-function saveProgress() {
-
-    const value =
-        Number(
-            episodeProgress.value
-        );
-
-    state.progress[
-        activeSeriesId
-    ] = value;
-
-    episodeProgressText.textContent =
-        `${value}%`;
-
-    if (
-        value === 100 &&
-        !isWatched(
-            activeSeriesId
-        )
-    ) {
-
-        state.watched.push(
-            activeSeriesId
-        );
-
-        showToast(
-            "Você terminou a série! 🍿",
-            "✓"
-        );
-
-        burstConfetti();
-
-    }
-
-    saveState();
-
-    updateEverything();
-
-}
-
-
-/* =========================================================
-   TEMA ESCURO
-========================================================= */
-
-function applyTheme() {
-
-    body.classList.toggle(
-        "dark-mode",
-        state.theme ===
-            "dark"
-    );
-
-    themeIcon.textContent =
-        state.theme ===
-        "dark"
-            ? "☀"
-            : "☾";
-
-}
-
-
-function toggleTheme() {
-
-    state.theme =
-        state.theme ===
-        "dark"
-            ? "light"
-            : "dark";
-
-    saveState();
-
-    applyTheme();
-
-    showToast(
-        state.theme ===
-        "dark"
-            ? "Tema escuro ativado"
-            : "Tema claro ativado",
-        themeIcon.textContent
-    );
-
-}
-
-
-/* =========================================================
-   CORES
-========================================================= */
-
-function applyColorTheme() {
-
-    if (
-        state.colorTheme ===
-        "bia"
-    ) {
-
-        body.removeAttribute(
-            "data-color-theme"
-        );
-
-    } else {
-
-        body.setAttribute(
-            "data-color-theme",
-            state.colorTheme
-        );
-
-    }
-
-    $$(".theme-color")
-        .forEach(
-            button => {
-
-                button.classList.toggle(
-                    "active",
-                    button.dataset
-                        .themeColor ===
-                        state.colorTheme
+    list.innerHTML = "";
+
+    comments.forEach(
+        comment => {
+            const card =
+                document.createElement(
+                    "article"
                 );
 
-            }
+            card.className =
+                "comment-card";
+
+            const item =
+                series.find(
+                    serie =>
+                        serie.id
+                        === comment.seriesId
+                );
+
+            const initials =
+                comment.name
+                    .split(" ")
+                    .map(
+                        word =>
+                            word[0]
+                    )
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase();
+
+            card.innerHTML = `
+                <div class="comment-top">
+
+                    <div class="comment-author">
+
+                        <div class="comment-avatar">
+                            ${initials || "♥"}
+                        </div>
+
+                        <div>
+                            <strong>
+                                ${escapeHTML(
+                                    comment.name
+                                )}
+                            </strong>
+
+                            <small>
+                                ${formatDate(
+                                    comment.createdAt
+                                )}
+                            </small>
+                        </div>
+
+                    </div>
+
+                    ${
+                        item
+                            ? `
+                            <span class="comment-series-badge">
+                                ${item.title}
+                            </span>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <p class="comment-text ${
+                    comment.spoiler
+                        ? "spoiler"
+                        : ""
+                }">
+                    ${escapeHTML(
+                        comment.text
+                    )}
+                </p>
+
+                ${
+                    comment.spoiler
+                        ? `
+                        <button
+                            class="spoiler-button"
+                            type="button"
+                        >
+                            ${
+                                state.language
+                                === "en"
+                                    ? "Show spoiler"
+                                    : "Mostrar spoiler"
+                            }
+                        </button>
+                        `
+                        : ""
+                }
+
+                <div class="comment-actions">
+
+                    <button
+                        class="comment-like ${
+                            comment.liked
+                                ? "active"
+                                : ""
+                        }"
+                        type="button"
+                    >
+                        ♥ ${comment.likes}
+                    </button>
+
+                    <button
+                        class="comment-reply"
+                        type="button"
+                    >
+                        ${
+                            state.language
+                            === "en"
+                                ? "Reply"
+                                : "Responder"
+                        }
+                    </button>
+
+                    <button
+                        class="comment-delete"
+                        type="button"
+                    >
+                        ${
+                            state.language
+                            === "en"
+                                ? "Delete"
+                                : "Excluir"
+                        }
+                    </button>
+
+                </div>
+
+                <div class="comment-reply-box">
+
+                    <input
+                        type="text"
+                        maxlength="200"
+                        placeholder="${
+                            state.language
+                            === "en"
+                                ? "Write a reply..."
+                                : "Escreva uma resposta..."
+                        }"
+                    >
+
+                    <button type="button">
+                        ${
+                            state.language
+                            === "en"
+                                ? "Send"
+                                : "Enviar"
+                        }
+                    </button>
+
+                </div>
+
+                <div class="reply-list">
+                    ${
+                        (
+                            comment.replies
+                            || []
+                        )
+                        .map(
+                            reply => `
+                            <div class="reply">
+                                <strong>
+                                    ${escapeHTML(
+                                        reply.name
+                                    )}
+                                </strong>
+
+                                <p>
+                                    ${escapeHTML(
+                                        reply.text
+                                    )}
+                                </p>
+                            </div>
+                            `
+                        )
+                        .join("")
+                    }
+                </div>
+            `;
+
+            const spoilerText =
+                $(".comment-text", card);
+
+            $(".spoiler-button", card)
+                ?.addEventListener(
+                    "click",
+                    event => {
+                        spoilerText
+                            .classList
+                            .toggle(
+                                "revealed"
+                            );
+
+                        event.currentTarget
+                            .textContent =
+                            spoilerText
+                                .classList
+                                .contains(
+                                    "revealed"
+                                )
+                                ? (
+                                    state.language
+                                    === "en"
+                                        ? "Hide spoiler"
+                                        : "Ocultar spoiler"
+                                )
+                                : (
+                                    state.language
+                                    === "en"
+                                        ? "Show spoiler"
+                                        : "Mostrar spoiler"
+                                );
+                    }
+                );
+
+            $(".comment-like", card)
+                .addEventListener(
+                    "click",
+                    () => {
+                        comment.liked =
+                            !comment.liked;
+
+                        comment.likes +=
+                            comment.liked
+                                ? 1
+                                : -1;
+
+                        saveComments();
+                    }
+                );
+
+            $(".comment-delete", card)
+                .addEventListener(
+                    "click",
+                    () => {
+                        state.comments =
+                            state.comments
+                                .filter(
+                                    item =>
+                                        item.id
+                                        !== comment.id
+                                );
+
+                        saveComments();
+
+                        updateStats();
+                    }
+                );
+
+            const replyButton =
+                $(".comment-reply", card);
+
+            const replyBox =
+                $(".comment-reply-box", card);
+
+            replyButton
+                .addEventListener(
+                    "click",
+                    () =>
+                        replyBox
+                            .classList
+                            .toggle(
+                                "open"
+                            )
+                );
+
+            const replyInput =
+                $("input", replyBox);
+
+            const replySend =
+                $("button", replyBox);
+
+            replySend
+                .addEventListener(
+                    "click",
+                    () => {
+                        const text =
+                            replyInput
+                                .value
+                                .trim();
+
+                        if (!text) {
+                            return;
+                        }
+
+                        comment.replies =
+                            comment.replies
+                            || [];
+
+                        comment.replies.push({
+                            name:
+                                state.profile
+                                    .name
+                                || "Visitante",
+
+                            text
+                        });
+
+                        saveComments();
+                    }
+                );
+
+            list.appendChild(
+                card
+            );
+        }
+    );
+
+    if ($("#commentCount")) {
+        $("#commentCount")
+            .textContent =
+            state.comments.length;
+    }
+}
+
+function saveComments() {
+    storage.set(
+        "bia_comments",
+        state.comments
+    );
+
+    renderComments();
+}
+
+function escapeHTML(value) {
+    const div =
+        document.createElement(
+            "div"
         );
 
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+}
+
+function formatDate(timestamp) {
+    return new Intl.DateTimeFormat(
+        state.language === "en"
+            ? "en-US"
+            : "pt-BR",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    ).format(
+        new Date(timestamp)
+    );
 }
 
 
 /* =========================================================
-   EFEITOS
+   PERFIL
 ========================================================= */
 
-function applyEffects() {
+function setupProfile() {
+    updateProfile();
 
-    effectsToggle.checked =
-        state.effects;
+    $("#avatarEditBtn")
+        ?.addEventListener(
+            "click",
+            openProfileModal
+        );
 
-    animationsToggle.checked =
-        state.animations;
+    $("#closeProfileModal")
+        ?.addEventListener(
+            "click",
+            closeProfileModal
+        );
 
+    $("#profileModal")
+        ?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    === "profileModal"
+                ) {
+                    closeProfileModal();
+                }
+            }
+        );
+
+    $$(".avatar-picker button")
+        .forEach(button => {
+            button.addEventListener(
+                "click",
+                () => {
+                    $$(".avatar-picker button")
+                        .forEach(btn =>
+                            btn.classList
+                                .remove(
+                                    "active"
+                                )
+                        );
+
+                    button.classList.add(
+                        "active"
+                    );
+                }
+            );
+        });
+
+    $("#saveProfile")
+        ?.addEventListener(
+            "click",
+            () => {
+                const name =
+                    $("#profileNameInput")
+                        ?.value
+                        .trim();
+
+                const active =
+                    $(
+                        ".avatar-picker button.active"
+                    );
+
+                if (name) {
+                    state.profile.name =
+                        name;
+                }
+
+                if (active) {
+                    state.profile.avatar =
+                        active.dataset.avatar
+                        || active.textContent;
+                }
+
+                storage.set(
+                    "bia_profile",
+                    state.profile
+                );
+
+                updateProfile();
+
+                closeProfileModal();
+
+                showToast(
+                    t("profileSaved"),
+                    "♥"
+                );
+            }
+        );
+}
+
+function updateProfile() {
+    if ($("#profileName")) {
+        $("#profileName")
+            .textContent =
+            state.profile.name;
+    }
+
+    if ($("#profileAvatar")) {
+        $("#profileAvatar")
+            .textContent =
+            state.profile.avatar;
+    }
+}
+
+function openProfileModal() {
+    const modal =
+        $("#profileModal");
+
+    if (!modal) {
+        return;
+    }
+
+    if ($("#profileNameInput")) {
+        $("#profileNameInput")
+            .value =
+            state.profile.name;
+    }
+
+    $$(".avatar-picker button")
+        .forEach(button =>
+            button.classList.toggle(
+                "active",
+                (
+                    button.dataset.avatar
+                    || button.textContent
+                )
+                === state.profile.avatar
+            )
+        );
+
+    modal.classList.add(
+        "open"
+    );
+
+    body.style.overflow =
+        "hidden";
+}
+
+function closeProfileModal() {
+    $("#profileModal")
+        ?.classList.remove(
+            "open"
+        );
+
+    body.style.overflow = "";
+}
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const quizQuestions = [
+    {
+        pt:
+            "Qual clima você quer hoje?",
+        en:
+            "What mood do you want today?",
+        options: [
+            {
+                pt: "Romântico",
+                en: "Romantic",
+                genre: "Romance"
+            },
+            {
+                pt: "Misterioso",
+                en: "Mysterious",
+                genre: "Mistério"
+            },
+            {
+                pt: "Tenso",
+                en: "Intense",
+                genre: "Suspense"
+            },
+            {
+                pt: "Dramático",
+                en: "Dramatic",
+                genre: "Drama"
+            }
+        ]
+    },
+
+    {
+        pt:
+            "O que mais importa?",
+        en:
+            "What matters most?",
+        options: [
+            {
+                pt: "Romance",
+                en: "Romance",
+                genre: "Romance"
+            },
+            {
+                pt: "Segredos",
+                en: "Secrets",
+                genre: "Mistério"
+            },
+            {
+                pt: "Personagens",
+                en: "Characters",
+                genre: "Drama"
+            },
+            {
+                pt: "Ação",
+                en: "Action",
+                genre: "Crime"
+            }
+        ]
+    },
+
+    {
+        pt:
+            "Qual produção você prefere?",
+        en:
+            "Which production do you prefer?",
+        options: [
+            {
+                pt: "Brasil 🇧🇷",
+                en: "Brazil 🇧🇷",
+                country: "Brasil"
+            },
+            {
+                pt: "Estados Unidos",
+                en: "United States",
+                country:
+                    "Estados Unidos"
+            },
+            {
+                pt: "Europa",
+                en: "Europe",
+                country:
+                    "Reino Unido"
+            },
+            {
+                pt: "Tanto faz",
+                en: "Anything",
+                country: null
+            }
+        ]
+    }
+];
+
+function setupQuiz() {
+    $("#startQuiz")
+        ?.addEventListener(
+            "click",
+            openQuiz
+        );
+
+    $("#closeQuiz")
+        ?.addEventListener(
+            "click",
+            closeQuiz
+        );
+
+    $("#quizModal")
+        ?.addEventListener(
+            "click",
+            event => {
+                if (
+                    event.target.id
+                    === "quizModal"
+                ) {
+                    closeQuiz();
+                }
+            }
+        );
+}
+
+function openQuiz() {
+    state.quizIndex = 0;
+
+    state.quizAnswers = [];
+
+    $("#quizModal")
+        ?.classList.add(
+            "open"
+        );
+
+    body.style.overflow =
+        "hidden";
+
+    renderQuizQuestion();
+}
+
+function closeQuiz() {
+    $("#quizModal")
+        ?.classList.remove(
+            "open"
+        );
+
+    body.style.overflow = "";
+}
+
+function renderQuizQuestion() {
+    const question =
+        quizQuestions[
+            state.quizIndex
+        ];
+
+    const box =
+        $("#quizContent");
+
+    if (!box) {
+        return;
+    }
+
+    if (!question) {
+        showQuizResult();
+        return;
+    }
+
+    const progress =
+        (
+            state.quizIndex
+            / quizQuestions.length
+        ) * 100;
+
+    if ($("#quizProgressBar")) {
+        $("#quizProgressBar")
+            .style.width =
+            `${progress}%`;
+    }
+
+    box.innerHTML = `
+        <span class="eyebrow">
+            ${
+                state.language
+                === "en"
+                    ? `QUESTION ${
+                        state.quizIndex + 1
+                    }`
+                    : `PERGUNTA ${
+                        state.quizIndex + 1
+                    }`
+            }
+        </span>
+
+        <h3 class="quiz-question">
+            ${
+                state.language
+                === "en"
+                    ? question.en
+                    : question.pt
+            }
+        </h3>
+
+        <div class="quiz-options"></div>
+    `;
+
+    const options =
+        $(".quiz-options", box);
+
+    question.options.forEach(
+        option => {
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "quiz-option";
+
+            button.textContent =
+                state.language
+                === "en"
+                    ? option.en
+                    : option.pt;
+
+            button.addEventListener(
+                "click",
+                () => {
+                    state.quizAnswers.push(
+                        option
+                    );
+
+                    state.quizIndex++;
+
+                    renderQuizQuestion();
+                }
+            );
+
+            options.appendChild(
+                button
+            );
+        }
+    );
+}
+
+function showQuizResult() {
+    const genreScores = {};
+
+    let preferredCountry =
+        null;
+
+    state.quizAnswers.forEach(
+        answer => {
+            if (answer.genre) {
+                genreScores[
+                    answer.genre
+                ] =
+                    (
+                        genreScores[
+                            answer.genre
+                        ]
+                        || 0
+                    ) + 1;
+            }
+
+            if (answer.country) {
+                preferredCountry =
+                    answer.country;
+            }
+        }
+    );
+
+    const bestGenre =
+        Object.entries(
+            genreScores
+        )
+        .sort(
+            (a, b) =>
+                b[1] - a[1]
+        )[0]?.[0];
+
+    let candidates =
+        series.filter(
+            item =>
+                !bestGenre
+                || item.genre
+                === bestGenre
+                || (
+                    bestGenre
+                    === "Mistério"
+                    && item.genre
+                    === "Suspense"
+                )
+        );
+
+    if (preferredCountry) {
+        const countryMatches =
+            candidates.filter(
+                item =>
+                    item.country
+                    === preferredCountry
+            );
+
+        if (
+            countryMatches.length
+        ) {
+            candidates =
+                countryMatches;
+        }
+    }
+
+    const result =
+        candidates[
+            Math.floor(
+                Math.random()
+                * candidates.length
+            )
+        ]
+        || series[0];
+
+    if ($("#quizProgressBar")) {
+        $("#quizProgressBar")
+            .style.width =
+            "100%";
+    }
+
+    const box =
+        $("#quizContent");
+
+    box.innerHTML = `
+        <span class="eyebrow">
+            ${
+                state.language
+                === "en"
+                    ? "YOUR SERIES"
+                    : "SUA SÉRIE"
+            }
+        </span>
+
+        <h3 class="quiz-question">
+            ${result.title}
+        </h3>
+
+        <img
+            class="quiz-result-poster"
+            src="${result.poster}"
+            alt="${result.title}"
+        >
+
+        <p>
+            ${getDescription(result)}
+        </p>
+
+        <button
+            class="primary-btn"
+            id="quizResultButton"
+            type="button"
+        >
+            ${
+                state.language
+                === "en"
+                    ? "See details"
+                    : "Ver detalhes"
+            }
+        </button>
+    `;
+
+    imageFallback(
+        $(".quiz-result-poster", box)
+    );
+
+    $("#quizResultButton")
+        ?.addEventListener(
+            "click",
+            () => {
+                closeQuiz();
+
+                openSeries(
+                    result.id
+                );
+            }
+        );
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function setupSettings() {
+    const panel =
+        $("#settingsPanel");
+
+    function open() {
+        panel?.classList.add(
+            "open"
+        );
+    }
+
+    function close() {
+        panel?.classList.remove(
+            "open"
+        );
+    }
+
+    $("#settingsBtn")
+        ?.addEventListener(
+            "click",
+            open
+        );
+
+    $("#settingsFloating")
+        ?.addEventListener(
+            "click",
+            open
+        );
+
+    $("#closeSettings")
+        ?.addEventListener(
+            "click",
+            close
+        );
+
+    $$(".theme-color")
+        .forEach(button => {
+            button.addEventListener(
+                "click",
+                () =>
+                    setColorTheme(
+                        button.dataset.theme
+                    )
+            );
+        });
+
+    const darkToggle =
+        $("#darkModeToggle");
+
+    const animationToggle =
+        $("#animationToggle");
+
+    const particleToggle =
+        $("#particleToggle");
+
+    const cursorToggle =
+        $("#cursorToggle");
+
+    if (darkToggle) {
+        darkToggle.checked =
+            state.darkMode;
+
+        darkToggle.addEventListener(
+            "change",
+            event => {
+                state.darkMode =
+                    event.target.checked;
+
+                storage.set(
+                    "bia_dark",
+                    state.darkMode
+                );
+
+                applyPreferences();
+            }
+        );
+    }
+
+    if (animationToggle) {
+        animationToggle.checked =
+            state.animations;
+
+        animationToggle
+            .addEventListener(
+                "change",
+                event => {
+                    state.animations =
+                        event.target.checked;
+
+                    storage.set(
+                        "bia_animations",
+                        state.animations
+                    );
+
+                    applyPreferences();
+                }
+            );
+    }
+
+    if (particleToggle) {
+        particleToggle.checked =
+            state.particles;
+
+        particleToggle
+            .addEventListener(
+                "change",
+                event => {
+                    state.particles =
+                        event.target.checked;
+
+                    storage.set(
+                        "bia_particles",
+                        state.particles
+                    );
+
+                    createParticles();
+                }
+            );
+    }
+
+    if (cursorToggle) {
+        cursorToggle.checked =
+            state.cursor;
+
+        cursorToggle
+            .addEventListener(
+                "change",
+                event => {
+                    state.cursor =
+                        event.target.checked;
+
+                    storage.set(
+                        "bia_cursor",
+                        state.cursor
+                    );
+
+                    location.reload();
+                }
+            );
+    }
+
+    setColorTheme(
+        state.theme,
+        false
+    );
+
+    applyPreferences();
+}
+
+function setColorTheme(
+    theme,
+    notify = true
+) {
+    state.theme =
+        theme || "bia";
+
+    storage.set(
+        "bia_theme",
+        state.theme
+    );
+
+    body.dataset.colorTheme =
+        state.theme;
+
+    $$(".theme-color")
+        .forEach(button =>
+            button.classList.toggle(
+                "active",
+                button.dataset.theme
+                === state.theme
+            )
+        );
+
+    if (notify) {
+        showToast(
+            t("saved"),
+            "✦"
+        );
+    }
+}
+
+function applyPreferences() {
     body.classList.toggle(
-        "custom-heart-cursor",
-        state.effects
+        "dark-mode",
+        state.darkMode
     );
 
     body.classList.toggle(
         "animations-off",
         !state.animations
     );
-
-    heartCursor.style.display =
-        state.effects
-            ? ""
-            : "none";
-
 }
 
 
 /* =========================================================
-   CURSOR CORAÇÃO
+   EQUIPE — EFEITO SPOTLIGHT
 ========================================================= */
 
-let lastTrail =
-    0;
-
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        if (
-            !state.effects ||
-            window.matchMedia(
-                "(pointer: coarse)"
-            ).matches
-        ) {
-            return;
-        }
-
-        heartCursor.style.left =
-            `${event.clientX}px`;
-
-        heartCursor.style.top =
-            `${event.clientY}px`;
-
-        const now =
-            Date.now();
-
-        if (
-            now -
-            lastTrail >
-            80
-        ) {
-
-            createCursorTrail(
-                event.clientX,
-                event.clientY
-            );
-
-            lastTrail =
-                now;
-
-        }
-
-    }
-);
-
-
-function createCursorTrail(
-    x,
-    y
-) {
-
-    const trail =
-        document.createElement(
-            "span"
-        );
-
-    trail.className =
-        "cursor-trail";
-
-    trail.textContent =
-        Math.random() > 0.5
-            ? "♡"
-            : "✦";
-
-    trail.style.left =
-        `${x}px`;
-
-    trail.style.top =
-        `${y}px`;
-
-    clickEffects.appendChild(
-        trail
-    );
-
-    setTimeout(
-        () =>
-            trail.remove(),
-        700
-    );
-
-}
-
-
-/* =========================================================
-   CORAÇÃO AO CLICAR
-========================================================= */
-
-document.addEventListener(
-    "click",
-    event => {
-
-        if (
-            !state.effects
-        ) return;
-
-        if (
-            event.target.closest(
-                "input, textarea, select"
-            )
-        ) {
-            return;
-        }
-
-        const heart =
-            document.createElement(
-                "span"
-            );
-
-        heart.className =
-            "click-heart";
-
-        heart.textContent =
-            Math.random() > 0.4
-                ? "♡"
-                : "♥";
-
-        heart.style.left =
-            `${event.clientX}px`;
-
-        heart.style.top =
-            `${event.clientY}px`;
-
-        clickEffects.appendChild(
-            heart
-        );
-
-        setTimeout(
-            () =>
-                heart.remove(),
-            1000
-        );
-
-    }
-);
-
-
-/* =========================================================
-   CONFETE
-========================================================= */
-
-function burstConfetti() {
-
-    if (
-        !state.effects
-    ) return;
-
-    const symbols =
-        [
-            "♡",
-            "♥",
-            "✦",
-            "★"
-        ];
-
-    for (
-        let i = 0;
-        i < 22;
-        i++
-    ) {
-
-        const piece =
-            document.createElement(
-                "span"
-            );
-
-        piece.className =
-            "confetti";
-
-        piece.textContent =
-            randomItem(
-                symbols
-            );
-
-        piece.style.left =
-            `${
-                40 +
-                Math.random() *
-                20
-            }vw`;
-
-        piece.style.top =
-            `${
-                25 +
-                Math.random() *
-                20
-            }vh`;
-
-        piece.style.setProperty(
-            "--x",
-            `${
-                -150 +
-                Math.random() *
-                300
-            }px`
-        );
-
-        piece.style.fontSize =
-            `${
-                12 +
-                Math.random() *
-                15
-            }px`;
-
-        piece.style.width =
-            "auto";
-
-        piece.style.height =
-            "auto";
-
-        clickEffects.appendChild(
-            piece
-        );
-
-        setTimeout(
-            () =>
-                piece.remove(),
-            1500
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CARD 3D
-========================================================= */
-
-function activate3DCards() {
-
-    document.addEventListener(
-        "mousemove",
-        event => {
-
-            const card =
-                event.target.closest(
-                    ".series-card"
-                );
-
-            if (
-                !card ||
-                !state.animations
-            ) return;
-
-            const rect =
-                card.getBoundingClientRect();
-
-            const x =
-                event.clientX -
-                rect.left;
-
-            const y =
-                event.clientY -
-                rect.top;
-
-            const rotateY =
-                (
-                    x /
-                    rect.width -
-                    0.5
-                ) * 7;
-
-            const rotateX =
-                (
-                    y /
-                    rect.height -
-                    0.5
-                ) * -7;
-
-            card.style.transform =
-                `
-                translateY(-8px)
-                perspective(900px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                `;
-
-        }
-    );
-
-    document.addEventListener(
-        "mouseout",
-        event => {
-
-            const card =
-                event.target.closest(
-                    ".series-card"
-                );
-
-            if (!card) return;
-
-            if (
-                !card.contains(
-                    event.relatedTarget
-                )
-            ) {
-
-                card.style.transform =
-                    "";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   POSTER 3D HERO
-========================================================= */
-
-if (
-    heroPosterCard
-) {
-
-    heroPosterCard.addEventListener(
-        "mousemove",
-        event => {
-
-            if (
-                !state.animations
-            ) return;
-
-            const rect =
-                heroPosterCard
-                    .getBoundingClientRect();
-
-            const x =
-                event.clientX -
-                rect.left;
-
-            const y =
-                event.clientY -
-                rect.top;
-
-            const rx =
-                (
-                    y /
-                    rect.height -
-                    0.5
-                ) * -10;
-
-            const ry =
-                (
-                    x /
-                    rect.width -
-                    0.5
-                ) * 10;
-
-            heroPosterCard.style
-                .transform =
-                    `
-                    perspective(900px)
-                    rotateX(${rx}deg)
-                    rotateY(${ry}deg)
-                    `;
-
-        }
-    );
-
-    heroPosterCard.addEventListener(
-        "mouseleave",
-        () => {
-
-            heroPosterCard.style
-                .transform =
-                    "";
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
-
-function openMobileMenu() {
-
-    mobileMenu.classList.add(
-        "open"
-    );
-
-    menuOverlay.classList.add(
-        "show"
-    );
-
-}
-
-
-function closeMobileMenu() {
-
-    mobileMenu.classList.remove(
-        "open"
-    );
-
-    menuOverlay.classList.remove(
-        "show"
-    );
-
-}
-
-
-/* =========================================================
-   PESQUISA
-========================================================= */
-
-function openSearch() {
-
-    searchOverlay.classList.add(
-        "open"
-    );
-
-    body.style.overflow =
-        "hidden";
-
-    setTimeout(
-        () =>
-            globalSearch.focus(),
-        100
-    );
-
-    renderGlobalSearch();
-
-}
-
-
-function closeSearchModal() {
-
-    searchOverlay.classList.remove(
-        "open"
-    );
-
-    body.style.overflow =
-        "";
-
-}
-
-
-/* =========================================================
-   COMPARTILHAR
-========================================================= */
-
-async function shareBlog() {
-
-    const data = {
-        title:
-            "Blog da Bia ♡",
-
-        text:
-            "Olha esse blog de séries!",
-
-        url:
-            window.location.href
-    };
-
-    try {
-
-        if (
-            navigator.share
-        ) {
-
-            await navigator.share(
-                data
-            );
-
-        } else {
-
-            await navigator.clipboard
-                .writeText(
-                    window.location.href
-                );
-
-            showToast(
-                "Link copiado!",
-                "↗"
-            );
-
-        }
-
-    } catch (error) {
-
-        console.log(
-            "Compartilhamento cancelado."
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   COPIAR NOME
-========================================================= */
-
-async function copyCurrentSeries() {
-
-    const series =
-        getSeries(
-            activeSeriesId
-        );
-
-    if (!series) return;
-
-    try {
-
-        await navigator.clipboard
-            .writeText(
-                series.title
-            );
-
-        showToast(
-            `"${series.title}" copiado!`,
-            "⧉"
-        );
-
-    } catch {
-
-        showToast(
-            series.title,
-            "♡"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   STREAK
-========================================================= */
-
-function updateStreak() {
-
-    const today =
-        new Date();
-
-    const key =
-        today
-            .toISOString()
-            .slice(
-                0,
-                10
-            );
-
-    if (
-        !state.lastVisit
-    ) {
-
-        state.lastVisit =
-            key;
-
-        state.streak =
-            1;
-
-        saveState();
-
-        return;
-
-    }
-
-    if (
-        state.lastVisit ===
-        key
-    ) return;
-
-    const last =
-        new Date(
-            state.lastVisit +
-            "T00:00:00"
-        );
-
-    const current =
-        new Date(
-            key +
-            "T00:00:00"
-        );
-
-    const diff =
-        Math.round(
-            (
-                current -
-                last
-            ) /
-            86400000
-        );
-
-    if (
-        diff === 1
-    ) {
-
-        state.streak =
-            (
-                state.streak ||
-                1
-            ) + 1;
-
-    } else {
-
-        state.streak =
-            1;
-
-    }
-
-    state.lastVisit =
-        key;
-
-    saveState();
-
-}
-
-
-/* =========================================================
-   SCROLL
-========================================================= */
-
-function handleScroll() {
-
-    const scrollTop =
-        window.scrollY;
-
-    const height =
-        document.documentElement
-            .scrollHeight -
-        window.innerHeight;
-
-    const percent =
-        height > 0
-            ? (
-                scrollTop /
-                height
-            ) * 100
-            : 0;
-
-    scrollProgress.style.width =
-        `${percent}%`;
-
-    backTop.classList.toggle(
-        "show",
-        scrollTop > 550
-    );
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetUserData() {
-
-    const confirmed =
-        confirm(
-            "Deseja apagar favoritos, avaliações, comentários e progresso?"
-        );
-
-    if (!confirmed) return;
-
-    const theme =
-        state.theme;
-
-    const colorTheme =
-        state.colorTheme;
-
-    const effects =
-        state.effects;
-
-    const animations =
-        state.animations;
-
-    state = {
-        ...defaultState,
-        theme,
-        colorTheme,
-        effects,
-        animations
-    };
-
-    saveState();
-
-    updateEverything();
-
-    renderComments();
-
-    showToast(
-        "Seus dados foram redefinidos.",
-        "♡"
-    );
-
-}
-
-
-/* =========================================================
-   ATALHOS DO TECLADO
-
-   / = pesquisar
-   ESC = fechar
-   R = série aleatória
-   T = trocar tema
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        const typing =
-            ["INPUT", "TEXTAREA", "SELECT"]
-                .includes(
-                    document.activeElement
-                        ?.tagName
-                );
-
-        if (
-            event.key ===
-            "Escape"
-        ) {
-
-            closeSearchModal();
-
-            closeSeriesModal();
-
-            closeTrailerModal();
-
-            closeMobileMenu();
-
-            settingsPanel.classList
-                .remove(
-                    "open"
-                );
-
-            return;
-
-        }
-
-        if (typing) return;
-
-        if (
-            event.key === "/"
-        ) {
-
-            event.preventDefault();
-
-            openSearch();
-
-        }
-
-        if (
-            event.key.toLowerCase() ===
-            "r"
-        ) {
-
-            surpriseMe();
-
-        }
-
-        if (
-            event.key.toLowerCase() ===
-            "t"
-        ) {
-
-            toggleTheme();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   EVENT DELEGATION
-========================================================= */
-
-document.addEventListener(
-    "click",
-    event => {
-
-        const favorite =
-            event.target.closest(
-                "[data-favorite]"
-            );
-
-        if (favorite) {
-
-            event.stopPropagation();
-
-            toggleFavorite(
-                favorite.dataset
-                    .favorite
-            );
-
-            return;
-
-        }
-
-
-        const openButton =
-            event.target.closest(
-                "[data-open-series]"
-            );
-
-        if (openButton) {
-
-            openSeries(
-                openButton.dataset
-                    .openSeries
-            );
-
-            return;
-
-        }
-
-
-        const searchButton =
-            event.target.closest(
-                "[data-search-open]"
-            );
-
-        if (searchButton) {
-
-            closeSearchModal();
-
-            openSeries(
-                searchButton.dataset
-                    .searchOpen
-            );
-
-            return;
-
-        }
-
-
-        const spoiler =
-            event.target.closest(
-                "[data-spoiler]"
-            );
-
-        if (spoiler) {
-
-            const id =
-                spoiler.dataset
-                    .spoiler;
-
-            const text =
-                document.querySelector(
-                    `[data-comment-text="${id}"]`
-                );
-
-            text?.classList
-                .toggle(
-                    "revealed"
-                );
-
-            spoiler.textContent =
-                text?.classList
-                    .contains(
-                        "revealed"
-                    )
-                    ? "🙈 esconder spoiler"
-                    : "👁 revelar spoiler";
-
-            return;
-
-        }
-
-
-        const like =
-            event.target.closest(
-                "[data-like-comment]"
-            );
-
-        if (like) {
-
-            toggleCommentLike(
-                Number(
-                    like.dataset
-                        .likeComment
-                )
-            );
-
-            return;
-
-        }
-
-
-        const replyToggle =
-            event.target.closest(
-                "[data-reply-toggle]"
-            );
-
-        if (replyToggle) {
-
-            const box =
-                document.querySelector(
-                    `[data-reply-box="${
-                        replyToggle.dataset
-                            .replyToggle
-                    }"]`
-                );
-
-            box?.classList
-                .toggle(
-                    "open"
-                );
-
-            return;
-
-        }
-
-
-        const send =
-            event.target.closest(
-                "[data-send-reply]"
-            );
-
-        if (send) {
-
-            sendReply(
-                Number(
-                    send.dataset
-                        .sendReply
-                )
-            );
-
-            return;
-
-        }
-
-
-        const remove =
-            event.target.closest(
-                "[data-delete-comment]"
-            );
-
-        if (remove) {
-
-            deleteComment(
-                Number(
-                    remove.dataset
-                        .deleteComment
-                )
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   EVENTOS
-========================================================= */
-
-mobileMenuBtn?.addEventListener(
-    "click",
-    openMobileMenu
-);
-
-mobileMenuClose?.addEventListener(
-    "click",
-    closeMobileMenu
-);
-
-menuOverlay?.addEventListener(
-    "click",
-    closeMobileMenu
-);
-
-
-$$(
-    "#mobileMenu a"
-).forEach(
-    link =>
-        link.addEventListener(
-            "click",
-            closeMobileMenu
-        )
-);
-
-
-searchOpenBtn?.addEventListener(
-    "click",
-    openSearch
-);
-
-searchClose?.addEventListener(
-    "click",
-    closeSearchModal
-);
-
-searchOverlay?.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            searchOverlay
-        ) {
-
-            closeSearchModal();
-
-        }
-
-    }
-);
-
-
-globalSearch?.addEventListener(
-    "input",
-    renderGlobalSearch
-);
-
-clearSearch?.addEventListener(
-    "click",
-    () => {
-
-        globalSearch.value =
-            "";
-
-        globalSearch.focus();
-
-        renderGlobalSearch();
-
-    }
-);
-
-
-themeBtn?.addEventListener(
-    "click",
-    toggleTheme
-);
-
-shareBlogBtn?.addEventListener(
-    "click",
-    shareBlog
-);
-
-
-heroFavoriteBtn?.addEventListener(
-    "click",
-    () =>
-        toggleFavorite(
-            activeSeriesId
-        )
-);
-
-heroWatchedBtn?.addEventListener(
-    "click",
-    () =>
-        toggleWatched(
-            activeSeriesId
-        )
-);
-
-watchTrailerBtn?.addEventListener(
-    "click",
-    () => {
-
-        const series =
-            getSeries(
-                activeSeriesId
-            );
-
-        if (series) {
-
-            openTrailer(
-                series
-            );
-
-        }
-
-    }
-);
-
-randomSeriesBtn?.addEventListener(
-    "click",
-    surpriseMe
-);
-
-copySeriesBtn?.addEventListener(
-    "click",
-    copyCurrentSeries
-);
-
-
-heroDots?.addEventListener(
-    "click",
-    event => {
-
-        const dot =
-            event.target.closest(
-                "[data-hero-index]"
-            );
-
-        if (!dot) return;
-
-        updateHero(
-            Number(
-                dot.dataset
-                    .heroIndex
-            )
-        );
-
-    }
-);
-
-
-seriesSearch?.addEventListener(
-    "input",
-    renderSeries
-);
-
-seriesSort?.addEventListener(
-    "change",
-    renderSeries
-);
-
-
-clearFiltersBtn?.addEventListener(
-    "click",
-    () => {
-
-        activeFilter =
-            "all";
-
-        seriesSearch.value =
-            "";
-
-        seriesSort.value =
-            "default";
-
-        $$(".filter-btn")
-            .forEach(
-                button =>
-                    button.classList
-                        .toggle(
-                            "active",
-                            button.dataset
-                                .filter ===
-                                "all"
-                        )
-            );
-
-        renderSeries();
-
-    }
-);
-
-
-dailySeriesBtn?.addEventListener(
-    "click",
-    () => {
-
-        const series =
-            getDailySeries();
-
-        openSeries(
-            series.id
-        );
-
-    }
-);
-
-
-seriesModalClose?.addEventListener(
-    "click",
-    closeSeriesModal
-);
-
-seriesModal?.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            seriesModal
-        ) {
-
-            closeSeriesModal();
-
-        }
-
-    }
-);
-
-
-modalFavorite?.addEventListener(
-    "click",
-    () =>
-        toggleFavorite(
-            activeSeriesId
-        )
-);
-
-modalWatchlist?.addEventListener(
-    "click",
-    () =>
-        toggleWatchlist(
-            activeSeriesId
-        )
-);
-
-modalWatched?.addEventListener(
-    "click",
-    () =>
-        toggleWatched(
-            activeSeriesId
-        )
-);
-
-
-starRating?.addEventListener(
-    "click",
-    event => {
-
-        const button =
-            event.target.closest(
-                "[data-star]"
-            );
-
-        if (!button) return;
-
-        rateSeries(
-            activeSeriesId,
-            Number(
-                button.dataset.star
-            )
-        );
-
-    }
-);
-
-
-episodeProgress?.addEventListener(
-    "input",
-    () => {
-
-        episodeProgressText
-            .textContent =
-                `${
-                    episodeProgress
-                        .value
-                }%`;
-
-    }
-);
-
-episodeProgress?.addEventListener(
-    "change",
-    saveProgress
-);
-
-
-trailerClose?.addEventListener(
-    "click",
-    closeTrailerModal
-);
-
-trailerModal?.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            trailerModal
-        ) {
-
-            closeTrailerModal();
-
-        }
-
-    }
-);
-
-openYoutubeTrailer?.addEventListener(
-    "click",
-    launchYoutubeTrailer
-);
-
-
-commentText?.addEventListener(
-    "input",
-    () => {
-
-        commentCharCount
-            .textContent =
-                commentText
-                    .value
-                    .length;
-
-    }
-);
-
-commentForm?.addEventListener(
-    "submit",
-    addComment
-);
-
-commentSort?.addEventListener(
-    "change",
-    renderComments
-);
-
-
-resetDataBtn?.addEventListener(
-    "click",
-    resetUserData
-);
-
-
-settingsFloating?.addEventListener(
-    "click",
-    () => {
-
-        settingsPanel.classList
-            .add(
-                "open"
-            );
-
-    }
-);
-
-settingsClose?.addEventListener(
-    "click",
-    () => {
-
-        settingsPanel.classList
-            .remove(
-                "open"
-            );
-
-    }
-);
-
-
-$$(
-    ".theme-color"
-).forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                state.colorTheme =
-                    button.dataset
-                        .themeColor;
-
-                saveState();
-
-                applyColorTheme();
-
-                showToast(
-                    "Cores alteradas!",
-                    "✦"
-                );
-
-            }
-        );
-
-    }
-);
-
-
-effectsToggle?.addEventListener(
-    "change",
-    () => {
-
-        state.effects =
-            effectsToggle
-                .checked;
-
-        saveState();
-
-        applyEffects();
-
-    }
-);
-
-
-animationsToggle?.addEventListener(
-    "change",
-    () => {
-
-        state.animations =
-            animationsToggle
-                .checked;
-
-        saveState();
-
-        applyEffects();
-
-    }
-);
-
-
-backTop?.addEventListener(
-    "click",
-    () => {
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
-);
-
-
-window.addEventListener(
-    "scroll",
-    handleScroll,
-    {
-        passive: true
-    }
-);
-
-
-/* =========================================================
-   LINKS INTERNOS
-========================================================= */
-
-$$('a[href^="#"]')
-    .forEach(
-        link => {
-
-            link.addEventListener(
-                "click",
+function setupTeamCards() {
+    $$(".person-card")
+        .forEach(card => {
+            const spotlight =
+                $(".person-spotlight", card);
+
+            card.addEventListener(
+                "mousemove",
                 event => {
+                    if (
+                        !spotlight
+                        || !state.animations
+                    ) {
+                        return;
+                    }
 
-                    const href =
-                        link.getAttribute(
-                            "href"
-                        );
+                    const rect =
+                        card.getBoundingClientRect();
 
-                    const target =
-                        document.querySelector(
-                            href
-                        );
+                    const x =
+                        event.clientX
+                        - rect.left;
 
-                    if (!target) return;
+                    const y =
+                        event.clientY
+                        - rect.top;
 
-                    event.preventDefault();
+                    spotlight.style.left =
+                        `${x}px`;
 
-                    target.scrollIntoView({
-                        behavior:
-                            state.animations
-                                ? "smooth"
-                                : "auto"
-                    });
+                    spotlight.style.top =
+                        `${y}px`;
 
+                    const rotateY =
+                        (
+                            x
+                            / rect.width
+                            - 0.5
+                        )
+                        * 3;
+
+                    const rotateX =
+                        (
+                            0.5
+                            - y
+                            / rect.height
+                        )
+                        * 3;
+
+                    card.style.transform =
+                        `perspective(1000px)
+                         translateY(-5px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)`;
                 }
             );
 
-        }
-    );
-
-
-/* =========================================================
-   HOVER DO CURSOR
-========================================================= */
-
-document.addEventListener(
-    "mouseover",
-    event => {
-
-        if (
-            event.target.closest(
-                "button, a, input, textarea, select, .series-card"
-            )
-        ) {
-
-            heartCursor.classList
-                .add(
-                    "hover"
-                );
-
-        }
-
-    }
-);
-
-document.addEventListener(
-    "mouseout",
-    event => {
-
-        if (
-            event.target.closest(
-                "button, a, input, textarea, select, .series-card"
-            )
-        ) {
-
-            heartCursor.classList
-                .remove(
-                    "hover"
-                );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   ATUALIZA TUDO
-========================================================= */
-
-function updateEverything() {
-
-    renderSeries();
-
-    renderRanking();
-
-    updateStats();
-
-    updateAchievements();
-
-    updateHeroButtons(
-        activeSeriesId
-    );
-
-    if (
-        seriesModal.classList
-            .contains(
-                "open"
-            )
-    ) {
-
-        updateModalButtons(
-            activeSeriesId
-        );
-
-        renderStars(
-            activeSeriesId
-        );
-
-        episodeProgress.value =
-            state.progress[
-                activeSeriesId
-            ] || 0;
-
-        episodeProgressText
-            .textContent =
-                `${
-                    state.progress[
-                        activeSeriesId
-                    ] || 0
-                }%`;
-
-    }
-
-}
-
-
-/* =========================================================
-   AUTOPLAY HERO
-========================================================= */
-
-let heroAutoplay =
-    null;
-
-
-function startHeroAutoplay() {
-
-    clearInterval(
-        heroAutoplay
-    );
-
-    heroAutoplay =
-        setInterval(
-            () => {
-
-                if (
-                    document.hidden ||
-                    seriesModal.classList
-                        .contains(
-                            "open"
-                        ) ||
-                    searchOverlay.classList
-                        .contains(
-                            "open"
-                        )
-                ) {
-                    return;
+            card.addEventListener(
+                "mouseleave",
+                () => {
+                    card.style.transform =
+                        "";
                 }
-
-                updateHero(
-                    heroIndex + 1
-                );
-
-            },
-            9000
-        );
-
+            );
+        });
 }
 
 
 /* =========================================================
-   VISIBILIDADE
+   REVEAL AO ROLAR
 ========================================================= */
 
-document.addEventListener(
-    "visibilitychange",
-    () => {
-
-        if (
-            !document.hidden
-        ) {
-
-            startHeroAutoplay();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   ANIMAÇÃO DE ENTRADA AO ROLAR
-========================================================= */
-
-function activateRevealAnimations() {
-
+function setupReveal() {
     if (
-        !("IntersectionObserver" in window)
-    ) return;
+        !("IntersectionObserver"
+            in window)
+    ) {
+        return;
+    }
 
-    const elements =
-        document.querySelectorAll(
-            ".stat-card, .achievement-card, .person-card, .ranking-item"
+    const targets =
+        $$(
+            ".content-section, .daily-card, .profile-dashboard, .quiz-card, .person-card, .data-card"
         );
 
-    elements.forEach(
-        element => {
-
-            element.style.opacity =
-                "0";
-
-            element.style.transform =
-                "translateY(20px)";
-
-        }
+    targets.forEach(
+        element =>
+            element.classList.add(
+                "reveal-ready"
+            )
     );
 
     const observer =
         new IntersectionObserver(
             entries => {
-
                 entries.forEach(
                     entry => {
-
                         if (
-                            !entry.isIntersecting
-                        ) return;
-
-                        entry.target.style
-                            .transition =
-                                "opacity .6s ease, transform .6s ease";
-
-                        entry.target.style
-                            .opacity =
-                                "1";
-
-                        entry.target.style
-                            .transform =
-                                "translateY(0)";
-
-                        observer.unobserve(
+                            entry.isIntersecting
+                        ) {
                             entry.target
-                        );
+                                .classList
+                                .add(
+                                    "visible"
+                                );
 
+                            observer
+                                .unobserve(
+                                    entry.target
+                                );
+                        }
                     }
                 );
-
             },
             {
-                threshold: 0.12
+                threshold: 0.08
             }
         );
 
-    elements.forEach(
+    targets.forEach(
         element =>
             observer.observe(
                 element
             )
     );
-
 }
 
 
 /* =========================================================
-   ANO
+   ATALHOS DE TECLADO
 ========================================================= */
 
-if (
-    currentYear
-) {
+function setupKeyboard() {
+    document.addEventListener(
+        "keydown",
+        event => {
+            const tag =
+                document.activeElement
+                    ?.tagName;
 
-    currentYear.textContent =
-        new Date()
-            .getFullYear();
+            const typing =
+                [
+                    "INPUT",
+                    "TEXTAREA",
+                    "SELECT"
+                ].includes(tag);
 
+            if (
+                event.key === "Escape"
+            ) {
+                closeSeries();
+                closeTrailer();
+                closeQuiz();
+                closeProfileModal();
+
+                $("#searchOverlay")
+                    ?.classList.remove(
+                        "open"
+                    );
+
+                $("#settingsPanel")
+                    ?.classList.remove(
+                        "open"
+                    );
+
+                $("#mobileMenu")
+                    ?.classList.remove(
+                        "open"
+                    );
+
+                $("#menuOverlay")
+                    ?.classList.remove(
+                        "show"
+                    );
+
+                body.style.overflow =
+                    "";
+            }
+
+            if (
+                !typing
+                && event.key === "/"
+            ) {
+                event.preventDefault();
+
+                $("#searchBtn")
+                    ?.click();
+            }
+
+            if (
+                !typing
+                && event.key
+                    .toLowerCase()
+                === "r"
+            ) {
+                randomSeries();
+            }
+
+            if (
+                !typing
+                && event.key
+                    .toLowerCase()
+                === "d"
+            ) {
+                state.darkMode =
+                    !state.darkMode;
+
+                storage.set(
+                    "bia_dark",
+                    state.darkMode
+                );
+
+                applyPreferences();
+
+                if (
+                    $("#darkModeToggle")
+                ) {
+                    $("#darkModeToggle")
+                        .checked =
+                        state.darkMode;
+                }
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   LIMPAR DADOS
+========================================================= */
+
+function setupClearData() {
+    $("#clearData")
+        ?.addEventListener(
+            "click",
+            () => {
+                const message =
+                    state.language
+                    === "en"
+                        ? "Delete all locally saved blog data?"
+                        : "Apagar todos os dados salvos localmente pelo blog?";
+
+                if (
+                    !confirm(message)
+                ) {
+                    return;
+                }
+
+                [
+                    "bia_favorites",
+                    "bia_watchlist",
+                    "bia_watched",
+                    "bia_likes",
+                    "bia_ratings",
+                    "bia_progress",
+                    "bia_comments",
+                    "bia_profile"
+                ].forEach(
+                    key =>
+                        localStorage
+                            .removeItem(
+                                key
+                            )
+                );
+
+                showToast(
+                    t("dataCleared"),
+                    "✓"
+                );
+
+                setTimeout(
+                    () =>
+                        location.reload(),
+                    800
+                );
+            }
+        );
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO SUAVE
+========================================================= */
+
+function setupNavigation() {
+    $$('a[href^="#"]')
+        .forEach(link => {
+            link.addEventListener(
+                "click",
+                event => {
+                    const id =
+                        link.getAttribute(
+                            "href"
+                        );
+
+                    if (
+                        !id
+                        || id === "#"
+                    ) {
+                        return;
+                    }
+
+                    const target =
+                        $(id);
+
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            );
+        });
+}
+
+
+/* =========================================================
+   FAVORITOS HEADER
+========================================================= */
+
+function setupFavoriteShortcut() {
+    $("#favoritesBtn")
+        ?.addEventListener(
+            "click",
+            () => {
+                state.currentFilter =
+                    "favorites";
+
+                $$(".filter-btn")
+                    .forEach(
+                        button =>
+                            button.classList
+                                .toggle(
+                                    "active",
+                                    button.dataset
+                                        .filter
+                                    === "favorites"
+                                )
+                    );
+
+                renderSeries();
+
+                $("#series")
+                    ?.scrollIntoView({
+                        behavior:
+                            "smooth"
+                    });
+            }
+        );
+}
+
+
+/* =========================================================
+   BOTÃO BRASIL
+========================================================= */
+
+function setupBrazilShortcut() {
+    $("#showBrazilSeries")
+        ?.addEventListener(
+            "click",
+            () => {
+                state.currentFilter =
+                    "brazil";
+
+                $$(".filter-btn")
+                    .forEach(
+                        button =>
+                            button.classList
+                                .toggle(
+                                    "active",
+                                    button.dataset
+                                        .filter
+                                    === "brazil"
+                                )
+                    );
+
+                renderSeries();
+
+                $("#series")
+                    ?.scrollIntoView({
+                        behavior:
+                            "smooth"
+                    });
+            }
+        );
+}
+
+
+/* =========================================================
+   IMAGEM DA EQUIPE
+========================================================= */
+
+function setupTeamImages() {
+    const beatriz =
+        $("#beatrizImage");
+
+    const bayerlee =
+        $("#bayerleeImage");
+
+    if (beatriz) {
+        beatriz.src =
+            "Beatriz.jpg";
+
+        imageFallback(
+            beatriz,
+            "https://placehold.co/500x500/cb74b8/ffffff?text=Beatriz"
+        );
+    }
+
+    if (bayerlee) {
+        bayerlee.src =
+            "Bayerlee.jpg";
+
+        imageFallback(
+            bayerlee,
+            "https://placehold.co/500x500/765ed1/ffffff?text=Bayerlee"
+        );
+    }
+}
+
+
+/* =========================================================
+   ANO FOOTER
+========================================================= */
+
+function setupFooterYear() {
+    const year =
+        $("#currentYear");
+
+    if (year) {
+        year.textContent =
+            new Date()
+                .getFullYear();
+    }
 }
 
 
@@ -5264,78 +5693,87 @@ if (
    INICIALIZAÇÃO
 ========================================================= */
 
-async function init() {
+function init() {
+    setupLoader();
 
-    console.log(
-        "♡ Blog da Bia iniciado"
-    );
+    applyImageFallbacks();
 
-    updateStreak();
+    setupScroll();
 
-    applyTheme();
+    setupMobileMenu();
 
-    applyColorTheme();
+    setupHeartCursor();
 
-    applyEffects();
+    setupCursorTrail();
 
-    createHeroDots();
+    setupClickHearts();
 
-    populateCommentSeries();
+    createParticles();
 
-    renderSeries();
+    setupSettings();
+
+    setupLanguage();
+
+    setupHero();
+
+    setupCatalog();
+
+    setupSeriesModal();
+
+    setupTrailer();
+
+    setupSearch();
+
+    setupRandom();
+
+    setupComments();
+
+    setupProfile();
+
+    setupQuiz();
+
+    setupTeamCards();
+
+    setupTeamImages();
+
+    setupReveal();
+
+    setupKeyboard();
+
+    setupClearData();
+
+    setupNavigation();
+
+    setupFavoriteShortcut();
+
+    setupBrazilShortcut();
+
+    setupFooterYear();
+
+    renderBrazil();
 
     renderRanking();
 
-    renderComments();
+    renderDailySeries();
+
+    renderContinueWatching();
 
     updateStats();
-
-    updateAchievements();
-
-    await prepareDailySeries();
-
-    await updateHero(0);
-
-    activate3DCards();
-
-    handleScroll();
-
-    startHeroAutoplay();
-
-    setTimeout(
-        activateRevealAnimations,
-        300
-    );
-
 }
 
 
 /* =========================================================
-   LOADER
+   START
 ========================================================= */
 
-window.addEventListener(
-    "load",
-    () => {
-
-        setTimeout(
-            () => {
-
-                loader?.classList
-                    .add(
-                        "hidden"
-                    );
-
-            },
-            700
-        );
-
-    }
-);
-
-
-/* =========================================================
-   EXECUTAR
-========================================================= */
-
-init();
+if (
+    document.readyState
+    === "loading"
+) {
+    document.addEventListener(
+        "DOMContentLoaded",
+        init
+    );
+} else {
+    init();
+}
