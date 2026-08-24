@@ -11,15 +11,15 @@
 
     <meta
         name="description"
-        content="Blog da Bia — descubra séries, avaliações, recomendações e produções brasileiras."
+        content="Blog da Bia — séries, recomendações, avaliações, elenco, comentários e produções brasileiras."
     >
 
     <meta
         name="theme-color"
-        content="#8d45d8"
+        content="#9b57df"
     >
 
-    <title>Blog da Bia ♡ Séries</title>
+    <title>Blog da Bia ♡</title>
 
     <link
         rel="preconnect"
@@ -51,10 +51,10 @@
     ====================================================== -->
 
     <div
-        class="loader"
         id="loader"
+        class="loader"
     >
-        <div class="loader-background"></div>
+        <div class="loader-bg"></div>
 
         <div class="loader-content">
 
@@ -62,9 +62,9 @@
                 ♡
             </div>
 
-            <h2>
+            <h1>
                 Blog da Bia
-            </h2>
+            </h1>
 
             <p data-i18n="loading">
                 preparando sua próxima maratona...
@@ -79,7 +79,7 @@
 
 
     <!-- =====================================================
-         CURSOR / EFEITOS
+         CURSOR E EFEITOS
     ====================================================== -->
 
     <div
@@ -92,23 +92,21 @@
     <div
         id="clickEffects"
         class="click-effects"
-        aria-hidden="true"
     ></div>
 
     <div
         id="particles"
         class="particles"
-        aria-hidden="true"
     ></div>
 
 
     <!-- =====================================================
-         BARRA DE PROGRESSO
+         PROGRESSO DA PÁGINA
     ====================================================== -->
 
     <div
-        class="scroll-progress"
         id="scrollProgress"
+        class="scroll-progress"
     ></div>
 
 
@@ -117,18 +115,21 @@
     ====================================================== -->
 
     <div
-        class="toast"
         id="toast"
+        class="toast"
         role="status"
     >
         <span
-            class="toast-icon"
             id="toastIcon"
+            class="toast-icon"
         >
             ♡
         </span>
 
-        <span id="toastText">
+        <span
+            id="toastText"
+            class="toast-text"
+        >
             Tudo certo!
         </span>
     </div>
@@ -139,22 +140,24 @@
     ====================================================== -->
 
     <header
-        class="header"
         id="header"
+        class="header"
     >
 
         <div class="header-container">
 
+            <!-- LOGO -->
+
             <a
                 href="#inicio"
                 class="brand"
-                aria-label="Blog da Bia"
             >
-                <span class="brand-heart">
+                <span class="brand-icon">
                     ♡
                 </span>
 
                 <span class="brand-text">
+
                     <strong>
                         Blog da Bia
                     </strong>
@@ -162,14 +165,14 @@
                     <small data-i18n="brandSubtitle">
                         séries & histórias
                     </small>
+
                 </span>
             </a>
 
 
-            <nav
-                class="desktop-nav"
-                aria-label="Navegação principal"
-            >
+            <!-- MENU DESKTOP -->
+
+            <nav class="desktop-nav">
 
                 <a
                     href="#inicio"
@@ -216,63 +219,60 @@
             </nav>
 
 
+            <!-- AÇÕES -->
+
             <div class="header-actions">
 
-                <!-- IDIOMAS -->
+                <!-- IDIOMA -->
 
                 <div
-                    class="language-switcher"
                     id="languageSwitcher"
-                    aria-label="Selecionar idioma"
+                    class="language-switcher"
                 >
 
                     <button
-                        class="language-btn active"
                         id="langPT"
+                        class="language-btn active"
                         data-lang="pt"
-                        title="Português"
                     >
-                        <span class="flag">
+                        <span>
                             🇧🇷
                         </span>
 
-                        <span>
-                            PT
-                        </span>
+                        PT
                     </button>
 
                     <button
-                        class="language-btn"
                         id="langEN"
+                        class="language-btn"
                         data-lang="en"
-                        title="English"
                     >
-                        <span class="flag">
+                        <span>
                             🇺🇸
                         </span>
 
-                        <span>
-                            EN
-                        </span>
+                        EN
                     </button>
 
                 </div>
 
 
+                <!-- BUSCAR -->
+
                 <button
-                    class="icon-btn"
                     id="searchOpenBtn"
-                    title="Pesquisar"
+                    class="icon-btn"
                     aria-label="Pesquisar"
                 >
                     ⌕
                 </button>
 
 
+                <!-- TEMA -->
+
                 <button
-                    class="icon-btn"
                     id="themeBtn"
-                    title="Tema"
+                    class="icon-btn"
                     aria-label="Alternar tema"
                 >
                     <span id="themeIcon">
@@ -281,19 +281,22 @@
                 </button>
 
 
+                <!-- COMPARTILHAR -->
+
                 <button
-                    class="icon-btn"
                     id="shareBlogBtn"
-                    title="Compartilhar"
+                    class="icon-btn"
                     aria-label="Compartilhar"
                 >
                     ↗
                 </button>
 
 
+                <!-- MENU MOBILE -->
+
                 <button
-                    class="mobile-menu-btn"
                     id="mobileMenuBtn"
+                    class="mobile-menu-btn"
                     aria-label="Abrir menu"
                 >
                     <span></span>
@@ -313,20 +316,21 @@
     ====================================================== -->
 
     <div
-        class="menu-overlay"
         id="menuOverlay"
+        class="menu-overlay"
     ></div>
 
+
     <aside
-        class="mobile-menu"
         id="mobileMenu"
+        class="mobile-menu"
     >
 
-        <div class="mobile-menu-top">
+        <div class="mobile-menu-header">
 
-            <span class="mobile-brand">
+            <strong>
                 ♡ Blog da Bia
-            </span>
+            </strong>
 
             <button
                 id="mobileMenuClose"
@@ -356,9 +360,9 @@
 
             <a
                 href="#brasil"
-                data-i18n="brazilianProductions"
+                data-i18n="brazil"
             >
-                Produções brasileiras
+                Brasil
             </a>
 
             <a
@@ -409,30 +413,33 @@
     ====================================================== -->
 
     <div
-        class="search-overlay"
         id="searchOverlay"
+        class="search-overlay"
     >
 
         <div class="search-modal">
 
-            <div class="search-modal-top">
+            <div class="search-modal-header">
 
                 <div>
-                    <span class="eyebrow">
-                        ♡
-                        <span data-i18n="search">
-                            PESQUISAR
-                        </span>
+
+                    <span
+                        class="eyebrow"
+                        data-i18n="search"
+                    >
+                        PESQUISAR
                     </span>
 
                     <h2 data-i18n="whatWatch">
                         O que vamos assistir?
                     </h2>
+
                 </div>
 
+
                 <button
-                    class="modal-close"
                     id="searchClose"
+                    class="modal-close"
                     aria-label="Fechar"
                 >
                     ×
@@ -441,21 +448,24 @@
             </div>
 
 
-            <div class="big-search">
+            <div class="global-search">
 
                 <span>
                     ⌕
                 </span>
 
                 <input
-                    type="search"
                     id="globalSearch"
-                    data-i18n-placeholder="searchPlaceholder"
+                    type="search"
                     placeholder="Digite uma série..."
+                    data-i18n-placeholder="searchPlaceholder"
                     autocomplete="off"
                 >
 
-                <button id="clearSearch">
+                <button
+                    id="clearSearch"
+                    aria-label="Limpar pesquisa"
+                >
                     ×
                 </button>
 
@@ -463,8 +473,8 @@
 
 
             <div
-                class="search-results"
                 id="searchResults"
+                class="search-results"
             ></div>
 
         </div>
@@ -484,32 +494,35 @@
         ================================================== -->
 
         <section
-            class="hero"
             id="inicio"
+            class="hero"
         >
 
             <div
-                class="hero-backdrop"
                 id="heroBackdrop"
+                class="hero-backdrop"
             ></div>
 
-            <div class="hero-gradient"></div>
-            <div class="hero-orb hero-orb-one"></div>
-            <div class="hero-orb hero-orb-two"></div>
+            <div class="hero-overlay"></div>
+
+            <div class="hero-light hero-light-one"></div>
+            <div class="hero-light hero-light-two"></div>
 
 
             <div class="hero-container">
 
+                <!-- TEXTO -->
+
                 <div class="hero-content">
 
-                    <span class="hero-kicker">
-                        <span>
-                            ✦
-                        </span>
+                    <span class="hero-label">
+
+                        ✦
 
                         <span data-i18n="featured">
                             DESTAQUE DA BIA
                         </span>
+
                     </span>
 
 
@@ -521,8 +534,8 @@
                     <div class="hero-meta">
 
                         <span
-                            class="rating"
                             id="heroRating"
+                            class="hero-rating"
                         >
                             ★ 4.9
                         </span>
@@ -531,36 +544,33 @@
                             2016
                         </span>
 
-                        <span id="heroSeasons">
-                            5 temporadas
+                        <span id="heroGenre">
+                            Mistério
                         </span>
 
-                        <span class="hero-netflix">
-                            N
+                        <span id="heroSeasons">
+                            4 temporadas
                         </span>
 
                     </div>
 
 
                     <p
-                        class="hero-description"
                         id="heroDescription"
+                        class="hero-description"
                     >
-                        Mistérios, amizade e acontecimentos
-                        sobrenaturais transformam para sempre
-                        a pequena cidade de Hawkins.
+                        Mistérios e acontecimentos sobrenaturais
+                        transformam para sempre a cidade de Hawkins.
                     </p>
 
 
                     <div class="hero-buttons">
 
                         <button
-                            class="primary-btn"
                             id="watchTrailerBtn"
+                            class="primary-btn"
                         >
-                            <span>
-                                ▶
-                            </span>
+                            ▶
 
                             <span data-i18n="watchTrailer">
                                 Assistir trailer
@@ -569,10 +579,11 @@
 
 
                         <button
-                            class="secondary-btn"
                             id="heroFavoriteBtn"
+                            class="secondary-btn"
                         >
                             ♡
+
                             <span data-i18n="favorite">
                                 Favoritar
                             </span>
@@ -580,29 +591,33 @@
 
 
                         <button
+                            id="heroWatchlistBtn"
                             class="secondary-btn"
-                            id="heroWatchedBtn"
                         >
-                            ✓
-                            <span data-i18n="markWatched">
-                                Marcar assistida
+                            ＋
+
+                            <span data-i18n="watchlist">
+                                Quero assistir
                             </span>
                         </button>
 
                     </div>
 
 
-                    <div class="hero-extra-actions">
+                    <div class="hero-secondary-actions">
 
                         <button id="randomSeriesBtn">
                             ✦
+
                             <span data-i18n="surpriseMe">
                                 Surpreenda-me
                             </span>
                         </button>
 
+
                         <button id="copySeriesBtn">
                             ⧉
+
                             <span data-i18n="copyTitle">
                                 Copiar título
                             </span>
@@ -612,29 +627,34 @@
 
 
                     <div
-                        class="hero-dots"
                         id="heroDots"
+                        class="hero-dots"
                     ></div>
 
                 </div>
 
 
+                <!-- POSTER -->
+
                 <div class="hero-poster-area">
 
                     <div
-                        class="hero-poster-card"
                         id="heroPosterCard"
+                        class="hero-poster-card"
                     >
 
-                        <div class="poster-glow"></div>
+                        <div class="hero-poster-glow"></div>
 
                         <img
                             id="heroPoster"
-                            src="./img/series/stranger-things.jpg"
-                            alt="Capa da série em destaque"
+                            src=""
+                            alt="Capa da série"
                         >
 
-                        <div class="poster-score">
+                        <div class="poster-shine"></div>
+
+
+                        <div class="poster-rating">
 
                             <small data-i18n="communityRating">
                                 avaliação
@@ -656,96 +676,100 @@
 
 
         <!-- =================================================
-             QUICK STATS
+             ESTATÍSTICAS
         ================================================== -->
 
-        <section class="quick-stats">
+        <section class="stats-section">
 
-            <div class="stats-container">
+            <div class="section-container">
 
-                <article class="stat-card">
+                <div class="stats-grid">
 
-                    <span class="stat-icon">
-                        ♥
-                    </span>
+                    <article class="stat-card">
 
-                    <strong id="favoriteCount">
-                        0
-                    </strong>
+                        <span>
+                            ♥
+                        </span>
 
-                    <small data-i18n="favorites">
-                        Favoritas
-                    </small>
+                        <strong id="favoriteCount">
+                            0
+                        </strong>
 
-                </article>
+                        <small data-i18n="favorites">
+                            Favoritas
+                        </small>
 
-
-                <article class="stat-card">
-
-                    <span class="stat-icon">
-                        ✓
-                    </span>
-
-                    <strong id="watchedCount">
-                        0
-                    </strong>
-
-                    <small data-i18n="watched">
-                        Assistidas
-                    </small>
-
-                </article>
+                    </article>
 
 
-                <article class="stat-card">
+                    <article class="stat-card">
 
-                    <span class="stat-icon">
-                        ＋
-                    </span>
+                        <span>
+                            ＋
+                        </span>
 
-                    <strong id="watchlistCount">
-                        0
-                    </strong>
+                        <strong id="watchlistCount">
+                            0
+                        </strong>
 
-                    <small data-i18n="watchlist">
-                        Quero assistir
-                    </small>
+                        <small data-i18n="watchlist">
+                            Quero assistir
+                        </small>
 
-                </article>
-
-
-                <article class="stat-card">
-
-                    <span class="stat-icon">
-                        ★
-                    </span>
-
-                    <strong id="ratingsCount">
-                        0
-                    </strong>
-
-                    <small data-i18n="ratings">
-                        Avaliações
-                    </small>
-
-                </article>
+                    </article>
 
 
-                <article class="stat-card">
+                    <article class="stat-card">
 
-                    <span class="stat-icon">
-                        🔥
-                    </span>
+                        <span>
+                            ✓
+                        </span>
 
-                    <strong id="streakCount">
-                        1
-                    </strong>
+                        <strong id="watchedCount">
+                            0
+                        </strong>
 
-                    <small data-i18n="streak">
-                        Dias seguidos
-                    </small>
+                        <small data-i18n="watched">
+                            Assistidas
+                        </small>
 
-                </article>
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span>
+                            ★
+                        </span>
+
+                        <strong id="ratingsCount">
+                            0
+                        </strong>
+
+                        <small data-i18n="ratings">
+                            Avaliações
+                        </small>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <span>
+                            ☁
+                        </span>
+
+                        <strong id="commentsCount">
+                            0
+                        </strong>
+
+                        <small data-i18n="comments">
+                            Comentários
+                        </small>
+
+                    </article>
+
+                </div>
 
             </div>
 
@@ -753,58 +777,61 @@
 
 
         <!-- =================================================
-             PERFIL / MARATONISTA
+             PERFIL
         ================================================== -->
 
         <section class="profile-section">
 
             <div class="section-container">
 
-                <div class="profile-dashboard">
+                <div class="profile-card">
 
-                    <div class="profile-avatar-wrap">
+                    <div class="profile-left">
 
-                        <div
-                            class="profile-avatar"
-                            id="profileAvatar"
-                        >
-                            ♡
+                        <div class="profile-avatar-wrapper">
+
+                            <div
+                                id="profileAvatar"
+                                class="profile-avatar"
+                            >
+                                ♡
+                            </div>
+
+                            <button
+                                id="editProfileBtn"
+                                class="profile-edit"
+                            >
+                                ✎
+                            </button>
+
                         </div>
 
-                        <button
-                            class="avatar-edit-btn"
-                            id="editProfileBtn"
-                            title="Editar perfil"
-                        >
-                            ✎
-                        </button>
+
+                        <div>
+
+                            <span
+                                class="eyebrow"
+                                data-i18n="yourProfile"
+                            >
+                                SEU PERFIL
+                            </span>
+
+                            <h2 id="profileName">
+                                Visitante
+                            </h2>
+
+                            <p id="profileLevelText">
+                                Maratonista iniciante
+                            </p>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="profile-info">
+                    <div class="profile-level">
 
-                        <span
-                            class="eyebrow"
-                            data-i18n="yourProfile"
-                        >
-                            SEU PERFIL
-                        </span>
-
-                        <h2 id="profileName">
-                            Visitante
-                        </h2>
-
-                        <p id="profileLevel">
-                            Maratonista iniciante
-                        </p>
-
-                    </div>
-
-
-                    <div class="level-area">
-
-                        <div class="level-top">
+                        <div class="level-heading">
 
                             <span data-i18n="marathonLevel">
                                 Nível de maratonista
@@ -816,12 +843,18 @@
 
                         </div>
 
-                        <div class="level-bar">
-                            <span id="levelProgress"></span>
+
+                        <div class="level-track">
+
+                            <span
+                                id="levelProgress"
+                            ></span>
+
                         </div>
 
+
                         <small id="levelText">
-                            0 / 5 séries assistidas
+                            0 / 100 XP
                         </small>
 
                     </div>
@@ -838,8 +871,8 @@
         ================================================== -->
 
         <section
-            class="content-section continue-section"
             id="continueSection"
+            class="continue-section"
         >
 
             <div class="section-container">
@@ -847,6 +880,7 @@
                 <div class="section-heading">
 
                     <div>
+
                         <span
                             class="eyebrow"
                             data-i18n="yourMarathon"
@@ -857,30 +891,16 @@
                         <h2 data-i18n="continueWatching">
                             Continue assistindo
                         </h2>
+
                     </div>
 
                 </div>
 
 
                 <div
-                    class="continue-grid"
                     id="continueGrid"
+                    class="continue-grid"
                 ></div>
-
-
-                <div
-                    class="empty-mini"
-                    id="continueEmpty"
-                >
-                    <span>
-                        🍿
-                    </span>
-
-                    <p data-i18n="noProgress">
-                        Comece uma série e seu progresso
-                        aparecerá aqui.
-                    </p>
-                </div>
 
             </div>
 
@@ -897,12 +917,7 @@
 
                 <div class="daily-card">
 
-                    <div class="daily-decoration">
-                        ✦ ♡ ✦
-                    </div>
-
-
-                    <div class="daily-text">
+                    <div class="daily-content">
 
                         <span
                             class="eyebrow"
@@ -915,28 +930,38 @@
                             Série do dia
                         </h2>
 
-                        <p data-i18n="dailyDescription">
-                            Uma escolha especial para quando
-                            você não sabe o que assistir.
+                        <h3 id="dailyTitle">
+                            Descubra sua escolha de hoje
+                        </h3>
+
+                        <p id="dailyDescription">
+                            Uma recomendação especial para você.
                         </p>
 
+
                         <button
-                            class="primary-btn"
                             id="dailySeriesBtn"
+                            class="primary-btn"
                         >
                             <span data-i18n="discover">
                                 Descobrir
                             </span>
+
                             →
                         </button>
 
                     </div>
 
 
-                    <div
-                        class="daily-preview"
-                        id="dailyPreview"
-                    ></div>
+                    <div class="daily-poster">
+
+                        <img
+                            id="dailyImage"
+                            src=""
+                            alt="Série do dia"
+                        >
+
+                    </div>
 
                 </div>
 
@@ -950,8 +975,8 @@
         ================================================== -->
 
         <section
-            class="content-section series-section"
             id="series"
+            class="series-section"
         >
 
             <div class="section-container">
@@ -972,15 +997,13 @@
                         </h2>
 
                         <p data-i18n="catalogDescription">
-                            Escolhas para rir, chorar,
-                            investigar e passar a madrugada
-                            dizendo “só mais um episódio”.
+                            Escolha sua próxima série.
                         </p>
 
                     </div>
 
 
-                    <span class="result-counter">
+                    <div class="catalog-result">
 
                         <strong id="seriesResultCount">
                             0
@@ -990,12 +1013,12 @@
                             resultados
                         </span>
 
-                    </span>
+                    </div>
 
                 </div>
 
 
-                <!-- BUSCA E ORDENAÇÃO -->
+                <!-- BUSCA -->
 
                 <div class="catalog-tools">
 
@@ -1006,10 +1029,10 @@
                         </span>
 
                         <input
-                            type="search"
                             id="seriesSearch"
-                            data-i18n-placeholder="searchSeries"
+                            type="search"
                             placeholder="Buscar série..."
+                            data-i18n-placeholder="searchSeries"
                         >
 
                     </label>
@@ -1017,43 +1040,27 @@
 
                     <select id="seriesSort">
 
-                        <option
-                            value="default"
-                            data-i18n="sortDefault"
-                        >
+                        <option value="featured">
                             Recomendadas
                         </option>
 
-                        <option
-                            value="rating"
-                            data-i18n="highestRated"
-                        >
+                        <option value="rating">
                             Maior nota
                         </option>
 
-                        <option
-                            value="az"
-                        >
+                        <option value="az">
                             A → Z
                         </option>
 
-                        <option
-                            value="za"
-                        >
+                        <option value="za">
                             Z → A
                         </option>
 
-                        <option
-                            value="year-new"
-                            data-i18n="newest"
-                        >
+                        <option value="newest">
                             Mais recentes
                         </option>
 
-                        <option
-                            value="year-old"
-                            data-i18n="oldest"
-                        >
+                        <option value="oldest">
                             Mais antigas
                         </option>
 
@@ -1065,8 +1072,8 @@
                 <!-- FILTROS -->
 
                 <div
-                    class="filters"
                     id="filters"
+                    class="filters"
                 >
 
                     <button
@@ -1103,10 +1110,18 @@
 
                     <button
                         class="filter-btn"
-                        data-filter="terror"
-                        data-i18n="horror"
+                        data-filter="suspense"
+                        data-i18n="thriller"
                     >
-                        Terror
+                        Suspense
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-filter="crime"
+                        data-i18n="crime"
+                    >
+                        Crime
                     </button>
 
                     <button
@@ -1118,41 +1133,32 @@
                     </button>
 
                     <button
-                        class="filter-btn"
-                        data-filter="acao"
-                        data-i18n="action"
-                    >
-                        Ação
-                    </button>
-
-                    <button
                         class="filter-btn brazil-filter"
                         data-filter="brasil"
                     >
-                        🇧🇷
-                        <span data-i18n="brazil">
-                            Brasil
-                        </span>
+                        🇧🇷 Brasil
                     </button>
 
                 </div>
 
 
-                <div
-                    class="advanced-filter-toggle"
+                <!-- FILTROS AVANÇADOS -->
+
+                <button
+                    id="advancedFilterBtn"
+                    class="advanced-filter-button"
                 >
-                    <button id="advancedFilterBtn">
-                        ⚙
-                        <span data-i18n="advancedFilters">
-                            Filtros avançados
-                        </span>
-                    </button>
-                </div>
+                    ⚙
+
+                    <span data-i18n="advancedFilters">
+                        Filtros avançados
+                    </span>
+                </button>
 
 
                 <div
-                    class="advanced-filters"
                     id="advancedFilters"
+                    class="advanced-filters"
                 >
 
                     <label>
@@ -1162,18 +1168,23 @@
                         </span>
 
                         <select id="ratingFilter">
+
                             <option value="0">
                                 Todas
                             </option>
+
                             <option value="4">
                                 ★ 4.0+
                             </option>
+
                             <option value="4.5">
                                 ★ 4.5+
                             </option>
+
                             <option value="4.8">
                                 ★ 4.8+
                             </option>
+
                         </select>
 
                     </label>
@@ -1187,38 +1198,23 @@
 
                         <select id="statusFilter">
 
-                            <option
-                                value="all"
-                                data-i18n="all"
-                            >
+                            <option value="all">
                                 Todos
                             </option>
 
-                            <option
-                                value="favorite"
-                                data-i18n="favorites"
-                            >
+                            <option value="favorite">
                                 Favoritas
                             </option>
 
-                            <option
-                                value="watchlist"
-                                data-i18n="watchlist"
-                            >
+                            <option value="watchlist">
                                 Quero assistir
                             </option>
 
-                            <option
-                                value="watched"
-                                data-i18n="watched"
-                            >
+                            <option value="watched">
                                 Assistidas
                             </option>
 
-                            <option
-                                value="watching"
-                                data-i18n="watching"
-                            >
+                            <option value="watching">
                                 Assistindo
                             </option>
 
@@ -1228,10 +1224,11 @@
 
 
                     <button
-                        class="clear-filters"
                         id="clearFiltersBtn"
+                        class="clear-filters-btn"
                     >
                         ×
+
                         <span data-i18n="clearFilters">
                             Limpar filtros
                         </span>
@@ -1243,14 +1240,14 @@
                 <!-- GRID -->
 
                 <div
-                    class="series-grid"
                     id="seriesGrid"
+                    class="series-grid"
                 ></div>
 
 
                 <div
-                    class="empty-state hidden"
                     id="emptySeries"
+                    class="empty-state hidden"
                 >
 
                     <span>
@@ -1262,8 +1259,7 @@
                     </h3>
 
                     <p data-i18n="tryOtherFilters">
-                        Tente mudar os filtros ou
-                        pesquisar outro título.
+                        Tente mudar os filtros.
                     </p>
 
                 </div>
@@ -1274,15 +1270,16 @@
 
 
         <!-- =================================================
-             PRODUÇÕES BRASILEIRAS
+             BRASIL
         ================================================== -->
 
         <section
-            class="brazil-section"
             id="brasil"
+            class="brazil-section"
         >
 
-            <div class="brazil-bg"></div>
+            <div class="brazil-background"></div>
+
 
             <div class="section-container">
 
@@ -1290,7 +1287,7 @@
 
                     <div>
 
-                        <span class="brazil-label">
+                        <span class="brazil-tag">
                             🇧🇷 NETFLIX BRASIL
                         </span>
 
@@ -1299,20 +1296,21 @@
                         </h2>
 
                         <p data-i18n="brazilDescription">
-                            Histórias brasileiras que merecem
-                            um lugar especial na sua lista.
+                            Séries brasileiras que merecem
+                            entrar na sua lista.
                         </p>
 
                     </div>
 
 
                     <button
-                        class="light-btn"
                         id="seeAllBrazilBtn"
+                        class="light-btn"
                     >
                         <span data-i18n="seeAll">
                             Ver todas
                         </span>
+
                         →
                     </button>
 
@@ -1320,8 +1318,8 @@
 
 
                 <div
-                    class="brazil-carousel"
                     id="brazilCarousel"
+                    class="brazil-carousel"
                 ></div>
 
             </div>
@@ -1343,6 +1341,7 @@
                         ✦
                     </div>
 
+
                     <div>
 
                         <span
@@ -1358,20 +1357,22 @@
 
                         <p data-i18n="quizDescription">
                             Responda algumas perguntas e
-                            deixe o Blog da Bia escolher uma
-                            série que combina com você.
+                            receba uma recomendação.
                         </p>
 
                     </div>
 
+
                     <button
-                        class="primary-btn"
                         id="startQuizBtn"
+                        class="primary-btn"
                     >
                         ✦
+
                         <span data-i18n="startQuiz">
-                            Fazer o quiz
+                            Fazer quiz
                         </span>
+
                     </button>
 
                 </div>
@@ -1386,8 +1387,8 @@
         ================================================== -->
 
         <section
-            class="content-section ranking-section"
             id="ranking"
+            class="ranking-section"
         >
 
             <div class="section-container">
@@ -1408,8 +1409,7 @@
                         </h2>
 
                         <p data-i18n="rankingDescription">
-                            As séries mais bem avaliadas
-                            no blog.
+                            As mais bem avaliadas do blog.
                         </p>
 
                     </div>
@@ -1418,8 +1418,8 @@
 
 
                 <div
-                    class="ranking-list"
                     id="rankingList"
+                    class="ranking-list"
                 ></div>
 
             </div>
@@ -1455,48 +1455,77 @@
                 </div>
 
 
-                <div
-                    class="achievement-grid"
-                    id="achievementGrid"
-                >
+                <div class="achievement-grid">
 
                     <article
                         class="achievement-card"
-                        data-achievement="firstFavorite"
+                        data-achievement="favorite"
                     >
+
                         <span>
                             ♡
                         </span>
 
                         <div>
+
                             <strong data-i18n="firstLove">
                                 Primeiro amor
                             </strong>
 
-                            <small data-i18n="firstFavoriteDescription">
-                                Favorite sua primeira série
+                            <small>
+                                1 favorita
                             </small>
+
                         </div>
+
                     </article>
 
 
                     <article
                         class="achievement-card"
-                        data-achievement="fiveWatched"
+                        data-achievement="watchlist"
                     >
+
+                        <span>
+                            ＋
+                        </span>
+
+                        <div>
+
+                            <strong data-i18n="collector">
+                                Colecionadora
+                            </strong>
+
+                            <small>
+                                3 na sua lista
+                            </small>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="achievement-card"
+                        data-achievement="watched"
+                    >
+
                         <span>
                             🍿
                         </span>
 
                         <div>
+
                             <strong data-i18n="marathoner">
                                 Maratonista
                             </strong>
 
-                            <small data-i18n="fiveWatchedDescription">
-                                Termine 5 séries
+                            <small>
+                                3 séries assistidas
                             </small>
+
                         </div>
+
                     </article>
 
 
@@ -1504,79 +1533,71 @@
                         class="achievement-card"
                         data-achievement="critic"
                     >
+
                         <span>
                             ★
                         </span>
 
                         <div>
+
                             <strong data-i18n="critic">
                                 Crítica de sofá
                             </strong>
 
-                            <small data-i18n="criticDescription">
-                                Avalie 3 séries
+                            <small>
+                                3 avaliações
                             </small>
+
                         </div>
+
                     </article>
 
 
                     <article
                         class="achievement-card"
-                        data-achievement="explorer"
+                        data-achievement="community"
                     >
+
+                        <span>
+                            ☁
+                        </span>
+
+                        <div>
+
+                            <strong data-i18n="community">
+                                Comunidade
+                            </strong>
+
+                            <small>
+                                2 comentários
+                            </small>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="achievement-card"
+                        data-achievement="expert"
+                    >
+
                         <span>
                             ✦
                         </span>
 
                         <div>
-                            <strong data-i18n="explorer">
-                                Exploradora
+
+                            <strong>
+                                Expert
                             </strong>
 
-                            <small data-i18n="explorerDescription">
-                                Conheça 10 séries
+                            <small>
+                                300 XP
                             </small>
+
                         </div>
-                    </article>
 
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="brazilFan"
-                    >
-                        <span>
-                            🇧🇷
-                        </span>
-
-                        <div>
-                            <strong data-i18n="brazilFan">
-                                Made in Brazil
-                            </strong>
-
-                            <small data-i18n="brazilFanDescription">
-                                Assista 3 produções brasileiras
-                            </small>
-                        </div>
-                    </article>
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="collector"
-                    >
-                        <span>
-                            ♥
-                        </span>
-
-                        <div>
-                            <strong data-i18n="collector">
-                                Colecionadora
-                            </strong>
-
-                            <small data-i18n="collectorDescription">
-                                Tenha 10 favoritas
-                            </small>
-                        </div>
                     </article>
 
                 </div>
@@ -1591,8 +1612,8 @@
         ================================================== -->
 
         <section
-            class="community-section"
             id="comunidade"
+            class="community-section"
         >
 
             <div class="section-container">
@@ -1613,8 +1634,7 @@
                         </h2>
 
                         <p data-i18n="communityDescription">
-                            Conte o que achou, responda outras
-                            pessoas e compartilhe suas teorias.
+                            Compartilhe sua opinião.
                         </p>
 
                     </div>
@@ -1624,24 +1644,17 @@
 
                 <div class="community-layout">
 
-                    <!-- FORM -->
+
+                    <!-- FORMULÁRIO -->
 
                     <form
-                        class="comment-form"
                         id="commentForm"
+                        class="comment-form"
                     >
 
-                        <div class="form-heading">
-
-                            <span>
-                                ♡
-                            </span>
-
-                            <h3 data-i18n="leaveComment">
-                                Deixe seu comentário
-                            </h3>
-
-                        </div>
+                        <h3 data-i18n="leaveComment">
+                            Deixe seu comentário ♡
+                        </h3>
 
 
                         <label>
@@ -1651,11 +1664,10 @@
                             </span>
 
                             <input
-                                type="text"
                                 id="commentName"
+                                type="text"
                                 maxlength="30"
-                                placeholder="Como podemos te chamar?"
-                                data-i18n-placeholder="namePlaceholder"
+                                placeholder="Seu nome"
                                 required
                             >
 
@@ -1672,12 +1684,11 @@
                                 id="commentSeries"
                                 required
                             >
-                                <option
-                                    value=""
-                                    data-i18n="chooseSeries"
-                                >
+
+                                <option value="">
                                     Escolha uma série
                                 </option>
+
                             </select>
 
                         </label>
@@ -1689,12 +1700,11 @@
                                 Seu comentário
                             </span>
 
-                            <div class="textarea-wrap">
+                            <div class="textarea-wrapper">
 
                                 <textarea
                                     id="commentText"
                                     maxlength="400"
-                                    data-i18n-placeholder="commentPlaceholder"
                                     placeholder="Conta pra gente..."
                                     required
                                 ></textarea>
@@ -1711,20 +1721,20 @@
                         </label>
 
 
-                        <label class="checkbox-label">
+                        <label class="spoiler-checkbox">
 
                             <input
-                                type="checkbox"
                                 id="commentSpoiler"
+                                type="checkbox"
                             >
 
-                            <span class="fake-checkbox">
+                            <span>
                                 ✓
                             </span>
 
-                            <span data-i18n="containsSpoiler">
+                            <strong data-i18n="containsSpoiler">
                                 Contém spoiler
-                            </span>
+                            </strong>
 
                         </label>
 
@@ -1734,54 +1744,46 @@
                             class="primary-btn full-btn"
                         >
                             ♡
+
                             <span data-i18n="publish">
-                                Publicar comentário
+                                Publicar
                             </span>
+
                         </button>
 
                     </form>
 
 
-                    <!-- COMMENTS -->
+                    <!-- COMENTÁRIOS -->
 
                     <div class="comments-area">
 
                         <div class="comments-toolbar">
 
                             <h3>
+
                                 <span data-i18n="comments">
                                     Comentários
                                 </span>
 
-                                <span
-                                    class="comment-count"
-                                    id="commentCount"
-                                >
+                                <span id="commentCount">
                                     0
                                 </span>
+
                             </h3>
 
 
                             <select id="commentSort">
 
-                                <option
-                                    value="new"
-                                    data-i18n="newestComments"
-                                >
+                                <option value="new">
                                     Mais recentes
                                 </option>
 
-                                <option
-                                    value="likes"
-                                    data-i18n="mostLiked"
-                                >
+                                <option value="likes">
                                     Mais curtidos
                                 </option>
 
-                                <option
-                                    value="old"
-                                    data-i18n="oldestComments"
-                                >
+                                <option value="old">
                                     Mais antigos
                                 </option>
 
@@ -1791,8 +1793,8 @@
 
 
                         <div
-                            class="comments-list"
                             id="commentsList"
+                            class="comments-list"
                         ></div>
 
                     </div>
@@ -1805,12 +1807,12 @@
 
 
         <!-- =================================================
-             CRIADORA E DESENVOLVEDOR
+             EQUIPE
         ================================================== -->
 
         <section
-            class="team-section"
             id="sobre"
+            class="team-section"
         >
 
             <div class="team-decoration team-decoration-one">
@@ -1834,13 +1836,11 @@
                     </span>
 
                     <h2 data-i18n="madeWithLove">
-                        Feito com carinho
-                        <em>e muitos episódios.</em>
+                        Feito com carinho e muitos episódios.
                     </h2>
 
                     <p data-i18n="teamDescription">
-                        Conheça quem transformou a paixão por
-                        séries neste cantinho.
+                        Conheça quem faz parte do Blog da Bia.
                     </p>
 
                 </div>
@@ -1848,29 +1848,27 @@
 
                 <div class="team-grid">
 
+
                     <!-- BEATRIZ -->
 
                     <article
-                        class="person-card creator-card"
+                        class="person-card"
                         data-tilt-card
                     >
 
-                        <div
-                            class="person-spotlight"
-                        ></div>
+                        <div class="person-spotlight"></div>
 
-                        <div class="person-image-wrap">
+                        <div class="person-image-wrapper">
 
-                            <div class="image-ring"></div>
+                            <div class="person-ring"></div>
 
                             <img
                                 src="./img/Beatriz.jpg"
                                 alt="Beatriz"
                                 class="person-image"
-                                onerror="this.src='./img/beatriz.jpg'"
                             >
 
-                            <span class="person-floating-heart">
+                            <span class="person-heart">
                                 ♡
                             </span>
 
@@ -1879,22 +1877,25 @@
 
                         <div class="person-content">
 
-                            <span
-                                class="person-role creator-role"
-                                data-i18n="creator"
-                            >
-                                ♡ CRIADORA
+                            <span class="person-role creator-role">
+
+                                ♡
+
+                                <span data-i18n="creator">
+                                    CRIADORA
+                                </span>
+
                             </span>
+
 
                             <h3>
                                 Beatriz
                             </h3>
 
+
                             <p data-i18n="beatrizDescription">
-                                Apaixonada por séries,
-                                personagens e histórias que
-                                continuam na cabeça mesmo
-                                depois dos créditos.
+                                Criadora do Blog da Bia e responsável
+                                pelas ideias, séries e identidade do projeto.
                             </p>
 
 
@@ -1905,11 +1906,11 @@
                                 </span>
 
                                 <span>
-                                    ✦ Netflix
+                                    🎬 Netflix
                                 </span>
 
-                                <span data-i18n="creatorTag">
-                                    Criadora
+                                <span>
+                                    ✦ Criadora
                                 </span>
 
                             </div>
@@ -1929,29 +1930,29 @@
                         data-tilt-card
                     >
 
-                        <div
-                            class="person-spotlight"
-                        ></div>
+                        <div class="person-spotlight"></div>
 
-                        <div class="developer-code-bg">
+                        <div class="developer-code">
                             &lt;/&gt;
                         </div>
 
 
-                        <div class="person-image-wrap">
+                        <div class="person-image-wrapper">
 
-                            <div class="image-ring developer-ring"></div>
+                            <div class="person-ring developer-ring"></div>
 
                             <img
                                 src="./img/Bayerlee.jpg"
                                 alt="Bayerlee"
                                 class="person-image"
-                                onerror="this.src='./img/bayerlee.jpg'"
                             >
 
-                            <span class="developer-status">
+                            <span class="developer-online">
+
                                 <i></i>
+
                                 online
+
                             </span>
 
                         </div>
@@ -1959,23 +1960,25 @@
 
                         <div class="person-content">
 
-                            <span
-                                class="person-role developer-role"
-                            >
+                            <span class="person-role developer-role">
+
                                 &lt;/&gt;
+
                                 <span data-i18n="developer">
                                     DESENVOLVEDOR
                                 </span>
+
                             </span>
+
 
                             <h3>
                                 Bayerlee
                             </h3>
 
+
                             <p data-i18n="bayerleeDescription">
-                                Responsável pelo design,
-                                desenvolvimento, interações e
-                                experiência do Blog da Bia.
+                                Responsável pelo desenvolvimento,
+                                design, animações e interações do site.
                             </p>
 
 
@@ -2000,9 +2003,10 @@
                             </div>
 
 
-                            <div class="developer-details">
+                            <div class="developer-stats">
 
                                 <div>
+
                                     <strong>
                                         50+
                                     </strong>
@@ -2010,9 +2014,12 @@
                                     <small data-i18n="features">
                                         funções
                                     </small>
+
                                 </div>
 
+
                                 <div>
+
                                     <strong>
                                         2
                                     </strong>
@@ -2020,9 +2027,12 @@
                                     <small data-i18n="languages">
                                         idiomas
                                     </small>
+
                                 </div>
 
+
                                 <div>
+
                                     <strong>
                                         ∞
                                     </strong>
@@ -2030,6 +2040,7 @@
                                     <small data-i18n="creativity">
                                         criatividade
                                     </small>
+
                                 </div>
 
                             </div>
@@ -2043,30 +2054,13 @@
 
                 </div>
 
-
-                <div class="team-signature">
-
-                    <span>
-                        Beatriz
-                    </span>
-
-                    <i>
-                        ♡
-                    </i>
-
-                    <span>
-                        Bayerlee
-                    </span>
-
-                </div>
-
             </div>
 
         </section>
 
 
         <!-- =================================================
-             CONFIGURAÇÕES / DADOS
+             DADOS LOCAIS
         ================================================== -->
 
         <section class="data-section">
@@ -2089,21 +2083,23 @@
                         </h3>
 
                         <p data-i18n="dataDescription">
-                            Favoritos, progresso, avaliações
-                            e comentários são mantidos neste
-                            dispositivo.
+                            Favoritos, comentários e progresso
+                            ficam salvos neste dispositivo.
                         </p>
 
                     </div>
 
+
                     <button
-                        class="danger-btn"
                         id="resetDataBtn"
+                        class="danger-btn"
                     >
                         ×
+
                         <span data-i18n="resetData">
-                            Redefinir meus dados
+                            Redefinir dados
                         </span>
+
                     </button>
 
                 </div>
@@ -2130,6 +2126,7 @@
                 </span>
 
                 <div>
+
                     <strong>
                         Blog da Bia
                     </strong>
@@ -2137,12 +2134,14 @@
                     <small data-i18n="footerText">
                         Um cantinho para quem ama séries.
                     </small>
+
                 </div>
 
             </div>
 
 
             <p>
+
                 <span data-i18n="createdBy">
                     Criado por
                 </span>
@@ -2160,13 +2159,20 @@
                 <strong>
                     Bayerlee
                 </strong>
+
             </p>
 
 
             <small>
+
                 ©
-                <span id="currentYear"></span>
+
+                <span id="currentYear">
+                    2026
+                </span>
+
                 Blog da Bia
+
             </small>
 
         </div>
@@ -2175,12 +2181,12 @@
 
 
     <!-- =====================================================
-         BOTÃO VOLTAR
+         VOLTAR AO TOPO
     ====================================================== -->
 
     <button
-        class="back-top"
         id="backTop"
+        class="back-top"
         aria-label="Voltar ao topo"
     >
         ↑
@@ -2188,26 +2194,26 @@
 
 
     <!-- =====================================================
-         CONFIGURAÇÕES FLUTUANTES
+         CONFIGURAÇÕES
     ====================================================== -->
 
     <button
-        class="settings-floating"
         id="settingsFloating"
-        title="Personalizar"
+        class="settings-floating"
     >
         ✦
     </button>
 
 
     <aside
-        class="settings-panel"
         id="settingsPanel"
+        class="settings-panel"
     >
 
-        <div class="settings-top">
+        <div class="settings-header">
 
             <div>
+
                 <span
                     class="eyebrow"
                     data-i18n="customize"
@@ -2215,10 +2221,12 @@
                     PERSONALIZE
                 </span>
 
-                <h3 data-i18n="yourBlog">
+                <h2 data-i18n="yourBlog">
                     Seu Blog da Bia
-                </h3>
+                </h2>
+
             </div>
+
 
             <button id="settingsClose">
                 ×
@@ -2227,42 +2235,38 @@
         </div>
 
 
-        <div class="setting-group">
+        <div class="settings-group">
 
             <span data-i18n="gradient">
                 Gradiente
             </span>
 
-            <div class="theme-colors">
+
+            <div class="theme-options">
 
                 <button
-                    class="theme-color theme-bia active"
+                    class="theme-color active"
                     data-theme-color="bia"
-                    title="Bia"
                 ></button>
 
                 <button
-                    class="theme-color theme-sunset"
+                    class="theme-color"
                     data-theme-color="sunset"
-                    title="Sunset"
                 ></button>
 
                 <button
-                    class="theme-color theme-ocean"
+                    class="theme-color"
                     data-theme-color="ocean"
-                    title="Ocean"
                 ></button>
 
                 <button
-                    class="theme-color theme-berry"
+                    class="theme-color"
                     data-theme-color="berry"
-                    title="Berry"
                 ></button>
 
                 <button
-                    class="theme-color theme-aurora"
+                    class="theme-color"
                     data-theme-color="aurora"
-                    title="Aurora"
                 ></button>
 
             </div>
@@ -2273,18 +2277,20 @@
         <label class="setting-toggle">
 
             <span>
+
                 <strong data-i18n="visualEffects">
                     Efeitos visuais
                 </strong>
 
                 <small data-i18n="visualEffectsDescription">
-                    Corações, partículas e brilhos
+                    Corações e partículas
                 </small>
+
             </span>
 
             <input
-                type="checkbox"
                 id="effectsToggle"
+                type="checkbox"
                 checked
             >
 
@@ -2296,18 +2302,20 @@
         <label class="setting-toggle">
 
             <span>
+
                 <strong data-i18n="animations">
                     Animações
                 </strong>
 
                 <small data-i18n="animationsDescription">
-                    Movimentos e transições
+                    Movimentos da interface
                 </small>
+
             </span>
 
             <input
-                type="checkbox"
                 id="animationsToggle"
+                type="checkbox"
                 checked
             >
 
@@ -2323,29 +2331,29 @@
     ====================================================== -->
 
     <div
-        class="series-modal"
         id="seriesModal"
+        class="series-modal"
     >
 
         <div class="series-modal-content">
 
             <button
-                class="series-modal-close"
                 id="seriesModalClose"
+                class="series-modal-close"
             >
                 ×
             </button>
 
 
             <div
-                class="modal-backdrop"
                 id="modalBackdrop"
+                class="modal-backdrop"
             ></div>
 
 
             <div class="modal-main">
 
-                <div class="modal-poster-wrap">
+                <div class="modal-poster-wrapper">
 
                     <img
                         id="modalPoster"
@@ -2354,8 +2362,8 @@
                     >
 
                     <span
-                        class="modal-badge"
                         id="modalBadge"
+                        class="modal-badge"
                     >
                         NETFLIX
                     </span>
@@ -2369,8 +2377,9 @@
                         class="eyebrow"
                         data-i18n="seriesDetails"
                     >
-                        DETALHES DA SÉRIE
+                        DETALHES
                     </span>
+
 
                     <h2 id="modalTitle">
                         Série
@@ -2387,8 +2396,12 @@
                             2026
                         </span>
 
+                        <span id="modalGenre">
+                            Drama
+                        </span>
+
                         <span id="modalSeasons">
-                            Temporadas
+                            1 temporada
                         </span>
 
                     </div>
@@ -2400,30 +2413,35 @@
                     <div class="modal-actions">
 
                         <button
-                            id="modalFavorite"
+                            id="modalFavoriteBtn"
                             class="modal-action-btn"
                         >
                             ♡
+
                             <span data-i18n="favorite">
                                 Favoritar
                             </span>
                         </button>
 
+
                         <button
-                            id="modalWatchlist"
+                            id="modalWatchlistBtn"
                             class="modal-action-btn"
                         >
                             ＋
+
                             <span data-i18n="watchlist">
                                 Quero assistir
                             </span>
                         </button>
 
+
                         <button
-                            id="modalWatched"
+                            id="modalWatchedBtn"
                             class="modal-action-btn"
                         >
                             ✓
+
                             <span data-i18n="watched">
                                 Assistida
                             </span>
@@ -2432,27 +2450,48 @@
                     </div>
 
 
-                    <div class="user-rating">
+                    <!-- AVALIAÇÃO -->
+
+                    <div class="rating-area">
 
                         <span data-i18n="yourRating">
                             Sua avaliação
                         </span>
 
+
                         <div
-                            class="star-rating"
                             id="starRating"
+                            class="star-rating"
                         >
-                            <button data-star="1">☆</button>
-                            <button data-star="2">☆</button>
-                            <button data-star="3">☆</button>
-                            <button data-star="4">☆</button>
-                            <button data-star="5">☆</button>
+
+                            <button data-star="1">
+                                ☆
+                            </button>
+
+                            <button data-star="2">
+                                ☆
+                            </button>
+
+                            <button data-star="3">
+                                ☆
+                            </button>
+
+                            <button data-star="4">
+                                ☆
+                            </button>
+
+                            <button data-star="5">
+                                ☆
+                            </button>
+
                         </div>
 
                     </div>
 
 
-                    <div class="progress-control">
+                    <!-- PROGRESSO -->
+
+                    <div class="progress-area">
 
                         <div>
 
@@ -2466,13 +2505,14 @@
 
                         </div>
 
+
                         <input
-                            type="range"
                             id="episodeProgress"
+                            type="range"
                             min="0"
                             max="100"
-                            value="0"
                             step="5"
+                            value="0"
                         >
 
                     </div>
@@ -2484,60 +2524,50 @@
 
             <!-- ELENCO -->
 
-            <div class="modal-section">
+            <section class="modal-section">
 
-                <div class="modal-section-heading">
+                <span
+                    class="eyebrow"
+                    data-i18n="cast"
+                >
+                    ELENCO
+                </span>
 
-                    <div>
-                        <span
-                            class="eyebrow"
-                            data-i18n="whoIsWho"
-                        >
-                            QUEM É QUEM
-                        </span>
+                <h3 data-i18n="mainCast">
+                    Elenco principal
+                </h3>
 
-                        <h3 data-i18n="cast">
-                            Elenco
-                        </h3>
-                    </div>
-
-                </div>
 
                 <div
-                    class="cast-grid"
                     id="castGrid"
+                    class="cast-grid"
                 ></div>
 
-            </div>
+            </section>
 
 
             <!-- RECOMENDAÇÕES -->
 
-            <div class="modal-section">
+            <section class="modal-section">
 
-                <div class="modal-section-heading">
+                <span
+                    class="eyebrow"
+                    data-i18n="recommendations"
+                >
+                    RECOMENDAÇÕES
+                </span>
 
-                    <div>
-                        <span
-                            class="eyebrow"
-                            data-i18n="keepWatching"
-                        >
-                            CONTINUE MARATONANDO
-                        </span>
+                <h3 data-i18n="youMayLike">
+                    Você também pode gostar
+                </h3>
 
-                        <h3 data-i18n="youMayLike">
-                            Você também pode gostar
-                        </h3>
-                    </div>
-
-                </div>
 
                 <div
-                    class="recommendations"
                     id="recommendations"
+                    class="recommendations"
                 ></div>
 
-            </div>
+            </section>
 
         </div>
 
@@ -2545,12 +2575,12 @@
 
 
     <!-- =====================================================
-         MODAL TRAILER
+         TRAILER
     ====================================================== -->
 
     <div
-        class="trailer-modal"
         id="trailerModal"
+        class="trailer-modal"
     >
 
         <div class="trailer-box">
@@ -2562,24 +2592,28 @@
                 ×
             </button>
 
-            <span class="trailer-symbol">
+
+            <span class="trailer-icon">
                 ▶
             </span>
+
 
             <h2 id="trailerTitle">
                 Trailer
             </h2>
 
+
             <p data-i18n="trailerDescription">
-                Abra a busca do trailer oficial
-                em uma nova aba.
+                Abra o trailer oficial em uma nova guia.
             </p>
 
+
             <button
-                class="primary-btn"
                 id="openYoutubeTrailer"
+                class="primary-btn"
             >
                 ▶
+
                 <span data-i18n="searchOfficialTrailer">
                     Procurar trailer oficial
                 </span>
@@ -2591,42 +2625,35 @@
 
 
     <!-- =====================================================
-         MODAL QUIZ
+         QUIZ
     ====================================================== -->
 
     <div
-        class="quiz-modal"
         id="quizModal"
+        class="quiz-modal"
     >
 
         <div class="quiz-modal-box">
 
             <button
-                class="modal-close"
                 id="quizClose"
+                class="modal-close"
             >
                 ×
             </button>
 
-            <div
-                class="quiz-progress"
-                id="quizProgress"
-            >
-                <span></span>
+
+            <div class="quiz-progress">
+
+                <span id="quizProgress"></span>
+
             </div>
 
 
             <div id="quizContent">
 
-                <span class="quiz-big-icon">
+                <span class="quiz-icon-big">
                     ✦
-                </span>
-
-                <span
-                    class="eyebrow"
-                    data-i18n="seriesQuiz"
-                >
-                    QUIZ DE SÉRIES
                 </span>
 
                 <h2 data-i18n="readyQuiz">
@@ -2634,18 +2661,18 @@
                 </h2>
 
                 <p data-i18n="quizIntro">
-                    São só algumas perguntas.
-                    No final, escolhemos uma série
-                    para você.
+                    Responda algumas perguntas.
                 </p>
 
+
                 <button
-                    class="primary-btn"
                     id="quizBeginBtn"
+                    class="primary-btn"
                 >
                     <span data-i18n="letsGo">
                         Vamos lá
                     </span>
+
                     →
                 </button>
 
@@ -2657,37 +2684,32 @@
 
 
     <!-- =====================================================
-         MODAL PERFIL
+         PERFIL
     ====================================================== -->
 
     <div
-        class="profile-modal"
         id="profileModal"
+        class="profile-modal"
     >
 
         <form
-            class="profile-modal-box"
             id="profileForm"
+            class="profile-modal-box"
         >
 
             <button
+                id="profileClose"
                 type="button"
                 class="modal-close"
-                id="profileClose"
             >
                 ×
             </button>
+
 
             <span class="profile-modal-icon">
                 ♡
             </span>
 
-            <span
-                class="eyebrow"
-                data-i18n="yourProfile"
-            >
-                SEU PERFIL
-            </span>
 
             <h2 data-i18n="howCallYou">
                 Como podemos te chamar?
@@ -2701,8 +2723,8 @@
                 </span>
 
                 <input
-                    type="text"
                     id="profileNameInput"
+                    type="text"
                     maxlength="25"
                     placeholder="Seu nome"
                     required
@@ -2716,6 +2738,7 @@
                 <span data-i18n="chooseAvatar">
                     Escolha seu avatar
                 </span>
+
 
                 <div>
 
@@ -2781,19 +2804,7 @@
 
 
     <!-- =====================================================
-         NOSCRIPT
-    ====================================================== -->
-
-    <noscript>
-        <div class="noscript-message">
-            Este blog precisa do JavaScript ativado
-            para utilizar as funções interativas.
-        </div>
-    </noscript>
-
-
-    <!-- =====================================================
-         JAVASCRIPT
+         JS
     ====================================================== -->
 
     <script src="script.js"></script>
