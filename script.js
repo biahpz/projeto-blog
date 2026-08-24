@@ -3,7 +3,7 @@
 
 /* =========================================================
    BLOG DA BIA
-   SCRIPT.JS — NOVA VERSÃO
+   SCRIPT.JS — VERSÃO COMPLETA
 ========================================================= */
 
 
@@ -30,7 +30,7 @@ const body =
 
 
 const STORAGE_KEY =
-    "blogDaBia_v12";
+    "blogDaBia_v14";
 
 
 function clamp(
@@ -592,12 +592,32 @@ const profileNameInput =
     $("#profileNameInput");
 
 
-/* =========================================================
-   CATÁLOGO OFICIAL DO BLOG
+/* TEAM MODAL */
 
-   Sem Heartstopper.
-   Sem Cidade Invisível.
-   Sem séries extras.
+const teamProfileModal =
+    $("#teamProfileModal");
+
+const teamProfileClose =
+    $("#teamProfileClose");
+
+const teamModalImage =
+    $("#teamModalImage");
+
+const teamModalRole =
+    $("#teamModalRole");
+
+const teamModalName =
+    $("#teamModalName");
+
+const teamModalDescription =
+    $("#teamModalDescription");
+
+const teamModalTags =
+    $("#teamModalTags");
+
+
+/* =========================================================
+   CATÁLOGO
 ========================================================= */
 
 const seriesData = [
@@ -1600,11 +1620,14 @@ const translations = {
         behindBlog:
             "POR TRÁS DO BLOG",
 
-        teamTitle:
-            "Criadora & Desenvolvedor",
+        teamTitleMain:
+            "As pessoas por trás",
+
+        teamTitleAccent:
+            "do projeto.",
 
         teamDescription:
-            "Quem tornou o projeto possível.",
+            "Ideia, conteúdo, desenvolvimento e design trabalhando juntos para criar o Blog da Bia.",
 
         creator:
             "Criadora",
@@ -1612,17 +1635,65 @@ const translations = {
         developer:
             "Desenvolvedor",
 
+        blogCreatorRole:
+            "CRIADORA DO BLOG",
+
+        developerRole:
+            "DESENVOLVEDOR",
+
         beatrizDescription:
-            "Responsável pelas ideias, seleção de séries e identidade do blog.",
+            "Responsável pelas ideias, seleção de séries, conteúdo e identidade do projeto.",
 
         bayerleeDescription:
-            "Responsável pelo desenvolvimento, design, funções e experiência do site.",
+            "Responsável por transformar as ideias do projeto em uma experiência completa através de desenvolvimento, design e interatividade.",
 
-        features:
-            "funções",
+        selectedSeries:
+            "séries selecionadas",
 
         languages:
             "idiomas",
+
+        responsive:
+            "responsivo",
+
+        mainAreas:
+            "Principais áreas",
+
+        curation:
+            "Curadoria",
+
+        content:
+            "Conteúdo",
+
+        identity:
+            "Identidade",
+
+        focus:
+            "FOCO",
+
+        project:
+            "PROJETO",
+
+        technologies:
+            "Tecnologias",
+
+        interface:
+            "Interface",
+
+        interactions:
+            "Interações",
+
+        meetCreator:
+            "Conhecer a criadora",
+
+        meetDeveloper:
+            "Conhecer o desenvolvedor",
+
+        ideaDevelopment:
+            "Ideia + desenvolvimento.",
+
+        features:
+            "funções",
 
         yourData:
             "SEUS DADOS",
@@ -1986,11 +2057,14 @@ const translations = {
         behindBlog:
             "BEHIND THE BLOG",
 
-        teamTitle:
-            "Creator & Developer",
+        teamTitleMain:
+            "The people behind",
+
+        teamTitleAccent:
+            "the project.",
 
         teamDescription:
-            "Meet the people behind the project.",
+            "Ideas, content, development and design working together to create Bia's Blog.",
 
         creator:
             "Creator",
@@ -1998,17 +2072,65 @@ const translations = {
         developer:
             "Developer",
 
+        blogCreatorRole:
+            "BLOG CREATOR",
+
+        developerRole:
+            "DEVELOPER",
+
         beatrizDescription:
-            "Responsible for ideas, series selection and the identity of the blog.",
+            "Responsible for ideas, series selection, content and the identity of the project.",
 
         bayerleeDescription:
-            "Responsible for development, design, features and website experience.",
+            "Responsible for transforming the project's ideas into a complete experience through development, design and interactivity.",
 
-        features:
-            "features",
+        selectedSeries:
+            "selected series",
 
         languages:
             "languages",
+
+        responsive:
+            "responsive",
+
+        mainAreas:
+            "Main areas",
+
+        curation:
+            "Curation",
+
+        content:
+            "Content",
+
+        identity:
+            "Identity",
+
+        focus:
+            "FOCUS",
+
+        project:
+            "PROJECT",
+
+        technologies:
+            "Technologies",
+
+        interface:
+            "Interface",
+
+        interactions:
+            "Interactions",
+
+        meetCreator:
+            "Meet the creator",
+
+        meetDeveloper:
+            "Meet the developer",
+
+        ideaDevelopment:
+            "Idea + development.",
+
+        features:
+            "features",
 
         yourData:
             "YOUR DATA",
@@ -2121,6 +2243,94 @@ const translations = {
 
 
 /* =========================================================
+   TEAM PROFILES
+========================================================= */
+
+const teamProfiles = {
+
+    beatriz: {
+
+        name:
+            "Beatriz",
+
+        rolePT:
+            "CRIADORA DO BLOG",
+
+        roleEN:
+            "BLOG CREATOR",
+
+        image:
+            "./img/Beatriz.jpg",
+
+        descriptionPT:
+            "Criadora do Blog da Bia. Responsável pelas ideias do projeto, escolha das séries, organização do conteúdo e identidade geral do blog.",
+
+        descriptionEN:
+            "Creator of Bia's Blog. Responsible for project ideas, series selection, content organization and the overall identity of the blog.",
+
+        tagsPT: [
+            "Curadoria",
+            "Conteúdo",
+            "Netflix",
+            "Séries",
+            "Identidade"
+        ],
+
+        tagsEN: [
+            "Curation",
+            "Content",
+            "Netflix",
+            "Series",
+            "Identity"
+        ]
+
+    },
+
+
+    bayerlee: {
+
+        name:
+            "Bayerlee",
+
+        rolePT:
+            "DESENVOLVEDOR",
+
+        roleEN:
+            "DEVELOPER",
+
+        image:
+            "./img/Bayerlee.jpg",
+
+        descriptionPT:
+            "Desenvolvedor do Blog da Bia. Responsável pela programação, design da interface, responsividade, animações, favoritos, avaliações, perfis, comentários e demais interações.",
+
+        descriptionEN:
+            "Developer of Bia's Blog. Responsible for programming, interface design, responsiveness, animations, favorites, ratings, profiles, comments and other interactions.",
+
+        tagsPT: [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "UI",
+            "UX",
+            "Responsivo"
+        ],
+
+        tagsEN: [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "UI",
+            "UX",
+            "Responsive"
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
    ESTADO PADRÃO
 ========================================================= */
 
@@ -2185,7 +2395,7 @@ const defaultState = {
 
 
 /* =========================================================
-   CARREGAR / SALVAR
+   CARREGAR ESTADO
 ========================================================= */
 
 function loadState() {
@@ -2292,7 +2502,7 @@ let quizAnswers =
 
 
 /* =========================================================
-   DADOS DE MÍDIA / TVMAZE
+   MEDIA CACHE
 ========================================================= */
 
 const mediaMemory =
@@ -2355,13 +2565,11 @@ function createPlaceholder(
 
             </defs>
 
-
             <rect
                 width="600"
                 height="900"
                 fill="url(#bg)"
             />
-
 
             <text
                 x="300"
@@ -2374,7 +2582,6 @@ function createPlaceholder(
             >
                 B
             </text>
-
 
             <text
                 x="300"
@@ -2396,199 +2603,6 @@ function createPlaceholder(
         +
         encodeURIComponent(svg)
     );
-
-}
-
-
-/* =========================================================
-   BUSCAR CAPA + ELENCO
-========================================================= */
-
-async function getSeriesMedia(
-    series
-) {
-
-    if (
-        mediaMemory.has(
-            series.id
-        )
-    ) {
-
-        return mediaMemory.get(
-            series.id
-        );
-
-    }
-
-
-    const localKey =
-        mediaStorageKey(
-            series.id
-        );
-
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                localKey
-            );
-
-
-        if (saved) {
-
-            const parsed =
-                JSON.parse(saved);
-
-
-            mediaMemory.set(
-                series.id,
-                parsed
-            );
-
-
-            return parsed;
-
-        }
-
-    } catch {
-
-        // ignora cache quebrado
-
-    }
-
-
-    try {
-
-        const url =
-            "https://api.tvmaze.com/singlesearch/shows?q="
-            +
-            encodeURIComponent(
-                series.query
-            )
-            +
-            "&embed=cast";
-
-
-        const response =
-            await fetch(url);
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "TVMaze request failed"
-            );
-
-        }
-
-
-        const result =
-            await response.json();
-
-
-        const poster =
-            result?.image?.original
-            ||
-            result?.image?.medium
-            ||
-            createPlaceholder(
-                getSeriesTitle(series)
-            );
-
-
-        const cast =
-            (
-                result?._embedded?.cast
-                ||
-                []
-            )
-                .slice(0, 8)
-                .map(
-                    item => ({
-
-                        name:
-                            item.person?.name
-                            ||
-                            "—",
-
-                        character:
-                            item.character?.name
-                            ||
-                            "",
-
-                        image:
-                            item.person?.image?.original
-                            ||
-                            item.person?.image?.medium
-                            ||
-                            ""
-
-                    })
-                );
-
-
-        const media = {
-
-            poster,
-            cast
-
-        };
-
-
-        mediaMemory.set(
-            series.id,
-            media
-        );
-
-
-        try {
-
-            localStorage.setItem(
-                localKey,
-                JSON.stringify(media)
-            );
-
-        } catch {
-
-            // pode falhar se cache lotar
-
-        }
-
-
-        return media;
-
-    } catch (error) {
-
-        console.warn(
-            "Não foi possível buscar mídia:",
-            series.title,
-            error
-        );
-
-
-        const fallback = {
-
-            poster:
-                createPlaceholder(
-                    getSeriesTitle(series)
-                ),
-
-            cast:
-                []
-
-        };
-
-
-        mediaMemory.set(
-            series.id,
-            fallback
-        );
-
-
-        return fallback;
-
-    }
 
 }
 
@@ -2727,6 +2741,199 @@ function formatGenre(
     )[genre]
     ||
     genre;
+
+}
+
+
+/* =========================================================
+   BUSCAR CAPA + ELENCO
+========================================================= */
+
+async function getSeriesMedia(
+    series
+) {
+
+    if (
+        mediaMemory.has(
+            series.id
+        )
+    ) {
+
+        return mediaMemory.get(
+            series.id
+        );
+
+    }
+
+
+    const localKey =
+        mediaStorageKey(
+            series.id
+        );
+
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                localKey
+            );
+
+
+        if (saved) {
+
+            const parsed =
+                JSON.parse(saved);
+
+
+            mediaMemory.set(
+                series.id,
+                parsed
+            );
+
+
+            return parsed;
+
+        }
+
+    } catch {
+
+        /* IGNORA */
+
+    }
+
+
+    try {
+
+        const url =
+            "https://api.tvmaze.com/singlesearch/shows?q="
+            +
+            encodeURIComponent(
+                series.query
+            )
+            +
+            "&embed=cast";
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Media request failed"
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        const poster =
+            result?.image?.original
+            ||
+            result?.image?.medium
+            ||
+            createPlaceholder(
+                getSeriesTitle(series)
+            );
+
+
+        const cast =
+            (
+                result?._embedded?.cast
+                ||
+                []
+            )
+                .slice(0, 8)
+                .map(
+                    item => ({
+
+                        name:
+                            item.person?.name
+                            ||
+                            "—",
+
+                        character:
+                            item.character?.name
+                            ||
+                            "",
+
+                        image:
+                            item.person?.image?.original
+                            ||
+                            item.person?.image?.medium
+                            ||
+                            ""
+
+                    })
+                );
+
+
+        const media = {
+
+            poster,
+            cast
+
+        };
+
+
+        mediaMemory.set(
+            series.id,
+            media
+        );
+
+
+        try {
+
+            localStorage.setItem(
+                localKey,
+                JSON.stringify(media)
+            );
+
+        } catch {
+
+            /* IGNORA CACHE */
+
+        }
+
+
+        return media;
+
+    } catch (error) {
+
+        console.warn(
+            "Erro ao carregar mídia:",
+            series.title,
+            error
+        );
+
+
+        const fallback = {
+
+            poster:
+                createPlaceholder(
+                    getSeriesTitle(series)
+                ),
+
+            cast:
+                []
+
+        };
+
+
+        mediaMemory.set(
+            series.id,
+            fallback
+        );
+
+
+        return fallback;
+
+    }
 
 }
 
@@ -2896,8 +3103,7 @@ function setLanguage(
     showToast(
         language === "pt"
             ? "🇧🇷 Português"
-            : "🇺🇸 English",
-        "✓"
+            : "🇺🇸 English"
     );
 
 }
@@ -2998,7 +3204,7 @@ function applyColorTheme() {
 
 
 /* =========================================================
-   ANIMATIONS
+   ANIMAÇÕES
 ========================================================= */
 
 function applyAnimationSetting() {
@@ -3032,7 +3238,7 @@ function applyAnimationSetting() {
 
 
 /* =========================================================
-   FAVORITE / WATCHLIST / WATCHING / WATCHED
+   STATUS
 ========================================================= */
 
 function isFavorite(id) {
@@ -3092,7 +3298,9 @@ function toggleArrayItem(
 }
 
 
-/* FAVORITO */
+/* =========================================================
+   FAVORITO
+========================================================= */
 
 function toggleFavorite(id) {
 
@@ -3128,7 +3336,9 @@ function toggleFavorite(id) {
 }
 
 
-/* WATCHLIST */
+/* =========================================================
+   WATCHLIST
+========================================================= */
 
 function toggleWatchlist(id) {
 
@@ -3161,7 +3371,9 @@ function toggleWatchlist(id) {
 }
 
 
-/* WATCHING */
+/* =========================================================
+   WATCHING
+========================================================= */
 
 function toggleWatching(id) {
 
@@ -3230,7 +3442,9 @@ function toggleWatching(id) {
 }
 
 
-/* WATCHED */
+/* =========================================================
+   WATCHED
+========================================================= */
 
 function toggleWatched(id) {
 
@@ -3442,8 +3656,7 @@ async function updateHero() {
 
                 dot.classList.toggle(
                     "active",
-                    index
-                    === heroIndex
+                    index === heroIndex
                 );
 
             }
@@ -3451,6 +3664,10 @@ async function updateHero() {
 
 }
 
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
 
 function updateHeroButtons(id) {
 
@@ -3545,7 +3762,9 @@ function startHeroTimer() {
                             "open"
                         )
                 ) {
+
                     return;
+
                 }
 
 
@@ -3555,8 +3774,7 @@ function startHeroTimer() {
                         + 1
                     )
                     %
-                    featuredSeries
-                        .length;
+                    featuredSeries.length;
 
 
                 updateHero();
@@ -3578,16 +3796,12 @@ function getFilteredSeries() {
         [...seriesData];
 
 
-    /* FILTRO DE GÊNERO */
-
     if (
-        activeFilter
-        !== "all"
+        activeFilter !== "all"
     ) {
 
         if (
-            activeFilter
-            === "brasil"
+            activeFilter === "brasil"
         ) {
 
             list =
@@ -3611,8 +3825,6 @@ function getFilteredSeries() {
 
     }
 
-
-    /* PESQUISA */
 
     const query =
         seriesSearch
@@ -3651,8 +3863,6 @@ function getFilteredSeries() {
     }
 
 
-    /* RATING */
-
     const minimum =
         Number(
             ratingFilter
@@ -3676,8 +3886,6 @@ function getFilteredSeries() {
     }
 
 
-    /* STATUS */
-
     const status =
         statusFilter
             ?.value
@@ -3686,8 +3894,7 @@ function getFilteredSeries() {
 
 
     if (
-        status
-        === "favorite"
+        status === "favorite"
     ) {
 
         list =
@@ -3702,8 +3909,7 @@ function getFilteredSeries() {
 
 
     if (
-        status
-        === "watchlist"
+        status === "watchlist"
     ) {
 
         list =
@@ -3718,8 +3924,7 @@ function getFilteredSeries() {
 
 
     if (
-        status
-        === "watching"
+        status === "watching"
     ) {
 
         list =
@@ -3734,8 +3939,7 @@ function getFilteredSeries() {
 
 
     if (
-        status
-        === "watched"
+        status === "watched"
     ) {
 
         list =
@@ -3748,8 +3952,6 @@ function getFilteredSeries() {
 
     }
 
-
-    /* ORDENAR */
 
     const sorting =
         seriesSort
@@ -4064,6 +4266,83 @@ function seriesCardHTML(
 
 
 /* =========================================================
+   LOAD IMAGES
+========================================================= */
+
+async function loadImagesForList(
+    list,
+    attribute
+) {
+
+    const promises =
+        list.map(
+            async series => {
+
+                const image =
+                    document.querySelector(
+                        `[${attribute}="${series.id}"]`
+                    );
+
+
+                if (!image) {
+                    return;
+                }
+
+
+                image.classList.add(
+                    "loading-image"
+                );
+
+
+                const media =
+                    await getSeriesMedia(
+                        series
+                    );
+
+
+                image.src =
+                    media.poster;
+
+
+                image.onload =
+                    () => {
+
+                        image.classList.remove(
+                            "loading-image"
+                        );
+
+                    };
+
+
+                image.onerror =
+                    () => {
+
+                        image.src =
+                            createPlaceholder(
+                                getSeriesTitle(
+                                    series
+                                )
+                            );
+
+
+                        image.classList.remove(
+                            "loading-image"
+                        );
+
+                    };
+
+            }
+        );
+
+
+    await Promise.allSettled(
+        promises
+    );
+
+}
+
+
+/* =========================================================
    RENDER SERIES
 ========================================================= */
 
@@ -4104,50 +4383,6 @@ async function renderSeries() {
     await loadImagesForList(
         list,
         "data-series-image"
-    );
-
-}
-
-
-/* =========================================================
-   CARREGAR CAPAS DE UMA LISTA
-========================================================= */
-
-async function loadImagesForList(
-    list,
-    attribute
-) {
-
-    const promises =
-        list.map(
-            async series => {
-
-                const image =
-                    document.querySelector(
-                        `[${attribute}="${series.id}"]`
-                    );
-
-
-                if (!image) {
-                    return;
-                }
-
-
-                const media =
-                    await getSeriesMedia(
-                        series
-                    );
-
-
-                image.src =
-                    media.poster;
-
-            }
-        );
-
-
-    await Promise.allSettled(
-        promises
     );
 
 }
@@ -4428,13 +4663,9 @@ async function renderContinueWatching() {
                                 <div
                                     class="continue-progress"
                                 >
-
                                     <span
-                                        style="
-                                            width:${progress}%
-                                        "
+                                        style="width:${progress}%"
                                     ></span>
-
                                 </div>
 
 
@@ -4586,7 +4817,7 @@ async function renderHistory() {
 
 
 /* =========================================================
-   BRAZIL
+   BRASIL
 ========================================================= */
 
 async function renderBrazil() {
@@ -4715,10 +4946,10 @@ async function renderRanking() {
                                 String(
                                     index + 1
                                 )
-                                .padStart(
-                                    2,
-                                    "0"
-                                )
+                                    .padStart(
+                                        2,
+                                        "0"
+                                    )
                             }
                         </span>
 
@@ -4790,7 +5021,7 @@ async function renderRanking() {
 
 
 /* =========================================================
-   DAILY SERIES
+   SÉRIE DO DIA
 ========================================================= */
 
 function getDailySeries() {
@@ -4799,20 +5030,14 @@ function getDailySeries() {
         new Date();
 
 
-    const number =
+    const seed =
         Number(
-            `${
-                date.getFullYear()
-            }${
-                date.getMonth() + 1
-            }${
-                date.getDate()
-            }`
+            `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
         );
 
 
     return seriesData[
-        number
+        seed
         %
         seriesData.length
     ];
@@ -4889,17 +5114,14 @@ function getFavoriteGenre() {
                 series.genres
                     .filter(
                         genre =>
-                            genre
-                            !== "brasil"
+                            genre !== "brasil"
                     )
                     .forEach(
                         genre => {
 
                             counts[genre] =
                                 (
-                                    counts[
-                                        genre
-                                    ]
+                                    counts[genre]
                                     ||
                                     0
                                 )
@@ -5022,7 +5244,7 @@ function updateUserStats() {
 
 
 /* =========================================================
-   STATS + LEVEL
+   XP
 ========================================================= */
 
 function calculateXP() {
@@ -5099,8 +5321,7 @@ function updateStats() {
 
 
     if (
-        state.language
-        === "en"
+        state.language === "en"
     ) {
 
         profileLevelText.textContent =
@@ -5130,7 +5351,7 @@ function updateStats() {
 
 
 /* =========================================================
-   ACHIEVEMENTS
+   CONQUISTAS
 ========================================================= */
 
 function updateAchievements() {
@@ -5187,7 +5408,7 @@ function updateAchievements() {
 
 
 /* =========================================================
-   MODAL SERIES
+   ABRIR SÉRIE
 ========================================================= */
 
 async function openSeries(id) {
@@ -5332,10 +5553,17 @@ async function openSeries(id) {
 
 
 /* =========================================================
-   MODAL BUTTONS
+   MODAL CONTROLS
 ========================================================= */
 
 function updateModalControls(id) {
+
+    if (
+        !modalFavoriteBtn
+    ) {
+        return;
+    }
+
 
     modalFavoriteBtn.classList.toggle(
         "active",
@@ -5420,7 +5648,7 @@ function updateModalControls(id) {
 
 
 /* =========================================================
-   FECHAR SERIES MODAL
+   FECHAR MODAL
 ========================================================= */
 
 function closeSeriesModal() {
@@ -5535,7 +5763,7 @@ function renderCast(cast) {
 
 
 /* =========================================================
-   RECOMMENDATIONS
+   RECOMENDAÇÕES
 ========================================================= */
 
 async function renderRecommendations(
@@ -5555,8 +5783,7 @@ async function renderRecommendations(
                                 genre
                             )
                         &&
-                        genre
-                        !== "brasil"
+                        genre !== "brasil"
                 )
         );
 
@@ -5741,8 +5968,7 @@ function saveProgress() {
         state.watched =
             state.watched.filter(
                 id =>
-                    id
-                    !== activeSeriesId
+                    id !== activeSeriesId
             );
 
     }
@@ -5755,8 +5981,7 @@ function saveProgress() {
         state.watching =
             state.watching.filter(
                 id =>
-                    id
-                    !== activeSeriesId
+                    id !== activeSeriesId
             );
 
 
@@ -5783,7 +6008,7 @@ function saveProgress() {
 
 
 /* =========================================================
-   EPISODE + NOTE
+   EPISÓDIO + NOTA
 ========================================================= */
 
 function saveSeriesInfo() {
@@ -5792,8 +6017,7 @@ function saveSeriesInfo() {
         Math.max(
             1,
             Number(
-                currentEpisodeInput
-                    .value
+                currentEpisodeInput.value
             )
             ||
             1
@@ -6241,9 +6465,7 @@ function randomSeries() {
         );
 
 
-    if (
-        !series
-    ) {
+    if (!series) {
         return;
     }
 
@@ -6263,7 +6485,7 @@ function randomSeries() {
 
 
 /* =========================================================
-   SHARE / COPY
+   COPY
 ========================================================= */
 
 async function copySeriesTitle(
@@ -6310,6 +6532,10 @@ async function copySeriesTitle(
 }
 
 
+/* =========================================================
+   SHARE SERIES
+========================================================= */
+
 async function shareSeries(
     id = activeSeriesId
 ) {
@@ -6331,11 +6557,7 @@ async function shareSeries(
             ),
 
         text:
-            `${
-                getSeriesTitle(
-                    series
-                )
-            } — Blog da Bia`,
+            `${getSeriesTitle(series)} — Blog da Bia`,
 
         url:
             window.location.href
@@ -6371,12 +6593,16 @@ async function shareSeries(
 
     } catch {
 
-        // usuário cancelou
+        /* CANCELADO */
 
     }
 
 }
 
+
+/* =========================================================
+   SHARE BLOG
+========================================================= */
 
 async function shareBlog() {
 
@@ -6419,7 +6645,7 @@ async function shareBlog() {
 
     } catch {
 
-        // cancelado
+        /* CANCELADO */
 
     }
 
@@ -6427,7 +6653,7 @@ async function shareBlog() {
 
 
 /* =========================================================
-   COMMENTS
+   COMMENTS OPTIONS
 ========================================================= */
 
 function populateCommentSeries() {
@@ -6496,6 +6722,10 @@ function populateCommentSeries() {
 
 }
 
+
+/* =========================================================
+   ADD COMMENT
+========================================================= */
 
 function addComment(event) {
 
@@ -6592,7 +6822,7 @@ function addComment(event) {
 
 
 /* =========================================================
-   FORMAT DATE
+   DATE
 ========================================================= */
 
 function formatDate(date) {
@@ -6620,7 +6850,7 @@ function formatDate(date) {
 
 
 /* =========================================================
-   RENDER COMMENTS
+   COMMENTS
 ========================================================= */
 
 function renderComments() {
@@ -6637,8 +6867,7 @@ function renderComments() {
 
 
     switch (
-        commentSort
-            ?.value
+        commentSort?.value
     ) {
 
         case "likes":
@@ -7304,7 +7533,100 @@ function saveProfile(event) {
 
 
 /* =========================================================
-   QUIZ
+   TEAM PROFILE
+========================================================= */
+
+function openTeamProfile(
+    profileId
+) {
+
+    const profile =
+        teamProfiles[
+            profileId
+        ];
+
+
+    if (
+        !profile
+        ||
+        !teamProfileModal
+    ) {
+        return;
+    }
+
+
+    teamModalImage.src =
+        profile.image;
+
+
+    teamModalImage.alt =
+        profile.name;
+
+
+    teamModalName.textContent =
+        profile.name;
+
+
+    teamModalRole.textContent =
+        state.language === "en"
+            ? profile.roleEN
+            : profile.rolePT;
+
+
+    teamModalDescription.textContent =
+        state.language === "en"
+            ? profile.descriptionEN
+            : profile.descriptionPT;
+
+
+    const tags =
+        state.language === "en"
+            ? profile.tagsEN
+            : profile.tagsPT;
+
+
+    teamModalTags.innerHTML =
+        tags
+            .map(
+                tag => `
+                    <span>
+                        ${escapeHTML(tag)}
+                    </span>
+                `
+            )
+            .join("");
+
+
+    teamProfileModal
+        .classList
+        .add(
+            "open"
+        );
+
+
+    body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeTeamProfile() {
+
+    teamProfileModal
+        ?.classList
+        .remove(
+            "open"
+        );
+
+
+    body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   QUIZ DATA
 ========================================================= */
 
 const quizQuestions = [
@@ -7486,6 +7808,10 @@ const quizQuestions = [
 ];
 
 
+/* =========================================================
+   QUIZ
+========================================================= */
+
 function openQuiz() {
 
     quizStep =
@@ -7599,12 +7925,8 @@ function renderQuizQuestion() {
         >
             ${
                 state.language === "en"
-                    ? `QUESTION ${
-                        quizStep + 1
-                    }`
-                    : `PERGUNTA ${
-                        quizStep + 1
-                    }`
+                    ? `QUESTION ${quizStep + 1}`
+                    : `PERGUNTA ${quizStep + 1}`
             }
         </span>
 
@@ -7892,7 +8214,7 @@ function closeQuiz() {
 
 
 /* =========================================================
-   DATA EXPORT
+   EXPORT
 ========================================================= */
 
 function exportData() {
@@ -8244,6 +8566,81 @@ function handleScroll() {
         current > 500
     );
 
+
+    updateActiveNav();
+
+}
+
+
+/* =========================================================
+   NAV ATIVA
+========================================================= */
+
+function updateActiveNav() {
+
+    const sections = [
+        "inicio",
+        "series",
+        "brasil",
+        "minha-lista",
+        "ranking",
+        "comunidade",
+        "sobre"
+    ];
+
+
+    let active =
+        "inicio";
+
+
+    for (
+        const id
+        of sections
+    ) {
+
+        const section =
+            document.getElementById(
+                id
+            );
+
+
+        if (!section) {
+            continue;
+        }
+
+
+        const rect =
+            section
+                .getBoundingClientRect();
+
+
+        if (
+            rect.top <= 170
+        ) {
+
+            active =
+                id;
+
+        }
+
+    }
+
+
+    $$(".desktop-nav a")
+        .forEach(
+            link => {
+
+                link.classList.toggle(
+                    "active",
+                    link.getAttribute(
+                        "href"
+                    )
+                    === `#${active}`
+                );
+
+            }
+        );
+
 }
 
 
@@ -8339,6 +8736,186 @@ function setupHeroTilt() {
 
 
 /* =========================================================
+   TEAM CARD 3D
+========================================================= */
+
+function setupTeamCards() {
+
+    $$(".premium-person-card")
+        .forEach(
+            card => {
+
+                card.addEventListener(
+                    "mousemove",
+                    event => {
+
+                        if (
+                            !state.animations
+                        ) {
+                            return;
+                        }
+
+
+                        const rect =
+                            card
+                                .getBoundingClientRect();
+
+
+                        const x =
+                            event.clientX
+                            -
+                            rect.left;
+
+
+                        const y =
+                            event.clientY
+                            -
+                            rect.top;
+
+
+                        card.style
+                            .setProperty(
+                                "--mouse-x",
+                                `${x}px`
+                            );
+
+
+                        card.style
+                            .setProperty(
+                                "--mouse-y",
+                                `${y}px`
+                            );
+
+
+                        const rotateY =
+                            (
+                                x
+                                /
+                                rect.width
+                                -
+                                0.5
+                            )
+                            *
+                            3;
+
+
+                        const rotateX =
+                            (
+                                0.5
+                                -
+                                y
+                                /
+                                rect.height
+                            )
+                            *
+                            3;
+
+
+                        card.style.transform =
+                            `
+                            perspective(1000px)
+                            translateY(-4px)
+                            rotateX(${rotateX}deg)
+                            rotateY(${rotateY}deg)
+                            `;
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    "mouseleave",
+                    () => {
+
+                        card.style.transform =
+                            "";
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+function setupRevealAnimations() {
+
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        $$(".reveal")
+            .forEach(
+                element => {
+
+                    element.classList.add(
+                        "visible"
+                    );
+
+                }
+            );
+
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add(
+                                    "visible"
+                                );
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.12
+            }
+        );
+
+
+    $$(".reveal")
+        .forEach(
+            element => {
+
+                observer.observe(
+                    element
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
    REFRESH
 ========================================================= */
 
@@ -8395,6 +8972,20 @@ function renderEverything() {
 
     renderComments();
 
+
+    const projectCount =
+        $("#projectSeriesCount");
+
+
+    if (
+        projectCount
+    ) {
+
+        projectCount.textContent =
+            seriesData.length;
+
+    }
+
 }
 
 
@@ -8405,8 +8996,6 @@ function renderEverything() {
 document.addEventListener(
     "click",
     event => {
-
-        /* ABRIR SÉRIE */
 
         const openSeriesButton =
             event.target.closest(
@@ -8429,8 +9018,6 @@ document.addEventListener(
 
         }
 
-
-        /* CARD */
 
         const card =
             event.target.closest(
@@ -8457,8 +9044,6 @@ document.addEventListener(
         }
 
 
-        /* FAVORITO */
-
         const favoriteButton =
             event.target.closest(
                 "[data-toggle-favorite]"
@@ -8483,8 +9068,6 @@ document.addEventListener(
 
         }
 
-
-        /* SEARCH */
 
         const searchItem =
             event.target.closest(
@@ -8511,7 +9094,27 @@ document.addEventListener(
         }
 
 
-        /* SPOILER */
+        const teamButton =
+            event.target.closest(
+                "[data-open-team-profile]"
+            );
+
+
+        if (
+            teamButton
+        ) {
+
+            openTeamProfile(
+                teamButton
+                    .dataset
+                    .openTeamProfile
+            );
+
+
+            return;
+
+        }
+
 
         const spoilerButton =
             event.target.closest(
@@ -8562,8 +9165,6 @@ document.addEventListener(
         }
 
 
-        /* LIKE COMMENT */
-
         const likeComment =
             event.target.closest(
                 "[data-like-comment]"
@@ -8585,8 +9186,6 @@ document.addEventListener(
 
         }
 
-
-        /* REPLY BOX */
 
         const replyButton =
             event.target.closest(
@@ -8619,8 +9218,6 @@ document.addEventListener(
         }
 
 
-        /* SEND REPLY */
-
         const sendReplyButton =
             event.target.closest(
                 "[data-send-reply]"
@@ -8643,8 +9240,6 @@ document.addEventListener(
         }
 
 
-        /* EDIT COMMENT */
-
         const editButton =
             event.target.closest(
                 "[data-edit-comment]"
@@ -8666,8 +9261,6 @@ document.addEventListener(
 
         }
 
-
-        /* DELETE COMMENT */
 
         const deleteButton =
             event.target.closest(
@@ -8990,8 +9583,7 @@ filters?.addEventListener(
 
                     item.classList.toggle(
                         "active",
-                        item
-                        === button
+                        item === button
                     );
 
                 }
@@ -9046,8 +9638,7 @@ clearFiltersBtn?.addEventListener(
 
                     button.classList.toggle(
                         "active",
-                        button.dataset
-                            .filter
+                        button.dataset.filter
                         === "all"
                     );
 
@@ -9084,8 +9675,7 @@ $$("[data-personal-tab]")
 
                                 item.classList.toggle(
                                     "active",
-                                    item
-                                    === button
+                                    item === button
                                 );
 
                             }
@@ -9300,9 +9890,7 @@ episodeProgress?.addEventListener(
     () => {
 
         episodeProgressText.textContent =
-            `${
-                episodeProgress.value
-            }%`;
+            `${episodeProgress.value}%`;
 
     }
 );
@@ -9466,8 +10054,7 @@ $$(".avatar-picker button")
                 () => {
 
                     state.profile.avatar =
-                        button.dataset
-                            .avatar;
+                        button.dataset.avatar;
 
 
                     $$(".avatar-picker button")
@@ -9476,8 +10063,7 @@ $$(".avatar-picker button")
 
                                 item.classList.toggle(
                                     "active",
-                                    item
-                                    === button
+                                    item === button
                                 );
 
                             }
@@ -9488,6 +10074,33 @@ $$(".avatar-picker button")
 
         }
     );
+
+
+/* =========================================================
+   TEAM EVENTS
+========================================================= */
+
+teamProfileClose?.addEventListener(
+    "click",
+    closeTeamProfile
+);
+
+
+teamProfileModal?.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target
+            === teamProfileModal
+        ) {
+
+            closeTeamProfile();
+
+        }
+
+    }
+);
 
 
 /* =========================================================
@@ -9542,8 +10155,7 @@ $$(".theme-color")
                 () => {
 
                     state.colorTheme =
-                        button.dataset
-                            .themeColor;
+                        button.dataset.themeColor;
 
 
                     saveState();
@@ -9562,8 +10174,7 @@ animationsToggle?.addEventListener(
     () => {
 
         state.animations =
-            animationsToggle
-                .checked;
+            animationsToggle.checked;
 
 
         saveState();
@@ -9579,8 +10190,7 @@ autoHeroToggle?.addEventListener(
     () => {
 
         state.autoHero =
-            autoHeroToggle
-                .checked;
+            autoHeroToggle.checked;
 
 
         saveState();
@@ -9694,7 +10304,7 @@ backTop?.addEventListener(
 
 
 /* =========================================================
-   INTERNAL LINKS
+   LINKS INTERNOS
 ========================================================= */
 
 $$('a[href^="#"]')
@@ -9778,8 +10388,7 @@ document.addEventListener(
 
 
         if (
-            event.key
-            === "Escape"
+            event.key === "Escape"
         ) {
 
             closeSearch();
@@ -9791,6 +10400,8 @@ document.addEventListener(
             closeQuiz();
 
             closeProfile();
+
+            closeTeamProfile();
 
             closeMobileMenu();
 
@@ -9807,11 +10418,8 @@ document.addEventListener(
         }
 
 
-        /* / PESQUISA */
-
         if (
-            event.key
-            === "/"
+            event.key === "/"
         ) {
 
             event.preventDefault();
@@ -9820,8 +10428,6 @@ document.addEventListener(
 
         }
 
-
-        /* R ALEATÓRIA */
 
         if (
             event.key
@@ -9834,8 +10440,6 @@ document.addEventListener(
         }
 
 
-        /* T TEMA */
-
         if (
             event.key
                 .toLowerCase()
@@ -9847,8 +10451,6 @@ document.addEventListener(
         }
 
 
-        /* F FAVORITO */
-
         if (
             event.key
                 .toLowerCase()
@@ -9858,6 +10460,28 @@ document.addEventListener(
             toggleFavorite(
                 activeSeriesId
             );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   VISIBILITY
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            !document.hidden
+            &&
+            state.autoHero
+        ) {
+
+            startHeroTimer();
 
         }
 
@@ -9939,6 +10563,10 @@ function init() {
     translatePage();
 
     setupHeroTilt();
+
+    setupTeamCards();
+
+    setupRevealAnimations();
 
     handleScroll();
 
