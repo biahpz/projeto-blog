@@ -2,8 +2,8 @@
 
 
 /* =========================================================
-   BLOG DA BIA — SCRIPT.JS
-   Compatível com o index.html e style.css atuais
+   BLOG DA BIA
+   SCRIPT.JS — NOVA VERSÃO
 ========================================================= */
 
 
@@ -11,41 +11,87 @@
    HELPERS
 ========================================================= */
 
-const $ = (selector, parent = document) =>
-    parent.querySelector(selector);
-
-const $$ = (selector, parent = document) =>
-    [...parent.querySelectorAll(selector)];
-
-const body = document.body;
-
-const STORAGE_KEY = "blogDaBiaV10";
+const $ = (
+    selector,
+    parent = document
+) => parent.querySelector(selector);
 
 
-function escapeHTML(value = "") {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+const $$ = (
+    selector,
+    parent = document
+) => [
+    ...parent.querySelectorAll(selector)
+];
+
+
+const body =
+    document.body;
+
+
+const STORAGE_KEY =
+    "blogDaBia_v12";
+
+
+function clamp(
+    value,
+    min,
+    max
+) {
+
+    return Math.min(
+        Math.max(
+            value,
+            min
+        ),
+        max
+    );
+
 }
 
 
 function randomItem(array) {
+
+    if (!array.length) {
+        return null;
+    }
+
     return array[
         Math.floor(
-            Math.random() * array.length
+            Math.random()
+            * array.length
         )
     ];
+
 }
 
 
-function clamp(value, min, max) {
-    return Math.min(
-        Math.max(value, min),
-        max
-    );
+function escapeHTML(
+    value = ""
+) {
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
 
@@ -53,559 +99,1031 @@ function clamp(value, min, max) {
    ELEMENTOS
 ========================================================= */
 
-const loader = $("#loader");
+const loader =
+    $("#loader");
 
-const heartCursor = $("#heartCursor");
+const scrollProgress =
+    $("#scrollProgress");
 
-const clickEffects = $("#clickEffects");
+const toast =
+    $("#toast");
 
-const particles = $("#particles");
+const toastIcon =
+    $("#toastIcon");
 
-const scrollProgress = $("#scrollProgress");
+const toastText =
+    $("#toastText");
 
-const toast = $("#toast");
-const toastIcon = $("#toastIcon");
-const toastText = $("#toastText");
+const header =
+    $("#header");
 
-const header = $("#header");
 
-const langPT = $("#langPT");
-const langEN = $("#langEN");
+/* HEADER */
 
-const searchOpenBtn = $("#searchOpenBtn");
-const searchOverlay = $("#searchOverlay");
-const searchClose = $("#searchClose");
-const globalSearch = $("#globalSearch");
-const clearSearch = $("#clearSearch");
-const searchResults = $("#searchResults");
+const langPT =
+    $("#langPT");
 
-const themeBtn = $("#themeBtn");
-const themeIcon = $("#themeIcon");
-const shareBlogBtn = $("#shareBlogBtn");
+const langEN =
+    $("#langEN");
 
-const mobileMenuBtn = $("#mobileMenuBtn");
-const mobileMenu = $("#mobileMenu");
-const mobileMenuClose = $("#mobileMenuClose");
-const menuOverlay = $("#menuOverlay");
+const searchOpenBtn =
+    $("#searchOpenBtn");
 
-const heroBackdrop = $("#heroBackdrop");
-const heroTitle = $("#heroTitle");
-const heroRating = $("#heroRating");
-const heroYear = $("#heroYear");
-const heroGenre = $("#heroGenre");
-const heroSeasons = $("#heroSeasons");
-const heroDescription = $("#heroDescription");
-const heroPoster = $("#heroPoster");
-const heroPosterCard = $("#heroPosterCard");
-const communityRating = $("#communityRating");
-const heroDots = $("#heroDots");
+const themeBtn =
+    $("#themeBtn");
 
-const watchTrailerBtn = $("#watchTrailerBtn");
-const heroFavoriteBtn = $("#heroFavoriteBtn");
-const heroWatchlistBtn = $("#heroWatchlistBtn");
-const randomSeriesBtn = $("#randomSeriesBtn");
-const copySeriesBtn = $("#copySeriesBtn");
+const themeIcon =
+    $("#themeIcon");
 
-const favoriteCount = $("#favoriteCount");
-const watchlistCount = $("#watchlistCount");
-const watchedCount = $("#watchedCount");
-const ratingsCount = $("#ratingsCount");
-const commentsCount = $("#commentsCount");
+const shareBlogBtn =
+    $("#shareBlogBtn");
 
-const profileAvatar = $("#profileAvatar");
-const profileName = $("#profileName");
-const profileLevelText = $("#profileLevelText");
-const editProfileBtn = $("#editProfileBtn");
-const levelNumber = $("#levelNumber");
-const levelProgress = $("#levelProgress");
-const levelText = $("#levelText");
+const mobileMenuBtn =
+    $("#mobileMenuBtn");
 
-const continueSection = $("#continueSection");
-const continueGrid = $("#continueGrid");
 
-const dailyTitle = $("#dailyTitle");
-const dailyDescription = $("#dailyDescription");
-const dailyImage = $("#dailyImage");
-const dailySeriesBtn = $("#dailySeriesBtn");
+/* MENU MOBILE */
 
-const seriesSearch = $("#seriesSearch");
-const seriesSort = $("#seriesSort");
-const filters = $("#filters");
-const advancedFilterBtn = $("#advancedFilterBtn");
-const advancedFilters = $("#advancedFilters");
-const ratingFilter = $("#ratingFilter");
-const statusFilter = $("#statusFilter");
-const clearFiltersBtn = $("#clearFiltersBtn");
-const seriesGrid = $("#seriesGrid");
-const seriesResultCount = $("#seriesResultCount");
-const emptySeries = $("#emptySeries");
+const mobileMenu =
+    $("#mobileMenu");
 
-const seeAllBrazilBtn = $("#seeAllBrazilBtn");
-const brazilCarousel = $("#brazilCarousel");
+const mobileMenuClose =
+    $("#mobileMenuClose");
 
-const startQuizBtn = $("#startQuizBtn");
+const menuOverlay =
+    $("#menuOverlay");
 
-const rankingList = $("#rankingList");
 
-const commentForm = $("#commentForm");
-const commentName = $("#commentName");
-const commentSeries = $("#commentSeries");
-const commentText = $("#commentText");
-const commentCharCount = $("#commentCharCount");
-const commentSpoiler = $("#commentSpoiler");
-const commentCount = $("#commentCount");
-const commentSort = $("#commentSort");
-const commentsList = $("#commentsList");
+/* PESQUISA */
 
-const resetDataBtn = $("#resetDataBtn");
+const searchOverlay =
+    $("#searchOverlay");
 
-const currentYear = $("#currentYear");
+const searchClose =
+    $("#searchClose");
 
-const backTop = $("#backTop");
+const globalSearch =
+    $("#globalSearch");
 
-const settingsFloating = $("#settingsFloating");
-const settingsPanel = $("#settingsPanel");
-const settingsClose = $("#settingsClose");
-const effectsToggle = $("#effectsToggle");
-const animationsToggle = $("#animationsToggle");
+const clearSearch =
+    $("#clearSearch");
 
-const seriesModal = $("#seriesModal");
-const seriesModalClose = $("#seriesModalClose");
-const modalBackdrop = $("#modalBackdrop");
-const modalPoster = $("#modalPoster");
-const modalBadge = $("#modalBadge");
-const modalTitle = $("#modalTitle");
-const modalRating = $("#modalRating");
-const modalYear = $("#modalYear");
-const modalGenre = $("#modalGenre");
-const modalSeasons = $("#modalSeasons");
-const modalDescription = $("#modalDescription");
-const modalFavoriteBtn = $("#modalFavoriteBtn");
-const modalWatchlistBtn = $("#modalWatchlistBtn");
-const modalWatchedBtn = $("#modalWatchedBtn");
-const starRating = $("#starRating");
-const episodeProgress = $("#episodeProgress");
-const episodeProgressText = $("#episodeProgressText");
-const castGrid = $("#castGrid");
-const recommendations = $("#recommendations");
+const searchResults =
+    $("#searchResults");
 
-const trailerModal = $("#trailerModal");
-const trailerClose = $("#trailerClose");
-const trailerTitle = $("#trailerTitle");
-const openYoutubeTrailer = $("#openYoutubeTrailer");
 
-const quizModal = $("#quizModal");
-const quizClose = $("#quizClose");
-const quizProgress = $("#quizProgress");
-const quizContent = $("#quizContent");
-const quizBeginBtn = $("#quizBeginBtn");
+/* HERO */
 
-const profileModal = $("#profileModal");
-const profileClose = $("#profileClose");
-const profileForm = $("#profileForm");
-const profileNameInput = $("#profileNameInput");
+const heroBackdrop =
+    $("#heroBackdrop");
+
+const heroTitle =
+    $("#heroTitle");
+
+const heroRating =
+    $("#heroRating");
+
+const heroYear =
+    $("#heroYear");
+
+const heroGenre =
+    $("#heroGenre");
+
+const heroSeasons =
+    $("#heroSeasons");
+
+const heroDescription =
+    $("#heroDescription");
+
+const heroDetailsBtn =
+    $("#heroDetailsBtn");
+
+const watchTrailerBtn =
+    $("#watchTrailerBtn");
+
+const heroFavoriteBtn =
+    $("#heroFavoriteBtn");
+
+const heroWatchlistBtn =
+    $("#heroWatchlistBtn");
+
+const randomSeriesBtn =
+    $("#randomSeriesBtn");
+
+const copySeriesBtn =
+    $("#copySeriesBtn");
+
+const shareSeriesBtn =
+    $("#shareSeriesBtn");
+
+const heroPoster =
+    $("#heroPoster");
+
+const heroPosterCard =
+    $("#heroPosterCard");
+
+const communityRating =
+    $("#communityRating");
+
+const heroDots =
+    $("#heroDots");
+
+
+/* STATS */
+
+const favoriteCount =
+    $("#favoriteCount");
+
+const watchlistCount =
+    $("#watchlistCount");
+
+const watchedCount =
+    $("#watchedCount");
+
+const ratingsCount =
+    $("#ratingsCount");
+
+const commentsCount =
+    $("#commentsCount");
+
+
+/* PROFILE */
+
+const profileAvatar =
+    $("#profileAvatar");
+
+const profileName =
+    $("#profileName");
+
+const profileLevelText =
+    $("#profileLevelText");
+
+const editProfileBtn =
+    $("#editProfileBtn");
+
+const levelNumber =
+    $("#levelNumber");
+
+const levelProgress =
+    $("#levelProgress");
+
+const levelText =
+    $("#levelText");
+
+
+/* CONTINUAR */
+
+const continueSection =
+    $("#continueSection");
+
+const continueGrid =
+    $("#continueGrid");
+
+
+/* HISTÓRICO */
+
+const historySection =
+    $("#historySection");
+
+const historyGrid =
+    $("#historyGrid");
+
+const clearHistoryBtn =
+    $("#clearHistoryBtn");
+
+
+/* DAILY */
+
+const dailyTitle =
+    $("#dailyTitle");
+
+const dailyDescription =
+    $("#dailyDescription");
+
+const dailyImage =
+    $("#dailyImage");
+
+const dailySeriesBtn =
+    $("#dailySeriesBtn");
+
+
+/* CATÁLOGO */
+
+const seriesSearch =
+    $("#seriesSearch");
+
+const seriesSort =
+    $("#seriesSort");
+
+const filters =
+    $("#filters");
+
+const advancedFilterBtn =
+    $("#advancedFilterBtn");
+
+const advancedFilters =
+    $("#advancedFilters");
+
+const ratingFilter =
+    $("#ratingFilter");
+
+const statusFilter =
+    $("#statusFilter");
+
+const clearFiltersBtn =
+    $("#clearFiltersBtn");
+
+const seriesGrid =
+    $("#seriesGrid");
+
+const seriesResultCount =
+    $("#seriesResultCount");
+
+const emptySeries =
+    $("#emptySeries");
+
+
+/* MINHA LISTA */
+
+const personalGrid =
+    $("#personalGrid");
+
+const personalEmpty =
+    $("#personalEmpty");
+
+
+/* BRASIL */
+
+const seeAllBrazilBtn =
+    $("#seeAllBrazilBtn");
+
+const brazilCarousel =
+    $("#brazilCarousel");
+
+
+/* QUIZ */
+
+const startQuizBtn =
+    $("#startQuizBtn");
+
+const smartRecommendBtn =
+    $("#smartRecommendBtn");
+
+
+/* RANKING */
+
+const rankingList =
+    $("#rankingList");
+
+
+/* USER STATS */
+
+const favoriteGenreStat =
+    $("#favoriteGenreStat");
+
+const completionStat =
+    $("#completionStat");
+
+const averageRatingStat =
+    $("#averageRatingStat");
+
+const brazilWatchedStat =
+    $("#brazilWatchedStat");
+
+
+/* COMMENTS */
+
+const commentForm =
+    $("#commentForm");
+
+const commentName =
+    $("#commentName");
+
+const commentSeries =
+    $("#commentSeries");
+
+const commentText =
+    $("#commentText");
+
+const commentCharCount =
+    $("#commentCharCount");
+
+const commentSpoiler =
+    $("#commentSpoiler");
+
+const commentCount =
+    $("#commentCount");
+
+const commentSort =
+    $("#commentSort");
+
+const commentsList =
+    $("#commentsList");
+
+
+/* DATA */
+
+const exportDataBtn =
+    $("#exportDataBtn");
+
+const importDataBtn =
+    $("#importDataBtn");
+
+const importDataInput =
+    $("#importDataInput");
+
+const resetDataBtn =
+    $("#resetDataBtn");
+
+
+/* FOOTER */
+
+const currentYear =
+    $("#currentYear");
+
+const backTop =
+    $("#backTop");
+
+
+/* SETTINGS */
+
+const settingsFloating =
+    $("#settingsFloating");
+
+const settingsPanel =
+    $("#settingsPanel");
+
+const settingsClose =
+    $("#settingsClose");
+
+const animationsToggle =
+    $("#animationsToggle");
+
+const autoHeroToggle =
+    $("#autoHeroToggle");
+
+
+/* SERIES MODAL */
+
+const seriesModal =
+    $("#seriesModal");
+
+const seriesModalClose =
+    $("#seriesModalClose");
+
+const modalBackdrop =
+    $("#modalBackdrop");
+
+const modalPoster =
+    $("#modalPoster");
+
+const modalBadge =
+    $("#modalBadge");
+
+const modalTitle =
+    $("#modalTitle");
+
+const modalRating =
+    $("#modalRating");
+
+const modalYear =
+    $("#modalYear");
+
+const modalGenre =
+    $("#modalGenre");
+
+const modalSeasons =
+    $("#modalSeasons");
+
+const modalDescription =
+    $("#modalDescription");
+
+const modalFavoriteBtn =
+    $("#modalFavoriteBtn");
+
+const modalWatchlistBtn =
+    $("#modalWatchlistBtn");
+
+const modalWatchingBtn =
+    $("#modalWatchingBtn");
+
+const modalWatchedBtn =
+    $("#modalWatchedBtn");
+
+const starRating =
+    $("#starRating");
+
+const episodeProgress =
+    $("#episodeProgress");
+
+const episodeProgressText =
+    $("#episodeProgressText");
+
+const currentEpisodeInput =
+    $("#currentEpisodeInput");
+
+const personalNoteInput =
+    $("#personalNoteInput");
+
+const saveSeriesInfoBtn =
+    $("#saveSeriesInfoBtn");
+
+const modalTrailerBtn =
+    $("#modalTrailerBtn");
+
+const modalShareBtn =
+    $("#modalShareBtn");
+
+const modalCopyBtn =
+    $("#modalCopyBtn");
+
+const castGrid =
+    $("#castGrid");
+
+const recommendations =
+    $("#recommendations");
+
+
+/* TRAILER */
+
+const trailerModal =
+    $("#trailerModal");
+
+const trailerClose =
+    $("#trailerClose");
+
+const trailerTitle =
+    $("#trailerTitle");
+
+const openYoutubeTrailer =
+    $("#openYoutubeTrailer");
+
+
+/* QUIZ MODAL */
+
+const quizModal =
+    $("#quizModal");
+
+const quizClose =
+    $("#quizClose");
+
+const quizProgress =
+    $("#quizProgress");
+
+const quizContent =
+    $("#quizContent");
+
+const quizBeginBtn =
+    $("#quizBeginBtn");
+
+
+/* PROFILE MODAL */
+
+const profileModal =
+    $("#profileModal");
+
+const profileClose =
+    $("#profileClose");
+
+const profileForm =
+    $("#profileForm");
+
+const profileNameInput =
+    $("#profileNameInput");
 
 
 /* =========================================================
-   SÉRIES
+   CATÁLOGO OFICIAL DO BLOG
 
-   NÃO TEM ANIME.
-
-   As capas e as fotos do elenco vêm automaticamente
-   da internet usando a API pública do TVMaze.
-
-   Você NÃO precisa baixar essas imagens.
+   Sem Heartstopper.
+   Sem Cidade Invisível.
+   Sem séries extras.
 ========================================================= */
 
 const seriesData = [
 
     {
-        id: "stranger-things",
-        title: "Stranger Things",
-        query: "Stranger Things",
-        year: 2016,
-        seasonsPT: "5 temporadas",
-        seasonsEN: "5 seasons",
-        rating: 4.9,
+        id:
+            "stranger-things",
+
+        title:
+            "Stranger Things",
+
+        query:
+            "Stranger Things",
+
+        year:
+            2016,
+
+        seasonsPT:
+            "5 temporadas",
+
+        seasonsEN:
+            "5 seasons",
+
+        rating:
+            4.9,
+
         genres: [
             "misterio",
             "drama",
             "suspense"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: true,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Em Hawkins, o desaparecimento de um garoto revela experiências secretas, forças sobrenaturais e uma amizade capaz de enfrentar o impossível.",
+            "Em Hawkins, o desaparecimento de um garoto revela experimentos secretos, forças sobrenaturais e mistérios que mudam a vida de um grupo de amigos.",
 
         descriptionEN:
-            "In Hawkins, a boy's disappearance reveals secret experiments, supernatural forces and a friendship strong enough to face the impossible."
+            "In Hawkins, a boy's disappearance reveals secret experiments, supernatural forces and mysteries that change the lives of a group of friends."
     },
 
 
     {
-        id: "wednesday",
-        title: "Wednesday",
-        query: "Wednesday",
-        year: 2022,
-        seasonsPT: "2 temporadas",
-        seasonsEN: "2 seasons",
-        rating: 4.8,
+        id:
+            "wednesday",
+
+        title:
+            "Wednesday",
+
+        query:
+            "Wednesday",
+
+        year:
+            2022,
+
+        seasonsPT:
+            "2 temporadas",
+
+        seasonsEN:
+            "2 seasons",
+
+        rating:
+            4.8,
+
         genres: [
             "misterio",
-            "comedia",
-            "suspense"
+            "suspense",
+            "comedia"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: true,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Wednesday Addams chega à Academia Nevermore e começa a investigar assassinatos, segredos familiares e mistérios sobrenaturais.",
+            "Wednesday Addams entra na Academia Nevermore e começa a investigar assassinatos, segredos familiares e acontecimentos sobrenaturais.",
 
         descriptionEN:
-            "Wednesday Addams arrives at Nevermore Academy and begins investigating murders, family secrets and supernatural mysteries."
+            "Wednesday Addams enters Nevermore Academy and begins investigating murders, family secrets and supernatural events."
     },
 
 
     {
-        id: "outer-banks",
-        title: "Outer Banks",
-        query: "Outer Banks",
-        year: 2020,
-        seasonsPT: "5 temporadas",
-        seasonsEN: "5 seasons",
-        rating: 4.7,
+        id:
+            "outer-banks",
+
+        title:
+            "Outer Banks",
+
+        query:
+            "Outer Banks",
+
+        year:
+            2020,
+
+        seasonsPT:
+            "5 temporadas",
+
+        seasonsEN:
+            "5 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "drama",
             "romance",
             "suspense"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: true,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "John B e seus amigos entram em uma perigosa caça ao tesouro cheia de segredos, romances, perseguições e rivalidades.",
+            "John B e seus amigos entram em uma caça ao tesouro cheia de segredos, perseguições, romances e perigos.",
 
         descriptionEN:
-            "John B and his friends enter a dangerous treasure hunt filled with secrets, romance, chases and rivalries."
+            "John B and his friends enter a treasure hunt filled with secrets, chases, romance and danger."
     },
 
 
     {
-        id: "bridgerton",
-        title: "Bridgerton",
-        query: "Bridgerton",
-        year: 2020,
-        seasonsPT: "4+ temporadas",
-        seasonsEN: "4+ seasons",
-        rating: 4.7,
-        genres: [
-            "romance",
-            "drama"
-        ],
-        countryPT: "Reino Unido",
-        countryEN: "United Kingdom",
-        brazil: false,
-        featured: true,
+        id:
+            "ginny-georgia",
 
-        descriptionPT:
-            "Romances, escândalos, segredos e disputas familiares movimentam a alta sociedade londrina.",
+        title:
+            "Ginny & Georgia",
 
-        descriptionEN:
-            "Romance, scandals, secrets and family rivalries shake London's high society."
-    },
+        query:
+            "Ginny & Georgia",
 
+        year:
+            2021,
 
-    {
-        id: "ginny-georgia",
-        title: "Ginny & Georgia",
-        query: "Ginny & Georgia",
-        year: 2021,
-        seasonsPT: "3+ temporadas",
-        seasonsEN: "3+ seasons",
-        rating: 4.7,
+        seasonsPT:
+            "3 temporadas",
+
+        seasonsEN:
+            "3 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "drama",
             "romance",
             "comedia"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: true,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Ginny tenta viver uma adolescência normal enquanto percebe que sua mãe Georgia esconde um passado complicado.",
+            "Ginny tenta viver uma adolescência normal enquanto descobre que sua mãe Georgia esconde um passado muito mais complicado do que parece.",
 
         descriptionEN:
-            "Ginny tries to live a normal teenage life while realizing that her mother Georgia hides a complicated past."
+            "Ginny tries to live a normal teenage life while discovering that her mother Georgia hides a far more complicated past than it seems."
     },
 
 
     {
-        id: "you",
-        title: "You",
-        query: "You",
-        year: 2018,
-        seasonsPT: "5 temporadas",
-        seasonsEN: "5 seasons",
-        rating: 4.6,
-        genres: [
-            "suspense",
-            "crime",
-            "drama"
-        ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: true,
+        id:
+            "bridgerton",
 
-        descriptionPT:
-            "Joe Goldberg transforma paixão em obsessão enquanto tenta esconder seus crimes e controlar as pessoas ao seu redor.",
+        title:
+            "Bridgerton",
 
-        descriptionEN:
-            "Joe Goldberg turns love into obsession while trying to hide his crimes and control the people around him."
-    },
+        query:
+            "Bridgerton",
 
+        year:
+            2020,
 
-    {
-        id: "heartstopper",
-        title: "Heartstopper",
-        query: "Heartstopper",
-        year: 2022,
-        seasonsPT: "3+ temporadas",
-        seasonsEN: "3+ seasons",
-        rating: 4.8,
+        seasonsPT:
+            "4 temporadas",
+
+        seasonsEN:
+            "4 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "romance",
             "drama"
         ],
-        countryPT: "Reino Unido",
-        countryEN: "United Kingdom",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Reino Unido",
+
+        countryEN:
+            "United Kingdom",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Charlie e Nick descobrem que uma amizade inesperada pode se transformar em uma história muito maior.",
+            "Romances, escândalos e disputas familiares movimentam a alta sociedade enquanto novos casais surgem a cada temporada.",
 
         descriptionEN:
-            "Charlie and Nick discover that an unexpected friendship can become something much bigger."
+            "Romance, scandals and family rivalries shake high society as new couples emerge each season."
     },
 
 
     {
-        id: "elite",
-        title: "Elite",
-        query: "Elite",
-        year: 2018,
-        seasonsPT: "8 temporadas",
-        seasonsEN: "8 seasons",
-        rating: 4.4,
+        id:
+            "elite",
+
+        title:
+            "Elite",
+
+        query:
+            "Elite",
+
+        year:
+            2018,
+
+        seasonsPT:
+            "8 temporadas",
+
+        seasonsEN:
+            "8 seasons",
+
+        rating:
+            4.4,
+
         genres: [
             "drama",
             "crime",
             "suspense",
             "romance"
         ],
-        countryPT: "Espanha",
-        countryEN: "Spain",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Espanha",
+
+        countryEN:
+            "Spain",
+
+        brazil:
+            false,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Segredos, rivalidades, relacionamentos e crimes colocam os alunos de Las Encinas em situações cada vez mais perigosas.",
+            "Alunos de uma escola de elite vivem romances, rivalidades e segredos que frequentemente acabam ligados a crimes.",
 
         descriptionEN:
-            "Secrets, rivalries, relationships and crimes put the students of Las Encinas in increasingly dangerous situations."
+            "Students at an elite school experience romance, rivalries and secrets that often become connected to crimes."
     },
 
 
     {
-        id: "never-have-i-ever",
-        title: "Eu Nunca...",
-        titleEN: "Never Have I Ever",
-        query: "Never Have I Ever",
-        year: 2020,
-        seasonsPT: "4 temporadas",
-        seasonsEN: "4 seasons",
-        rating: 4.7,
+        id:
+            "never-have-i-ever",
+
+        title:
+            "Eu Nunca...",
+
+        titleEN:
+            "Never Have I Ever",
+
+        query:
+            "Never Have I Ever",
+
+        year:
+            2020,
+
+        seasonsPT:
+            "4 temporadas",
+
+        seasonsEN:
+            "4 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "comedia",
             "romance",
             "drama"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Devi tenta melhorar sua vida social enquanto enfrenta escola, família, amizades e romances complicados.",
+            "Devi tenta melhorar sua vida social enquanto lida com escola, família, amizades e relacionamentos complicados.",
 
         descriptionEN:
-            "Devi tries to improve her social life while dealing with school, family, friendships and complicated romances."
+            "Devi tries to improve her social life while dealing with school, family, friendships and complicated relationships."
     },
 
 
     {
-        id: "sex-education",
-        title: "Sex Education",
-        query: "Sex Education",
-        year: 2019,
-        seasonsPT: "4 temporadas",
-        seasonsEN: "4 seasons",
-        rating: 4.8,
+        id:
+            "sex-education",
+
+        title:
+            "Sex Education",
+
+        query:
+            "Sex Education",
+
+        year:
+            2019,
+
+        seasonsPT:
+            "4 temporadas",
+
+        seasonsEN:
+            "4 seasons",
+
+        rating:
+            4.8,
+
         genres: [
             "comedia",
             "drama",
             "romance"
         ],
-        countryPT: "Reino Unido",
-        countryEN: "United Kingdom",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Reino Unido",
+
+        countryEN:
+            "United Kingdom",
+
+        brazil:
+            false,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Otis usa o conhecimento da mãe terapeuta para aconselhar colegas e acaba se envolvendo nos problemas deles.",
+            "Otis usa o conhecimento adquirido com sua mãe terapeuta para aconselhar colegas e acaba envolvido nos problemas deles.",
 
         descriptionEN:
-            "Otis uses knowledge from his therapist mother to advise classmates and becomes involved in their problems."
+            "Otis uses knowledge from his therapist mother to advise classmates and ends up involved in their problems."
     },
 
 
     {
-        id: "one-day",
-        title: "One Day",
-        query: "One Day",
-        year: 2024,
-        seasonsPT: "Minissérie",
-        seasonsEN: "Limited series",
-        rating: 4.8,
-        genres: [
-            "romance",
-            "drama"
-        ],
-        countryPT: "Reino Unido",
-        countryEN: "United Kingdom",
-        brazil: false,
-        featured: false,
+        id:
+            "you",
 
-        descriptionPT:
-            "Emma e Dexter se reencontram na mesma data ao longo dos anos enquanto suas vidas seguem caminhos inesperados.",
+        title:
+            "You",
 
-        descriptionEN:
-            "Emma and Dexter meet again on the same date over the years as their lives take unexpected paths."
-    },
+        query:
+            "You",
 
+        year:
+            2018,
 
-    {
-        id: "the-night-agent",
-        title: "O Agente Noturno",
-        titleEN: "The Night Agent",
-        query: "The Night Agent",
-        year: 2023,
-        seasonsPT: "2+ temporadas",
-        seasonsEN: "2+ seasons",
-        rating: 4.6,
+        seasonsPT:
+            "5 temporadas",
+
+        seasonsEN:
+            "5 seasons",
+
+        rating:
+            4.6,
+
         genres: [
             "suspense",
             "crime",
             "drama"
         ],
-        countryPT: "Estados Unidos",
-        countryEN: "United States",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Um agente do FBI atende uma ligação inesperada e entra no centro de uma enorme conspiração.",
+            "Joe Goldberg transforma paixão em obsessão enquanto tenta controlar pessoas e esconder seus próprios crimes.",
 
         descriptionEN:
-            "An FBI agent answers an unexpected call and finds himself at the center of a massive conspiracy."
+            "Joe Goldberg turns love into obsession while trying to control people and hide his own crimes."
     },
 
 
     {
-        id: "the-gentlemen",
-        title: "Magnatas do Crime",
-        titleEN: "The Gentlemen",
-        query: "The Gentlemen",
-        year: 2024,
-        seasonsPT: "1+ temporada",
-        seasonsEN: "1+ season",
-        rating: 4.6,
-        genres: [
-            "crime",
-            "comedia",
-            "drama"
-        ],
-        countryPT: "Reino Unido",
-        countryEN: "United Kingdom",
-        brazil: false,
-        featured: false,
+        id:
+            "lucifer",
 
-        descriptionPT:
-            "Um aristocrata herda uma propriedade e descobre que seu novo patrimônio está ligado a um império criminoso.",
+        title:
+            "Lucifer",
 
-        descriptionEN:
-            "An aristocrat inherits an estate and discovers that his new property is connected to a criminal empire."
-    },
+        query:
+            "Lucifer",
 
+        year:
+            2016,
 
-    {
-        id: "blood-water",
-        title: "Blood & Water",
-        query: "Blood & Water",
-        year: 2020,
-        seasonsPT: "4 temporadas",
-        seasonsEN: "4 seasons",
-        rating: 4.4,
+        seasonsPT:
+            "6 temporadas",
+
+        seasonsEN:
+            "6 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "drama",
-            "misterio",
-            "suspense"
+            "crime",
+            "comedia"
         ],
-        countryPT: "África do Sul",
-        countryEN: "South Africa",
-        brazil: false,
-        featured: false,
+
+        countryPT:
+            "Estados Unidos",
+
+        countryEN:
+            "United States",
+
+        brazil:
+            false,
+
+        featured:
+            true,
 
         descriptionPT:
-            "Uma adolescente começa a investigar se uma estudante popular pode ser sua irmã desaparecida.",
+            "Lucifer Morningstar abandona o inferno, vai para Los Angeles e passa a ajudar a polícia a solucionar crimes.",
 
         descriptionEN:
-            "A teenager begins investigating whether a popular student could be her missing sister."
+            "Lucifer Morningstar leaves Hell, moves to Los Angeles and begins helping the police solve crimes."
     },
 
 
-    /* =====================================================
-       BRASIL
-    ===================================================== */
-
-
     {
-        id: "sintonia",
-        title: "Sintonia",
-        query: "Sintonia",
-        year: 2019,
-        seasonsPT: "5 temporadas",
-        seasonsEN: "5 seasons",
-        rating: 4.8,
+        id:
+            "sintonia",
+
+        title:
+            "Sintonia",
+
+        query:
+            "Sintonia",
+
+        year:
+            2019,
+
+        seasonsPT:
+            "5 temporadas",
+
+        seasonsEN:
+            "5 seasons",
+
+        rating:
+            4.8,
+
         genres: [
             "drama",
             "crime",
             "brasil"
         ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+
+        countryPT:
+            "Brasil",
+
+        countryEN:
+            "Brazil",
+
+        brazil:
+            true,
+
+        featured:
+            false,
 
         descriptionPT:
             "Doni, Nando e Rita crescem juntos na periferia de São Paulo enquanto música, crime e fé mudam seus caminhos.",
@@ -616,108 +1134,154 @@ const seriesData = [
 
 
     {
-        id: "bom-dia-veronica",
-        title: "Bom Dia, Verônica",
-        query: "Good Morning Veronica",
-        year: 2020,
-        seasonsPT: "3 temporadas",
-        seasonsEN: "3 seasons",
-        rating: 4.7,
+        id:
+            "dna-do-crime",
+
+        title:
+            "DNA do Crime",
+
+        titleEN:
+            "Criminal Code",
+
+        query:
+            "Criminal Code",
+
+        year:
+            2023,
+
+        seasonsPT:
+            "2 temporadas",
+
+        seasonsEN:
+            "2 seasons",
+
+        rating:
+            4.7,
+
+        genres: [
+            "crime",
+            "suspense",
+            "brasil"
+        ],
+
+        countryPT:
+            "Brasil",
+
+        countryEN:
+            "Brazil",
+
+        brazil:
+            true,
+
+        featured:
+            false,
+
+        descriptionPT:
+            "Policiais federais usam pistas de DNA para investigar uma poderosa organização criminosa depois de um grande assalto.",
+
+        descriptionEN:
+            "Federal police use DNA evidence to investigate a powerful criminal organization after a major robbery."
+    },
+
+
+    {
+        id:
+            "bom-dia-veronica",
+
+        title:
+            "Bom Dia, Verônica",
+
+        titleEN:
+            "Good Morning, Verônica",
+
+        query:
+            "Good Morning Veronica",
+
+        year:
+            2020,
+
+        seasonsPT:
+            "3 temporadas",
+
+        seasonsEN:
+            "3 seasons",
+
+        rating:
+            4.7,
+
         genres: [
             "crime",
             "suspense",
             "drama",
             "brasil"
         ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+
+        countryPT:
+            "Brasil",
+
+        countryEN:
+            "Brazil",
+
+        brazil:
+            true,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Uma escrivã da polícia investiga casos de violência e acaba descobrindo uma rede muito mais perigosa.",
+            "Uma escrivã da polícia investiga casos de violência e descobre uma rede de crimes muito mais perigosa do que imaginava.",
 
         descriptionEN:
-            "A police clerk investigates cases of violence and discovers a network far more dangerous than expected."
+            "A police clerk investigates cases of violence and discovers a criminal network far more dangerous than she imagined."
     },
 
 
     {
-        id: "dna-do-crime",
-        title: "DNA do Crime",
-        titleEN: "Criminal Code",
-        query: "Criminal Code",
-        year: 2023,
-        seasonsPT: "2+ temporadas",
-        seasonsEN: "2+ seasons",
-        rating: 4.7,
-        genres: [
-            "crime",
-            "suspense",
-            "brasil"
-        ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+        id:
+            "de-volta-aos-15",
 
-        descriptionPT:
-            "Policiais federais usam pistas de DNA para investigar uma organização criminosa depois de um grande assalto.",
+        title:
+            "De Volta aos 15",
 
-        descriptionEN:
-            "Federal police use DNA evidence to investigate a criminal organization after a major robbery."
-    },
+        titleEN:
+            "Back to 15",
 
+        query:
+            "Back to 15",
 
-    {
-        id: "cidade-invisivel",
-        title: "Cidade Invisível",
-        titleEN: "Invisible City",
-        query: "Invisible City",
-        year: 2021,
-        seasonsPT: "2 temporadas",
-        seasonsEN: "2 seasons",
-        rating: 4.4,
-        genres: [
-            "misterio",
-            "drama",
-            "brasil"
-        ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+        year:
+            2022,
 
-        descriptionPT:
-            "Um investigador descobre criaturas do folclore brasileiro vivendo escondidas entre os humanos.",
+        seasonsPT:
+            "3 temporadas",
 
-        descriptionEN:
-            "An investigator discovers creatures from Brazilian folklore living secretly among humans."
-    },
+        seasonsEN:
+            "3 seasons",
 
+        rating:
+            4.5,
 
-    {
-        id: "de-volta-aos-15",
-        title: "De Volta aos 15",
-        titleEN: "Back to 15",
-        query: "Back to 15",
-        year: 2022,
-        seasonsPT: "3 temporadas",
-        seasonsEN: "3 seasons",
-        rating: 4.5,
         genres: [
             "comedia",
             "romance",
             "drama",
             "brasil"
         ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+
+        countryPT:
+            "Brasil",
+
+        countryEN:
+            "Brazil",
+
+        brazil:
+            true,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Anita volta misteriosamente aos 15 anos e começa a alterar acontecimentos do próprio passado.",
+            "Anita volta misteriosamente aos 15 anos e começa a alterar acontecimentos de seu próprio passado.",
 
         descriptionEN:
             "Anita mysteriously returns to age 15 and begins changing events from her own past."
@@ -725,81 +1289,52 @@ const seriesData = [
 
 
     {
-        id: "pedaco-de-mim",
-        title: "Pedaço de Mim",
-        titleEN: "Desperate Lies",
-        query: "Desperate Lies",
-        year: 2024,
-        seasonsPT: "1 temporada",
-        seasonsEN: "1 season",
-        rating: 4.5,
+        id:
+            "pedaco-de-mim",
+
+        title:
+            "Pedaço de Mim",
+
+        titleEN:
+            "Desperate Lies",
+
+        query:
+            "Desperate Lies",
+
+        year:
+            2024,
+
+        seasonsPT:
+            "1 temporada",
+
+        seasonsEN:
+            "1 season",
+
+        rating:
+            4.5,
+
         genres: [
             "drama",
             "brasil"
         ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
+
+        countryPT:
+            "Brasil",
+
+        countryEN:
+            "Brazil",
+
+        brazil:
+            true,
+
+        featured:
+            false,
 
         descriptionPT:
-            "Uma descoberta inesperada muda completamente a vida de uma mulher e de sua família.",
+            "Uma descoberta inesperada muda completamente a vida de uma mulher, seu casamento e sua família.",
 
         descriptionEN:
-            "An unexpected discovery completely changes a woman's life and her family."
-    },
-
-
-    {
-        id: "3-percent",
-        title: "3%",
-        query: "3%",
-        year: 2016,
-        seasonsPT: "4 temporadas",
-        seasonsEN: "4 seasons",
-        rating: 4.5,
-        genres: [
-            "drama",
-            "suspense",
-            "brasil"
-        ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
-
-        descriptionPT:
-            "Em uma sociedade extremamente desigual, jovens disputam uma oportunidade de viver no lado privilegiado do mundo.",
-
-        descriptionEN:
-            "In an extremely unequal society, young people compete for the chance to live in the privileged part of the world."
-    },
-
-
-    {
-        id: "irmandade",
-        title: "Irmandade",
-        titleEN: "Brotherhood",
-        query: "Brotherhood",
-        year: 2019,
-        seasonsPT: "2 temporadas",
-        seasonsEN: "2 seasons",
-        rating: 4.5,
-        genres: [
-            "crime",
-            "drama",
-            "brasil"
-        ],
-        countryPT: "Brasil",
-        countryEN: "Brazil",
-        brazil: true,
-        featured: false,
-
-        descriptionPT:
-            "Uma advogada é pressionada a colaborar com a polícia contra o próprio irmão, líder de uma organização criminosa.",
-
-        descriptionEN:
-            "A lawyer is pressured to cooperate with the police against her own brother, the leader of a criminal organization."
+            "An unexpected discovery completely changes a woman's life, marriage and family."
     }
 
 ];
@@ -814,7 +1349,7 @@ const translations = {
     pt: {
 
         loading:
-            "preparando sua próxima maratona...",
+            "preparando o catálogo...",
 
         brandSubtitle:
             "séries & histórias",
@@ -827,6 +1362,9 @@ const translations = {
 
         brazil:
             "Brasil",
+
+        myList:
+            "Minha Lista",
 
         ranking:
             "Ranking",
@@ -846,26 +1384,23 @@ const translations = {
         searchPlaceholder:
             "Digite uma série...",
 
-        featured:
-            "DESTAQUE DA BIA",
+        details:
+            "Ver detalhes",
 
         watchTrailer:
-            "Assistir trailer",
+            "Trailer",
 
         favorite:
             "Favoritar",
 
         watchlist:
-            "Quero assistir",
+            "Minha lista",
 
         watched:
             "Assistidas",
 
-        surpriseMe:
-            "Surpreenda-me",
-
-        copyTitle:
-            "Copiar título",
+        watching:
+            "Assistindo",
 
         communityRating:
             "avaliação",
@@ -885,11 +1420,20 @@ const translations = {
         marathonLevel:
             "Nível de maratonista",
 
-        yourMarathon:
-            "SUA MARATONA",
+        continue:
+            "CONTINUE",
 
         continueWatching:
             "Continue assistindo",
+
+        history:
+            "HISTÓRICO",
+
+        recentlyViewed:
+            "Vistas recentemente",
+
+        clearHistory:
+            "Limpar histórico",
 
         biaRecommends:
             "BIA RECOMENDA",
@@ -897,14 +1441,14 @@ const translations = {
         seriesOfDay:
             "Série do dia",
 
-        discover:
-            "Descobrir",
+        catalog:
+            "CATÁLOGO",
 
         seriesForMarathon:
             "Séries para maratonar",
 
         catalogDescription:
-            "Escolha sua próxima obsessão.",
+            "Escolha sua próxima série.",
 
         results:
             "resultados",
@@ -951,29 +1495,38 @@ const translations = {
         tryOtherFilters:
             "Tente mudar os filtros.",
 
+        personal:
+            "PESSOAL",
+
+        myListDescription:
+            "Suas séries salvas em um só lugar.",
+
+        emptyPersonal:
+            "Sua lista ainda está vazia.",
+
         brazilianProductions:
             "Produções brasileiras",
 
         brazilDescription:
-            "Séries brasileiras que merecem entrar na sua lista.",
+            "Histórias brasileiras presentes no blog.",
 
         seeAll:
             "Ver todas",
 
-        cantChoose:
-            "NÃO CONSEGUE ESCOLHER?",
+        recommendation:
+            "RECOMENDAÇÃO",
 
         findYourSeries:
             "Descubra sua próxima série",
 
         quizDescription:
-            "Responda algumas perguntas e receba uma recomendação.",
+            "Responda algumas perguntas e receba uma indicação.",
 
         startQuiz:
             "Fazer quiz",
 
-        topSeries:
-            "TOP SÉRIES",
+        recommendForMe:
+            "Recomendar para mim",
 
         biaRanking:
             "Ranking da Bia",
@@ -981,14 +1534,32 @@ const translations = {
         rankingDescription:
             "As mais bem avaliadas do blog.",
 
-        yourJourney:
-            "SUA JORNADA",
+        statistics:
+            "ESTATÍSTICAS",
+
+        yourStatistics:
+            "Suas estatísticas",
+
+        favoriteGenre:
+            "Gênero favorito",
+
+        completion:
+            "Catálogo concluído",
+
+        averageRating:
+            "Sua nota média",
+
+        brazilWatched:
+            "Brasileiras assistidas",
 
         achievements:
-            "Conquistas",
+            "CONQUISTAS",
 
-        firstLove:
-            "Primeiro amor",
+        yourJourney:
+            "Sua jornada",
+
+        firstFavorite:
+            "Primeira favorita",
 
         collector:
             "Colecionadora",
@@ -997,52 +1568,55 @@ const translations = {
             "Maratonista",
 
         critic:
-            "Crítica de sofá",
+            "Crítica",
+
+        communityMember:
+            "Comunidade",
 
         talkAboutSeries:
             "Vamos falar de séries?",
 
         communityDescription:
-            "Compartilhe sua opinião.",
+            "Comente e compartilhe sua opinião.",
 
         leaveComment:
-            "Deixe seu comentário ♡",
+            "Novo comentário",
 
         yourName:
             "Seu nome",
 
         whichSeries:
-            "Sobre qual série?",
+            "Série",
 
         yourComment:
-            "Seu comentário",
+            "Comentário",
 
         containsSpoiler:
             "Contém spoiler",
 
         publish:
-            "Publicar",
+            "Publicar comentário",
 
         behindBlog:
             "POR TRÁS DO BLOG",
 
-        madeWithLove:
-            "Feito com carinho e muitos episódios.",
+        teamTitle:
+            "Criadora & Desenvolvedor",
 
         teamDescription:
-            "Conheça quem faz parte do Blog da Bia.",
+            "Quem tornou o projeto possível.",
 
         creator:
-            "CRIADORA",
+            "Criadora",
 
         developer:
-            "DESENVOLVEDOR",
+            "Desenvolvedor",
 
         beatrizDescription:
-            "Criadora do Blog da Bia e responsável pelas ideias, séries e identidade do projeto.",
+            "Responsável pelas ideias, seleção de séries e identidade do blog.",
 
         bayerleeDescription:
-            "Responsável pelo desenvolvimento, design, animações e interações do site.",
+            "Responsável pelo desenvolvimento, design, funções e experiência do site.",
 
         features:
             "funções",
@@ -1050,23 +1624,26 @@ const translations = {
         languages:
             "idiomas",
 
-        creativity:
-            "criatividade",
-
         yourData:
             "SEUS DADOS",
 
         savedInBrowser:
-            "Tudo fica salvo no seu navegador",
+            "Dados salvos no navegador",
 
         dataDescription:
-            "Favoritos, comentários e progresso ficam salvos neste dispositivo.",
+            "Favoritos, listas, avaliações e comentários ficam salvos localmente.",
+
+        exportData:
+            "Exportar dados",
+
+        importData:
+            "Importar dados",
 
         resetData:
             "Redefinir dados",
 
         footerText:
-            "Um cantinho para quem ama séries.",
+            "Um blog sobre séries.",
 
         createdBy:
             "Criado por",
@@ -1074,29 +1651,29 @@ const translations = {
         developedBy:
             "Desenvolvido por",
 
+        settings:
+            "CONFIGURAÇÕES",
+
         customize:
-            "PERSONALIZE",
+            "Personalizar",
 
-        yourBlog:
-            "Seu Blog da Bia",
-
-        gradient:
-            "Gradiente",
-
-        visualEffects:
-            "Efeitos visuais",
-
-        visualEffectsDescription:
-            "Corações e partículas",
+        accent:
+            "Estilo de cor",
 
         animations:
             "Animações",
 
         animationsDescription:
-            "Movimentos da interface",
+            "Transições e movimento",
+
+        autoHero:
+            "Destaque automático",
+
+        autoHeroDescription:
+            "Troca a série principal automaticamente",
 
         seriesDetails:
-            "DETALHES",
+            "DETALHES DA SÉRIE",
 
         yourRating:
             "Sua avaliação",
@@ -1104,32 +1681,41 @@ const translations = {
         yourProgress:
             "Seu progresso",
 
+        currentEpisode:
+            "Episódio atual",
+
+        personalNote:
+            "Nota pessoal",
+
+        save:
+            "Salvar",
+
         cast:
             "ELENCO",
 
         mainCast:
             "Elenco principal",
 
-        recommendations:
-            "RECOMENDAÇÕES",
+        similar:
+            "PARECIDAS",
 
         youMayLike:
             "Você também pode gostar",
 
         trailerDescription:
-            "Abra o trailer oficial em uma nova guia.",
+            "Abrir busca pelo trailer oficial.",
 
         searchOfficialTrailer:
-            "Procurar trailer oficial",
+            "Procurar trailer",
 
         readyQuiz:
-            "Pronta para descobrir?",
+            "Descubra sua próxima série",
 
         quizIntro:
             "Responda algumas perguntas.",
 
         letsGo:
-            "Vamos lá",
+            "Começar",
 
         howCallYou:
             "Como podemos te chamar?",
@@ -1138,17 +1724,18 @@ const translations = {
             "Nome",
 
         chooseAvatar:
-            "Escolha seu avatar",
+            "Escolha um avatar",
 
         saveProfile:
             "Salvar perfil"
+
     },
 
 
     en: {
 
         loading:
-            "preparing your next binge...",
+            "preparing the catalog...",
 
         brandSubtitle:
             "series & stories",
@@ -1161,6 +1748,9 @@ const translations = {
 
         brazil:
             "Brazil",
+
+        myList:
+            "My List",
 
         ranking:
             "Ranking",
@@ -1180,26 +1770,23 @@ const translations = {
         searchPlaceholder:
             "Type a series...",
 
-        featured:
-            "BIA'S FEATURED PICK",
+        details:
+            "View details",
 
         watchTrailer:
-            "Watch trailer",
+            "Trailer",
 
         favorite:
             "Favorite",
 
         watchlist:
-            "Watchlist",
+            "My list",
 
         watched:
             "Watched",
 
-        surpriseMe:
-            "Surprise me",
-
-        copyTitle:
-            "Copy title",
+        watching:
+            "Watching",
 
         communityRating:
             "rating",
@@ -1219,11 +1806,20 @@ const translations = {
         marathonLevel:
             "Binge level",
 
-        yourMarathon:
-            "YOUR BINGE",
+        continue:
+            "CONTINUE",
 
         continueWatching:
             "Continue watching",
+
+        history:
+            "HISTORY",
+
+        recentlyViewed:
+            "Recently viewed",
+
+        clearHistory:
+            "Clear history",
 
         biaRecommends:
             "BIA RECOMMENDS",
@@ -1231,14 +1827,14 @@ const translations = {
         seriesOfDay:
             "Series of the day",
 
-        discover:
-            "Discover",
+        catalog:
+            "CATALOG",
 
         seriesForMarathon:
             "Series to binge",
 
         catalogDescription:
-            "Choose your next obsession.",
+            "Choose your next series.",
 
         results:
             "results",
@@ -1285,17 +1881,26 @@ const translations = {
         tryOtherFilters:
             "Try changing the filters.",
 
+        personal:
+            "PERSONAL",
+
+        myListDescription:
+            "Your saved series in one place.",
+
+        emptyPersonal:
+            "Your list is still empty.",
+
         brazilianProductions:
             "Brazilian productions",
 
         brazilDescription:
-            "Brazilian series that deserve a place on your list.",
+            "Brazilian stories featured on the blog.",
 
         seeAll:
             "See all",
 
-        cantChoose:
-            "CAN'T CHOOSE?",
+        recommendation:
+            "RECOMMENDATION",
 
         findYourSeries:
             "Find your next series",
@@ -1304,10 +1909,10 @@ const translations = {
             "Answer a few questions and get a recommendation.",
 
         startQuiz:
-            "Take the quiz",
+            "Take quiz",
 
-        topSeries:
-            "TOP SERIES",
+        recommendForMe:
+            "Recommend for me",
 
         biaRanking:
             "Bia's ranking",
@@ -1315,14 +1920,32 @@ const translations = {
         rankingDescription:
             "The highest-rated series on the blog.",
 
-        yourJourney:
-            "YOUR JOURNEY",
+        statistics:
+            "STATISTICS",
+
+        yourStatistics:
+            "Your statistics",
+
+        favoriteGenre:
+            "Favorite genre",
+
+        completion:
+            "Catalog completed",
+
+        averageRating:
+            "Your average rating",
+
+        brazilWatched:
+            "Brazilian series watched",
 
         achievements:
-            "Achievements",
+            "ACHIEVEMENTS",
 
-        firstLove:
-            "First love",
+        yourJourney:
+            "Your journey",
+
+        firstFavorite:
+            "First favorite",
 
         collector:
             "Collector",
@@ -1331,52 +1954,55 @@ const translations = {
             "Binge watcher",
 
         critic:
-            "Couch critic",
+            "Critic",
+
+        communityMember:
+            "Community",
 
         talkAboutSeries:
             "Let's talk about series?",
 
         communityDescription:
-            "Share your opinion.",
+            "Comment and share your opinion.",
 
         leaveComment:
-            "Leave your comment ♡",
+            "New comment",
 
         yourName:
             "Your name",
 
         whichSeries:
-            "Which series?",
+            "Series",
 
         yourComment:
-            "Your comment",
+            "Comment",
 
         containsSpoiler:
             "Contains spoiler",
 
         publish:
-            "Publish",
+            "Publish comment",
 
         behindBlog:
             "BEHIND THE BLOG",
 
-        madeWithLove:
-            "Made with love and many episodes.",
+        teamTitle:
+            "Creator & Developer",
 
         teamDescription:
-            "Meet the people behind Bia's Blog.",
+            "Meet the people behind the project.",
 
         creator:
-            "CREATOR",
+            "Creator",
 
         developer:
-            "DEVELOPER",
+            "Developer",
 
         beatrizDescription:
-            "Creator of Bia's Blog, responsible for the ideas, series and identity of the project.",
+            "Responsible for ideas, series selection and the identity of the blog.",
 
         bayerleeDescription:
-            "Responsible for development, design, animations and website interactions.",
+            "Responsible for development, design, features and website experience.",
 
         features:
             "features",
@@ -1384,23 +2010,26 @@ const translations = {
         languages:
             "languages",
 
-        creativity:
-            "creativity",
-
         yourData:
             "YOUR DATA",
 
         savedInBrowser:
-            "Everything is saved in your browser",
+            "Data saved in your browser",
 
         dataDescription:
-            "Favorites, comments and progress are saved on this device.",
+            "Favorites, lists, ratings and comments are stored locally.",
+
+        exportData:
+            "Export data",
+
+        importData:
+            "Import data",
 
         resetData:
             "Reset data",
 
         footerText:
-            "A little place for people who love series.",
+            "A blog about series.",
 
         createdBy:
             "Created by",
@@ -1408,29 +2037,29 @@ const translations = {
         developedBy:
             "Developed by",
 
+        settings:
+            "SETTINGS",
+
         customize:
-            "CUSTOMIZE",
+            "Customize",
 
-        yourBlog:
-            "Your Bia's Blog",
-
-        gradient:
-            "Gradient",
-
-        visualEffects:
-            "Visual effects",
-
-        visualEffectsDescription:
-            "Hearts and particles",
+        accent:
+            "Color style",
 
         animations:
             "Animations",
 
         animationsDescription:
-            "Interface movement",
+            "Transitions and motion",
+
+        autoHero:
+            "Automatic featured series",
+
+        autoHeroDescription:
+            "Automatically changes the main series",
 
         seriesDetails:
-            "DETAILS",
+            "SERIES DETAILS",
 
         yourRating:
             "Your rating",
@@ -1438,32 +2067,41 @@ const translations = {
         yourProgress:
             "Your progress",
 
+        currentEpisode:
+            "Current episode",
+
+        personalNote:
+            "Personal note",
+
+        save:
+            "Save",
+
         cast:
             "CAST",
 
         mainCast:
             "Main cast",
 
-        recommendations:
-            "RECOMMENDATIONS",
+        similar:
+            "SIMILAR",
 
         youMayLike:
             "You may also like",
 
         trailerDescription:
-            "Open the official trailer in a new tab.",
+            "Open a search for the official trailer.",
 
         searchOfficialTrailer:
-            "Search official trailer",
+            "Search trailer",
 
         readyQuiz:
-            "Ready to find out?",
+            "Find your next series",
 
         quizIntro:
             "Answer a few questions.",
 
         letsGo:
-            "Let's go",
+            "Start",
 
         howCallYou:
             "What should we call you?",
@@ -1472,50 +2110,83 @@ const translations = {
             "Name",
 
         chooseAvatar:
-            "Choose your avatar",
+            "Choose an avatar",
 
         saveProfile:
             "Save profile"
+
     }
 
 };
 
 
 /* =========================================================
-   ESTADO
+   ESTADO PADRÃO
 ========================================================= */
 
 const defaultState = {
 
-    language: "pt",
+    language:
+        "pt",
 
-    theme: "light",
+    theme:
+        "dark",
 
-    colorTheme: "bia",
+    colorTheme:
+        "default",
 
-    effects: true,
+    animations:
+        true,
 
-    animations: true,
+    autoHero:
+        true,
 
-    favorites: [],
+    favorites:
+        [],
 
-    watchlist: [],
+    watchlist:
+        [],
 
-    watched: [],
+    watching:
+        [],
 
-    ratings: {},
+    watched:
+        [],
 
-    progress: {},
+    ratings:
+        {},
 
-    comments: [],
+    progress:
+        {},
+
+    episodes:
+        {},
+
+    notes:
+        {},
+
+    history:
+        [],
+
+    comments:
+        [],
 
     profile: {
-        name: "Visitante",
-        avatar: "♡"
+
+        name:
+            "Visitante",
+
+        avatar:
+            "B"
+
     }
 
 };
 
+
+/* =========================================================
+   CARREGAR / SALVAR
+========================================================= */
 
 function loadState() {
 
@@ -1528,50 +2199,47 @@ function loadState() {
                 )
             );
 
+
+        if (!saved) {
+
+            return structuredClone(
+                defaultState
+            );
+
+        }
+
+
         return {
-            ...defaultState,
-            ...(saved || {}),
+
+            ...structuredClone(
+                defaultState
+            ),
+
+            ...saved,
 
             profile: {
+
                 ...defaultState.profile,
-                ...(saved?.profile || {})
+                ...(saved.profile || {})
+
             }
+
         };
 
     } catch {
 
-        return {
-            ...defaultState
-        };
+        return structuredClone(
+            defaultState
+        );
 
     }
 
 }
 
 
-let state = loadState();
+let state =
+    loadState();
 
-let heroIndex = 0;
-
-let activeSeriesId =
-    seriesData[0].id;
-
-let currentTrailerSeries = null;
-
-let activeFilter = "all";
-
-let quizStep = 0;
-
-let quizAnswers = [];
-
-let toastTimer = null;
-
-let heroTimer = null;
-
-
-/* =========================================================
-   SALVAR
-========================================================= */
 
 function saveState() {
 
@@ -1584,98 +2252,208 @@ function saveState() {
 
 
 /* =========================================================
-   TEXTO DA SÉRIE
+   ESTADO TEMPORÁRIO
 ========================================================= */
 
-function getSeriesTitle(series) {
-
-    if (
-        state.language === "en"
-        && series.titleEN
-    ) {
-        return series.titleEN;
-    }
-
-    return series.title;
-
-}
+let activeSeriesId =
+    seriesData[0].id;
 
 
-function getSeriesDescription(series) {
-
-    return state.language === "en"
-        ? series.descriptionEN
-        : series.descriptionPT;
-
-}
+let heroIndex =
+    0;
 
 
-function getSeriesCountry(series) {
-
-    return state.language === "en"
-        ? series.countryEN
-        : series.countryPT;
-
-}
+let activeFilter =
+    "all";
 
 
-function getSeriesSeasons(series) {
+let personalTab =
+    "watchlist";
 
-    return state.language === "en"
-        ? series.seasonsEN
-        : series.seasonsPT;
+
+let heroTimer =
+    null;
+
+
+let toastTimer =
+    null;
+
+
+let currentTrailerSeries =
+    null;
+
+
+let quizStep =
+    0;
+
+
+let quizAnswers =
+    [];
+
+
+/* =========================================================
+   DADOS DE MÍDIA / TVMAZE
+========================================================= */
+
+const mediaMemory =
+    new Map();
+
+
+function mediaStorageKey(id) {
+
+    return `biaMedia_${id}`;
 
 }
 
 
 /* =========================================================
-   API TVMAZE
-
-   Essa parte busca CAPA e ELENCO online.
+   PLACEHOLDER
 ========================================================= */
 
-const mediaCache = {};
+function createPlaceholder(
+    title
+) {
+
+    const safeTitle =
+        String(title)
+            .replaceAll(
+                "&",
+                "e"
+            );
 
 
-function getMediaStorageKey(id) {
+    const svg =
+        `
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="600"
+            height="900"
+            viewBox="0 0 600 900"
+        >
 
-    return `bia_media_${id}`;
+            <defs>
+
+                <linearGradient
+                    id="bg"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-color="#29252f"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#141419"
+                    />
+
+                </linearGradient>
+
+            </defs>
+
+
+            <rect
+                width="600"
+                height="900"
+                fill="url(#bg)"
+            />
+
+
+            <text
+                x="300"
+                y="405"
+                text-anchor="middle"
+                fill="#ffffff"
+                font-family="Arial"
+                font-size="58"
+                font-weight="700"
+            >
+                B
+            </text>
+
+
+            <text
+                x="300"
+                y="480"
+                text-anchor="middle"
+                fill="#b8b5bf"
+                font-family="Arial"
+                font-size="25"
+            >
+                ${safeTitle}
+            </text>
+
+        </svg>
+        `;
+
+
+    return (
+        "data:image/svg+xml;charset=UTF-8,"
+        +
+        encodeURIComponent(svg)
+    );
 
 }
 
 
-async function getSeriesMedia(series) {
+/* =========================================================
+   BUSCAR CAPA + ELENCO
+========================================================= */
+
+async function getSeriesMedia(
+    series
+) {
 
     if (
-        mediaCache[series.id]
+        mediaMemory.has(
+            series.id
+        )
     ) {
-        return mediaCache[series.id];
+
+        return mediaMemory.get(
+            series.id
+        );
+
     }
 
 
-    const cached =
-        localStorage.getItem(
-            getMediaStorageKey(
-                series.id
-            )
+    const localKey =
+        mediaStorageKey(
+            series.id
         );
 
 
-    if (cached) {
+    try {
 
-        try {
+        const saved =
+            localStorage.getItem(
+                localKey
+            );
+
+
+        if (saved) {
 
             const parsed =
-                JSON.parse(cached);
+                JSON.parse(saved);
 
-            mediaCache[series.id] =
-                parsed;
+
+            mediaMemory.set(
+                series.id,
+                parsed
+            );
+
 
             return parsed;
 
-        } catch {
-            // continua
         }
+
+    } catch {
+
+        // ignora cache quebrado
 
     }
 
@@ -1697,20 +2475,22 @@ async function getSeriesMedia(series) {
 
 
         if (!response.ok) {
+
             throw new Error(
-                "TVMaze error"
+                "TVMaze request failed"
             );
+
         }
 
 
-        const data =
+        const result =
             await response.json();
 
 
         const poster =
-            data?.image?.original
+            result?.image?.original
             ||
-            data?.image?.medium
+            result?.image?.medium
             ||
             createPlaceholder(
                 getSeriesTitle(series)
@@ -1719,47 +2499,61 @@ async function getSeriesMedia(series) {
 
         const cast =
             (
-                data?._embedded?.cast
+                result?._embedded?.cast
                 ||
                 []
             )
                 .slice(0, 8)
-                .map(item => ({
-                    name:
-                        item.person?.name
-                        ||
-                        "Ator",
+                .map(
+                    item => ({
 
-                    character:
-                        item.character?.name
-                        ||
-                        "",
+                        name:
+                            item.person?.name
+                            ||
+                            "—",
 
-                    image:
-                        item.person?.image?.original
-                        ||
-                        item.person?.image?.medium
-                        ||
-                        ""
-                }));
+                        character:
+                            item.character?.name
+                            ||
+                            "",
+
+                        image:
+                            item.person?.image?.original
+                            ||
+                            item.person?.image?.medium
+                            ||
+                            ""
+
+                    })
+                );
 
 
         const media = {
+
             poster,
             cast
+
         };
 
 
-        mediaCache[series.id] =
-            media;
-
-
-        localStorage.setItem(
-            getMediaStorageKey(
-                series.id
-            ),
-            JSON.stringify(media)
+        mediaMemory.set(
+            series.id,
+            media
         );
+
+
+        try {
+
+            localStorage.setItem(
+                localKey,
+                JSON.stringify(media)
+            );
+
+        } catch {
+
+            // pode falhar se cache lotar
+
+        }
 
 
         return media;
@@ -1767,18 +2561,32 @@ async function getSeriesMedia(series) {
     } catch (error) {
 
         console.warn(
-            `Imagem online não encontrada: ${series.title}`
+            "Não foi possível buscar mídia:",
+            series.title,
+            error
         );
 
 
-        return {
+        const fallback = {
+
             poster:
                 createPlaceholder(
                     getSeriesTitle(series)
                 ),
 
-            cast: []
+            cast:
+                []
+
         };
+
+
+        mediaMemory.set(
+            series.id,
+            fallback
+        );
+
+
+        return fallback;
 
     }
 
@@ -1786,85 +2594,139 @@ async function getSeriesMedia(series) {
 
 
 /* =========================================================
-   PLACEHOLDER
+   GETTERS
 ========================================================= */
 
-function createPlaceholder(title) {
+function getSeries(id) {
+
+    return seriesData.find(
+        item =>
+            item.id === id
+    );
+
+}
+
+
+function getSeriesTitle(
+    series
+) {
+
+    if (
+        state.language === "en"
+        &&
+        series.titleEN
+    ) {
+
+        return series.titleEN;
+
+    }
+
+
+    return series.title;
+
+}
+
+
+function getSeriesDescription(
+    series
+) {
+
+    return state.language === "en"
+        ? series.descriptionEN
+        : series.descriptionPT;
+
+}
+
+
+function getSeriesCountry(
+    series
+) {
+
+    return state.language === "en"
+        ? series.countryEN
+        : series.countryPT;
+
+}
+
+
+function getSeriesSeasons(
+    series
+) {
+
+    return state.language === "en"
+        ? series.seasonsEN
+        : series.seasonsPT;
+
+}
+
+
+/* =========================================================
+   GENRE
+========================================================= */
+
+function formatGenre(
+    genre
+) {
+
+    const mapPT = {
+
+        misterio:
+            "Mistério",
+
+        suspense:
+            "Suspense",
+
+        drama:
+            "Drama",
+
+        romance:
+            "Romance",
+
+        crime:
+            "Crime",
+
+        comedia:
+            "Comédia",
+
+        brasil:
+            "Brasil"
+
+    };
+
+
+    const mapEN = {
+
+        misterio:
+            "Mystery",
+
+        suspense:
+            "Thriller",
+
+        drama:
+            "Drama",
+
+        romance:
+            "Romance",
+
+        crime:
+            "Crime",
+
+        comedia:
+            "Comedy",
+
+        brasil:
+            "Brazil"
+
+    };
+
 
     return (
-        "data:image/svg+xml;charset=UTF-8,"
-        +
-        encodeURIComponent(`
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="600"
-                height="900"
-                viewBox="0 0 600 900"
-            >
-
-                <defs>
-
-                    <linearGradient
-                        id="g"
-                        x1="0"
-                        y1="0"
-                        x2="1"
-                        y2="1"
-                    >
-
-                        <stop
-                            offset="0%"
-                            stop-color="#9158d9"
-                        />
-
-                        <stop
-                            offset="50%"
-                            stop-color="#df6bbb"
-                        />
-
-                        <stop
-                            offset="100%"
-                            stop-color="#746ee7"
-                        />
-
-                    </linearGradient>
-
-                </defs>
-
-
-                <rect
-                    width="600"
-                    height="900"
-                    fill="url(#g)"
-                />
-
-
-                <text
-                    x="300"
-                    y="390"
-                    text-anchor="middle"
-                    fill="white"
-                    font-size="80"
-                    font-family="Arial"
-                >
-                    ♡
-                </text>
-
-
-                <text
-                    x="300"
-                    y="475"
-                    text-anchor="middle"
-                    fill="white"
-                    font-size="28"
-                    font-family="Arial"
-                >
-                    ${escapeHTML(title)}
-                </text>
-
-            </svg>
-        `)
-    );
+        state.language === "en"
+            ? mapEN
+            : mapPT
+    )[genre]
+    ||
+    genre;
 
 }
 
@@ -1875,17 +2737,28 @@ function createPlaceholder(title) {
 
 function showToast(
     message,
-    icon = "♡"
+    icon = "✓"
 ) {
 
-    if (!toast) return;
+    if (
+        !toast
+        ||
+        !toastText
+    ) {
+        return;
+    }
 
-
-    toastIcon.textContent =
-        icon;
 
     toastText.textContent =
         message;
+
+
+    if (toastIcon) {
+
+        toastIcon.textContent =
+            icon;
+
+    }
 
 
     toast.classList.add(
@@ -1901,9 +2774,11 @@ function showToast(
     toastTimer =
         setTimeout(
             () => {
+
                 toast.classList.remove(
                     "show"
                 );
+
             },
             2400
         );
@@ -1912,7 +2787,7 @@ function showToast(
 
 
 /* =========================================================
-   IDIOMA
+   LANGUAGE
 ========================================================= */
 
 function translatePage() {
@@ -1924,44 +2799,48 @@ function translatePage() {
 
 
     $$("[data-i18n]")
-        .forEach(element => {
+        .forEach(
+            element => {
 
-            const key =
-                element.dataset.i18n;
+                const key =
+                    element.dataset.i18n;
 
 
-            if (
-                dictionary[key]
-                !== undefined
-            ) {
+                if (
+                    dictionary[key]
+                    !== undefined
+                ) {
 
-                element.textContent =
-                    dictionary[key];
+                    element.textContent =
+                        dictionary[key];
+
+                }
 
             }
-
-        });
+        );
 
 
     $$("[data-i18n-placeholder]")
-        .forEach(element => {
+        .forEach(
+            element => {
 
-            const key =
-                element.dataset
-                    .i18nPlaceholder;
+                const key =
+                    element.dataset
+                        .i18nPlaceholder;
 
 
-            if (
-                dictionary[key]
-                !== undefined
-            ) {
+                if (
+                    dictionary[key]
+                    !== undefined
+                ) {
 
-                element.placeholder =
-                    dictionary[key];
+                    element.placeholder =
+                        dictionary[key];
+
+                }
 
             }
-
-        });
+        );
 
 
     document.documentElement.lang =
@@ -1982,17 +2861,24 @@ function translatePage() {
     );
 
 
-    updateAllDynamicContent();
+    populateCommentSeries();
+
+    renderEverything();
 
 }
 
 
-function setLanguage(language) {
+function setLanguage(
+    language
+) {
 
     if (
-        language !== "pt"
-        &&
-        language !== "en"
+        ![
+            "pt",
+            "en"
+        ].includes(
+            language
+        )
     ) {
         return;
     }
@@ -2011,30 +2897,30 @@ function setLanguage(language) {
         language === "pt"
             ? "🇧🇷 Português"
             : "🇺🇸 English",
-        "✦"
+        "✓"
     );
 
 }
 
 
 /* =========================================================
-   TEMA ESCURO
+   THEME
 ========================================================= */
 
 function applyTheme() {
 
     body.classList.toggle(
-        "dark-mode",
-        state.theme === "dark"
+        "light-mode",
+        state.theme === "light"
     );
 
 
     if (themeIcon) {
 
         themeIcon.textContent =
-            state.theme === "dark"
-                ? "☀"
-                : "☾";
+            state.theme === "light"
+                ? "☾"
+                : "☀";
 
     }
 
@@ -2058,28 +2944,28 @@ function toggleTheme() {
         state.language === "en"
             ? (
                 state.theme === "dark"
-                    ? "Dark mode enabled"
-                    : "Light mode enabled"
+                    ? "Dark mode"
+                    : "Light mode"
             )
             : (
                 state.theme === "dark"
-                    ? "Tema escuro ativado"
-                    : "Tema claro ativado"
-            ),
-        themeIcon?.textContent || "✦"
+                    ? "Tema escuro"
+                    : "Tema claro"
+            )
     );
 
 }
 
 
 /* =========================================================
-   GRADIENTES
+   COLOR THEME
 ========================================================= */
 
 function applyColorTheme() {
 
     if (
-        state.colorTheme === "bia"
+        state.colorTheme
+        === "default"
     ) {
 
         body.removeAttribute(
@@ -2088,55 +2974,34 @@ function applyColorTheme() {
 
     } else {
 
-        body.setAttribute(
-            "data-color-theme",
-            state.colorTheme
-        );
+        body.dataset.colorTheme =
+            state.colorTheme;
 
     }
 
 
     $$(".theme-color")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.classList.toggle(
-                "active",
-                button.dataset
-                    .themeColor
-                === state.colorTheme
-            );
+                button.classList.toggle(
+                    "active",
+                    button.dataset
+                        .themeColor
+                    === state.colorTheme
+                );
 
-        });
-
-}
-
-
-function setColorTheme(theme) {
-
-    state.colorTheme =
-        theme;
-
-
-    saveState();
-
-    applyColorTheme();
-
-
-    showToast(
-        state.language === "en"
-            ? "Gradient changed!"
-            : "Gradiente alterado!",
-        "✦"
-    );
+            }
+        );
 
 }
 
 
 /* =========================================================
-   EFEITOS
+   ANIMATIONS
 ========================================================= */
 
-function applyEffects() {
+function applyAnimationSetting() {
 
     body.classList.toggle(
         "animations-off",
@@ -2144,15 +3009,9 @@ function applyEffects() {
     );
 
 
-    if (effectsToggle) {
-
-        effectsToggle.checked =
-            state.effects;
-
-    }
-
-
-    if (animationsToggle) {
+    if (
+        animationsToggle
+    ) {
 
         animationsToggle.checked =
             state.animations;
@@ -2160,375 +3019,12 @@ function applyEffects() {
     }
 
 
-    const finePointer =
-        window.matchMedia(
-            "(pointer: fine)"
-        ).matches;
-
-
-    body.classList.toggle(
-        "custom-heart-cursor",
-        state.effects
-        &&
-        finePointer
-    );
-
-
-    if (heartCursor) {
-
-        heartCursor.style.display =
-            state.effects
-            &&
-            finePointer
-                ? ""
-                : "none";
-
-    }
-
-
-    createParticles();
-
-}
-
-
-/* =========================================================
-   PARTÍCULAS
-========================================================= */
-
-function createParticles() {
-
-    if (!particles) return;
-
-
-    particles.innerHTML = "";
-
-
-    if (!state.effects) {
-        return;
-    }
-
-
-    const symbols = [
-        "♡",
-        "✦",
-        "♥",
-        "✧"
-    ];
-
-
-    for (
-        let i = 0;
-        i < 16;
-        i++
-    ) {
-
-        const particle =
-            document.createElement(
-                "span"
-            );
-
-
-        particle.className =
-            "background-particle";
-
-
-        particle.textContent =
-            randomItem(symbols);
-
-
-        particle.style.left =
-            `${Math.random() * 100}%`;
-
-
-        particle.style.fontSize =
-            `${
-                8
-                +
-                Math.random() * 13
-            }px`;
-
-
-        particle.style.animationDelay =
-            `-${
-                Math.random() * 15
-            }s`;
-
-
-        particle.style.setProperty(
-            "--particle-speed",
-            `${
-                10
-                +
-                Math.random() * 11
-            }s`
-        );
-
-
-        particles.appendChild(
-            particle
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   CURSOR CORAÇÃO
-========================================================= */
-
-let lastTrailTime = 0;
-
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        if (
-            !state.effects
-            ||
-            !window.matchMedia(
-                "(pointer: fine)"
-            ).matches
-        ) {
-            return;
-        }
-
-
-        if (heartCursor) {
-
-            heartCursor.style.left =
-                `${event.clientX}px`;
-
-            heartCursor.style.top =
-                `${event.clientY}px`;
-
-        }
-
-
-        const now =
-            Date.now();
-
-
-        if (
-            now - lastTrailTime
-            > 70
-        ) {
-
-            createCursorTrail(
-                event.clientX,
-                event.clientY
-            );
-
-
-            lastTrailTime = now;
-
-        }
-
-    }
-);
-
-
-function createCursorTrail(
-    x,
-    y
-) {
-
     if (
-        !state.effects
-        ||
-        !clickEffects
-    ) {
-        return;
-    }
-
-
-    const trail =
-        document.createElement(
-            "span"
-        );
-
-
-    trail.className =
-        "cursor-trail";
-
-
-    trail.textContent =
-        Math.random() > 0.5
-            ? "♡"
-            : "✦";
-
-
-    trail.style.left =
-        `${x}px`;
-
-    trail.style.top =
-        `${y}px`;
-
-
-    clickEffects.appendChild(
-        trail
-    );
-
-
-    setTimeout(
-        () => trail.remove(),
-        700
-    );
-
-}
-
-
-/* =========================================================
-   CORAÇÃO AO CLICAR
-========================================================= */
-
-document.addEventListener(
-    "click",
-    event => {
-
-        if (
-            !state.effects
-            ||
-            !clickEffects
-        ) {
-            return;
-        }
-
-
-        if (
-            event.target.closest(
-                "input, textarea, select"
-            )
-        ) {
-            return;
-        }
-
-
-        const heart =
-            document.createElement(
-                "span"
-            );
-
-
-        heart.className =
-            "click-heart";
-
-
-        heart.textContent =
-            Math.random() > 0.4
-                ? "♡"
-                : "♥";
-
-
-        heart.style.left =
-            `${event.clientX}px`;
-
-        heart.style.top =
-            `${event.clientY}px`;
-
-
-        clickEffects.appendChild(
-            heart
-        );
-
-
-        setTimeout(
-            () => heart.remove(),
-            1000
-        );
-
-    }
-);
-
-
-/* =========================================================
-   CONFETE
-========================================================= */
-
-function burstConfetti() {
-
-    if (
-        !state.effects
-        ||
-        !clickEffects
-    ) {
-        return;
-    }
-
-
-    const symbols = [
-        "♡",
-        "♥",
-        "✦",
-        "★"
-    ];
-
-
-    for (
-        let i = 0;
-        i < 24;
-        i++
+        autoHeroToggle
     ) {
 
-        const piece =
-            document.createElement(
-                "span"
-            );
-
-
-        piece.className =
-            "confetti-piece";
-
-
-        piece.textContent =
-            randomItem(symbols);
-
-
-        piece.style.left =
-            `${40 + Math.random() * 20}vw`;
-
-        piece.style.top =
-            `${25 + Math.random() * 25}vh`;
-
-
-        piece.style.setProperty(
-            "--x",
-            `${
-                -180
-                +
-                Math.random() * 360
-            }px`
-        );
-
-
-        piece.style.setProperty(
-            "--y",
-            `${
-                80
-                +
-                Math.random() * 220
-            }px`
-        );
-
-
-        piece.style.setProperty(
-            "--rotation",
-            `${
-                Math.random() * 720
-            }deg`
-        );
-
-
-        clickEffects.appendChild(
-            piece
-        );
-
-
-        setTimeout(
-            () => piece.remove(),
-            1500
-        );
+        autoHeroToggle.checked =
+            state.autoHero;
 
     }
 
@@ -2536,21 +3032,7 @@ function burstConfetti() {
 
 
 /* =========================================================
-   DADOS
-========================================================= */
-
-function getSeries(id) {
-
-    return seriesData.find(
-        series =>
-            series.id === id
-    );
-
-}
-
-
-/* =========================================================
-   FAVORITOS
+   FAVORITE / WATCHLIST / WATCHING / WATCHED
 ========================================================= */
 
 function isFavorite(id) {
@@ -2561,52 +3043,6 @@ function isFavorite(id) {
 }
 
 
-function toggleFavorite(id) {
-
-    if (isFavorite(id)) {
-
-        state.favorites =
-            state.favorites.filter(
-                item => item !== id
-            );
-
-
-        showToast(
-            state.language === "en"
-                ? "Removed from favorites"
-                : "Removida dos favoritos",
-            "♡"
-        );
-
-    } else {
-
-        state.favorites.push(id);
-
-
-        showToast(
-            state.language === "en"
-                ? "Added to favorites!"
-                : "Adicionada aos favoritos!",
-            "♥"
-        );
-
-
-        burstConfetti();
-
-    }
-
-
-    saveState();
-
-    updateAllDynamicContent();
-
-}
-
-
-/* =========================================================
-   WATCHLIST
-========================================================= */
-
 function isWatchlisted(id) {
 
     return state.watchlist
@@ -2615,48 +3051,13 @@ function isWatchlisted(id) {
 }
 
 
-function toggleWatchlist(id) {
+function isWatching(id) {
 
-    if (isWatchlisted(id)) {
-
-        state.watchlist =
-            state.watchlist.filter(
-                item => item !== id
-            );
-
-
-        showToast(
-            state.language === "en"
-                ? "Removed from watchlist"
-                : "Removida da lista",
-            "−"
-        );
-
-    } else {
-
-        state.watchlist.push(id);
-
-
-        showToast(
-            state.language === "en"
-                ? "Added to watchlist!"
-                : "Adicionada à sua lista!",
-            "＋"
-        );
-
-    }
-
-
-    saveState();
-
-    updateAllDynamicContent();
+    return state.watching
+        .includes(id);
 
 }
 
-
-/* =========================================================
-   ASSISTIDAS
-========================================================= */
 
 function isWatched(id) {
 
@@ -2666,47 +3067,239 @@ function isWatched(id) {
 }
 
 
-function toggleWatched(id) {
+function toggleArrayItem(
+    array,
+    id
+) {
 
-    if (isWatched(id)) {
+    if (
+        array.includes(id)
+    ) {
+
+        return array.filter(
+            item =>
+                item !== id
+        );
+
+    }
+
+
+    return [
+        ...array,
+        id
+    ];
+
+}
+
+
+/* FAVORITO */
+
+function toggleFavorite(id) {
+
+    state.favorites =
+        toggleArrayItem(
+            state.favorites,
+            id
+        );
+
+
+    saveState();
+
+    refreshAfterUserChange();
+
+
+    showToast(
+        isFavorite(id)
+            ? (
+                state.language === "en"
+                    ? "Added to favorites"
+                    : "Adicionada aos favoritos"
+            )
+            : (
+                state.language === "en"
+                    ? "Removed from favorites"
+                    : "Removida dos favoritos"
+            ),
+        isFavorite(id)
+            ? "★"
+            : "✓"
+    );
+
+}
+
+
+/* WATCHLIST */
+
+function toggleWatchlist(id) {
+
+    state.watchlist =
+        toggleArrayItem(
+            state.watchlist,
+            id
+        );
+
+
+    saveState();
+
+    refreshAfterUserChange();
+
+
+    showToast(
+        isWatchlisted(id)
+            ? (
+                state.language === "en"
+                    ? "Added to your list"
+                    : "Adicionada à sua lista"
+            )
+            : (
+                state.language === "en"
+                    ? "Removed from your list"
+                    : "Removida da sua lista"
+            )
+    );
+
+}
+
+
+/* WATCHING */
+
+function toggleWatching(id) {
+
+    const turningOn =
+        !isWatching(id);
+
+
+    if (turningOn) {
+
+        if (
+            !state.watching
+                .includes(id)
+        ) {
+
+            state.watching.push(id);
+
+        }
+
 
         state.watched =
             state.watched.filter(
-                item => item !== id
+                item =>
+                    item !== id
             );
 
 
-        showToast(
-            state.language === "en"
-                ? "Removed from watched"
-                : "Removida das assistidas",
-            "✓"
-        );
+        if (
+            !state.progress[id]
+        ) {
+
+            state.progress[id] =
+                5;
+
+        }
 
     } else {
 
-        state.watched.push(id);
-
-        state.progress[id] =
-            100;
-
-
-        showToast(
-            state.language === "en"
-                ? "Series completed!"
-                : "Série concluída!",
-            "🍿"
-        );
-
-
-        burstConfetti();
+        state.watching =
+            state.watching.filter(
+                item =>
+                    item !== id
+            );
 
     }
 
 
     saveState();
 
-    updateAllDynamicContent();
+    refreshAfterUserChange();
+
+
+    showToast(
+        turningOn
+            ? (
+                state.language === "en"
+                    ? "Marked as watching"
+                    : "Marcada como assistindo"
+            )
+            : (
+                state.language === "en"
+                    ? "Removed from watching"
+                    : "Removida de assistindo"
+            )
+    );
+
+}
+
+
+/* WATCHED */
+
+function toggleWatched(id) {
+
+    const turningOn =
+        !isWatched(id);
+
+
+    if (turningOn) {
+
+        if (
+            !state.watched
+                .includes(id)
+        ) {
+
+            state.watched.push(id);
+
+        }
+
+
+        state.watching =
+            state.watching.filter(
+                item =>
+                    item !== id
+            );
+
+
+        state.progress[id] =
+            100;
+
+    } else {
+
+        state.watched =
+            state.watched.filter(
+                item =>
+                    item !== id
+            );
+
+
+        if (
+            state.progress[id]
+            === 100
+        ) {
+
+            state.progress[id] =
+                0;
+
+        }
+
+    }
+
+
+    saveState();
+
+    refreshAfterUserChange();
+
+
+    showToast(
+        turningOn
+            ? (
+                state.language === "en"
+                    ? "Marked as watched"
+                    : "Marcada como assistida"
+            )
+            : (
+                state.language === "en"
+                    ? "Removed from watched"
+                    : "Removida das assistidas"
+            )
+    );
 
 }
 
@@ -2717,29 +3310,39 @@ function toggleWatched(id) {
 
 const featuredSeries =
     seriesData.filter(
-        series =>
-            series.featured
+        item =>
+            item.featured
     );
 
 
 function createHeroDots() {
 
-    if (!heroDots) return;
+    if (!heroDots) {
+        return;
+    }
 
 
     heroDots.innerHTML =
         featuredSeries
             .map(
-                (_, index) => `
+                (
+                    series,
+                    index
+                ) => `
                     <button
                         class="hero-dot ${
-                            index === heroIndex
+                            index
+                            === heroIndex
                                 ? "active"
                                 : ""
                         }"
                         data-hero-index="${index}"
-                        aria-label="Slide ${
-                            index + 1
+                        aria-label="${
+                            escapeHTML(
+                                getSeriesTitle(
+                                    series
+                                )
+                            )
                         }"
                     ></button>
                 `
@@ -2752,7 +3355,7 @@ function createHeroDots() {
 async function updateHero() {
 
     if (
-        featuredSeries.length === 0
+        !featuredSeries.length
     ) {
         return;
     }
@@ -2769,7 +3372,9 @@ async function updateHero() {
 
 
     heroTitle.textContent =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 
     heroRating.textContent =
@@ -2787,55 +3392,24 @@ async function updateHero() {
 
 
     heroSeasons.textContent =
-        getSeriesSeasons(series);
+        getSeriesSeasons(
+            series
+        );
 
 
     heroDescription.textContent =
-        getSeriesDescription(series);
+        getSeriesDescription(
+            series
+        );
 
 
     communityRating.textContent =
         `${series.rating} / 5`;
 
 
-    heroFavoriteBtn.classList.toggle(
-        "active",
-        isFavorite(series.id)
+    updateHeroButtons(
+        series.id
     );
-
-
-    heroFavoriteBtn.innerHTML =
-        isFavorite(series.id)
-            ? `♥ <span>${
-                state.language === "en"
-                    ? "Favorited"
-                    : "Favoritada"
-            }</span>`
-            : `♡ <span>${
-                translations[
-                    state.language
-                ].favorite
-            }</span>`;
-
-
-    heroWatchlistBtn.classList.toggle(
-        "active",
-        isWatchlisted(series.id)
-    );
-
-
-    heroWatchlistBtn.innerHTML =
-        isWatchlisted(series.id)
-            ? `✓ <span>${
-                state.language === "en"
-                    ? "In my list"
-                    : "Na minha lista"
-            }</span>`
-            : `＋ <span>${
-                translations[
-                    state.language
-                ].watchlist
-            }</span>`;
 
 
     const media =
@@ -2849,27 +3423,27 @@ async function updateHero() {
 
 
     heroPoster.alt =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 
     heroBackdrop.style
         .backgroundImage =
-            `
-            linear-gradient(
-                rgba(20,10,25,.1),
-                rgba(20,10,25,.1)
-            ),
-            url("${media.poster}")
-            `;
+        `url("${media.poster}")`;
 
 
     $$(".hero-dot")
         .forEach(
-            (dot, index) => {
+            (
+                dot,
+                index
+            ) => {
 
                 dot.classList.toggle(
                     "active",
-                    index === heroIndex
+                    index
+                    === heroIndex
                 );
 
             }
@@ -2878,8 +3452,64 @@ async function updateHero() {
 }
 
 
+function updateHeroButtons(id) {
+
+    if (
+        heroFavoriteBtn
+    ) {
+
+        heroFavoriteBtn.classList.toggle(
+            "active",
+            isFavorite(id)
+        );
+
+
+        heroFavoriteBtn.innerHTML =
+            isFavorite(id)
+                ? (
+                    state.language === "en"
+                        ? "★ Favorited"
+                        : "★ Favoritada"
+                )
+                : (
+                    state.language === "en"
+                        ? "☆ Favorite"
+                        : "☆ Favoritar"
+                );
+
+    }
+
+
+    if (
+        heroWatchlistBtn
+    ) {
+
+        heroWatchlistBtn.classList.toggle(
+            "active",
+            isWatchlisted(id)
+        );
+
+
+        heroWatchlistBtn.innerHTML =
+            isWatchlisted(id)
+                ? (
+                    state.language === "en"
+                        ? "✓ In my list"
+                        : "✓ Na minha lista"
+                )
+                : (
+                    state.language === "en"
+                        ? "+ My list"
+                        : "+ Minha lista"
+                );
+
+    }
+
+}
+
+
 /* =========================================================
-   HERO AUTOPLAY
+   HERO TIMER
 ========================================================= */
 
 function startHeroTimer() {
@@ -2889,6 +3519,13 @@ function startHeroTimer() {
     );
 
 
+    if (
+        !state.autoHero
+    ) {
+        return;
+    }
+
+
     heroTimer =
         setInterval(
             () => {
@@ -2896,11 +3533,17 @@ function startHeroTimer() {
                 if (
                     document.hidden
                     ||
-                    seriesModal?.classList
-                        .contains("open")
+                    seriesModal
+                        ?.classList
+                        .contains(
+                            "open"
+                        )
                     ||
-                    searchOverlay?.classList
-                        .contains("open")
+                    searchOverlay
+                        ?.classList
+                        .contains(
+                            "open"
+                        )
                 ) {
                     return;
                 }
@@ -2908,63 +3551,19 @@ function startHeroTimer() {
 
                 heroIndex =
                     (
-                        heroIndex + 1
+                        heroIndex
+                        + 1
                     )
                     %
-                    featuredSeries.length;
+                    featuredSeries
+                        .length;
 
 
                 updateHero();
 
             },
-            9000
+            8500
         );
-
-}
-
-
-/* =========================================================
-   GÊNEROS
-========================================================= */
-
-function formatGenre(genre) {
-
-    const map = {
-
-        misterio:
-            state.language === "en"
-                ? "Mystery"
-                : "Mistério",
-
-        suspense:
-            state.language === "en"
-                ? "Thriller"
-                : "Suspense",
-
-        drama:
-            "Drama",
-
-        romance:
-            "Romance",
-
-        crime:
-            "Crime",
-
-        comedia:
-            state.language === "en"
-                ? "Comedy"
-                : "Comédia",
-
-        brasil:
-            state.language === "en"
-                ? "Brazil"
-                : "Brasil"
-
-    };
-
-
-    return map[genre]
-        || genre;
 
 }
 
@@ -2979,34 +3578,30 @@ function getFilteredSeries() {
         [...seriesData];
 
 
-    const query =
-        seriesSearch?.value
-            .trim()
-            .toLowerCase()
-        ||
-        "";
-
+    /* FILTRO DE GÊNERO */
 
     if (
-        activeFilter !== "all"
+        activeFilter
+        !== "all"
     ) {
 
         if (
-            activeFilter === "brasil"
+            activeFilter
+            === "brasil"
         ) {
 
             list =
                 list.filter(
-                    series =>
-                        series.brazil
+                    item =>
+                        item.brazil
                 );
 
         } else {
 
             list =
                 list.filter(
-                    series =>
-                        series.genres
+                    item =>
+                        item.genres
                             .includes(
                                 activeFilter
                             )
@@ -3017,28 +3612,38 @@ function getFilteredSeries() {
     }
 
 
+    /* PESQUISA */
+
+    const query =
+        seriesSearch
+            ?.value
+            .trim()
+            .toLowerCase()
+        ||
+        "";
+
+
     if (query) {
 
         list =
             list.filter(
-                series => {
+                item => {
 
-                    const text =
+                    const searchable =
                         [
-                            getSeriesTitle(series),
-                            series.title,
-                            series.titleEN || "",
-                            getSeriesCountry(series),
-                            getSeriesDescription(series),
-                            ...series.genres
+                            item.title,
+                            item.titleEN || "",
+                            getSeriesTitle(item),
+                            getSeriesCountry(item),
+                            getSeriesDescription(item),
+                            ...item.genres
                         ]
                             .join(" ")
                             .toLowerCase();
 
 
-                    return text.includes(
-                        query
-                    );
+                    return searchable
+                        .includes(query);
 
                 }
             );
@@ -3046,41 +3651,50 @@ function getFilteredSeries() {
     }
 
 
-    const minimumRating =
+    /* RATING */
+
+    const minimum =
         Number(
-            ratingFilter?.value
+            ratingFilter
+                ?.value
             ||
             0
         );
 
 
-    if (minimumRating > 0) {
+    if (
+        minimum > 0
+    ) {
 
         list =
             list.filter(
-                series =>
-                    series.rating
-                    >= minimumRating
+                item =>
+                    item.rating
+                    >= minimum
             );
 
     }
 
 
+    /* STATUS */
+
     const status =
-        statusFilter?.value
+        statusFilter
+            ?.value
         ||
         "all";
 
 
     if (
-        status === "favorite"
+        status
+        === "favorite"
     ) {
 
         list =
             list.filter(
-                series =>
+                item =>
                     isFavorite(
-                        series.id
+                        item.id
                     )
             );
 
@@ -3088,14 +3702,15 @@ function getFilteredSeries() {
 
 
     if (
-        status === "watchlist"
+        status
+        === "watchlist"
     ) {
 
         list =
             list.filter(
-                series =>
+                item =>
                     isWatchlisted(
-                        series.id
+                        item.id
                     )
             );
 
@@ -3103,124 +3718,140 @@ function getFilteredSeries() {
 
 
     if (
-        status === "watched"
+        status
+        === "watching"
     ) {
 
         list =
             list.filter(
-                series =>
+                item =>
+                    isWatching(
+                        item.id
+                    )
+            );
+
+    }
+
+
+    if (
+        status
+        === "watched"
+    ) {
+
+        list =
+            list.filter(
+                item =>
                     isWatched(
-                        series.id
+                        item.id
                     )
             );
 
     }
 
 
-    if (
-        status === "watching"
-    ) {
+    /* ORDENAR */
 
-        list =
-            list.filter(
-                series => {
-
-                    const progress =
-                        Number(
-                            state.progress[
-                                series.id
-                            ]
-                            ||
-                            0
-                        );
-
-
-                    return (
-                        progress > 0
-                        &&
-                        progress < 100
-                    );
-
-                }
-            );
-
-    }
-
-
-    const sort =
-        seriesSort?.value
+    const sorting =
+        seriesSort
+            ?.value
         ||
         "featured";
 
 
-    if (
-        sort === "rating"
-    ) {
+    switch (sorting) {
 
-        list.sort(
-            (a, b) =>
-                b.rating
-                -
-                a.rating
-        );
+        case "rating":
 
-    }
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    b.rating
+                    -
+                    a.rating
+            );
+
+            break;
 
 
-    if (
-        sort === "az"
-    ) {
+        case "az":
 
-        list.sort(
-            (a, b) =>
-                getSeriesTitle(a)
-                    .localeCompare(
-                        getSeriesTitle(b)
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    getSeriesTitle(a)
+                        .localeCompare(
+                            getSeriesTitle(b)
+                        )
+            );
+
+            break;
+
+
+        case "za":
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    getSeriesTitle(b)
+                        .localeCompare(
+                            getSeriesTitle(a)
+                        )
+            );
+
+            break;
+
+
+        case "newest":
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    b.year
+                    -
+                    a.year
+            );
+
+            break;
+
+
+        case "oldest":
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    a.year
+                    -
+                    b.year
+            );
+
+            break;
+
+
+        default:
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    Number(
+                        b.featured
                     )
-        );
-
-    }
-
-
-    if (
-        sort === "za"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                getSeriesTitle(b)
-                    .localeCompare(
-                        getSeriesTitle(a)
+                    -
+                    Number(
+                        a.featured
                     )
-        );
-
-    }
-
-
-    if (
-        sort === "newest"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                b.year
-                -
-                a.year
-        );
-
-    }
-
-
-    if (
-        sort === "oldest"
-    ) {
-
-        list.sort(
-            (a, b) =>
-                a.year
-                -
-                b.year
-        );
+            );
 
     }
 
@@ -3231,16 +3862,233 @@ function getFilteredSeries() {
 
 
 /* =========================================================
-   GRID DAS SÉRIES
+   SERIES CARD
+========================================================= */
+
+function seriesCardHTML(
+    series,
+    imageAttribute =
+        "data-series-image"
+) {
+
+    const watched =
+        isWatched(
+            series.id
+        );
+
+
+    const watching =
+        isWatching(
+            series.id
+        );
+
+
+    return `
+        <article
+            class="series-card"
+            data-series-card="${series.id}"
+        >
+
+            <div
+                class="series-poster"
+            >
+
+                <img
+                    ${imageAttribute}="${series.id}"
+                    src="${
+                        createPlaceholder(
+                            getSeriesTitle(series)
+                        )
+                    }"
+                    alt="${
+                        escapeHTML(
+                            getSeriesTitle(series)
+                        )
+                    }"
+                    loading="lazy"
+                >
+
+
+                <div
+                    class="card-top-actions"
+                >
+
+                    <span
+                        class="card-badge"
+                    >
+                        ${
+                            series.brazil
+                                ? "🇧🇷 BRASIL"
+                                : escapeHTML(
+                                    formatGenre(
+                                        series.genres[0]
+                                    )
+                                )
+                        }
+                    </span>
+
+
+                    <button
+                        class="card-heart ${
+                            isFavorite(
+                                series.id
+                            )
+                                ? "active"
+                                : ""
+                        }"
+                        data-toggle-favorite="${series.id}"
+                        type="button"
+                    >
+                        ${
+                            isFavorite(
+                                series.id
+                            )
+                                ? "★"
+                                : "☆"
+                        }
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="series-card-body"
+            >
+
+                <h3>
+                    ${
+                        escapeHTML(
+                            getSeriesTitle(
+                                series
+                            )
+                        )
+                    }
+                </h3>
+
+
+                <div
+                    class="series-card-meta"
+                >
+
+                    <span>
+                        ${series.year}
+                    </span>
+
+                    <span>
+                        ${
+                            escapeHTML(
+                                getSeriesCountry(
+                                    series
+                                )
+                            )
+                        }
+                    </span>
+
+                    ${
+                        watching
+                            ? `
+                                <span>
+                                    ${
+                                        state.language === "en"
+                                            ? "Watching"
+                                            : "Assistindo"
+                                    }
+                                </span>
+                            `
+                            : ""
+                    }
+
+                    ${
+                        watched
+                            ? `
+                                <span>
+                                    ${
+                                        state.language === "en"
+                                            ? "Watched"
+                                            : "Assistida"
+                                    }
+                                </span>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+
+                <p
+                    class="series-card-description"
+                >
+                    ${
+                        escapeHTML(
+                            getSeriesDescription(
+                                series
+                            )
+                        )
+                    }
+                </p>
+
+
+                <div
+                    class="series-card-footer"
+                >
+
+                    <span
+                        class="series-rating"
+                    >
+                        ★ ${series.rating}
+                    </span>
+
+
+                    <button
+                        class="open-series-btn"
+                        data-open-series="${series.id}"
+                        type="button"
+                    >
+                        ${
+                            state.language === "en"
+                                ? "details"
+                                : "detalhes"
+                        }
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER SERIES
 ========================================================= */
 
 async function renderSeries() {
 
-    if (!seriesGrid) return;
+    if (
+        !seriesGrid
+    ) {
+        return;
+    }
 
 
     const list =
         getFilteredSeries();
+
+
+    seriesGrid.innerHTML =
+        list
+            .map(
+                item =>
+                    seriesCardHTML(
+                        item
+                    )
+            )
+            .join("");
 
 
     seriesResultCount.textContent =
@@ -3249,219 +4097,40 @@ async function renderSeries() {
 
     emptySeries.classList.toggle(
         "hidden",
-        list.length > 0
+        list.length !== 0
     );
 
 
-    seriesGrid.innerHTML =
-        list
-            .map(
-                series => `
-                    <article
-                        class="series-card"
-                        data-series-card="${
-                            series.id
-                        }"
-                    >
-
-                        <div
-                            class="series-poster"
-                        >
-
-                            <img
-                                data-online-poster="${
-                                    series.id
-                                }"
-                                src="${
-                                    createPlaceholder(
-                                        getSeriesTitle(series)
-                                    )
-                                }"
-                                alt="${
-                                    escapeHTML(
-                                        getSeriesTitle(series)
-                                    )
-                                }"
-                                loading="lazy"
-                            >
-
-                            <div
-                                class="series-card-shine"
-                            ></div>
-
-
-                            <div
-                                class="card-top-actions"
-                            >
-
-                                <span
-                                    class="card-badge"
-                                >
-                                    ${
-                                        series.brazil
-                                            ? "🇧🇷 BRASIL"
-                                            : escapeHTML(
-                                                formatGenre(
-                                                    series.genres[0]
-                                                )
-                                            )
-                                    }
-                                </span>
-
-
-                                <button
-                                    class="card-heart ${
-                                        isFavorite(
-                                            series.id
-                                        )
-                                            ? "active"
-                                            : ""
-                                    }"
-                                    data-favorite="${
-                                        series.id
-                                    }"
-                                    type="button"
-                                >
-                                    ${
-                                        isFavorite(
-                                            series.id
-                                        )
-                                            ? "♥"
-                                            : "♡"
-                                    }
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="series-card-body"
-                        >
-
-                            <h3>
-                                ${
-                                    escapeHTML(
-                                        getSeriesTitle(
-                                            series
-                                        )
-                                    )
-                                }
-                            </h3>
-
-
-                            <div
-                                class="series-card-meta"
-                            >
-
-                                <span>
-                                    ${series.year}
-                                </span>
-
-                                <span>
-                                    ${
-                                        escapeHTML(
-                                            getSeriesCountry(
-                                                series
-                                            )
-                                        )
-                                    }
-                                </span>
-
-                                ${
-                                    isWatched(
-                                        series.id
-                                    )
-                                        ? `
-                                            <span>
-                                                ✓ ${
-                                                    state.language === "en"
-                                                        ? "watched"
-                                                        : "assistida"
-                                                }
-                                            </span>
-                                        `
-                                        : ""
-                                }
-
-                            </div>
-
-
-                            <p
-                                class="series-card-description"
-                            >
-                                ${
-                                    escapeHTML(
-                                        getSeriesDescription(
-                                            series
-                                        )
-                                    )
-                                }
-                            </p>
-
-
-                            <div
-                                class="series-card-footer"
-                            >
-
-                                <span
-                                    class="series-rating"
-                                >
-                                    ★ ${series.rating}
-                                </span>
-
-
-                                <button
-                                    class="open-series-btn"
-                                    data-open-series="${
-                                        series.id
-                                    }"
-                                    type="button"
-                                >
-                                    ${
-                                        state.language === "en"
-                                            ? "details ♡"
-                                            : "detalhes ♡"
-                                    }
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-                `
-            )
-            .join("");
-
-
-    loadVisiblePosters(
-        list
+    await loadImagesForList(
+        list,
+        "data-series-image"
     );
 
 }
 
 
 /* =========================================================
-   CARREGAR CAPAS
+   CARREGAR CAPAS DE UMA LISTA
 ========================================================= */
 
-async function loadVisiblePosters(list) {
+async function loadImagesForList(
+    list,
+    attribute
+) {
 
-    const tasks =
+    const promises =
         list.map(
             async series => {
 
                 const image =
                     document.querySelector(
-                        `[data-online-poster="${
-                            series.id
-                        }"]`
+                        `[${attribute}="${series.id}"]`
                     );
 
 
-                if (!image) return;
+                if (!image) {
+                    return;
+                }
 
 
                 const media =
@@ -3478,52 +4147,488 @@ async function loadVisiblePosters(list) {
 
 
     await Promise.allSettled(
-        tasks
+        promises
     );
 
 }
 
 
 /* =========================================================
-   BRASIL
+   MINHA LISTA
 ========================================================= */
 
-async function renderBrazil() {
+function getPersonalSeries() {
 
-    if (!brazilCarousel) return;
+    switch (
+        personalTab
+    ) {
+
+        case "favorites":
+
+            return seriesData
+                .filter(
+                    item =>
+                        isFavorite(
+                            item.id
+                        )
+                );
 
 
-    const brazilSeries =
+        case "watching":
+
+            return seriesData
+                .filter(
+                    item =>
+                        isWatching(
+                            item.id
+                        )
+                );
+
+
+        case "watched":
+
+            return seriesData
+                .filter(
+                    item =>
+                        isWatched(
+                            item.id
+                        )
+                );
+
+
+        case "watchlist":
+        default:
+
+            return seriesData
+                .filter(
+                    item =>
+                        isWatchlisted(
+                            item.id
+                        )
+                );
+
+    }
+
+}
+
+
+async function renderPersonalList() {
+
+    if (
+        !personalGrid
+    ) {
+        return;
+    }
+
+
+    const list =
+        getPersonalSeries();
+
+
+    personalGrid.innerHTML =
+        list
+            .map(
+                item => {
+
+                    const progress =
+                        Number(
+                            state.progress[
+                                item.id
+                            ]
+                            ||
+                            0
+                        );
+
+
+                    return `
+                        <button
+                            class="personal-card"
+                            data-open-series="${item.id}"
+                            type="button"
+                        >
+
+                            <img
+                                data-personal-image="${item.id}"
+                                src="${
+                                    createPlaceholder(
+                                        getSeriesTitle(
+                                            item
+                                        )
+                                    )
+                                }"
+                                alt="${
+                                    escapeHTML(
+                                        getSeriesTitle(
+                                            item
+                                        )
+                                    )
+                                }"
+                            >
+
+
+                            <div
+                                class="personal-content"
+                            >
+
+                                <strong>
+                                    ${
+                                        escapeHTML(
+                                            getSeriesTitle(
+                                                item
+                                            )
+                                        )
+                                    }
+                                </strong>
+
+                                <small>
+                                    ${
+                                        progress > 0
+                                            ? `${progress}%`
+                                            : (
+                                                state.language === "en"
+                                                    ? "View details"
+                                                    : "Ver detalhes"
+                                            )
+                                    }
+                                </small>
+
+                            </div>
+
+                        </button>
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    if (
+        personalEmpty
+    ) {
+
+        personalEmpty.style.display =
+            list.length
+                ? "none"
+                : "";
+
+    }
+
+
+    await loadImagesForList(
+        list,
+        "data-personal-image"
+    );
+
+}
+
+
+/* =========================================================
+   CONTINUAR ASSISTINDO
+========================================================= */
+
+async function renderContinueWatching() {
+
+    if (
+        !continueSection
+        ||
+        !continueGrid
+    ) {
+        return;
+    }
+
+
+    const list =
         seriesData.filter(
-            series =>
-                series.brazil
+            item => {
+
+                const progress =
+                    Number(
+                        state.progress[
+                            item.id
+                        ]
+                        ||
+                        0
+                    );
+
+
+                return (
+                    progress > 0
+                    &&
+                    progress < 100
+                );
+
+            }
         );
 
 
-    brazilCarousel.innerHTML =
-        brazilSeries
+    continueSection
+        .classList
+        .toggle(
+            "show",
+            list.length > 0
+        );
+
+
+    continueGrid.innerHTML =
+        list
             .map(
-                series => `
+                item => {
+
+                    const progress =
+                        Number(
+                            state.progress[
+                                item.id
+                            ]
+                            ||
+                            0
+                        );
+
+
+                    return `
+                        <button
+                            class="continue-card"
+                            data-open-series="${item.id}"
+                            type="button"
+                        >
+
+                            <img
+                                data-continue-image="${item.id}"
+                                src="${
+                                    createPlaceholder(
+                                        getSeriesTitle(
+                                            item
+                                        )
+                                    )
+                                }"
+                                alt="${
+                                    escapeHTML(
+                                        getSeriesTitle(
+                                            item
+                                        )
+                                    )
+                                }"
+                            >
+
+
+                            <div
+                                class="continue-content"
+                            >
+
+                                <strong>
+                                    ${
+                                        escapeHTML(
+                                            getSeriesTitle(
+                                                item
+                                            )
+                                        )
+                                    }
+                                </strong>
+
+
+                                <div
+                                    class="continue-progress"
+                                >
+
+                                    <span
+                                        style="
+                                            width:${progress}%
+                                        "
+                                    ></span>
+
+                                </div>
+
+
+                                <small>
+                                    ${progress}%
+                                </small>
+
+                            </div>
+
+                        </button>
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    await loadImagesForList(
+        list,
+        "data-continue-image"
+    );
+
+}
+
+
+/* =========================================================
+   HISTÓRICO
+========================================================= */
+
+function addToHistory(id) {
+
+    state.history =
+        state.history.filter(
+            item =>
+                item !== id
+        );
+
+
+    state.history.unshift(
+        id
+    );
+
+
+    state.history =
+        state.history.slice(
+            0,
+            8
+        );
+
+
+    saveState();
+
+}
+
+
+async function renderHistory() {
+
+    if (
+        !historySection
+        ||
+        !historyGrid
+    ) {
+        return;
+    }
+
+
+    const list =
+        state.history
+            .map(
+                id =>
+                    getSeries(id)
+            )
+            .filter(Boolean);
+
+
+    historySection
+        .classList
+        .toggle(
+            "show",
+            list.length > 0
+        );
+
+
+    historyGrid.innerHTML =
+        list
+            .map(
+                item => `
                     <button
-                        class="brazil-card"
-                        data-open-series="${
-                            series.id
-                        }"
+                        class="history-card"
+                        data-open-series="${item.id}"
                         type="button"
                     >
 
                         <img
-                            data-brazil-poster="${
-                                series.id
-                            }"
+                            data-history-image="${item.id}"
                             src="${
                                 createPlaceholder(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                             alt="${
                                 escapeHTML(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
+                                )
+                            }"
+                        >
+
+
+                        <div
+                            class="history-content"
+                        >
+
+                            <strong>
+                                ${
+                                    escapeHTML(
+                                        getSeriesTitle(
+                                            item
+                                        )
+                                    )
+                                }
+                            </strong>
+
+                            <small>
+                                ${
+                                    state.language === "en"
+                                        ? "Viewed"
+                                        : "Visualizada"
+                                }
+                            </small>
+
+                        </div>
+
+                    </button>
+                `
+            )
+            .join("");
+
+
+    await loadImagesForList(
+        list,
+        "data-history-image"
+    );
+
+}
+
+
+/* =========================================================
+   BRAZIL
+========================================================= */
+
+async function renderBrazil() {
+
+    if (
+        !brazilCarousel
+    ) {
+        return;
+    }
+
+
+    const list =
+        seriesData.filter(
+            item =>
+                item.brazil
+        );
+
+
+    brazilCarousel.innerHTML =
+        list
+            .map(
+                item => `
+                    <button
+                        class="brazil-card"
+                        data-open-series="${item.id}"
+                        type="button"
+                    >
+
+                        <img
+                            data-brazil-image="${item.id}"
+                            src="${
+                                createPlaceholder(
+                                    getSeriesTitle(
+                                        item
+                                    )
+                                )
+                            }"
+                            alt="${
+                                escapeHTML(
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                         >
@@ -3537,16 +4642,15 @@ async function renderBrazil() {
                                 ${
                                     escapeHTML(
                                         getSeriesTitle(
-                                            series
+                                            item
                                         )
                                     )
                                 }
                             </strong>
 
                             <small>
-                                ${series.year}
-                                ·
-                                ★ ${series.rating}
+                                ${item.year}
+                                · ★ ${item.rating}
                             </small>
 
                         </div>
@@ -3557,31 +4661,10 @@ async function renderBrazil() {
             .join("");
 
 
-    for (
-        const series of brazilSeries
-    ) {
-
-        const image =
-            document.querySelector(
-                `[data-brazil-poster="${
-                    series.id
-                }"]`
-            );
-
-
-        if (!image) continue;
-
-
-        const media =
-            await getSeriesMedia(
-                series
-            );
-
-
-        image.src =
-            media.poster;
-
-    }
+    await loadImagesForList(
+        list,
+        "data-brazil-image"
+    );
 
 }
 
@@ -3592,51 +4675,68 @@ async function renderBrazil() {
 
 async function renderRanking() {
 
-    if (!rankingList) return;
+    if (
+        !rankingList
+    ) {
+        return;
+    }
 
 
     const ranking =
         [...seriesData]
             .sort(
-                (a, b) =>
+                (
+                    a,
+                    b
+                ) =>
                     b.rating
                     -
                     a.rating
-            )
-            .slice(0, 10);
+            );
 
 
     rankingList.innerHTML =
         ranking
             .map(
-                (series, index) => `
+                (
+                    item,
+                    index
+                ) => `
                     <button
                         class="ranking-item"
-                        data-open-series="${
-                            series.id
-                        }"
+                        data-open-series="${item.id}"
                         type="button"
                     >
 
                         <span
                             class="ranking-position"
                         >
-                            ${index + 1}
+                            ${
+                                String(
+                                    index + 1
+                                )
+                                .padStart(
+                                    2,
+                                    "0"
+                                )
+                            }
                         </span>
 
 
                         <img
-                            data-ranking-poster="${
-                                series.id
-                            }"
+                            data-ranking-image="${item.id}"
                             src="${
                                 createPlaceholder(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                             alt="${
                                 escapeHTML(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                         >
@@ -3650,7 +4750,7 @@ async function renderRanking() {
                                 ${
                                     escapeHTML(
                                         getSeriesTitle(
-                                            series
+                                            item
                                         )
                                     )
                                 }
@@ -3658,14 +4758,12 @@ async function renderRanking() {
 
                             <small>
                                 ${
-                                    escapeHTML(
-                                        formatGenre(
-                                            series.genres[0]
-                                        )
+                                    formatGenre(
+                                        item.genres[0]
                                     )
                                 }
                                 ·
-                                ${series.year}
+                                ${item.year}
                             </small>
 
                         </span>
@@ -3674,7 +4772,7 @@ async function renderRanking() {
                         <span
                             class="ranking-score"
                         >
-                            ★ ${series.rating}
+                            ★ ${item.rating}
                         </span>
 
                     </button>
@@ -3683,59 +4781,38 @@ async function renderRanking() {
             .join("");
 
 
-    for (
-        const series of ranking
-    ) {
-
-        const image =
-            document.querySelector(
-                `[data-ranking-poster="${
-                    series.id
-                }"]`
-            );
-
-
-        if (!image) continue;
-
-
-        const media =
-            await getSeriesMedia(
-                series
-            );
-
-
-        image.src =
-            media.poster;
-
-    }
+    await loadImagesForList(
+        ranking,
+        "data-ranking-image"
+    );
 
 }
 
 
 /* =========================================================
-   SÉRIE DO DIA
+   DAILY SERIES
 ========================================================= */
 
 function getDailySeries() {
 
-    const now =
+    const date =
         new Date();
 
 
-    const key =
+    const number =
         Number(
             `${
-                now.getFullYear()
+                date.getFullYear()
             }${
-                now.getMonth() + 1
+                date.getMonth() + 1
             }${
-                now.getDate()
+                date.getDate()
             }`
         );
 
 
     return seriesData[
-        key
+        number
         %
         seriesData.length
     ];
@@ -3750,11 +4827,15 @@ async function renderDailySeries() {
 
 
     dailyTitle.textContent =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 
     dailyDescription.textContent =
-        getSeriesDescription(series);
+        getSeriesDescription(
+            series
+        );
 
 
     const media =
@@ -3768,14 +4849,202 @@ async function renderDailySeries() {
 
 
     dailyImage.alt =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 }
 
 
 /* =========================================================
-   ESTATÍSTICAS
+   USER STATS
 ========================================================= */
+
+function getFavoriteGenre() {
+
+    const counts = {};
+
+
+    const relevantIds =
+        [
+            ...state.favorites,
+            ...state.watched,
+            ...state.watching
+        ];
+
+
+    relevantIds
+        .forEach(
+            id => {
+
+                const series =
+                    getSeries(id);
+
+
+                if (!series) {
+                    return;
+                }
+
+
+                series.genres
+                    .filter(
+                        genre =>
+                            genre
+                            !== "brasil"
+                    )
+                    .forEach(
+                        genre => {
+
+                            counts[genre] =
+                                (
+                                    counts[
+                                        genre
+                                    ]
+                                    ||
+                                    0
+                                )
+                                +
+                                1;
+
+                        }
+                    );
+
+            }
+        );
+
+
+    const sorted =
+        Object.entries(
+            counts
+        )
+            .sort(
+                (
+                    a,
+                    b
+                ) =>
+                    b[1]
+                    -
+                    a[1]
+            );
+
+
+    return sorted[0]?.[0]
+        ||
+        null;
+
+}
+
+
+function updateUserStats() {
+
+    const favoriteGenre =
+        getFavoriteGenre();
+
+
+    favoriteGenreStat.textContent =
+        favoriteGenre
+            ? formatGenre(
+                favoriteGenre
+            )
+            : "—";
+
+
+    const completion =
+        Math.round(
+            (
+                state.watched.length
+                /
+                seriesData.length
+            )
+            *
+            100
+        );
+
+
+    completionStat.textContent =
+        `${completion}%`;
+
+
+    const ratingValues =
+        Object.values(
+            state.ratings
+        )
+            .map(Number)
+            .filter(
+                value =>
+                    value > 0
+            );
+
+
+    if (
+        ratingValues.length
+    ) {
+
+        const average =
+            ratingValues.reduce(
+                (
+                    total,
+                    value
+                ) =>
+                    total + value,
+                0
+            )
+            /
+            ratingValues.length;
+
+
+        averageRatingStat.textContent =
+            `${average.toFixed(1)}/5`;
+
+    } else {
+
+        averageRatingStat.textContent =
+            "—";
+
+    }
+
+
+    const brazilWatched =
+        seriesData.filter(
+            item =>
+                item.brazil
+                &&
+                isWatched(
+                    item.id
+                )
+        ).length;
+
+
+    brazilWatchedStat.textContent =
+        brazilWatched;
+
+}
+
+
+/* =========================================================
+   STATS + LEVEL
+========================================================= */
+
+function calculateXP() {
+
+    return (
+        state.favorites.length * 8
+        +
+        state.watchlist.length * 5
+        +
+        state.watching.length * 10
+        +
+        state.watched.length * 25
+        +
+        Object.keys(
+            state.ratings
+        ).length * 12
+        +
+        state.comments.length * 15
+    );
+
+}
+
 
 function updateStats() {
 
@@ -3801,38 +5070,6 @@ function updateStats() {
         state.comments.length;
 
 
-    updateLevel();
-
-    updateAchievements();
-
-}
-
-
-/* =========================================================
-   NÍVEL
-========================================================= */
-
-function calculateXP() {
-
-    return (
-        state.favorites.length * 8
-        +
-        state.watchlist.length * 5
-        +
-        state.watched.length * 25
-        +
-        Object.keys(
-            state.ratings
-        ).length * 12
-        +
-        state.comments.length * 15
-    );
-
-}
-
-
-function updateLevel() {
-
     const xp =
         calculateXP();
 
@@ -3845,7 +5082,7 @@ function updateLevel() {
         1;
 
 
-    const progress =
+    const current =
         xp % 100;
 
 
@@ -3854,15 +5091,16 @@ function updateLevel() {
 
 
     levelProgress.style.width =
-        `${progress}%`;
+        `${current}%`;
 
 
     levelText.textContent =
-        `${progress} / 100 XP`;
+        `${current} / 100 XP`;
 
 
     if (
-        state.language === "en"
+        state.language
+        === "en"
     ) {
 
         profileLevelText.textContent =
@@ -3870,7 +5108,7 @@ function updateLevel() {
                 ? "Beginner binge watcher"
                 : level < 6
                     ? "Series lover"
-                    : "Binge expert";
+                    : "Series expert";
 
     } else {
 
@@ -3879,20 +5117,25 @@ function updateLevel() {
                 ? "Maratonista iniciante"
                 : level < 6
                     ? "Apaixonada por séries"
-                    : "Expert em maratonas";
+                    : "Expert em séries";
 
     }
+
+
+    updateAchievements();
+
+    updateUserStats();
 
 }
 
 
 /* =========================================================
-   CONQUISTAS
+   ACHIEVEMENTS
 ========================================================= */
 
 function updateAchievements() {
 
-    const achievements = {
+    const unlocked = {
 
         favorite:
             state.favorites.length
@@ -3924,182 +5167,27 @@ function updateAchievements() {
 
 
     $$("[data-achievement]")
-        .forEach(card => {
+        .forEach(
+            card => {
 
-            const id =
-                card.dataset
-                    .achievement;
-
-
-            card.classList.toggle(
-                "unlocked",
-                Boolean(
-                    achievements[id]
-                )
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   CONTINUAR ASSISTINDO
-========================================================= */
-
-async function renderContinueWatching() {
-
-    if (
-        !continueSection
-        ||
-        !continueGrid
-    ) {
-        return;
-    }
-
-
-    const items =
-        seriesData.filter(
-            series => {
-
-                const progress =
-                    Number(
-                        state.progress[
-                            series.id
+                card.classList.toggle(
+                    "unlocked",
+                    Boolean(
+                        unlocked[
+                            card.dataset
+                                .achievement
                         ]
-                        ||
-                        0
-                    );
-
-
-                return (
-                    progress > 0
-                    &&
-                    progress < 100
+                    )
                 );
 
             }
         );
 
-
-    continueSection.classList.toggle(
-        "show",
-        items.length > 0
-    );
-
-
-    continueGrid.innerHTML =
-        items
-            .map(
-                series => `
-                    <button
-                        class="continue-card"
-                        data-open-series="${
-                            series.id
-                        }"
-                        type="button"
-                    >
-
-                        <img
-                            data-continue-poster="${
-                                series.id
-                            }"
-                            src="${
-                                createPlaceholder(
-                                    getSeriesTitle(series)
-                                )
-                            }"
-                            alt="${
-                                escapeHTML(
-                                    getSeriesTitle(series)
-                                )
-                            }"
-                        >
-
-
-                        <div
-                            class="continue-content"
-                        >
-
-                            <strong>
-                                ${
-                                    escapeHTML(
-                                        getSeriesTitle(
-                                            series
-                                        )
-                                    )
-                                }
-                            </strong>
-
-
-                            <div
-                                class="continue-progress"
-                            >
-
-                                <span
-                                    style="
-                                        width:${
-                                            state.progress[
-                                                series.id
-                                            ]
-                                            ||
-                                            0
-                                        }%
-                                    "
-                                ></span>
-
-                            </div>
-
-
-                            <small>
-                                ${
-                                    state.progress[
-                                        series.id
-                                    ]
-                                    ||
-                                    0
-                                }%
-                            </small>
-
-                        </div>
-
-                    </button>
-                `
-            )
-            .join("");
-
-
-    for (
-        const series of items
-    ) {
-
-        const image =
-            document.querySelector(
-                `[data-continue-poster="${
-                    series.id
-                }"]`
-            );
-
-
-        if (!image) continue;
-
-
-        const media =
-            await getSeriesMedia(
-                series
-            );
-
-
-        image.src =
-            media.poster;
-
-    }
-
 }
 
 
 /* =========================================================
-   MODAL DA SÉRIE
+   MODAL SERIES
 ========================================================= */
 
 async function openSeries(id) {
@@ -4108,15 +5196,24 @@ async function openSeries(id) {
         getSeries(id);
 
 
-    if (!series) return;
+    if (!series) {
+        return;
+    }
 
 
     activeSeriesId =
         id;
 
 
+    addToHistory(
+        id
+    );
+
+
     modalTitle.textContent =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 
     modalRating.textContent =
@@ -4134,18 +5231,21 @@ async function openSeries(id) {
 
 
     modalSeasons.textContent =
-        getSeriesSeasons(series);
+        getSeriesSeasons(
+            series
+        );
 
 
     modalDescription.textContent =
-        getSeriesDescription(series);
+        getSeriesDescription(
+            series
+        );
 
 
     modalBadge.textContent =
         series.brazil
-            ? "🇧🇷 NETFLIX BRASIL"
-            : getSeriesCountry(series)
-                .toUpperCase();
+            ? "NETFLIX BRASIL"
+            : "NETFLIX";
 
 
     const media =
@@ -4159,16 +5259,17 @@ async function openSeries(id) {
 
 
     modalPoster.alt =
-        getSeriesTitle(series);
+        getSeriesTitle(
+            series
+        );
 
 
     modalBackdrop.style
         .backgroundImage =
-            `url("${media.poster}")`;
+        `url("${media.poster}")`;
 
 
     renderCast(
-        series,
         media.cast
     );
 
@@ -4178,21 +5279,19 @@ async function openSeries(id) {
     );
 
 
-    renderStars(
-        series.id
+    updateModalControls(
+        id
     );
 
 
-    updateModalButtons(
-        series.id
+    renderStars(
+        id
     );
 
 
     const progress =
         Number(
-            state.progress[
-                series.id
-            ]
+            state.progress[id]
             ||
             0
         );
@@ -4206,6 +5305,18 @@ async function openSeries(id) {
         `${progress}%`;
 
 
+    currentEpisodeInput.value =
+        state.episodes[id]
+        ||
+        1;
+
+
+    personalNoteInput.value =
+        state.notes[id]
+        ||
+        "";
+
+
     seriesModal.classList.add(
         "open"
     );
@@ -4214,18 +5325,111 @@ async function openSeries(id) {
     body.style.overflow =
         "hidden";
 
+
+    renderHistory();
+
 }
 
 
 /* =========================================================
-   FECHAR MODAL
+   MODAL BUTTONS
+========================================================= */
+
+function updateModalControls(id) {
+
+    modalFavoriteBtn.classList.toggle(
+        "active",
+        isFavorite(id)
+    );
+
+
+    modalWatchlistBtn.classList.toggle(
+        "active",
+        isWatchlisted(id)
+    );
+
+
+    modalWatchingBtn.classList.toggle(
+        "active",
+        isWatching(id)
+    );
+
+
+    modalWatchedBtn.classList.toggle(
+        "active",
+        isWatched(id)
+    );
+
+
+    modalFavoriteBtn.innerHTML =
+        isFavorite(id)
+            ? (
+                state.language === "en"
+                    ? "★ Favorited"
+                    : "★ Favoritada"
+            )
+            : (
+                state.language === "en"
+                    ? "☆ Favorite"
+                    : "☆ Favoritar"
+            );
+
+
+    modalWatchlistBtn.innerHTML =
+        isWatchlisted(id)
+            ? (
+                state.language === "en"
+                    ? "✓ In my list"
+                    : "✓ Na minha lista"
+            )
+            : (
+                state.language === "en"
+                    ? "+ My list"
+                    : "+ Minha lista"
+            );
+
+
+    modalWatchingBtn.innerHTML =
+        isWatching(id)
+            ? (
+                state.language === "en"
+                    ? "■ Watching"
+                    : "■ Assistindo"
+            )
+            : (
+                state.language === "en"
+                    ? "▶ Watching"
+                    : "▶ Assistindo"
+            );
+
+
+    modalWatchedBtn.innerHTML =
+        isWatched(id)
+            ? (
+                state.language === "en"
+                    ? "✓ Watched"
+                    : "✓ Assistida"
+            )
+            : (
+                state.language === "en"
+                    ? "✓ Mark watched"
+                    : "✓ Marcar assistida"
+            );
+
+}
+
+
+/* =========================================================
+   FECHAR SERIES MODAL
 ========================================================= */
 
 function closeSeriesModal() {
 
-    seriesModal.classList.remove(
-        "open"
-    );
+    seriesModal
+        ?.classList
+        .remove(
+            "open"
+        );
 
 
     body.style.overflow =
@@ -4235,114 +5439,38 @@ function closeSeriesModal() {
 
 
 /* =========================================================
-   BOTÕES MODAL
+   CAST
 ========================================================= */
 
-function updateModalButtons(id) {
+function renderCast(cast) {
 
-    const favorite =
-        isFavorite(id);
-
-
-    const watchlist =
-        isWatchlisted(id);
-
-
-    const watched =
-        isWatched(id);
-
-
-    modalFavoriteBtn.classList.toggle(
-        "active",
-        favorite
-    );
-
-
-    modalWatchlistBtn.classList.toggle(
-        "active",
-        watchlist
-    );
-
-
-    modalWatchedBtn.classList.toggle(
-        "active",
-        watched
-    );
-
-
-    modalFavoriteBtn.innerHTML =
-        favorite
-            ? `♥ ${
-                state.language === "en"
-                    ? "Favorited"
-                    : "Favoritada"
-            }`
-            : `♡ ${
-                translations[
-                    state.language
-                ].favorite
-            }`;
-
-
-    modalWatchlistBtn.innerHTML =
-        watchlist
-            ? `✓ ${
-                state.language === "en"
-                    ? "In my list"
-                    : "Na minha lista"
-            }`
-            : `＋ ${
-                translations[
-                    state.language
-                ].watchlist
-            }`;
-
-
-    modalWatchedBtn.innerHTML =
-        watched
-            ? `✓ ${
-                state.language === "en"
-                    ? "Watched"
-                    : "Assistida"
-            }`
-            : `✓ ${
-                state.language === "en"
-                    ? "Mark watched"
-                    : "Marcar assistida"
-            }`;
-
-}
-
-
-/* =========================================================
-   ELENCO
-========================================================= */
-
-function renderCast(
-    series,
-    cast
-) {
-
-    if (!castGrid) return;
+    if (
+        !castGrid
+    ) {
+        return;
+    }
 
 
     if (
         !cast
         ||
-        cast.length === 0
+        !cast.length
     ) {
 
         castGrid.innerHTML =
             `
-            <div
-                class="cast-loading"
+            <p
+                style="
+                    color:var(--text-soft);
+                    font-size:.6rem;
+                "
             >
                 ${
                     state.language === "en"
-                        ? "Cast information unavailable."
-                        : "Elenco não disponível no momento."
+                        ? "Cast unavailable."
+                        : "Elenco indisponível."
                 }
-            </div>
+            </p>
             `;
 
 
@@ -4407,28 +5535,28 @@ function renderCast(
 
 
 /* =========================================================
-   RECOMENDAÇÕES
+   RECOMMENDATIONS
 ========================================================= */
 
 async function renderRecommendations(
     current
 ) {
 
-    if (!recommendations) return;
-
-
     let related =
         seriesData.filter(
-            series =>
-                series.id
+            item =>
+                item.id
                 !== current.id
                 &&
-                series.genres.some(
+                item.genres.some(
                     genre =>
                         current.genres
                             .includes(
                                 genre
                             )
+                        &&
+                        genre
+                        !== "brasil"
                 )
         );
 
@@ -4441,33 +5569,36 @@ async function renderRecommendations(
                     -
                     0.5
             )
-            .slice(0, 4);
+            .slice(
+                0,
+                4
+            );
 
 
     recommendations.innerHTML =
         related
             .map(
-                series => `
+                item => `
                     <button
                         class="recommendation-card"
-                        data-open-series="${
-                            series.id
-                        }"
+                        data-open-series="${item.id}"
                         type="button"
                     >
 
                         <img
-                            data-recommendation-poster="${
-                                series.id
-                            }"
+                            data-recommendation-image="${item.id}"
                             src="${
                                 createPlaceholder(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                             alt="${
                                 escapeHTML(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                         >
@@ -4475,7 +5606,9 @@ async function renderRecommendations(
                         <span>
                             ${
                                 escapeHTML(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }
                         </span>
@@ -4486,45 +5619,21 @@ async function renderRecommendations(
             .join("");
 
 
-    for (
-        const series of related
-    ) {
-
-        const image =
-            document.querySelector(
-                `[data-recommendation-poster="${
-                    series.id
-                }"]`
-            );
-
-
-        if (!image) continue;
-
-
-        const media =
-            await getSeriesMedia(
-                series
-            );
-
-
-        image.src =
-            media.poster;
-
-    }
+    await loadImagesForList(
+        related,
+        "data-recommendation-image"
+    );
 
 }
 
 
 /* =========================================================
-   ESTRELAS
+   RATING
 ========================================================= */
 
 function renderStars(id) {
 
-    if (!starRating) return;
-
-
-    const rating =
+    const value =
         Number(
             state.ratings[id]
             ||
@@ -4536,31 +5645,35 @@ function renderStars(id) {
         "[data-star]",
         starRating
     )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            const star =
-                Number(
-                    button.dataset.star
-                );
+                const number =
+                    Number(
+                        button.dataset.star
+                    );
 
 
-            button.textContent =
-                star <= rating
-                    ? "★"
-                    : "☆";
+                button.textContent =
+                    number <= value
+                        ? "★"
+                        : "☆";
 
-        });
+            }
+        );
 
 }
 
 
 function rateSeries(
     id,
-    value
+    rating
 ) {
 
     state.ratings[id] =
-        Number(value);
+        Number(
+            rating
+        );
 
 
     saveState();
@@ -4571,32 +5684,20 @@ function rateSeries(
 
 
     showToast(
-        `${
-            state.language === "en"
-                ? "Your rating"
-                : "Sua nota"
-        }: ${value}/5`,
+        state.language === "en"
+            ? `Rating: ${rating}/5`
+            : `Sua nota: ${rating}/5`,
         "★"
     );
-
-
-    if (
-        Number(value) === 5
-    ) {
-        burstConfetti();
-    }
 
 }
 
 
 /* =========================================================
-   PROGRESSO
+   PROGRESS
 ========================================================= */
 
-function updateProgress() {
-
-    if (!activeSeriesId) return;
-
+function saveProgress() {
 
     const value =
         clamp(
@@ -4610,7 +5711,8 @@ function updateProgress() {
 
     state.progress[
         activeSeriesId
-    ] = value;
+    ] =
+        value;
 
 
     episodeProgressText.textContent =
@@ -4618,39 +5720,111 @@ function updateProgress() {
 
 
     if (
-        value === 100
+        value > 0
         &&
-        !isWatched(
-            activeSeriesId
-        )
+        value < 100
     ) {
 
-        state.watched.push(
-            activeSeriesId
-        );
+        if (
+            !isWatching(
+                activeSeriesId
+            )
+        ) {
+
+            state.watching.push(
+                activeSeriesId
+            );
+
+        }
 
 
-        showToast(
-            state.language === "en"
-                ? "Series completed!"
-                : "Série concluída!",
-            "🍿"
-        );
+        state.watched =
+            state.watched.filter(
+                id =>
+                    id
+                    !== activeSeriesId
+            );
+
+    }
 
 
-        burstConfetti();
+    if (
+        value === 100
+    ) {
+
+        state.watching =
+            state.watching.filter(
+                id =>
+                    id
+                    !== activeSeriesId
+            );
+
+
+        if (
+            !isWatched(
+                activeSeriesId
+            )
+        ) {
+
+            state.watched.push(
+                activeSeriesId
+            );
+
+        }
 
     }
 
 
     saveState();
 
-    updateStats();
+    refreshAfterUserChange();
 
-    renderContinueWatching();
+}
 
-    updateModalButtons(
+
+/* =========================================================
+   EPISODE + NOTE
+========================================================= */
+
+function saveSeriesInfo() {
+
+    const episode =
+        Math.max(
+            1,
+            Number(
+                currentEpisodeInput
+                    .value
+            )
+            ||
+            1
+        );
+
+
+    const note =
+        personalNoteInput
+            .value
+            .trim();
+
+
+    state.episodes[
         activeSeriesId
+    ] =
+        episode;
+
+
+    state.notes[
+        activeSeriesId
+    ] =
+        note;
+
+
+    saveState();
+
+
+    showToast(
+        state.language === "en"
+            ? "Series info saved"
+            : "Informações salvas"
     );
 
 }
@@ -4660,9 +5834,13 @@ function updateProgress() {
    TRAILER
 ========================================================= */
 
-function openTrailer(series) {
+function openTrailer(
+    series
+) {
 
-    if (!series) return;
+    if (!series) {
+        return;
+    }
 
 
     currentTrailerSeries =
@@ -4670,13 +5848,7 @@ function openTrailer(series) {
 
 
     trailerTitle.textContent =
-        `${
-            state.language === "en"
-                ? "Trailer"
-                : "Trailer"
-        } — ${
-            getSeriesTitle(series)
-        }`;
+        `${getSeriesTitle(series)} — Trailer`;
 
 
     trailerModal.classList.add(
@@ -4692,9 +5864,11 @@ function openTrailer(series) {
 
 function closeTrailerModal() {
 
-    trailerModal.classList.remove(
-        "open"
-    );
+    trailerModal
+        ?.classList
+        .remove(
+            "open"
+        );
 
 
     body.style.overflow =
@@ -4703,9 +5877,11 @@ function closeTrailerModal() {
 }
 
 
-function openTrailerOnYoutube() {
+function openTrailerSearch() {
 
-    if (!currentTrailerSeries) {
+    if (
+        !currentTrailerSeries
+    ) {
         return;
     }
 
@@ -4730,7 +5906,7 @@ function openTrailerOnYoutube() {
 
 
 /* =========================================================
-   PESQUISA GLOBAL
+   SEARCH
 ========================================================= */
 
 function openSearch() {
@@ -4781,44 +5957,51 @@ async function renderGlobalSearch() {
             .toLowerCase();
 
 
-    const results =
+    const list =
         seriesData
             .filter(
-                series => {
+                item => {
 
                     if (!query) {
                         return true;
                     }
 
 
-                    return [
-                        getSeriesTitle(series),
-                        series.title,
-                        series.titleEN || "",
-                        getSeriesCountry(series),
-                        getSeriesDescription(series),
-                        ...series.genres
-                    ]
-                        .join(" ")
-                        .toLowerCase()
+                    const text =
+                        [
+                            item.title,
+                            item.titleEN || "",
+                            getSeriesTitle(item),
+                            getSeriesDescription(item),
+                            getSeriesCountry(item),
+                            ...item.genres
+                        ]
+                            .join(" ")
+                            .toLowerCase();
+
+
+                    return text
                         .includes(query);
 
                 }
             )
-            .slice(0, 8);
+            .slice(
+                0,
+                8
+            );
 
 
     if (
-        results.length === 0
+        !list.length
     ) {
 
         searchResults.innerHTML =
             `
-            <div
+            <p
                 style="
-                    padding:30px;
+                    padding:28px;
                     text-align:center;
-                    opacity:.65;
+                    color:var(--text-soft);
                 "
             >
                 ${
@@ -4826,7 +6009,7 @@ async function renderGlobalSearch() {
                         ? "No series found."
                         : "Nenhuma série encontrada."
                 }
-            </div>
+            </p>
             `;
 
 
@@ -4836,29 +6019,29 @@ async function renderGlobalSearch() {
 
 
     searchResults.innerHTML =
-        results
+        list
             .map(
-                series => `
+                item => `
                     <button
                         class="search-result"
-                        data-search-series="${
-                            series.id
-                        }"
+                        data-search-series="${item.id}"
                         type="button"
                     >
 
                         <img
-                            data-search-poster="${
-                                series.id
-                            }"
+                            data-search-image="${item.id}"
                             src="${
                                 createPlaceholder(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                             alt="${
                                 escapeHTML(
-                                    getSeriesTitle(series)
+                                    getSeriesTitle(
+                                        item
+                                    )
                                 )
                             }"
                         >
@@ -4870,7 +6053,7 @@ async function renderGlobalSearch() {
                                 ${
                                     escapeHTML(
                                         getSeriesTitle(
-                                            series
+                                            item
                                         )
                                     )
                                 }
@@ -4878,21 +6061,18 @@ async function renderGlobalSearch() {
 
                             <small>
                                 ${
-                                    escapeHTML(
-                                        formatGenre(
-                                            series.genres[0]
-                                        )
+                                    formatGenre(
+                                        item.genres[0]
                                     )
                                 }
-                                ·
-                                ${series.year}
+                                · ${item.year}
                             </small>
 
                         </span>
 
 
                         <span>
-                            ★ ${series.rating}
+                            ★ ${item.rating}
                         </span>
 
                     </button>
@@ -4901,29 +6081,345 @@ async function renderGlobalSearch() {
             .join("");
 
 
-    for (
-        const series of results
+    await loadImagesForList(
+        list,
+        "data-search-image"
+    );
+
+}
+
+
+/* =========================================================
+   SMART RECOMMENDATION
+========================================================= */
+
+function getSmartRecommendation() {
+
+    const favoriteGenre =
+        getFavoriteGenre();
+
+
+    let candidates =
+        seriesData.filter(
+            item =>
+                !isWatched(
+                    item.id
+                )
+        );
+
+
+    if (
+        favoriteGenre
     ) {
 
-        const image =
-            document.querySelector(
-                `[data-search-poster="${
-                    series.id
-                }"]`
+        const genreMatches =
+            candidates.filter(
+                item =>
+                    item.genres
+                        .includes(
+                            favoriteGenre
+                        )
             );
 
 
-        if (!image) continue;
+        if (
+            genreMatches.length
+        ) {
+
+            candidates =
+                genreMatches;
+
+        }
+
+    }
 
 
-        const media =
-            await getSeriesMedia(
+    const notSaved =
+        candidates.filter(
+            item =>
+                !isFavorite(
+                    item.id
+                )
+                &&
+                !isWatchlisted(
+                    item.id
+                )
+        );
+
+
+    if (
+        notSaved.length
+    ) {
+
+        candidates =
+            notSaved;
+
+    }
+
+
+    candidates.sort(
+        (
+            a,
+            b
+        ) =>
+            b.rating
+            -
+            a.rating
+    );
+
+
+    const bestPool =
+        candidates.slice(
+            0,
+            Math.min(
+                4,
+                candidates.length
+            )
+        );
+
+
+    return (
+        randomItem(
+            bestPool
+        )
+        ||
+        randomItem(
+            seriesData
+        )
+    );
+
+}
+
+
+function smartRecommend() {
+
+    const series =
+        getSmartRecommendation();
+
+
+    if (!series) {
+        return;
+    }
+
+
+    showToast(
+        state.language === "en"
+            ? `Recommendation: ${getSeriesTitle(series)}`
+            : `Recomendação: ${getSeriesTitle(series)}`,
+        "★"
+    );
+
+
+    openSeries(
+        series.id
+    );
+
+}
+
+
+/* =========================================================
+   RANDOM
+========================================================= */
+
+function randomSeries() {
+
+    const candidates =
+        seriesData.filter(
+            item =>
+                item.id
+                !== activeSeriesId
+        );
+
+
+    const series =
+        randomItem(
+            candidates
+        )
+        ||
+        randomItem(
+            seriesData
+        );
+
+
+    if (
+        !series
+    ) {
+        return;
+    }
+
+
+    showToast(
+        state.language === "en"
+            ? `Random pick: ${getSeriesTitle(series)}`
+            : `Série sorteada: ${getSeriesTitle(series)}`
+    );
+
+
+    openSeries(
+        series.id
+    );
+
+}
+
+
+/* =========================================================
+   SHARE / COPY
+========================================================= */
+
+async function copySeriesTitle(
+    id = activeSeriesId
+) {
+
+    const series =
+        getSeries(id);
+
+
+    if (!series) {
+        return;
+    }
+
+
+    const title =
+        getSeriesTitle(
+            series
+        );
+
+
+    try {
+
+        await navigator.clipboard
+            .writeText(
+                title
+            );
+
+
+        showToast(
+            state.language === "en"
+                ? "Title copied"
+                : "Título copiado"
+        );
+
+    } catch {
+
+        showToast(
+            title
+        );
+
+    }
+
+}
+
+
+async function shareSeries(
+    id = activeSeriesId
+) {
+
+    const series =
+        getSeries(id);
+
+
+    if (!series) {
+        return;
+    }
+
+
+    const data = {
+
+        title:
+            getSeriesTitle(
                 series
+            ),
+
+        text:
+            `${
+                getSeriesTitle(
+                    series
+                )
+            } — Blog da Bia`,
+
+        url:
+            window.location.href
+
+    };
+
+
+    try {
+
+        if (
+            navigator.share
+        ) {
+
+            await navigator.share(
+                data
             );
 
+        } else {
 
-        image.src =
-            media.poster;
+            await navigator.clipboard
+                .writeText(
+                    `${data.text} ${data.url}`
+                );
+
+
+            showToast(
+                state.language === "en"
+                    ? "Series link copied"
+                    : "Link da série copiado"
+            );
+
+        }
+
+    } catch {
+
+        // usuário cancelou
+
+    }
+
+}
+
+
+async function shareBlog() {
+
+    try {
+
+        if (
+            navigator.share
+        ) {
+
+            await navigator.share({
+
+                title:
+                    "Blog da Bia",
+
+                text:
+                    state.language === "en"
+                        ? "Check out this series blog."
+                        : "Confira este blog de séries.",
+
+                url:
+                    window.location.href
+
+            });
+
+        } else {
+
+            await navigator.clipboard
+                .writeText(
+                    window.location.href
+                );
+
+
+            showToast(
+                state.language === "en"
+                    ? "Blog link copied"
+                    : "Link do blog copiado"
+            );
+
+        }
+
+    } catch {
+
+        // cancelado
 
     }
 
@@ -4931,51 +6427,72 @@ async function renderGlobalSearch() {
 
 
 /* =========================================================
-   COMENTÁRIOS
+   COMMENTS
 ========================================================= */
 
 function populateCommentSeries() {
 
-    if (!commentSeries) return;
+    if (
+        !commentSeries
+    ) {
+        return;
+    }
 
 
-    const firstOption =
-        state.language === "en"
-            ? "Choose a series"
-            : "Escolha uma série";
+    const currentValue =
+        commentSeries.value;
 
 
     commentSeries.innerHTML =
         `
         <option value="">
-            ${firstOption}
+            ${
+                state.language === "en"
+                    ? "Choose a series"
+                    : "Escolha uma série"
+            }
         </option>
         `
         +
         [...seriesData]
             .sort(
-                (a, b) =>
+                (
+                    a,
+                    b
+                ) =>
                     getSeriesTitle(a)
                         .localeCompare(
                             getSeriesTitle(b)
                         )
             )
             .map(
-                series => `
+                item => `
                     <option
-                        value="${
-                            series.id
-                        }"
+                        value="${item.id}"
                     >
                         ${
                             escapeHTML(
-                                getSeriesTitle(series)
+                                getSeriesTitle(
+                                    item
+                                )
                             )
                         }
                     </option>
                 `
             )
             .join("");
+
+
+    if (
+        getSeries(
+            currentValue
+        )
+    ) {
+
+        commentSeries.value =
+            currentValue;
+
+    }
 
 }
 
@@ -5009,8 +6526,8 @@ function addComment(event) {
 
         showToast(
             state.language === "en"
-                ? "Fill in all fields."
-                : "Preencha todos os campos.",
+                ? "Fill in all fields"
+                : "Preencha todos os campos",
             "!"
         );
 
@@ -5020,7 +6537,7 @@ function addComment(event) {
     }
 
 
-    const comment = {
+    state.comments.unshift({
 
         id:
             Date.now(),
@@ -5040,18 +6557,14 @@ function addComment(event) {
         liked:
             false,
 
-        replies: [],
+        replies:
+            [],
 
         createdAt:
             new Date()
                 .toISOString()
 
-    };
-
-
-    state.comments.unshift(
-        comment
-    );
+    });
 
 
     saveState();
@@ -5071,104 +6584,139 @@ function addComment(event) {
 
     showToast(
         state.language === "en"
-            ? "Comment published!"
-            : "Comentário publicado!",
-        "♡"
+            ? "Comment published"
+            : "Comentário publicado"
     );
 
 }
 
 
 /* =========================================================
-   RENDER COMENTÁRIOS
+   FORMAT DATE
+========================================================= */
+
+function formatDate(date) {
+
+    return new Date(date)
+        .toLocaleDateString(
+            state.language === "en"
+                ? "en-US"
+                : "pt-BR",
+            {
+
+                day:
+                    "2-digit",
+
+                month:
+                    "short",
+
+                year:
+                    "numeric"
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   RENDER COMMENTS
 ========================================================= */
 
 function renderComments() {
 
-    if (!commentsList) return;
+    if (
+        !commentsList
+    ) {
+        return;
+    }
 
 
-    let comments =
+    let list =
         [...state.comments];
 
 
-    if (
-        commentSort.value === "likes"
+    switch (
+        commentSort
+            ?.value
     ) {
 
-        comments.sort(
-            (a, b) =>
-                b.likes
-                -
-                a.likes
-        );
+        case "likes":
 
-    } else if (
-        commentSort.value === "old"
-    ) {
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    b.likes
+                    -
+                    a.likes
+            );
 
-        comments.sort(
-            (a, b) =>
-                new Date(
-                    a.createdAt
-                )
-                -
-                new Date(
-                    b.createdAt
-                )
-        );
+            break;
 
-    } else {
 
-        comments.sort(
-            (a, b) =>
-                new Date(
-                    b.createdAt
-                )
-                -
-                new Date(
-                    a.createdAt
-                )
-        );
+        case "old":
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    new Date(
+                        a.createdAt
+                    )
+                    -
+                    new Date(
+                        b.createdAt
+                    )
+            );
+
+            break;
+
+
+        default:
+
+            list.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    new Date(
+                        b.createdAt
+                    )
+                    -
+                    new Date(
+                        a.createdAt
+                    )
+            );
 
     }
 
 
     commentCount.textContent =
-        comments.length;
+        list.length;
 
 
     if (
-        comments.length === 0
+        !list.length
     ) {
 
         commentsList.innerHTML =
             `
-            <div
+            <p
                 style="
-                    padding:40px;
+                    padding:35px;
+                    color:var(--text-soft);
                     text-align:center;
-                    opacity:.65;
                 "
             >
-
-                <div
-                    style="
-                        font-size:2.4rem;
-                    "
-                >
-                    ♡
-                </div>
-
-                <p>
-                    ${
-                        state.language === "en"
-                            ? "Be the first to comment."
-                            : "Seja a primeira pessoa a comentar."
-                    }
-                </p>
-
-            </div>
+                ${
+                    state.language === "en"
+                        ? "No comments yet."
+                        : "Ainda não há comentários."
+                }
+            </p>
             `;
 
 
@@ -5178,7 +6726,7 @@ function renderComments() {
 
 
     commentsList.innerHTML =
-        comments
+        list
             .map(
                 comment => {
 
@@ -5191,10 +6739,15 @@ function renderComments() {
                     const initials =
                         comment.name
                             .split(" ")
-                            .slice(0, 2)
+                            .slice(
+                                0,
+                                2
+                            )
                             .map(
                                 part =>
-                                    part[0] || ""
+                                    part[0]
+                                    ||
+                                    ""
                             )
                             .join("")
                             .toUpperCase();
@@ -5247,17 +6800,23 @@ function renderComments() {
                                 </div>
 
 
-                                <span
-                                    class="comment-series-badge"
-                                >
-                                    ${
-                                        escapeHTML(
-                                            series
-                                                ? getSeriesTitle(series)
-                                                : "Série"
-                                        )
-                                    }
-                                </span>
+                                ${
+                                    series
+                                        ? `
+                                            <span
+                                                class="comment-series-badge"
+                                            >
+                                                ${
+                                                    escapeHTML(
+                                                        getSeriesTitle(
+                                                            series
+                                                        )
+                                                    )
+                                                }
+                                            </span>
+                                        `
+                                        : ""
+                                }
 
                             </div>
 
@@ -5268,9 +6827,7 @@ function renderComments() {
                                         ? "spoiler"
                                         : ""
                                 }"
-                                data-comment-text="${
-                                    comment.id
-                                }"
+                                data-comment-text="${comment.id}"
                             >
                                 ${
                                     escapeHTML(
@@ -5285,15 +6842,13 @@ function renderComments() {
                                     ? `
                                         <button
                                             class="spoiler-button"
-                                            data-spoiler="${
-                                                comment.id
-                                            }"
+                                            data-show-spoiler="${comment.id}"
                                             type="button"
                                         >
                                             ${
                                                 state.language === "en"
-                                                    ? "👁 show spoiler"
-                                                    : "👁 revelar spoiler"
+                                                    ? "Show spoiler"
+                                                    : "Mostrar spoiler"
                                             }
                                         </button>
                                     `
@@ -5311,44 +6866,50 @@ function renderComments() {
                                             ? "active"
                                             : ""
                                     }"
-                                    data-like-comment="${
-                                        comment.id
-                                    }"
+                                    data-like-comment="${comment.id}"
                                     type="button"
                                 >
                                     ${
                                         comment.liked
-                                            ? "♥"
-                                            : "♡"
+                                            ? "★"
+                                            : "☆"
                                     }
                                     ${comment.likes}
                                 </button>
 
 
                                 <button
-                                    data-reply-toggle="${
-                                        comment.id
-                                    }"
+                                    data-reply-comment="${comment.id}"
                                     type="button"
                                 >
-                                    ↩ ${
+                                    ${
                                         state.language === "en"
-                                            ? "reply"
-                                            : "responder"
+                                            ? "Reply"
+                                            : "Responder"
                                     }
                                 </button>
 
 
                                 <button
-                                    data-delete-comment="${
-                                        comment.id
-                                    }"
+                                    data-edit-comment="${comment.id}"
                                     type="button"
                                 >
-                                    × ${
+                                    ${
                                         state.language === "en"
-                                            ? "delete"
-                                            : "excluir"
+                                            ? "Edit"
+                                            : "Editar"
+                                    }
+                                </button>
+
+
+                                <button
+                                    data-delete-comment="${comment.id}"
+                                    type="button"
+                                >
+                                    ${
+                                        state.language === "en"
+                                            ? "Delete"
+                                            : "Excluir"
                                     }
                                 </button>
 
@@ -5357,9 +6918,7 @@ function renderComments() {
 
                             <div
                                 class="comment-reply-box"
-                                data-reply-box="${
-                                    comment.id
-                                }"
+                                data-reply-box="${comment.id}"
                             >
 
                                 <input
@@ -5373,15 +6932,13 @@ function renderComments() {
                                 >
 
                                 <button
-                                    data-send-reply="${
-                                        comment.id
-                                    }"
+                                    data-send-reply="${comment.id}"
                                     type="button"
                                 >
                                     ${
                                         state.language === "en"
-                                            ? "send"
-                                            : "enviar"
+                                            ? "Send"
+                                            : "Enviar"
                                     }
                                 </button>
 
@@ -5439,45 +6996,29 @@ function renderComments() {
 
 
 /* =========================================================
-   DATA
+   COMMENT ACTIONS
 ========================================================= */
 
-function formatDate(date) {
+function findComment(id) {
 
-    return new Date(date)
-        .toLocaleDateString(
-            state.language === "en"
-                ? "en-US"
-                : "pt-BR",
-            {
-                day:
-                    "2-digit",
-
-                month:
-                    "short",
-
-                year:
-                    "numeric"
-            }
-        );
+    return state.comments.find(
+        comment =>
+            comment.id
+            === Number(id)
+    );
 
 }
 
 
-/* =========================================================
-   CURTIR COMENTÁRIO
-========================================================= */
-
 function toggleCommentLike(id) {
 
     const comment =
-        state.comments.find(
-            comment =>
-                comment.id === id
-        );
+        findComment(id);
 
 
-    if (!comment) return;
+    if (!comment) {
+        return;
+    }
 
 
     comment.liked =
@@ -5504,11 +7045,97 @@ function toggleCommentLike(id) {
 }
 
 
-/* =========================================================
-   RESPOSTAS
-========================================================= */
+function deleteComment(id) {
+
+    const confirmed =
+        confirm(
+            state.language === "en"
+                ? "Delete this comment?"
+                : "Excluir este comentário?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    state.comments =
+        state.comments.filter(
+            comment =>
+                comment.id
+                !== Number(id)
+        );
+
+
+    saveState();
+
+    renderComments();
+
+    updateStats();
+
+}
+
+
+function editComment(id) {
+
+    const comment =
+        findComment(id);
+
+
+    if (!comment) {
+        return;
+    }
+
+
+    const edited =
+        prompt(
+            state.language === "en"
+                ? "Edit your comment:"
+                : "Edite seu comentário:",
+            comment.text
+        );
+
+
+    if (
+        edited === null
+    ) {
+        return;
+    }
+
+
+    const text =
+        edited.trim();
+
+
+    if (!text) {
+        return;
+    }
+
+
+    comment.text =
+        text;
+
+
+    saveState();
+
+    renderComments();
+
+
+    showToast(
+        state.language === "en"
+            ? "Comment edited"
+            : "Comentário editado"
+    );
+
+}
+
 
 function sendReply(id) {
+
+    const comment =
+        findComment(id);
+
 
     const box =
         document.querySelector(
@@ -5516,7 +7143,13 @@ function sendReply(id) {
         );
 
 
-    if (!box) return;
+    if (
+        !comment
+        ||
+        !box
+    ) {
+        return;
+    }
 
 
     const input =
@@ -5528,21 +7161,15 @@ function sendReply(id) {
             .trim();
 
 
-    if (!text) return;
-
-
-    const comment =
-        state.comments.find(
-            comment =>
-                comment.id === id
-        );
-
-
-    if (!comment) return;
+    if (!text) {
+        return;
+    }
 
 
     comment.replies =
-        comment.replies || [];
+        comment.replies
+        ||
+        [];
 
 
     comment.replies.push({
@@ -5572,49 +7199,15 @@ function sendReply(id) {
 
     showToast(
         state.language === "en"
-            ? "Reply published!"
-            : "Resposta publicada!",
-        "↩"
+            ? "Reply published"
+            : "Resposta publicada"
     );
 
 }
 
 
 /* =========================================================
-   EXCLUIR COMENTÁRIO
-========================================================= */
-
-function deleteComment(id) {
-
-    const confirmed =
-        confirm(
-            state.language === "en"
-                ? "Delete this comment?"
-                : "Excluir este comentário?"
-        );
-
-
-    if (!confirmed) return;
-
-
-    state.comments =
-        state.comments.filter(
-            comment =>
-                comment.id !== id
-        );
-
-
-    saveState();
-
-    renderComments();
-
-    updateStats();
-
-}
-
-
-/* =========================================================
-   PERFIL
+   PROFILE
 ========================================================= */
 
 function renderProfile() {
@@ -5636,15 +7229,17 @@ function openProfile() {
 
 
     $$(".avatar-picker button")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.classList.toggle(
-                "active",
-                button.dataset.avatar
-                === state.profile.avatar
-            );
+                button.classList.toggle(
+                    "active",
+                    button.dataset.avatar
+                    === state.profile.avatar
+                );
 
-        });
+            }
+        );
 
 
     profileModal.classList.add(
@@ -5660,9 +7255,11 @@ function openProfile() {
 
 function closeProfile() {
 
-    profileModal.classList.remove(
-        "open"
-    );
+    profileModal
+        ?.classList
+        .remove(
+            "open"
+        );
 
 
     body.style.overflow =
@@ -5681,7 +7278,9 @@ function saveProfile(event) {
             .trim();
 
 
-    if (!name) return;
+    if (!name) {
+        return;
+    }
 
 
     state.profile.name =
@@ -5697,9 +7296,8 @@ function saveProfile(event) {
 
     showToast(
         state.language === "en"
-            ? "Profile saved!"
-            : "Perfil salvo!",
-        "♡"
+            ? "Profile saved"
+            : "Perfil salvo"
     );
 
 }
@@ -5714,55 +7312,63 @@ const quizQuestions = [
     {
 
         pt:
-            "Qual clima você quer hoje?",
+            "Que tipo de história você quer assistir?",
 
         en:
-            "What mood do you want today?",
+            "What kind of story do you want to watch?",
 
         options: [
 
             {
+
                 pt:
-                    "💕 Romance",
+                    "Romance",
 
                 en:
-                    "💕 Romance",
+                    "Romance",
 
-                value:
+                genre:
                     "romance"
+
             },
 
             {
+
                 pt:
-                    "🔎 Mistério",
+                    "Mistério",
 
                 en:
-                    "🔎 Mystery",
+                    "Mystery",
 
-                value:
+                genre:
                     "misterio"
+
             },
 
             {
+
                 pt:
-                    "😰 Suspense",
+                    "Suspense",
 
                 en:
-                    "😰 Thriller",
+                    "Thriller",
 
-                value:
+                genre:
                     "suspense"
+
             },
 
             {
+
                 pt:
-                    "🎭 Drama",
+                    "Drama",
 
                 en:
-                    "🎭 Drama",
+                    "Drama",
 
-                value:
+                genre:
                     "drama"
+
             }
 
         ]
@@ -5773,55 +7379,63 @@ const quizQuestions = [
     {
 
         pt:
-            "Que tipo de história parece melhor?",
+            "Qual dessas opções combina mais com você?",
 
         en:
-            "What kind of story sounds better?",
+            "Which option sounds best to you?",
 
         options: [
 
             {
+
                 pt:
-                    "💘 Relacionamentos",
+                    "Relacionamentos",
 
                 en:
-                    "💘 Relationships",
+                    "Relationships",
 
-                value:
+                genre:
                     "romance"
+
             },
 
             {
+
                 pt:
-                    "🕵️ Crimes e segredos",
+                    "Crimes e investigação",
 
                 en:
-                    "🕵️ Crime and secrets",
+                    "Crime and investigation",
 
-                value:
+                genre:
                     "crime"
+
             },
 
             {
+
                 pt:
-                    "😂 Algo mais leve",
+                    "Algo divertido",
 
                 en:
-                    "😂 Something lighter",
+                    "Something fun",
 
-                value:
+                genre:
                     "comedia"
+
             },
 
             {
+
                 pt:
-                    "🎬 História intensa",
+                    "Uma história intensa",
 
                 en:
-                    "🎬 Intense story",
+                    "An intense story",
 
-                value:
+                genre:
                     "drama"
+
             }
 
         ]
@@ -5832,33 +7446,37 @@ const quizQuestions = [
     {
 
         pt:
-            "Quer uma produção brasileira?",
+            "Quer uma série brasileira?",
 
         en:
-            "Do you want a Brazilian production?",
+            "Would you like a Brazilian series?",
 
         options: [
 
             {
+
                 pt:
-                    "🇧🇷 Sim",
+                    "Sim",
 
                 en:
-                    "🇧🇷 Yes",
+                    "Yes",
 
                 brazil:
                     true
+
             },
 
             {
+
                 pt:
-                    "🌎 Tanto faz",
+                    "Tanto faz",
 
                 en:
-                    "🌎 Either",
+                    "Either",
 
                 brazil:
                     null
+
             }
 
         ]
@@ -5870,9 +7488,12 @@ const quizQuestions = [
 
 function openQuiz() {
 
-    quizStep = 0;
+    quizStep =
+        0;
 
-    quizAnswers = [];
+
+    quizAnswers =
+        [];
 
 
     quizModal.classList.add(
@@ -5884,12 +7505,12 @@ function openQuiz() {
         "hidden";
 
 
-    renderQuizIntro();
+    renderQuizStart();
 
 }
 
 
-function renderQuizIntro() {
+function renderQuizStart() {
 
     quizProgress.style.width =
         "0%";
@@ -5898,9 +7519,9 @@ function renderQuizIntro() {
     quizContent.innerHTML =
         `
         <span
-            class="quiz-icon-big"
+            class="simple-modal-label"
         >
-            ✦
+            QUIZ
         </span>
 
         <h2>
@@ -5920,7 +7541,7 @@ function renderQuizIntro() {
         </p>
 
         <button
-            id="dynamicQuizBegin"
+            id="dynamicQuizStart"
             class="primary-btn"
             type="button"
         >
@@ -5929,12 +7550,11 @@ function renderQuizIntro() {
                     state.language
                 ].letsGo
             }
-            →
         </button>
         `;
 
 
-    $("#dynamicQuizBegin")
+    $("#dynamicQuizStart")
         ?.addEventListener(
             "click",
             renderQuizQuestion
@@ -5974,7 +7594,9 @@ function renderQuizQuestion() {
 
     quizContent.innerHTML =
         `
-        <span class="eyebrow">
+        <span
+            class="simple-modal-label"
+        >
             ${
                 state.language === "en"
                     ? `QUESTION ${
@@ -5995,109 +7617,109 @@ function renderQuizQuestion() {
         </h2>
 
         <div
+            id="quizOptions"
             class="quiz-options"
-            id="dynamicQuizOptions"
         ></div>
         `;
 
 
     const container =
-        $("#dynamicQuizOptions");
+        $("#quizOptions");
 
 
     question.options
-        .forEach(option => {
+        .forEach(
+            option => {
 
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "quiz-option";
-
-
-            button.textContent =
-                state.language === "en"
-                    ? option.en
-                    : option.pt;
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    quizAnswers.push(
-                        option
+                const button =
+                    document.createElement(
+                        "button"
                     );
 
 
-                    quizStep++;
+                button.className =
+                    "quiz-option";
 
 
-                    renderQuizQuestion();
+                button.textContent =
+                    state.language === "en"
+                        ? option.en
+                        : option.pt;
 
-                }
-            );
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        quizAnswers.push(
+                            option
+                        );
 
 
-            container.appendChild(
-                button
-            );
+                        quizStep++;
 
-        });
+
+                        renderQuizQuestion();
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
 
 }
 
 
 async function showQuizResult() {
 
-    quizProgress.style.width =
-        "100%";
-
-
     const genreCounts = {};
 
 
-    let brazilPreference =
+    let brazil =
         null;
 
 
     quizAnswers
-        .forEach(answer => {
+        .forEach(
+            answer => {
 
-            if (
-                answer.value
-            ) {
+                if (
+                    answer.genre
+                ) {
 
-                genreCounts[
-                    answer.value
-                ] =
-                    (
-                        genreCounts[
-                            answer.value
-                        ]
-                        ||
-                        0
-                    )
-                    +
-                    1;
+                    genreCounts[
+                        answer.genre
+                    ] =
+                        (
+                            genreCounts[
+                                answer.genre
+                            ]
+                            ||
+                            0
+                        )
+                        +
+                        1;
+
+                }
+
+
+                if (
+                    answer.brazil
+                    !== undefined
+                ) {
+
+                    brazil =
+                        answer.brazil;
+
+                }
 
             }
-
-
-            if (
-                answer.brazil
-                !== undefined
-            ) {
-
-                brazilPreference =
-                    answer.brazil;
-
-            }
-
-        });
+        );
 
 
     const favoriteGenre =
@@ -6105,7 +7727,10 @@ async function showQuizResult() {
             genreCounts
         )
             .sort(
-                (a, b) =>
+                (
+                    a,
+                    b
+                ) =>
                     b[1]
                     -
                     a[1]
@@ -6114,43 +7739,55 @@ async function showQuizResult() {
 
     let candidates =
         seriesData.filter(
-            series =>
+            item =>
                 !favoriteGenre
                 ||
-                series.genres.includes(
-                    favoriteGenre
-                )
+                item.genres
+                    .includes(
+                        favoriteGenre
+                    )
         );
 
 
     if (
-        brazilPreference === true
+        brazil === true
     ) {
 
-        const brazil =
+        const brazilMatches =
             candidates.filter(
-                series =>
-                    series.brazil
+                item =>
+                    item.brazil
             );
 
 
         if (
-            brazil.length > 0
+            brazilMatches.length
         ) {
 
             candidates =
-                brazil;
+                brazilMatches;
 
         }
 
     }
 
 
+    candidates =
+        candidates.filter(
+            item =>
+                !isWatched(
+                    item.id
+                )
+        );
+
+
     const result =
         randomItem(
-            candidates.length
-                ? candidates
-                : seriesData
+            candidates
+        )
+        ||
+        randomItem(
+            seriesData
         );
 
 
@@ -6160,9 +7797,15 @@ async function showQuizResult() {
         );
 
 
+    quizProgress.style.width =
+        "100%";
+
+
     quizContent.innerHTML =
         `
-        <span class="eyebrow">
+        <span
+            class="simple-modal-label"
+        >
             ${
                 state.language === "en"
                     ? "YOUR SERIES"
@@ -6203,20 +7846,20 @@ async function showQuizResult() {
         </p>
 
         <button
-            id="quizResultOpen"
+            id="quizOpenResult"
             class="primary-btn"
             type="button"
         >
             ${
                 state.language === "en"
-                    ? "See details"
+                    ? "View details"
                     : "Ver detalhes"
             }
         </button>
         `;
 
 
-    $("#quizResultOpen")
+    $("#quizOpenResult")
         ?.addEventListener(
             "click",
             () => {
@@ -6230,17 +7873,16 @@ async function showQuizResult() {
             }
         );
 
-
-    burstConfetti();
-
 }
 
 
 function closeQuiz() {
 
-    quizModal.classList.remove(
-        "open"
-    );
+    quizModal
+        ?.classList
+        .remove(
+            "open"
+        );
 
 
     body.style.overflow =
@@ -6250,7 +7892,256 @@ function closeQuiz() {
 
 
 /* =========================================================
-   MENU MOBILE
+   DATA EXPORT
+========================================================= */
+
+function exportData() {
+
+    const data =
+        JSON.stringify(
+            state,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        "blog-da-bia-dados.json";
+
+
+    document.body
+        .appendChild(
+            link
+        );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showToast(
+        state.language === "en"
+            ? "Data exported"
+            : "Dados exportados"
+    );
+
+}
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+function importData(file) {
+
+    if (!file) {
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        event => {
+
+            try {
+
+                const imported =
+                    JSON.parse(
+                        event.target
+                            .result
+                    );
+
+
+                if (
+                    typeof imported
+                    !== "object"
+                    ||
+                    !imported
+                ) {
+
+                    throw new Error(
+                        "Invalid"
+                    );
+
+                }
+
+
+                state = {
+
+                    ...structuredClone(
+                        defaultState
+                    ),
+
+                    ...imported,
+
+                    profile: {
+
+                        ...defaultState.profile,
+                        ...(
+                            imported.profile
+                            ||
+                            {}
+                        )
+
+                    }
+
+                };
+
+
+                saveState();
+
+
+                applyTheme();
+
+                applyColorTheme();
+
+                applyAnimationSetting();
+
+                translatePage();
+
+
+                showToast(
+                    state.language === "en"
+                        ? "Data imported"
+                        : "Dados importados"
+                );
+
+            } catch {
+
+                showToast(
+                    state.language === "en"
+                        ? "Invalid file"
+                        : "Arquivo inválido",
+                    "!"
+                );
+
+            }
+
+        };
+
+
+    reader.readAsText(
+        file
+    );
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetData() {
+
+    const confirmed =
+        confirm(
+            state.language === "en"
+                ? "Delete all saved blog data?"
+                : "Apagar todos os dados salvos do blog?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const preserved = {
+
+        language:
+            state.language,
+
+        theme:
+            state.theme,
+
+        colorTheme:
+            state.colorTheme,
+
+        animations:
+            state.animations,
+
+        autoHero:
+            state.autoHero
+
+    };
+
+
+    state = {
+
+        ...structuredClone(
+            defaultState
+        ),
+
+        ...preserved,
+
+        profile: {
+
+            ...defaultState.profile
+
+        }
+
+    };
+
+
+    saveState();
+
+
+    translatePage();
+
+    applyTheme();
+
+    applyColorTheme();
+
+    applyAnimationSetting();
+
+
+    showToast(
+        state.language === "en"
+            ? "Data reset"
+            : "Dados redefinidos"
+    );
+
+}
+
+
+/* =========================================================
+   MOBILE
 ========================================================= */
 
 function openMobileMenu() {
@@ -6290,7 +8181,7 @@ function closeMobileMenu() {
 
 
 /* =========================================================
-   CONFIGURAÇÕES
+   SETTINGS
 ========================================================= */
 
 function openSettings() {
@@ -6312,227 +8203,12 @@ function closeSettings() {
 
 
 /* =========================================================
-   COMPARTILHAR
-========================================================= */
-
-async function shareBlog() {
-
-    const shareData = {
-
-        title:
-            "Blog da Bia ♡",
-
-        text:
-            state.language === "en"
-                ? "Check out this series blog!"
-                : "Olha esse blog de séries!",
-
-        url:
-            window.location.href
-
-    };
-
-
-    try {
-
-        if (
-            navigator.share
-        ) {
-
-            await navigator.share(
-                shareData
-            );
-
-        } else {
-
-            await navigator.clipboard
-                .writeText(
-                    window.location.href
-                );
-
-
-            showToast(
-                state.language === "en"
-                    ? "Link copied!"
-                    : "Link copiado!",
-                "↗"
-            );
-
-        }
-
-    } catch {
-        // cancelado
-    }
-
-}
-
-
-/* =========================================================
-   COPIAR TÍTULO
-========================================================= */
-
-async function copyCurrentSeries() {
-
-    const series =
-        getSeries(
-            activeSeriesId
-        );
-
-
-    if (!series) return;
-
-
-    const title =
-        getSeriesTitle(
-            series
-        );
-
-
-    try {
-
-        await navigator.clipboard
-            .writeText(title);
-
-
-        showToast(
-            state.language === "en"
-                ? `"${title}" copied!`
-                : `"${title}" copiado!`,
-            "⧉"
-        );
-
-    } catch {
-
-        showToast(
-            title,
-            "♡"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ALEATÓRIA
-========================================================= */
-
-function surpriseMe() {
-
-    let series =
-        randomItem(
-            seriesData
-        );
-
-
-    if (
-        series.id === activeSeriesId
-        &&
-        seriesData.length > 1
-    ) {
-
-        series =
-            randomItem(
-                seriesData.filter(
-                    item =>
-                        item.id
-                        !== activeSeriesId
-                )
-            );
-
-    }
-
-
-    showToast(
-        state.language === "en"
-            ? `Your pick: ${
-                getSeriesTitle(series)
-            }`
-            : `Sua escolha: ${
-                getSeriesTitle(series)
-            }`,
-        "✦"
-    );
-
-
-    openSeries(
-        series.id
-    );
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetData() {
-
-    const confirmed =
-        confirm(
-            state.language === "en"
-                ? "Delete favorites, ratings, comments and progress?"
-                : "Apagar favoritos, avaliações, comentários e progresso?"
-        );
-
-
-    if (!confirmed) return;
-
-
-    const preserved = {
-
-        language:
-            state.language,
-
-        theme:
-            state.theme,
-
-        colorTheme:
-            state.colorTheme,
-
-        effects:
-            state.effects,
-
-        animations:
-            state.animations
-
-    };
-
-
-    state = {
-        ...defaultState,
-        ...preserved,
-
-        profile: {
-            ...defaultState.profile
-        }
-    };
-
-
-    saveState();
-
-    updateAllDynamicContent();
-
-    translatePage();
-
-
-    showToast(
-        state.language === "en"
-            ? "Data reset!"
-            : "Dados redefinidos!",
-        "✓"
-    );
-
-}
-
-
-/* =========================================================
    SCROLL
 ========================================================= */
 
 function handleScroll() {
 
-    const scrollTop =
+    const current =
         window.scrollY;
 
 
@@ -6543,43 +8219,45 @@ function handleScroll() {
         window.innerHeight;
 
 
-    const percentage =
-        maximum > 0
-            ? (
-                scrollTop
-                /
-                maximum
-            )
-            *
-            100
-            : 0;
-
-
     scrollProgress.style.width =
-        `${percentage}%`;
+        `${
+            maximum > 0
+                ? (
+                    current
+                    /
+                    maximum
+                )
+                *
+                100
+                : 0
+        }%`;
 
 
     header.classList.toggle(
         "scrolled",
-        scrollTop > 30
+        current > 25
     );
 
 
     backTop.classList.toggle(
         "show",
-        scrollTop > 550
+        current > 500
     );
 
 }
 
 
 /* =========================================================
-   TILT HERO
+   HERO TILT
 ========================================================= */
 
 function setupHeroTilt() {
 
-    if (!heroPosterCard) return;
+    if (
+        !heroPosterCard
+    ) {
+        return;
+    }
 
 
     heroPosterCard.addEventListener(
@@ -6612,31 +8290,35 @@ function setupHeroTilt() {
 
             const rotateY =
                 (
-                    x / rect.width
+                    x
+                    /
+                    rect.width
                     -
                     0.5
                 )
                 *
-                10;
+                7;
 
 
             const rotateX =
                 (
                     0.5
                     -
-                    y / rect.height
+                    y
+                    /
+                    rect.height
                 )
                 *
-                10;
+                7;
 
 
             heroPosterCard.style
                 .transform =
-                    `
-                    perspective(900px)
-                    rotateX(${rotateX}deg)
-                    rotateY(${rotateY}deg)
-                    `;
+                `
+                perspective(900px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                `;
 
         }
     );
@@ -6648,7 +8330,7 @@ function setupHeroTilt() {
 
             heroPosterCard.style
                 .transform =
-                    "";
+                "";
 
         }
     );
@@ -6657,120 +8339,61 @@ function setupHeroTilt() {
 
 
 /* =========================================================
-   TILT CARDS E EQUIPE
+   REFRESH
 ========================================================= */
 
-function setupTiltEffects() {
+function refreshAfterUserChange() {
 
-    document.addEventListener(
-        "mousemove",
-        event => {
+    saveState();
 
-            if (
-                !state.animations
-            ) {
-                return;
-            }
+    updateStats();
 
-
-            const card =
-                event.target.closest(
-                    ".series-card, .person-card"
-                );
-
-
-            if (!card) return;
-
-
-            const rect =
-                card.getBoundingClientRect();
-
-
-            const x =
-                event.clientX
-                -
-                rect.left;
-
-
-            const y =
-                event.clientY
-                -
-                rect.top;
-
-
-            const rotateY =
-                (
-                    x / rect.width
-                    -
-                    0.5
-                )
-                *
-                5;
-
-
-            const rotateX =
-                (
-                    0.5
-                    -
-                    y / rect.height
-                )
-                *
-                5;
-
-
-            card.style.transform =
-                `
-                perspective(900px)
-                translateY(-6px)
-                rotateX(${rotateX}deg)
-                rotateY(${rotateY}deg)
-                `;
-
-
-            const spotlight =
-                $(".person-spotlight", card);
-
-
-            if (spotlight) {
-
-                spotlight.style.left =
-                    `${x}px`;
-
-                spotlight.style.top =
-                    `${y}px`;
-
-            }
-
-        }
+    updateHeroButtons(
+        activeSeriesId
     );
 
-
-    document.addEventListener(
-        "mouseout",
-        event => {
-
-            const card =
-                event.target.closest(
-                    ".series-card, .person-card"
-                );
-
-
-            if (!card) return;
-
-
-            if (
-                !card.contains(
-                    event.relatedTarget
-                )
-            ) {
-
-                card.style.transform =
-                    "";
-
-            }
-
-        }
+    updateModalControls(
+        activeSeriesId
     );
+
+    renderSeries();
+
+    renderPersonalList();
+
+    renderContinueWatching();
+
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
+
+function renderEverything() {
+
+    renderProfile();
+
+    updateStats();
+
+    createHeroDots();
+
+    updateHero();
+
+    renderSeries();
+
+    renderPersonalList();
+
+    renderContinueWatching();
+
+    renderHistory();
+
+    renderBrazil();
+
+    renderRanking();
+
+    renderDailySeries();
+
+    renderComments();
 
 }
 
@@ -6783,38 +8406,21 @@ document.addEventListener(
     "click",
     event => {
 
-        const favorite =
-            event.target.closest(
-                "[data-favorite]"
-            );
+        /* ABRIR SÉRIE */
 
-
-        if (favorite) {
-
-            event.stopPropagation();
-
-
-            toggleFavorite(
-                favorite.dataset
-                    .favorite
-            );
-
-
-            return;
-
-        }
-
-
-        const openButton =
+        const openSeriesButton =
             event.target.closest(
                 "[data-open-series]"
             );
 
 
-        if (openButton) {
+        if (
+            openSeriesButton
+        ) {
 
             openSeries(
-                openButton.dataset
+                openSeriesButton
+                    .dataset
                     .openSeries
             );
 
@@ -6823,6 +8429,8 @@ document.addEventListener(
 
         }
 
+
+        /* CARD */
 
         const card =
             event.target.closest(
@@ -6849,19 +8457,51 @@ document.addEventListener(
         }
 
 
-        const searchButton =
+        /* FAVORITO */
+
+        const favoriteButton =
+            event.target.closest(
+                "[data-toggle-favorite]"
+            );
+
+
+        if (
+            favoriteButton
+        ) {
+
+            event.stopPropagation();
+
+
+            toggleFavorite(
+                favoriteButton
+                    .dataset
+                    .toggleFavorite
+            );
+
+
+            return;
+
+        }
+
+
+        /* SEARCH */
+
+        const searchItem =
             event.target.closest(
                 "[data-search-series]"
             );
 
 
-        if (searchButton) {
+        if (
+            searchItem
+        ) {
 
             closeSearch();
 
 
             openSeries(
-                searchButton.dataset
+                searchItem
+                    .dataset
                     .searchSeries
             );
 
@@ -6871,17 +8511,22 @@ document.addEventListener(
         }
 
 
+        /* SPOILER */
+
         const spoilerButton =
             event.target.closest(
-                "[data-spoiler]"
+                "[data-show-spoiler]"
             );
 
 
-        if (spoilerButton) {
+        if (
+            spoilerButton
+        ) {
 
             const id =
-                spoilerButton.dataset
-                    .spoiler;
+                spoilerButton
+                    .dataset
+                    .showSpoiler;
 
 
             const text =
@@ -6896,18 +8541,19 @@ document.addEventListener(
 
 
             spoilerButton.textContent =
-                text?.classList.contains(
-                    "revealed"
-                )
+                text?.classList
+                    .contains(
+                        "revealed"
+                    )
                     ? (
                         state.language === "en"
-                            ? "🙈 hide spoiler"
-                            : "🙈 esconder spoiler"
+                            ? "Hide spoiler"
+                            : "Ocultar spoiler"
                     )
                     : (
                         state.language === "en"
-                            ? "👁 show spoiler"
-                            : "👁 revelar spoiler"
+                            ? "Show spoiler"
+                            : "Mostrar spoiler"
                     );
 
 
@@ -6916,19 +8562,22 @@ document.addEventListener(
         }
 
 
-        const like =
+        /* LIKE COMMENT */
+
+        const likeComment =
             event.target.closest(
                 "[data-like-comment]"
             );
 
 
-        if (like) {
+        if (
+            likeComment
+        ) {
 
             toggleCommentLike(
-                Number(
-                    like.dataset
-                        .likeComment
-                )
+                likeComment
+                    .dataset
+                    .likeComment
             );
 
 
@@ -6937,32 +8586,40 @@ document.addEventListener(
         }
 
 
-        const replyToggle =
+        /* REPLY BOX */
+
+        const replyButton =
             event.target.closest(
-                "[data-reply-toggle]"
+                "[data-reply-comment]"
             );
 
 
-        if (replyToggle) {
+        if (
+            replyButton
+        ) {
 
-            const box =
-                document.querySelector(
-                    `[data-reply-box="${
-                        replyToggle.dataset
-                            .replyToggle
-                    }"]`
+            const id =
+                replyButton
+                    .dataset
+                    .replyComment;
+
+
+            document
+                .querySelector(
+                    `[data-reply-box="${id}"]`
+                )
+                ?.classList
+                .toggle(
+                    "open"
                 );
 
 
-            box?.classList.toggle(
-                "open"
-            );
-
-
             return;
 
         }
 
+
+        /* SEND REPLY */
 
         const sendReplyButton =
             event.target.closest(
@@ -6970,13 +8627,14 @@ document.addEventListener(
             );
 
 
-        if (sendReplyButton) {
+        if (
+            sendReplyButton
+        ) {
 
             sendReply(
-                Number(
-                    sendReplyButton.dataset
-                        .sendReply
-                )
+                sendReplyButton
+                    .dataset
+                    .sendReply
             );
 
 
@@ -6985,19 +8643,46 @@ document.addEventListener(
         }
 
 
+        /* EDIT COMMENT */
+
+        const editButton =
+            event.target.closest(
+                "[data-edit-comment]"
+            );
+
+
+        if (
+            editButton
+        ) {
+
+            editComment(
+                editButton
+                    .dataset
+                    .editComment
+            );
+
+
+            return;
+
+        }
+
+
+        /* DELETE COMMENT */
+
         const deleteButton =
             event.target.closest(
                 "[data-delete-comment]"
             );
 
 
-        if (deleteButton) {
+        if (
+            deleteButton
+        ) {
 
             deleteComment(
-                Number(
-                    deleteButton.dataset
-                        .deleteComment
-                )
+                deleteButton
+                    .dataset
+                    .deleteComment
             );
 
         }
@@ -7007,42 +8692,48 @@ document.addEventListener(
 
 
 /* =========================================================
-   EVENTOS HEADER
+   HEADER EVENTS
 ========================================================= */
 
 langPT?.addEventListener(
     "click",
     () =>
-        setLanguage("pt")
+        setLanguage(
+            "pt"
+        )
 );
 
 
 langEN?.addEventListener(
     "click",
     () =>
-        setLanguage("en")
+        setLanguage(
+            "en"
+        )
 );
 
 
 $$("[data-mobile-lang]")
-    .forEach(button => {
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                setLanguage(
-                    button.dataset
-                        .mobileLang
-                );
+                    setLanguage(
+                        button.dataset
+                            .mobileLang
+                    );
 
 
-                closeMobileMenu();
+                    closeMobileMenu();
 
-            }
-        );
+                }
+            );
 
-    });
+        }
+    );
 
 
 themeBtn?.addEventListener(
@@ -7063,35 +8754,8 @@ searchOpenBtn?.addEventListener(
 );
 
 
-searchClose?.addEventListener(
-    "click",
-    closeSearch
-);
-
-
-clearSearch?.addEventListener(
-    "click",
-    () => {
-
-        globalSearch.value =
-            "";
-
-        globalSearch.focus();
-
-        renderGlobalSearch();
-
-    }
-);
-
-
-globalSearch?.addEventListener(
-    "input",
-    renderGlobalSearch
-);
-
-
 /* =========================================================
-   MOBILE
+   MOBILE EVENTS
 ========================================================= */
 
 mobileMenuBtn?.addEventListener(
@@ -7115,31 +8779,89 @@ menuOverlay?.addEventListener(
 $$(
     "#mobileMenu a"
 )
-    .forEach(link => {
+    .forEach(
+        link => {
 
-        link.addEventListener(
-            "click",
-            closeMobileMenu
-        );
+            link.addEventListener(
+                "click",
+                closeMobileMenu
+            );
 
-    });
+        }
+    );
+
+
+/* =========================================================
+   SEARCH EVENTS
+========================================================= */
+
+searchClose?.addEventListener(
+    "click",
+    closeSearch
+);
+
+
+searchOverlay?.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target
+            === searchOverlay
+        ) {
+
+            closeSearch();
+
+        }
+
+    }
+);
+
+
+globalSearch?.addEventListener(
+    "input",
+    renderGlobalSearch
+);
+
+
+clearSearch?.addEventListener(
+    "click",
+    () => {
+
+        globalSearch.value =
+            "";
+
+
+        globalSearch.focus();
+
+
+        renderGlobalSearch();
+
+    }
+);
 
 
 /* =========================================================
    HERO EVENTS
 ========================================================= */
 
+heroDetailsBtn?.addEventListener(
+    "click",
+    () =>
+        openSeries(
+            activeSeriesId
+        )
+);
+
+
 watchTrailerBtn?.addEventListener(
     "click",
-    () => {
-
+    () =>
         openTrailer(
             getSeries(
                 activeSeriesId
             )
-        );
-
-    }
+        )
 );
 
 
@@ -7163,13 +8885,25 @@ heroWatchlistBtn?.addEventListener(
 
 randomSeriesBtn?.addEventListener(
     "click",
-    surpriseMe
+    randomSeries
 );
 
 
 copySeriesBtn?.addEventListener(
     "click",
-    copyCurrentSeries
+    () =>
+        copySeriesTitle(
+            activeSeriesId
+        )
+);
+
+
+shareSeriesBtn?.addEventListener(
+    "click",
+    () =>
+        shareSeries(
+            activeSeriesId
+        )
 );
 
 
@@ -7183,7 +8917,9 @@ heroDots?.addEventListener(
             );
 
 
-        if (!dot) return;
+        if (!dot) {
+            return;
+        }
 
 
         heroIndex =
@@ -7202,7 +8938,7 @@ heroDots?.addEventListener(
 
 
 /* =========================================================
-   FILTROS EVENTS
+   CATALOG EVENTS
 ========================================================= */
 
 seriesSearch?.addEventListener(
@@ -7239,26 +8975,27 @@ filters?.addEventListener(
             );
 
 
-        if (!button) return;
-
-
-        $$(".filter-btn")
-            .forEach(btn => {
-
-                btn.classList.remove(
-                    "active"
-                );
-
-            });
-
-
-        button.classList.add(
-            "active"
-        );
+        if (!button) {
+            return;
+        }
 
 
         activeFilter =
             button.dataset.filter;
+
+
+        $$(".filter-btn")
+            .forEach(
+                item => {
+
+                    item.classList.toggle(
+                        "active",
+                        item
+                        === button
+                    );
+
+                }
+            );
 
 
         renderSeries();
@@ -7304,16 +9041,18 @@ clearFiltersBtn?.addEventListener(
 
 
         $$(".filter-btn")
-            .forEach(button => {
+            .forEach(
+                button => {
 
-                button.classList.toggle(
-                    "active",
-                    button.dataset
-                        .filter
-                    === "all"
-                );
+                    button.classList.toggle(
+                        "active",
+                        button.dataset
+                            .filter
+                        === "all"
+                    );
 
-            });
+                }
+            );
 
 
         renderSeries();
@@ -7321,6 +9060,50 @@ clearFiltersBtn?.addEventListener(
     }
 );
 
+
+/* =========================================================
+   PERSONAL TABS
+========================================================= */
+
+$$("[data-personal-tab]")
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    personalTab =
+                        button.dataset
+                            .personalTab;
+
+
+                    $$("[data-personal-tab]")
+                        .forEach(
+                            item => {
+
+                                item.classList.toggle(
+                                    "active",
+                                    item
+                                    === button
+                                );
+
+                            }
+                        );
+
+
+                    renderPersonalList();
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   BRAZIL
+========================================================= */
 
 seeAllBrazilBtn?.addEventListener(
     "click",
@@ -7331,25 +9114,32 @@ seeAllBrazilBtn?.addEventListener(
 
 
         $$(".filter-btn")
-            .forEach(button => {
+            .forEach(
+                button => {
 
-                button.classList.toggle(
-                    "active",
-                    button.dataset
-                        .filter
-                    === "brasil"
-                );
+                    button.classList.toggle(
+                        "active",
+                        button.dataset
+                            .filter
+                        === "brasil"
+                    );
 
-            });
+                }
+            );
 
 
         renderSeries();
 
 
-        $("#series")?.scrollIntoView({
-            behavior:
-                "smooth"
-        });
+        $("#series")
+            ?.scrollIntoView({
+
+                behavior:
+                    state.animations
+                        ? "smooth"
+                        : "auto"
+
+            });
 
     }
 );
@@ -7363,8 +9153,12 @@ dailySeriesBtn?.addEventListener(
     "click",
     () => {
 
+        const series =
+            getDailySeries();
+
+
         openSeries(
-            getDailySeries().id
+            series.id
         );
 
     }
@@ -7372,7 +9166,50 @@ dailySeriesBtn?.addEventListener(
 
 
 /* =========================================================
-   MODAL EVENTS
+   HISTORY
+========================================================= */
+
+clearHistoryBtn?.addEventListener(
+    "click",
+    () => {
+
+        state.history =
+            [];
+
+
+        saveState();
+
+        renderHistory();
+
+
+        showToast(
+            state.language === "en"
+                ? "History cleared"
+                : "Histórico limpo"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   RECOMMENDATION
+========================================================= */
+
+smartRecommendBtn?.addEventListener(
+    "click",
+    smartRecommend
+);
+
+
+startQuizBtn?.addEventListener(
+    "click",
+    openQuiz
+);
+
+
+/* =========================================================
+   SERIES MODAL EVENTS
 ========================================================= */
 
 seriesModalClose?.addEventListener(
@@ -7416,6 +9253,15 @@ modalWatchlistBtn?.addEventListener(
 );
 
 
+modalWatchingBtn?.addEventListener(
+    "click",
+    () =>
+        toggleWatching(
+            activeSeriesId
+        )
+);
+
+
 modalWatchedBtn?.addEventListener(
     "click",
     () =>
@@ -7435,14 +9281,14 @@ starRating?.addEventListener(
             );
 
 
-        if (!button) return;
+        if (!button) {
+            return;
+        }
 
 
         rateSeries(
             activeSeriesId,
-            Number(
-                button.dataset.star
-            )
+            button.dataset.star
         );
 
     }
@@ -7464,7 +9310,45 @@ episodeProgress?.addEventListener(
 
 episodeProgress?.addEventListener(
     "change",
-    updateProgress
+    saveProgress
+);
+
+
+saveSeriesInfoBtn?.addEventListener(
+    "click",
+    saveSeriesInfo
+);
+
+
+modalTrailerBtn?.addEventListener(
+    "click",
+    () => {
+
+        openTrailer(
+            getSeries(
+                activeSeriesId
+            )
+        );
+
+    }
+);
+
+
+modalShareBtn?.addEventListener(
+    "click",
+    () =>
+        shareSeries(
+            activeSeriesId
+        )
+);
+
+
+modalCopyBtn?.addEventListener(
+    "click",
+    () =>
+        copySeriesTitle(
+            activeSeriesId
+        )
 );
 
 
@@ -7497,19 +9381,13 @@ trailerModal?.addEventListener(
 
 openYoutubeTrailer?.addEventListener(
     "click",
-    openTrailerOnYoutube
+    openTrailerSearch
 );
 
 
 /* =========================================================
    QUIZ EVENTS
 ========================================================= */
-
-startQuizBtn?.addEventListener(
-    "click",
-    openQuiz
-);
-
 
 quizClose?.addEventListener(
     "click",
@@ -7580,34 +9458,36 @@ profileForm?.addEventListener(
 
 
 $$(".avatar-picker button")
-    .forEach(button => {
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                $$(".avatar-picker button")
-                    .forEach(btn => {
+                    state.profile.avatar =
+                        button.dataset
+                            .avatar;
 
-                        btn.classList.remove(
-                            "active"
+
+                    $$(".avatar-picker button")
+                        .forEach(
+                            item => {
+
+                                item.classList.toggle(
+                                    "active",
+                                    item
+                                    === button
+                                );
+
+                            }
                         );
 
-                    });
+                }
+            );
 
-
-                button.classList.add(
-                    "active"
-                );
-
-
-                state.profile.avatar =
-                    button.dataset.avatar;
-
-            }
-        );
-
-    });
+        }
+    );
 
 
 /* =========================================================
@@ -7654,37 +9534,27 @@ settingsClose?.addEventListener(
 
 
 $$(".theme-color")
-    .forEach(button => {
+    .forEach(
+        button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+                "click",
+                () => {
 
-                setColorTheme(
-                    button.dataset
-                        .themeColor
-                );
-
-            }
-        );
-
-    });
+                    state.colorTheme =
+                        button.dataset
+                            .themeColor;
 
 
-effectsToggle?.addEventListener(
-    "change",
-    () => {
+                    saveState();
 
-        state.effects =
-            effectsToggle.checked;
+                    applyColorTheme();
 
+                }
+            );
 
-        saveState();
-
-        applyEffects();
-
-    }
-);
+        }
+    );
 
 
 animationsToggle?.addEventListener(
@@ -7692,44 +9562,100 @@ animationsToggle?.addEventListener(
     () => {
 
         state.animations =
-            animationsToggle.checked;
+            animationsToggle
+                .checked;
 
 
         saveState();
 
-        applyEffects();
+        applyAnimationSetting();
+
+    }
+);
+
+
+autoHeroToggle?.addEventListener(
+    "change",
+    () => {
+
+        state.autoHero =
+            autoHeroToggle
+                .checked;
+
+
+        saveState();
+
+        startHeroTimer();
+
+
+        showToast(
+            state.language === "en"
+                ? (
+                    state.autoHero
+                        ? "Automatic featured series enabled"
+                        : "Automatic featured series disabled"
+                )
+                : (
+                    state.autoHero
+                        ? "Destaque automático ativado"
+                        : "Destaque automático desativado"
+                )
+        );
 
     }
 );
 
 
 /* =========================================================
-   RESET
+   DATA EVENTS
 ========================================================= */
+
+exportDataBtn?.addEventListener(
+    "click",
+    exportData
+);
+
+
+importDataBtn?.addEventListener(
+    "click",
+    () => {
+
+        importDataInput.click();
+
+    }
+);
+
+
+importDataInput?.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            importDataInput
+                .files?.[0];
+
+
+        if (
+            file
+        ) {
+
+            importData(
+                file
+            );
+
+        }
+
+
+        importDataInput.value =
+            "";
+
+    }
+);
+
 
 resetDataBtn?.addEventListener(
     "click",
     resetData
-);
-
-
-/* =========================================================
-   BACK TOP
-========================================================= */
-
-backTop?.addEventListener(
-    "click",
-    () => {
-
-        window.scrollTo({
-            top: 0,
-            behavior:
-                state.animations
-                    ? "smooth"
-                    : "auto"
-        });
-
-    }
 );
 
 
@@ -7741,67 +9667,104 @@ window.addEventListener(
     "scroll",
     handleScroll,
     {
-        passive: true
+        passive:
+            true
+    }
+);
+
+
+backTop?.addEventListener(
+    "click",
+    () => {
+
+        window.scrollTo({
+
+            top:
+                0,
+
+            behavior:
+                state.animations
+                    ? "smooth"
+                    : "auto"
+
+        });
+
     }
 );
 
 
 /* =========================================================
-   HOVER CURSOR
+   INTERNAL LINKS
 ========================================================= */
 
-document.addEventListener(
-    "mouseover",
-    event => {
+$$('a[href^="#"]')
+    .forEach(
+        link => {
 
-        if (
-            event.target.closest(
-                "button, a, input, textarea, select, .series-card"
-            )
-        ) {
+            link.addEventListener(
+                "click",
+                event => {
 
-            heartCursor?.classList.add(
-                "hover"
+                    const href =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        !href
+                        ||
+                        href === "#"
+                    ) {
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            href
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+
+                        behavior:
+                            state.animations
+                                ? "smooth"
+                                : "auto",
+
+                        block:
+                            "start"
+
+                    });
+
+                }
             );
 
         }
-
-    }
-);
-
-
-document.addEventListener(
-    "mouseout",
-    event => {
-
-        if (
-            event.target.closest(
-                "button, a, input, textarea, select, .series-card"
-            )
-        ) {
-
-            heartCursor?.classList.remove(
-                "hover"
-            );
-
-        }
-
-    }
-);
+    );
 
 
 /* =========================================================
-   TECLADO
-
-   ESC = fecha
-   /   = pesquisa
-   R   = aleatória
-   T   = tema
+   KEYBOARD
 ========================================================= */
 
 document.addEventListener(
     "keydown",
     event => {
+
+        const activeTag =
+            document.activeElement
+                ?.tagName;
+
 
         const typing =
             [
@@ -7810,13 +9773,13 @@ document.addEventListener(
                 "SELECT"
             ]
                 .includes(
-                    document.activeElement
-                        ?.tagName
+                    activeTag
                 );
 
 
         if (
-            event.key === "Escape"
+            event.key
+            === "Escape"
         ) {
 
             closeSearch();
@@ -7839,11 +9802,16 @@ document.addEventListener(
         }
 
 
-        if (typing) return;
+        if (typing) {
+            return;
+        }
 
+
+        /* / PESQUISA */
 
         if (
-            event.key === "/"
+            event.key
+            === "/"
         ) {
 
             event.preventDefault();
@@ -7853,16 +9821,20 @@ document.addEventListener(
         }
 
 
+        /* R ALEATÓRIA */
+
         if (
             event.key
                 .toLowerCase()
             === "r"
         ) {
 
-            surpriseMe();
+            randomSeries();
 
         }
 
+
+        /* T TEMA */
 
         if (
             event.key
@@ -7874,121 +9846,27 @@ document.addEventListener(
 
         }
 
-    }
-);
 
+        /* F FAVORITO */
 
-/* =========================================================
-   LINKS INTERNOS
-========================================================= */
+        if (
+            event.key
+                .toLowerCase()
+            === "f"
+        ) {
 
-$$('a[href^="#"]')
-    .forEach(link => {
-
-        link.addEventListener(
-            "click",
-            event => {
-
-                const href =
-                    link.getAttribute(
-                        "href"
-                    );
-
-
-                if (
-                    !href
-                    ||
-                    href === "#"
-                ) {
-                    return;
-                }
-
-
-                const target =
-                    document.querySelector(
-                        href
-                    );
-
-
-                if (!target) return;
-
-
-                event.preventDefault();
-
-
-                target.scrollIntoView({
-
-                    behavior:
-                        state.animations
-                            ? "smooth"
-                            : "auto",
-
-                    block:
-                        "start"
-
-                });
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   ATUALIZAÇÃO GERAL
-========================================================= */
-
-function updateAllDynamicContent() {
-
-    renderProfile();
-
-    updateStats();
-
-    populateCommentSeries();
-
-    renderComments();
-
-    renderSeries();
-
-    renderBrazil();
-
-    renderRanking();
-
-    renderDailySeries();
-
-    renderContinueWatching();
-
-    createHeroDots();
-
-    updateHero();
-
-
-    if (
-        seriesModal?.classList
-            .contains("open")
-    ) {
-
-        const current =
-            getSeries(
+            toggleFavorite(
                 activeSeriesId
-            );
-
-
-        if (current) {
-
-            openSeries(
-                current.id
             );
 
         }
 
     }
-
-}
+);
 
 
 /* =========================================================
-   LOADER
+   LOAD
 ========================================================= */
 
 window.addEventListener(
@@ -7998,12 +9876,14 @@ window.addEventListener(
         setTimeout(
             () => {
 
-                loader?.classList.add(
-                    "hidden"
-                );
+                loader
+                    ?.classList
+                    .add(
+                        "hidden"
+                    );
 
             },
-            650
+            500
         );
 
     }
@@ -8013,12 +9893,14 @@ window.addEventListener(
 setTimeout(
     () => {
 
-        loader?.classList.add(
-            "hidden"
-        );
+        loader
+            ?.classList
+            .add(
+                "hidden"
+            );
 
     },
-    2800
+    2500
 );
 
 
@@ -8026,14 +9908,16 @@ setTimeout(
    INIT
 ========================================================= */
 
-async function init() {
+function init() {
 
     console.log(
-        "♡ Blog da Bia iniciado"
+        "Blog da Bia iniciado ✓"
     );
 
 
-    if (currentYear) {
+    if (
+        currentYear
+    ) {
 
         currentYear.textContent =
             new Date()
@@ -8046,37 +9930,17 @@ async function init() {
 
     applyColorTheme();
 
-    applyEffects();
+    applyAnimationSetting();
 
     renderProfile();
 
-    createHeroDots();
-
     populateCommentSeries();
 
-    updateStats();
-
-    renderComments();
-
-    renderSeries();
-
-    renderBrazil();
-
-    renderRanking();
-
-    renderContinueWatching();
-
-    await renderDailySeries();
-
-    await updateHero();
+    translatePage();
 
     setupHeroTilt();
 
-    setupTiltEffects();
-
     handleScroll();
-
-    translatePage();
 
     startHeroTimer();
 
@@ -8084,7 +9948,7 @@ async function init() {
 
 
 /* =========================================================
-   EXECUTAR
+   START
 ========================================================= */
 
 init();
