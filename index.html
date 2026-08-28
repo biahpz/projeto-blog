@@ -1,4931 +1,1573 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <meta
-        name="description"
-        content="Blog da Bia — séries, trailers, elenco, avaliações, listas, comentários e recomendações."
-    >
-
-    <meta
-        name="theme-color"
-        content="#0b0c12"
-    >
-
-    <title>Blog da Bia</title>
-
-
-    <!-- GOOGLE FONTS -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet"
-    >
-
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-</head>
-
-
-<body>
-
-
-    <!-- =====================================================
-         CURSOR GLOW
-    ====================================================== -->
-
-    <div
-        id="cursorGlow"
-        class="cursor-glow"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- =====================================================
-         LOADER
-    ====================================================== -->
-
-    <div
-        id="loader"
-        class="loader"
-    >
-
-        <div class="loader-inner">
-
-            <div class="loader-photo-wrap">
-
-                <img
-                    src="./img/Beatriz.jpg"
-                    alt="Beatriz"
-                    class="loader-photo"
-                >
-
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>
+            Blog da Bia
+        </title>
+        <meta content="Blog da Bia — séries, histórias e recomendações." name="description"/>
+        <link href="https://api.tvmaze.com" rel="preconnect"/>
+        <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+        <link href="./style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="loader" id="loader">
+            <div class="loader-inner">
+                <img alt="Beatriz" class="loader-photo" src="./img/Beatriz.jpg"/>
+                <strong>
+                    Blog da Bia
+                </strong>
+                <span data-i18n="loading">
+                    preparando o catálogo...
+                </span>
             </div>
-
-
-            <h1>
-                Blog da Bia
-            </h1>
-
-
-            <p
-                id="loaderText"
-                data-i18n="loading"
-            >
-                preparando o catálogo...
-            </p>
-
-
-            <div class="loader-progress">
-
-                <span></span>
-
-            </div>
-
+        </div>
+        <div class="scroll-progress" id="scrollProgress">
+        </div>
+        <div class="cursor-glow" id="cursorGlow">
         </div>
 
-    </div>
-
-
-    <!-- =====================================================
-         SCROLL PROGRESS
-    ====================================================== -->
-
-    <div
-        id="scrollProgress"
-        class="scroll-progress"
-    ></div>
-
-
-    <!-- =====================================================
-         TOAST
-    ====================================================== -->
-
-    <div
-        id="toast"
-        class="toast"
-        role="status"
-        aria-live="polite"
-    >
-
-        <span
-            id="toastIcon"
-            class="toast-icon"
-        >
-            ✓
-        </span>
-
-        <span id="toastText">
-            Tudo certo
-        </span>
-
-    </div>
-
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <header
-        id="header"
-        class="header"
-    >
-
-        <div class="header-container">
-
-
-            <!-- LOGO -->
-
-            <a
-                href="#inicio"
-                class="brand"
-                aria-label="Blog da Bia"
-            >
-
-                <div class="brand-avatar">
-
-                    <img
-                        src="./img/Beatriz.jpg"
-                        alt="Beatriz"
-                    >
-
-                    <span class="brand-status"></span>
-
-                </div>
-
-
-                <div class="brand-copy">
-
-                    <strong>
+        <header class="site-header" id="header">
+            <a class="brand" href="#inicio">
+                <span class="brand-avatar">
+                    <img alt="Beatriz" src="./img/Beatriz.jpg"/>
+                </span>
+                <span class="brand-copy">
+                    <b>
                         Blog da Bia
-                    </strong>
-
+                    </b>
                     <small data-i18n="brandSubtitle">
-                        séries & histórias
+                        séries &amp; histórias
                     </small>
-
-                </div>
-
+                </span>
             </a>
-
-
-            <!-- MENU DESKTOP -->
-
-            <nav
-                class="desktop-nav"
-                aria-label="Menu principal"
-            >
-
-                <a
-                    href="#inicio"
-                    data-i18n="home"
-                    class="active"
-                >
+            <nav class="desktop-nav">
+                <a class="active" href="#inicio">
                     Início
                 </a>
-
-
-                <a
-                    href="#series"
-                    data-i18n="series"
-                >
+                <a href="#series">
                     Séries
                 </a>
-
-
-                <a
-                    href="#populares"
-                    data-i18n="popular"
-                >
+                <a href="#populares">
                     Populares
                 </a>
-
-
-                <a
-                    href="#brasil"
-                    data-i18n="brazil"
-                >
+                <a href="#brasil">
                     Brasil
                 </a>
-
-
-                <a
-                    href="#minha-lista"
-                    data-i18n="myList"
-                >
+                <a href="#minha-lista">
                     Minha Lista
                 </a>
-
-
-                <a
-                    href="#ranking"
-                    data-i18n="ranking"
-                >
+                <a href="#ranking">
                     Ranking
                 </a>
-
-
-                <a
-                    href="#comunidade"
-                    data-i18n="community"
-                >
+                <a href="#comunidade">
                     Comunidade
                 </a>
-
-
-                <a
-                    href="#sobre"
-                    data-i18n="about"
-                >
+                <a href="#sobre">
                     Sobre
                 </a>
-
             </nav>
-
-
-            <!-- AÇÕES -->
-
             <div class="header-actions">
-
-
-                <!-- IDIOMA -->
-
-                <div
-                    id="languageSwitcher"
-                    class="language-switcher"
-                >
-
-                    <!-- BRASIL -->
-
-                    <button
-                        id="langPT"
-                        class="language-btn active"
-                        data-lang="pt"
-                        type="button"
-                        aria-label="Português"
-                        title="Português"
-                    >
-
-                        <span class="flag-icon">
-
-                            <svg
-                                viewBox="0 0 36 24"
-                                aria-hidden="true"
-                            >
-
-                                <rect
-                                    width="36"
-                                    height="24"
-                                    rx="3"
-                                    fill="#169b62"
-                                />
-
-                                <path
-                                    d="M18 3L32 12L18 21L4 12Z"
-                                    fill="#ffdf00"
-                                />
-
-                                <circle
-                                    cx="18"
-                                    cy="12"
-                                    r="5.15"
-                                    fill="#002776"
-                                />
-
-                                <path
-                                    d="M13.3 11.25C16.3 9.85 20.2 10 23 11.7"
-                                    fill="none"
-                                    stroke="#ffffff"
-                                    stroke-width=".9"
-                                />
-
-                            </svg>
-
-                        </span>
-
-                        <span>
-                            PT
-                        </span>
-
-                    </button>
-
-
-                    <!-- EUA -->
-
-                    <button
-                        id="langEN"
-                        class="language-btn"
-                        data-lang="en"
-                        type="button"
-                        aria-label="English"
-                        title="English"
-                    >
-
-                        <span class="flag-icon">
-
-                            <svg
-                                viewBox="0 0 36 24"
-                                aria-hidden="true"
-                            >
-
-                                <rect
-                                    width="36"
-                                    height="24"
-                                    rx="3"
-                                    fill="#ffffff"
-                                />
-
-
-                                <path
-                                    d="
-                                    M0 0H36V2H0Z
-                                    M0 4H36V6H0Z
-                                    M0 8H36V10H0Z
-                                    M0 12H36V14H0Z
-                                    M0 16H36V18H0Z
-                                    M0 20H36V22H0Z
-                                    "
-                                    fill="#b22234"
-                                />
-
-
-                                <rect
-                                    width="15"
-                                    height="12"
-                                    rx="1"
-                                    fill="#3c3b6e"
-                                />
-
-
-                                <g fill="#ffffff">
-
-                                    <circle cx="3" cy="2.5" r=".55"/>
-                                    <circle cx="7" cy="2.5" r=".55"/>
-                                    <circle cx="11" cy="2.5" r=".55"/>
-
-                                    <circle cx="5" cy="5.8" r=".55"/>
-                                    <circle cx="9" cy="5.8" r=".55"/>
-                                    <circle cx="13" cy="5.8" r=".55"/>
-
-                                    <circle cx="3" cy="9" r=".55"/>
-                                    <circle cx="7" cy="9" r=".55"/>
-                                    <circle cx="11" cy="9" r=".55"/>
-
-                                </g>
-
-                            </svg>
-
-                        </span>
-
-                        <span>
-                            EN
-                        </span>
-
-                    </button>
-
-                </div>
-
-
-                <!-- SEARCH -->
-
-                <button
-                    id="searchOpenBtn"
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Pesquisar"
-                    title="Pesquisar"
-                >
-                    <span class="search-icon">
-                        ⌕
-                    </span>
+                <button aria-label="Português" class="language-btn active" id="langPT" type="button">
+                    <svg aria-hidden="true" class="flag-icon" viewbox="0 0 60 42">
+                        <rect fill="#009b3a" height="42" rx="4" width="60">
+                        </rect>
+                        <polygon fill="#ffdf00" points="30,5 54,21 30,37 6,21">
+                        </polygon>
+                        <circle cx="30" cy="21" fill="#002776" r="9">
+                        </circle>
+                        <path d="M21 19c7-2 14 0 18 4" fill="none" stroke="#fff" stroke-width="1.7">
+                        </path>
+                    </svg>
                 </button>
-
-
-                <!-- THEME -->
-
-                <button
-                    id="themeBtn"
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Alternar tema"
-                    title="Alternar tema"
-                >
-
+                <button aria-label="English" class="language-btn" id="langEN" type="button">
+                    <svg aria-hidden="true" class="flag-icon" viewbox="0 0 60 42">
+                        <rect fill="#fff" height="42" rx="4" width="60">
+                        </rect>
+                        <g fill="#b22234">
+                            <rect height="3.23" width="60" y="0">
+                            </rect>
+                            <rect height="3.23" width="60" y="6.46">
+                            </rect>
+                            <rect height="3.23" width="60" y="12.92">
+                            </rect>
+                            <rect height="3.23" width="60" y="19.38">
+                            </rect>
+                            <rect height="3.23" width="60" y="25.84">
+                            </rect>
+                            <rect height="3.23" width="60" y="32.3">
+                            </rect>
+                            <rect height="3.24" width="60" y="38.76">
+                            </rect>
+                        </g>
+                        <rect fill="#3c3b6e" height="22.7" width="26">
+                        </rect>
+                        <g fill="#fff" opacity=".95">
+                            <circle cx="4" cy="4" r="1">
+                            </circle>
+                            <circle cx="10" cy="4" r="1">
+                            </circle>
+                            <circle cx="16" cy="4" r="1">
+                            </circle>
+                            <circle cx="22" cy="4" r="1">
+                            </circle>
+                            <circle cx="7" cy="8" r="1">
+                            </circle>
+                            <circle cx="13" cy="8" r="1">
+                            </circle>
+                            <circle cx="19" cy="8" r="1">
+                            </circle>
+                            <circle cx="4" cy="12" r="1">
+                            </circle>
+                            <circle cx="10" cy="12" r="1">
+                            </circle>
+                            <circle cx="16" cy="12" r="1">
+                            </circle>
+                            <circle cx="22" cy="12" r="1">
+                            </circle>
+                            <circle cx="7" cy="16" r="1">
+                            </circle>
+                            <circle cx="13" cy="16" r="1">
+                            </circle>
+                            <circle cx="19" cy="16" r="1">
+                            </circle>
+                        </g>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="searchOpenBtn" type="button">
+                    ⌕
+                </button>
+                <button class="icon-btn" id="themeBtn" type="button">
                     <span id="themeIcon">
                         ☾
                     </span>
-
                 </button>
-
-
-                <!-- SHARE -->
-
-                <button
-                    id="shareBlogBtn"
-                    class="icon-btn"
-                    type="button"
-                    aria-label="Compartilhar"
-                    title="Compartilhar blog"
-                >
+                <button class="icon-btn desktop-only" id="shareBlogBtn" type="button">
                     ↗
                 </button>
-
-
-                <!-- MOBILE -->
-
-                <button
-                    id="mobileMenuBtn"
-                    class="mobile-menu-btn"
-                    type="button"
-                    aria-label="Abrir menu"
-                >
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
+                <button class="icon-btn mobile-only" id="mobileMenuBtn" type="button">
+                    ☰
                 </button>
-
             </div>
+        </header>
 
+        <div class="menu-overlay" id="menuOverlay">
         </div>
 
-    </header>
-
-
-    <!-- =====================================================
-         MOBILE MENU
-    ====================================================== -->
-
-    <div
-        id="menuOverlay"
-        class="menu-overlay"
-    ></div>
-
-
-    <aside
-        id="mobileMenu"
-        class="mobile-menu"
-        aria-label="Menu mobile"
-    >
-
-        <div class="mobile-menu-top">
-
-            <div class="mobile-brand">
-
-                <img
-                    src="./img/Beatriz.jpg"
-                    alt="Beatriz"
-                >
-
-                <div>
-
-                    <strong>
-                        Blog da Bia
-                    </strong>
-
-                    <small>
-                        séries & histórias
-                    </small>
-
-                </div>
-
-            </div>
-
-
-            <button
-                id="mobileMenuClose"
-                class="mobile-close"
-                type="button"
-                aria-label="Fechar menu"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <nav class="mobile-nav">
-
-            <a href="#inicio">
-                Início
-            </a>
-
-            <a href="#series">
-                Séries
-            </a>
-
-            <a href="#populares">
-                Populares
-            </a>
-
-            <a href="#brasil">
-                Brasil
-            </a>
-
-            <a href="#minha-lista">
-                Minha Lista
-            </a>
-
-            <a href="#ranking">
-                Ranking
-            </a>
-
-            <a href="#comunidade">
-                Comunidade
-            </a>
-
-            <a href="#sobre">
-                Sobre
-            </a>
-
-        </nav>
-
-
-        <div class="mobile-language">
-
-            <button
-                data-mobile-lang="pt"
-                type="button"
-            >
-
-                <span class="mobile-flag">
-                    🇧🇷
-                </span>
-
-                Português
-
-            </button>
-
-
-            <button
-                data-mobile-lang="en"
-                type="button"
-            >
-
-                <span class="mobile-flag">
-                    🇺🇸
-                </span>
-
-                English
-
-            </button>
-
-        </div>
-
-
-        <button
-            id="mobileSettingsBtn"
-            class="mobile-settings-btn"
-            type="button"
-        >
-            ⚙ Personalizar
-        </button>
-
-    </aside>
-
-
-    <!-- =====================================================
-         SEARCH OVERLAY
-    ====================================================== -->
-
-    <div
-        id="searchOverlay"
-        class="search-overlay"
-    >
-
-        <div class="search-box">
-
-            <div class="search-header">
-
-                <div>
-
-                    <span
-                        class="section-kicker"
-                        data-i18n="search"
-                    >
-                        PESQUISAR
-                    </span>
-
-                    <h2 data-i18n="whatWatch">
-                        O que vamos assistir?
-                    </h2>
-
-                </div>
-
-
-                <button
-                    id="searchClose"
-                    class="modal-close"
-                    type="button"
-                    aria-label="Fechar pesquisa"
-                >
+        <aside class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-head">
+                <strong>
+                    Blog da Bia
+                </strong>
+                <button class="icon-btn" id="mobileMenuClose" type="button">
                     ×
                 </button>
-
             </div>
-
-
-            <label class="global-search">
-
-                <span>
-                    ⌕
-                </span>
-
-
-                <input
-                    id="globalSearch"
-                    type="search"
-                    placeholder="Digite uma série..."
-                    autocomplete="off"
-                >
-
-
-                <button
-                    id="clearSearch"
-                    type="button"
-                    aria-label="Limpar pesquisa"
-                >
-                    ×
+            <nav class="mobile-nav">
+                <a href="#inicio">
+                    Início
+                </a>
+                <a href="#series">
+                    Séries
+                </a>
+                <a href="#populares">
+                    Populares
+                </a>
+                <a href="#brasil">
+                    Brasil
+                </a>
+                <a href="#minha-lista">
+                    Minha Lista
+                </a>
+                <a href="#ranking">
+                    Ranking
+                </a>
+                <a href="#comunidade">
+                    Comunidade
+                </a>
+                <a href="#sobre">
+                    Sobre
+                </a>
+            </nav>
+            <div class="mobile-language-row">
+                <button data-mobile-lang="pt" type="button">
+                    🇧🇷 Português
                 </button>
-
-            </label>
-
-
-            <!-- HISTÓRICO DE PESQUISA -->
-
-            <div
-                id="searchHistoryArea"
-                class="search-history-area"
-            >
-
-                <div class="search-history-heading">
-
-                    <span>
-                        Pesquisas recentes
-                    </span>
-
-
-                    <button
-                        id="clearSearchHistoryBtn"
-                        type="button"
-                    >
-                        Limpar
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="searchHistory"
-                    class="search-history"
-                ></div>
-
+                <button data-mobile-lang="en" type="button">
+                    🇺🇸 English
+                </button>
             </div>
+            <button class="secondary-dark-btn" id="mobileSettingsBtn" type="button">
+                Personalizar
+            </button>
+        </aside>
 
+        <main>
 
-            <!-- RESULTADOS -->
-
-            <div
-                id="searchResults"
-                class="search-results"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
-    <main>
-
-
-        <!-- =================================================
-             HERO
-        ================================================== -->
-
-        <section
-            id="inicio"
-            class="hero"
-        >
-
-            <div
-                id="heroBackdrop"
-                class="hero-backdrop"
-            ></div>
-
-
-            <div class="hero-overlay"></div>
-
-
-            <div class="hero-container">
-
-
-                <!-- COPY -->
-
-                <div class="hero-copy">
-
-                    <span class="hero-label">
-                        NETFLIX SERIES BLOG
-                    </span>
-
-
-                    <h1 id="heroTitle">
-                        Stranger Things
-                    </h1>
-
-
-                    <div class="hero-meta">
-
-                        <span id="heroRating">
-                            ★ 4.9
+            <section class="hero reveal" id="inicio">
+                <div class="hero-backdrop" id="heroBackdrop">
+                </div>
+                <div class="hero-overlay">
+                </div>
+                <div class="container hero-grid">
+                    <div class="hero-copy">
+                        <span class="eyebrow">
+                            BLOG DA BIA
                         </span>
-
-                        <span id="heroYear">
-                            2016
-                        </span>
-
-                        <span id="heroGenre">
-                            Mistério
-                        </span>
-
-                        <span id="heroSeasons">
-                            5 temporadas
-                        </span>
-
-                    </div>
-
-
-                    <p
-                        id="heroDescription"
-                        class="hero-description"
-                    >
-                        Mistérios, amizade e acontecimentos sobrenaturais transformam Hawkins.
-                    </p>
-
-
-                    <div class="hero-actions">
-
-                        <button
-                            id="heroDetailsBtn"
-                            class="primary-btn"
-                            type="button"
-                        >
-                            Ver detalhes
-                        </button>
-
-
-                        <button
-                            id="watchTrailerBtn"
-                            class="secondary-btn"
-                            type="button"
-                        >
-                            ▶ Trailer
-                        </button>
-
-
-                        <button
-                            id="heroFavoriteBtn"
-                            class="secondary-btn"
-                            type="button"
-                        >
-                            ♡ Favoritar
-                        </button>
-
-
-                        <button
-                            id="heroWatchlistBtn"
-                            class="secondary-btn"
-                            type="button"
-                        >
-                            ＋ Minha lista
-                        </button>
-
-                    </div>
-
-
-                    <div class="hero-tools">
-
-                        <button
-                            id="heroLikeBtn"
-                            type="button"
-                            class="hero-mini-btn"
-                        >
-                            ♡
-
-                            <span>
-                                Curtir
+                        <h1 id="heroTitle">
+                            Stranger Things
+                        </h1>
+                        <div class="hero-meta">
+                            <span id="heroRating">
+                                ★ 4.9
                             </span>
-
-                            <b id="heroLikeCount">
-                                0
-                            </b>
-
-                        </button>
-
-
-                        <button
-                            id="randomSeriesBtn"
-                            type="button"
-                            class="hero-mini-btn"
-                        >
-                            ✦ Aleatória
-                        </button>
-
-
-                        <button
-                            id="copySeriesBtn"
-                            type="button"
-                            class="hero-mini-btn"
-                        >
-                            Copiar título
-                        </button>
-
-
-                        <button
-                            id="shareSeriesBtn"
-                            type="button"
-                            class="hero-mini-btn"
-                        >
-                            Compartilhar
-                        </button>
-
+                            <span id="heroYear">
+                                2016
+                            </span>
+                            <span id="heroGenre">
+                                Mistério
+                            </span>
+                            <span id="heroSeasons">
+                                5 temporadas
+                            </span>
+                        </div>
+                        <p id="heroDescription">
+                        </p>
+                        <div class="hero-actions">
+                            <button class="primary-btn" id="heroDetailsBtn" type="button">
+                                Ver detalhes
+                            </button>
+                            <button class="secondary-dark-btn" id="watchTrailerBtn" type="button">
+                                ▶ Trailer
+                            </button>
+                            <button class="secondary-dark-btn" id="heroFavoriteBtn" type="button">
+                                ♡ Favoritar
+                            </button>
+                            <button class="secondary-dark-btn" id="heroWatchlistBtn" type="button">
+                                ＋ Minha lista
+                            </button>
+                            <button class="secondary-dark-btn" id="heroLikeBtn" type="button">
+                                ♡
+                                <span>
+                                    Curtir
+                                </span>
+                                <b id="heroLikeCount">
+                                    0
+                                </b>
+                            </button>
+                        </div>
+                        <div class="hero-tools">
+                            <button id="randomSeriesBtn" type="button">
+                                Série aleatória
+                            </button>
+                            <button id="copySeriesBtn" type="button">
+                                Copiar título
+                            </button>
+                            <button id="shareSeriesBtn" type="button">
+                                Compartilhar
+                            </button>
+                        </div>
+                        <div class="hero-dots" id="heroDots">
+                        </div>
                     </div>
-
-
-                    <div
-                        id="heroDots"
-                        class="hero-dots"
-                    ></div>
-
-                </div>
-
-
-                <!-- POSTER -->
-
-                <div class="hero-poster-area">
-
-                    <div
-                        id="heroPosterCard"
-                        class="hero-poster-card"
-                    >
-
-                        <div class="hero-poster-glow"></div>
-
-
-                        <img
-                            id="heroPoster"
-                            src=""
-                            alt="Capa da série"
-                        >
-
-
-                        <div class="hero-poster-info">
-
+                    <div class="hero-poster-card" id="heroPosterCard">
+                        <img alt="Capa da série" id="heroPoster" src=""/>
+                        <div class="poster-score">
                             <small>
-                                avaliação
+                                NOTA
                             </small>
-
                             <strong id="communityRating">
                                 4.9 / 5
                             </strong>
-
                         </div>
-
                     </div>
-
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             QUICK STATS
-        ================================================== -->
-
-        <section class="stats-section">
-
-            <div class="section-container">
-
-                <div class="stats-grid">
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ♡
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Favoritas
-                            </span>
-
-                            <strong id="favoriteCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ＋
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Minha lista
-                            </span>
-
-                            <strong id="watchlistCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ✓
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Assistidas
-                            </span>
-
-                            <strong id="watchedCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ★
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Avaliações
-                            </span>
-
-                            <strong id="ratingsCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ♡
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Curtidas
-                            </span>
-
-                            <strong id="totalLikesCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="stat-card">
-
-                        <span class="stat-icon">
-                            ◌
-                        </span>
-
-                        <div>
-
-                            <span class="stat-label">
-                                Comentários
-                            </span>
-
-                            <strong id="commentsCount">
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             PERFIL
-        ================================================== -->
-
-        <section class="profile-section">
-
-            <div class="section-container">
-
-                <div class="profile-card">
-
-                    <div class="profile-identity">
-
-                        <div class="profile-avatar-wrap">
-
-                            <div
-                                id="profileAvatar"
-                                class="profile-avatar"
-                            >
-                                B
-                            </div>
-
-
-                            <button
-                                id="editProfileBtn"
-                                class="profile-edit"
-                                type="button"
-                                aria-label="Editar perfil"
-                            >
-                                ✎
-                            </button>
-
-                        </div>
-
-
-                        <div>
-
-                            <span class="section-kicker">
-                                SEU PERFIL
-                            </span>
-
-
-                            <h2 id="profileName">
-                                Visitante
-                            </h2>
-
-
-                            <p id="profileLevelText">
-                                Maratonista iniciante
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="profile-progress">
-
-                        <div class="progress-heading">
-
-                            <span>
-                                Nível de maratonista
-                            </span>
-
-                            <strong id="levelNumber">
-                                1
-                            </strong>
-
-                        </div>
-
-
-                        <div class="progress-track">
-
-                            <span id="levelProgress"></span>
-
-                        </div>
-
-
-                        <small id="levelText">
-                            0 / 100 XP
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CONTINUE ASSISTINDO
-        ================================================== -->
-
-        <section
-            id="continueSection"
-            class="content-section hidden-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            CONTINUE
-                        </span>
-
-                        <h2>
-                            Continue assistindo
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="continueGrid"
-                    class="horizontal-grid"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             HISTÓRICO
-        ================================================== -->
-
-        <section
-            id="historySection"
-            class="content-section hidden-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            HISTÓRICO
-                        </span>
-
-                        <h2>
-                            Vistas recentemente
-                        </h2>
-
-                    </div>
-
-
-                    <button
-                        id="clearHistoryBtn"
-                        class="text-btn"
-                        type="button"
-                    >
-                        Limpar histórico
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="historyGrid"
-                    class="horizontal-grid"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SÉRIE DO DIA
-        ================================================== -->
-
-        <section class="daily-section">
-
-            <div class="section-container">
-
-                <div class="daily-card">
-
-
-                    <div class="daily-copy">
-
-                        <span class="section-kicker">
-                            BIA RECOMENDA
-                        </span>
-
-
-                        <h2>
-                            Série do dia
-                        </h2>
-
-
-                        <h3 id="dailyTitle">
-                            Escolha de hoje
-                        </h3>
-
-
-                        <p id="dailyDescription">
-                            Uma recomendação especial para você.
-                        </p>
-
-
-                        <div class="daily-actions">
-
-                            <button
-                                id="dailySeriesBtn"
-                                class="primary-btn"
-                                type="button"
-                            >
-                                Ver detalhes
-                            </button>
-
-
-                            <button
-                                id="dailyAnotherBtn"
-                                class="secondary-dark-btn"
-                                type="button"
-                            >
-                                Outra sugestão
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="daily-image-wrap">
-
-                        <img
-                            id="dailyImage"
-                            src=""
-                            alt="Série do dia"
-                        >
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             POPULARES
-        ================================================== -->
-
-        <section
-            id="populares"
-            class="content-section popular-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            EM ALTA
-                        </span>
-
-                        <h2>
-                            Mais populares
-                        </h2>
-
-                        <p>
-                            As séries que mais se destacam no blog.
-                        </p>
-
-                    </div>
-
-
-                    <div class="carousel-buttons">
-
-                        <button
-                            id="popularPrevBtn"
-                            type="button"
-                            aria-label="Anterior"
-                        >
-                            ←
-                        </button>
-
-                        <button
-                            id="popularNextBtn"
-                            type="button"
-                            aria-label="Próximo"
-                        >
-                            →
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="popularCarousel"
-                    class="popular-carousel"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CATÁLOGO
-        ================================================== -->
-
-        <section
-            id="series"
-            class="content-section catalog-section"
-        >
-
-            <div class="section-container">
-
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            CATÁLOGO
-                        </span>
-
-
-                        <h2>
-                            Séries para maratonar
-                        </h2>
-
-
-                        <p>
-                            Escolha sua próxima série.
-                        </p>
-
-                    </div>
-
-
-                    <div class="result-count">
-
-                        <strong id="seriesResultCount">
+            </section>
+
+            <section class="stats-strip reveal">
+                <div class="container stats-grid">
+                    <article>
+                        <strong id="favoriteCount">
                             0
                         </strong>
-
                         <span>
-                            resultados
+                            Favoritos
                         </span>
+                    </article>
+                    <article>
+                        <strong id="watchlistCount">
+                            0
+                        </strong>
+                        <span>
+                            Minha lista
+                        </span>
+                    </article>
+                    <article>
+                        <strong id="watchedCount">
+                            0
+                        </strong>
+                        <span>
+                            Assistidas
+                        </span>
+                    </article>
+                    <article>
+                        <strong id="ratingsCount">
+                            0
+                        </strong>
+                        <span>
+                            Avaliações
+                        </span>
+                    </article>
+                    <article>
+                        <strong id="totalLikesCount">
+                            0
+                        </strong>
+                        <span>
+                            Curtidas
+                        </span>
+                    </article>
+                    <article>
+                        <strong id="commentsCount">
+                            0
+                        </strong>
+                        <span>
+                            Comentários
+                        </span>
+                    </article>
+                </div>
+            </section>
 
+            <section class="profile-section reveal">
+                <div class="container profile-card">
+                    <div class="profile-avatar" id="profileAvatar">
+                        B
                     </div>
-
-                </div>
-
-
-                <!-- TOOLBAR -->
-
-                <div class="catalog-toolbar">
-
-
-                    <label class="catalog-search">
-
+                    <div class="profile-copy">
                         <span>
-                            ⌕
+                            SEU PERFIL
                         </span>
-
-
-                        <input
-                            id="seriesSearch"
-                            type="search"
-                            placeholder="Buscar série..."
-                            autocomplete="off"
-                        >
-
-                    </label>
-
-
-                    <select
-                        id="seriesSort"
-                        aria-label="Ordenar séries"
-                    >
-
-                        <option value="featured">
-                            Recomendadas
-                        </option>
-
-                        <option value="rating">
-                            Maior nota
-                        </option>
-
-                        <option value="likes">
-                            Mais curtidas
-                        </option>
-
-                        <option value="az">
-                            A → Z
-                        </option>
-
-                        <option value="za">
-                            Z → A
-                        </option>
-
-                        <option value="newest">
-                            Mais recentes
-                        </option>
-
-                        <option value="oldest">
-                            Mais antigas
-                        </option>
-
-                    </select>
-
+                        <h2 id="profileName">
+                            Visitante
+                        </h2>
+                        <p id="profileLevelText">
+                            Maratonista iniciante
+                        </p>
+                        <div class="level-line">
+                            <div id="levelProgress">
+                            </div>
+                        </div>
+                        <small>
+                            Nível
+                            <b id="levelNumber">
+                                1
+                            </b>
+                            ·
+                            <span id="levelText">
+                                0 / 100 XP
+                            </span>
+                        </small>
+                    </div>
+                    <button class="secondary-dark-btn" id="editProfileBtn" type="button">
+                        Editar perfil
+                    </button>
                 </div>
+            </section>
 
-
-                <!-- FILTROS -->
-
-                <div
-                    id="filters"
-                    class="filters"
-                >
-
-                    <button
-                        class="filter-btn active"
-                        data-filter="all"
-                        type="button"
-                    >
-                        Todas
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="romance"
-                        type="button"
-                    >
-                        Romance
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="drama"
-                        type="button"
-                    >
-                        Drama
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="misterio"
-                        type="button"
-                    >
-                        Mistério
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="suspense"
-                        type="button"
-                    >
-                        Suspense
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="crime"
-                        type="button"
-                    >
-                        Crime
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="comedia"
-                        type="button"
-                    >
-                        Comédia
-                    </button>
-
-
-                    <button
-                        class="filter-btn"
-                        data-filter="brasil"
-                        type="button"
-                    >
-                        Brasil
-                    </button>
-
+            <section class="section hidden-section reveal" id="continueSection">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                RETOMAR
+                            </span>
+                            <h2>
+                                Continue assistindo
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="series-grid compact-grid" id="continueGrid">
+                    </div>
                 </div>
+            </section>
 
+            <section class="section hidden-section reveal" id="historySection">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                RECENTES
+                            </span>
+                            <h2>
+                                Vistos recentemente
+                            </h2>
+                        </div>
+                        <button class="text-btn" id="clearHistoryBtn" type="button">
+                            Limpar histórico
+                        </button>
+                    </div>
+                    <div class="series-grid compact-grid" id="historyGrid">
+                    </div>
+                </div>
+            </section>
 
-                <!-- FILTROS AVANÇADOS -->
-
-                <div class="advanced-filter-area">
-
-                    <button
-                        id="advancedFilterBtn"
-                        class="advanced-filter-btn"
-                        type="button"
-                    >
-                        <span>
-                            Filtros avançados
+            <section class="section reveal">
+                <div class="container daily-card">
+                    <div class="daily-copy">
+                        <span class="section-kicker">
+                            ESCOLHA DO DIA
                         </span>
+                        <h2 id="dailyTitle">
+                            Carregando...
+                        </h2>
+                        <p id="dailyDescription">
+                        </p>
+                        <div class="daily-actions">
+                            <button class="primary-btn" id="dailySeriesBtn" type="button">
+                                Ver série
+                            </button>
+                            <button class="secondary-dark-btn" id="dailyAnotherBtn" type="button">
+                                Outra escolha
+                            </button>
+                        </div>
+                    </div>
+                    <img alt="Capa" id="dailyImage" src=""/>
+                </div>
+            </section>
 
-                        <b>＋</b>
-                    </button>
-
-
-                    <div
-                        id="advancedFilters"
-                        class="advanced-filters"
-                    >
-
-
-                        <label>
-
-                            <span>
-                                Nota mínima
+            <section class="section reveal" id="populares">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                EM ALTA
                             </span>
+                            <h2>
+                                Populares
+                            </h2>
+                        </div>
+                        <div class="carousel-controls">
+                            <button id="popularPrevBtn" type="button">
+                                ←
+                            </button>
+                            <button id="popularNextBtn" type="button">
+                                →
+                            </button>
+                        </div>
+                    </div>
+                    <div class="popular-carousel" id="popularCarousel">
+                    </div>
+                </div>
+            </section>
 
-
-                            <select id="ratingFilter">
-
-                                <option value="0">
-                                    Todas
-                                </option>
-
-                                <option value="4">
-                                    4.0+
-                                </option>
-
-                                <option value="4.5">
-                                    4.5+
-                                </option>
-
-                                <option value="4.8">
-                                    4.8+
-                                </option>
-
-                            </select>
-
-                        </label>
-
-
-                        <label>
-
-                            <span>
-                                Status
+            <section class="section reveal" id="series">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                CATÁLOGO
                             </span>
-
-
-                            <select id="statusFilter">
-
-                                <option value="all">
-                                    Todos
-                                </option>
-
-                                <option value="favorite">
-                                    Favoritas
-                                </option>
-
-                                <option value="liked">
-                                    Curtidas
-                                </option>
-
-                                <option value="watchlist">
-                                    Minha lista
-                                </option>
-
-                                <option value="watching">
-                                    Assistindo
-                                </option>
-
-                                <option value="watched">
-                                    Assistidas
-                                </option>
-
-                            </select>
-
-                        </label>
-
-
-                        <label>
-
-                            <span>
-                                Origem
-                            </span>
-
-
-                            <select id="countryFilter">
-
-                                <option value="all">
-                                    Todos os países
-                                </option>
-
-                                <option value="brazil">
-                                    Brasil
-                                </option>
-
-                                <option value="international">
-                                    Internacional
-                                </option>
-
-                            </select>
-
-                        </label>
-
-
-                        <button
-                            id="clearFiltersBtn"
-                            class="danger-soft-btn"
-                            type="button"
-                        >
+                            <h2>
+                                Séries
+                                <span id="seriesResultCount">
+                                    15
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="catalog-toolbar">
+                        <input id="seriesSearch" placeholder="Buscar série..." type="search"/>
+                        <select id="seriesSort">
+                            <option value="featured">
+                                Destaques
+                            </option>
+                            <option value="rating">
+                                Melhor nota
+                            </option>
+                            <option value="likes">
+                                Mais curtidas
+                            </option>
+                            <option value="az">
+                                A-Z
+                            </option>
+                            <option value="za">
+                                Z-A
+                            </option>
+                            <option value="newest">
+                                Mais recentes
+                            </option>
+                            <option value="oldest">
+                                Mais antigas
+                            </option>
+                        </select>
+                        <button class="secondary-dark-btn" id="advancedFilterBtn" type="button">
+                            Filtros
+                        </button>
+                    </div>
+                    <div class="filter-row" id="filters">
+                        <button class="filter-btn active" data-filter="all" type="button">
+                            Todas
+                        </button>
+                        <button class="filter-btn" data-filter="drama" type="button">
+                            Drama
+                        </button>
+                        <button class="filter-btn" data-filter="romance" type="button">
+                            Romance
+                        </button>
+                        <button class="filter-btn" data-filter="crime" type="button">
+                            Crime
+                        </button>
+                        <button class="filter-btn" data-filter="suspense" type="button">
+                            Suspense
+                        </button>
+                        <button class="filter-btn" data-filter="comedia" type="button">
+                            Comédia
+                        </button>
+                        <button class="filter-btn" data-filter="misterio" type="button">
+                            Mistério
+                        </button>
+                        <button class="filter-btn" data-filter="brasil" type="button">
+                            Brasil
+                        </button>
+                    </div>
+                    <div class="advanced-filters" id="advancedFilters">
+                        <select id="ratingFilter">
+                            <option value="0">
+                                Qualquer nota
+                            </option>
+                            <option value="4.8">
+                                4.8+
+                            </option>
+                            <option value="4.7">
+                                4.7+
+                            </option>
+                            <option value="4.5">
+                                4.5+
+                            </option>
+                        </select>
+                        <select id="statusFilter">
+                            <option value="all">
+                                Qualquer status
+                            </option>
+                            <option value="favorite">
+                                Favoritas
+                            </option>
+                            <option value="liked">
+                                Curtidas
+                            </option>
+                            <option value="watchlist">
+                                Minha lista
+                            </option>
+                            <option value="watching">
+                                Assistindo
+                            </option>
+                            <option value="watched">
+                                Assistidas
+                            </option>
+                        </select>
+                        <select id="countryFilter">
+                            <option value="all">
+                                Todos os países
+                            </option>
+                            <option value="brazil">
+                                Brasil
+                            </option>
+                            <option value="international">
+                                Internacionais
+                            </option>
+                        </select>
+                        <button class="text-btn" id="clearFiltersBtn" type="button">
                             Limpar filtros
                         </button>
-
                     </div>
-
-                </div>
-
-
-                <!-- GRID -->
-
-                <div
-                    id="seriesGrid"
-                    class="series-grid"
-                ></div>
-
-
-                <!-- EMPTY -->
-
-                <div
-                    id="emptySeries"
-                    class="empty-state hidden"
-                >
-
-                    <div class="empty-icon">
-                        ⌕
+                    <div class="series-grid" id="seriesGrid">
                     </div>
-
-
-                    <h3>
-                        Nenhuma série encontrada
-                    </h3>
-
-
-                    <p>
-                        Tente outra pesquisa ou altere os filtros.
-                    </p>
-
-
-                    <button
-                        id="emptyClearBtn"
-                        class="secondary-dark-btn"
-                        type="button"
-                    >
-                        Limpar filtros
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             RECOMENDAÇÃO PERSONALIZADA
-        ================================================== -->
-
-        <section
-            id="becauseSection"
-            class="content-section hidden-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span
-                            id="becauseLabel"
-                            class="section-kicker"
-                        >
-                            PARA VOCÊ
-                        </span>
-
-
-                        <h2 id="becauseTitle">
-                            Porque você gostou...
-                        </h2>
-
+                    <div class="empty-state hidden" id="emptySeries">
+                        <h3>
+                            Nenhuma série encontrada
+                        </h3>
+                        <button class="secondary-dark-btn" id="emptyClearBtn" type="button">
+                            Limpar filtros
+                        </button>
                     </div>
-
                 </div>
+            </section>
 
+            <section class="section hidden-section reveal" id="becauseSection">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                PARA VOCÊ
+                            </span>
+                            <h2 id="becauseTitle">
+                                Porque você gosta de...
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="series-grid compact-grid" id="becauseGrid">
+                    </div>
+                </div>
+            </section>
 
-                <div
-                    id="becauseGrid"
-                    class="horizontal-grid"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             MINHA LISTA
-        ================================================== -->
-
-        <section
-            id="minha-lista"
-            class="content-section personal-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            PESSOAL
-                        </span>
-
-
-                        <h2>
-                            Minha Lista
-                        </h2>
-
-
+            <section class="section reveal" id="minha-lista">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                PESSOAL
+                            </span>
+                            <h2>
+                                Minha lista
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="personal-tabs">
+                        <button class="personal-tab active" data-personal-tab="watchlist" type="button">
+                            Lista
+                            <span id="watchlistTabCount">
+                                0
+                            </span>
+                        </button>
+                        <button class="personal-tab" data-personal-tab="favorites" type="button">
+                            Favoritas
+                            <span id="favoritesTabCount">
+                                0
+                            </span>
+                        </button>
+                        <button class="personal-tab" data-personal-tab="liked" type="button">
+                            Curtidas
+                            <span id="likedTabCount">
+                                0
+                            </span>
+                        </button>
+                        <button class="personal-tab" data-personal-tab="watching" type="button">
+                            Assistindo
+                            <span id="watchingTabCount">
+                                0
+                            </span>
+                        </button>
+                        <button class="personal-tab" data-personal-tab="watched" type="button">
+                            Assistidas
+                            <span id="watchedTabCount">
+                                0
+                            </span>
+                        </button>
+                    </div>
+                    <div class="series-grid compact-grid" id="personalGrid">
+                    </div>
+                    <div class="empty-state" id="personalEmpty">
                         <p>
-                            Tudo que você salvou em um só lugar.
+                            Nada por aqui ainda.
                         </p>
-
                     </div>
-
                 </div>
+            </section>
 
-
-                <div class="personal-tabs">
-
-                    <button
-                        class="personal-tab active"
-                        data-personal-tab="watchlist"
-                        type="button"
-                    >
-                        Minha lista
-
-                        <span id="watchlistTabCount">
-                            0
-                        </span>
-                    </button>
-
-
-                    <button
-                        class="personal-tab"
-                        data-personal-tab="favorites"
-                        type="button"
-                    >
-                        Favoritas
-
-                        <span id="favoritesTabCount">
-                            0
-                        </span>
-                    </button>
-
-
-                    <button
-                        class="personal-tab"
-                        data-personal-tab="liked"
-                        type="button"
-                    >
-                        Curtidas
-
-                        <span id="likedTabCount">
-                            0
-                        </span>
-                    </button>
-
-
-                    <button
-                        class="personal-tab"
-                        data-personal-tab="watching"
-                        type="button"
-                    >
-                        Assistindo
-
-                        <span id="watchingTabCount">
-                            0
-                        </span>
-                    </button>
-
-
-                    <button
-                        class="personal-tab"
-                        data-personal-tab="watched"
-                        type="button"
-                    >
-                        Assistidas
-
-                        <span id="watchedTabCount">
-                            0
-                        </span>
-                    </button>
-
+            <section class="section reveal" id="brasil">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                NACIONAIS
+                            </span>
+                            <h2>
+                                Produções brasileiras
+                            </h2>
+                        </div>
+                        <button class="text-btn" id="seeAllBrazilBtn" type="button">
+                            Ver todas
+                        </button>
+                    </div>
+                    <div class="popular-carousel" id="brazilCarousel">
+                    </div>
                 </div>
+            </section>
 
-
-                <div
-                    id="personalGrid"
-                    class="horizontal-grid"
-                ></div>
-
-
-                <div
-                    id="personalEmpty"
-                    class="personal-empty"
-                >
-
-                    <span>
-                        ＋
-                    </span>
-
-                    <p>
-                        Sua lista ainda está vazia.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             BRASIL
-        ================================================== -->
-
-        <section
-            id="brasil"
-            class="brazil-section"
-        >
-
-            <div class="brazil-background"></div>
-
-
-            <div class="section-container">
-
-                <div class="brazil-heading">
-
+            <section class="section reveal">
+                <div class="container recommendation-banner">
                     <div>
-
                         <span class="section-kicker">
-                            NETFLIX BRASIL
+                            NÃO SABE O QUE VER?
                         </span>
-
-
                         <h2>
-                            Produções brasileiras
+                            Encontre sua próxima série
                         </h2>
-
-
                         <p>
-                            Histórias brasileiras presentes no Blog da Bia.
+                            Use suas escolhas ou faça um quiz rápido.
                         </p>
-
                     </div>
-
-
-                    <button
-                        id="seeAllBrazilBtn"
-                        class="outline-btn"
-                        type="button"
-                    >
-                        Ver todas
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="brazilCarousel"
-                    class="brazil-carousel"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             QUIZ
-        ================================================== -->
-
-        <section class="quiz-section">
-
-            <div class="section-container">
-
-                <div class="quiz-card">
-
-                    <div class="quiz-copy">
-
-                        <span class="section-kicker">
-                            RECOMENDAÇÃO
-                        </span>
-
-
-                        <h2>
-                            Não sabe o que assistir?
-                        </h2>
-
-
-                        <p>
-                            Use o quiz ou deixe o blog escolher uma série baseado no que você gosta.
-                        </p>
-
-                    </div>
-
-
-                    <div class="quiz-actions">
-
-                        <button
-                            id="startQuizBtn"
-                            class="primary-btn"
-                            type="button"
-                        >
+                    <div class="recommendation-actions">
+                        <button class="primary-btn" id="smartRecommendBtn" type="button">
+                            Recomendação inteligente
+                        </button>
+                        <button class="secondary-dark-btn" id="startQuizBtn" type="button">
                             Fazer quiz
                         </button>
-
-
-                        <button
-                            id="smartRecommendBtn"
-                            class="secondary-dark-btn"
-                            type="button"
-                        >
-                            ✦ Recomendar para mim
+                        <button class="secondary-dark-btn" id="surpriseMeBtn" type="button">
+                            Me surpreenda
                         </button>
-
-
-                        <button
-                            id="surpriseMeBtn"
-                            class="secondary-dark-btn"
-                            type="button"
-                        >
-                            Surpreenda-me
-                        </button>
-
                     </div>
-
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             RANKING
-        ================================================== -->
-
-        <section
-            id="ranking"
-            class="content-section ranking-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            RANKING
-                        </span>
-
-
-                        <h2>
-                            Ranking da Bia
-                        </h2>
-
-
-                        <p>
-                            As séries mais bem avaliadas do catálogo.
-                        </p>
-
-                    </div>
-
-
-                    <div class="ranking-tabs">
-
-                        <button
-                            class="ranking-tab active"
-                            data-ranking-mode="rating"
-                            type="button"
-                        >
-                            Nota
-                        </button>
-
-
-                        <button
-                            class="ranking-tab"
-                            data-ranking-mode="likes"
-                            type="button"
-                        >
-                            Curtidas
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="rankingList"
-                    class="ranking-list"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             ESTATÍSTICAS
-        ================================================== -->
-
-        <section
-            id="userStatsSection"
-            class="content-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            ESTATÍSTICAS
-                        </span>
-
-                        <h2>
-                            Sua atividade
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-stats-grid">
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            ✦
-                        </span>
-
-                        <small>
-                            Gênero favorito
-                        </small>
-
-                        <strong id="favoriteGenreStat">
-                            —
-                        </strong>
-
-                    </article>
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            ◔
-                        </span>
-
-                        <small>
-                            Catálogo concluído
-                        </small>
-
-                        <strong id="completionStat">
-                            0%
-                        </strong>
-
-                    </article>
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            ★
-                        </span>
-
-                        <small>
-                            Sua nota média
-                        </small>
-
-                        <strong id="averageRatingStat">
-                            —
-                        </strong>
-
-                    </article>
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            🇧🇷
-                        </span>
-
-                        <small>
-                            Brasileiras assistidas
-                        </small>
-
-                        <strong id="brazilWatchedStat">
-                            0
-                        </strong>
-
-                    </article>
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            ♡
-                        </span>
-
-                        <small>
-                            Séries curtidas
-                        </small>
-
-                        <strong id="likedSeriesStat">
-                            0
-                        </strong>
-
-                    </article>
-
-
-                    <article>
-
-                        <span class="user-stat-icon">
-                            ◌
-                        </span>
-
-                        <small>
-                            Progresso médio
-                        </small>
-
-                        <strong id="averageProgressStat">
-                            0%
-                        </strong>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CONQUISTAS
-        ================================================== -->
-
-        <section
-            id="achievementsSection"
-            class="content-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            CONQUISTAS
-                        </span>
-
-
-                        <h2>
-                            Sua jornada
-                        </h2>
-
-                    </div>
-
-
-                    <span
-                        id="achievementProgress"
-                        class="achievement-progress"
-                    >
-                        0 / 6
-                    </span>
-
-                </div>
-
-
-                <div class="achievement-grid">
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="favorite"
-                    >
-
-                        <span class="achievement-icon">
-                            ♡
-                        </span>
-
+            </section>
+
+            <section class="section reveal" id="ranking">
+                <div class="container">
+                    <div class="section-head">
                         <div>
-
-                            <strong>
-                                Primeira favorita
-                            </strong>
-
-                            <small>
-                                Favorite uma série.
-                            </small>
-
+                            <span class="section-kicker">
+                                TOP
+                            </span>
+                            <h2>
+                                Ranking
+                            </h2>
                         </div>
+                        <div class="ranking-tabs">
+                            <button class="ranking-tab active" data-ranking-mode="rating" type="button">
+                                Nota
+                            </button>
+                            <button class="ranking-tab" data-ranking-mode="likes" type="button">
+                                Curtidas
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ranking-list" id="rankingList">
+                    </div>
+                </div>
+            </section>
 
-                    </article>
+            <section class="section reveal" id="userStatsSection">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                SEUS DADOS
+                            </span>
+                            <h2>
+                                Seu perfil de séries
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="user-stats-grid">
+                        <article>
+                            <span>
+                                Gênero favorito
+                            </span>
+                            <strong id="favoriteGenreStat">
+                                —
+                            </strong>
+                        </article>
+                        <article>
+                            <span>
+                                Catálogo concluído
+                            </span>
+                            <strong id="completionStat">
+                                0%
+                            </strong>
+                        </article>
+                        <article>
+                            <span>
+                                Média das notas
+                            </span>
+                            <strong id="averageRatingStat">
+                                —
+                            </strong>
+                        </article>
+                        <article>
+                            <span>
+                                Brasileiras assistidas
+                            </span>
+                            <strong id="brazilWatchedStat">
+                                0
+                            </strong>
+                        </article>
+                        <article>
+                            <span>
+                                Séries curtidas
+                            </span>
+                            <strong id="likedSeriesStat">
+                                0
+                            </strong>
+                        </article>
+                        <article>
+                            <span>
+                                Progresso médio
+                            </span>
+                            <strong id="averageProgressStat">
+                                0%
+                            </strong>
+                        </article>
+                    </div>
+                </div>
+            </section>
 
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="watchlist"
-                    >
-
-                        <span class="achievement-icon">
+            <section class="section reveal" id="achievementsSection">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                CONQUISTAS
+                            </span>
+                            <h2>
+                                Conquistas
+                                <small id="achievementProgress">
+                                    0 / 6
+                                </small>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="achievement-grid">
+                        <article class="achievement-card" data-achievement="favorite">
+                            ♡
+                            <strong>
+                                Primeiro favorito
+                            </strong>
+                        </article>
+                        <article class="achievement-card" data-achievement="watchlist">
                             ＋
-                        </span>
-
-                        <div>
-
                             <strong>
-                                Colecionadora
+                                Lista crescendo
                             </strong>
-
-                            <small>
-                                Adicione 3 séries à lista.
-                            </small>
-
-                        </div>
-
-                    </article>
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="watched"
-                    >
-
-                        <span class="achievement-icon">
+                        </article>
+                        <article class="achievement-card" data-achievement="watched">
                             ✓
-                        </span>
-
-                        <div>
-
                             <strong>
                                 Maratonista
                             </strong>
-
-                            <small>
-                                Termine 3 séries.
-                            </small>
-
-                        </div>
-
-                    </article>
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="critic"
-                    >
-
-                        <span class="achievement-icon">
+                        </article>
+                        <article class="achievement-card" data-achievement="critic">
                             ★
-                        </span>
-
-                        <div>
-
                             <strong>
                                 Crítica
                             </strong>
-
-                            <small>
-                                Avalie 3 séries.
-                            </small>
-
-                        </div>
-
-                    </article>
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="community"
-                    >
-
-                        <span class="achievement-icon">
-                            ◌
-                        </span>
-
-                        <div>
-
+                        </article>
+                        <article class="achievement-card" data-achievement="community">
+                            ✦
                             <strong>
                                 Comunidade
                             </strong>
-
-                            <small>
-                                Publique 2 comentários.
-                            </small>
-
-                        </div>
-
-                    </article>
-
-
-                    <article
-                        class="achievement-card"
-                        data-achievement="expert"
-                    >
-
-                        <span class="achievement-icon">
-                            ✦
-                        </span>
-
-                        <div>
-
+                        </article>
+                        <article class="achievement-card" data-achievement="expert">
+                            ♛
                             <strong>
                                 Expert
                             </strong>
-
-                            <small>
-                                Alcance 300 XP.
-                            </small>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             COMUNIDADE
-        ================================================== -->
-
-        <section
-            id="comunidade"
-            class="community-section"
-        >
-
-            <div class="section-container">
-
-                <div class="section-heading">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            COMUNIDADE
-                        </span>
-
-
-                        <h2>
-                            Vamos falar de séries?
-                        </h2>
-
-
-                        <p>
-                            Compartilhe sua opinião com o blog.
-                        </p>
-
+                        </article>
                     </div>
-
                 </div>
+            </section>
 
-
-                <div class="community-layout">
-
-
-                    <!-- FORM -->
-
-                    <form
-                        id="commentForm"
-                        class="comment-form"
-                    >
-
-                        <div class="comment-form-heading">
-
-                            <span>
-                                ◌
+            <section class="section reveal" id="comunidade">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                COMUNIDADE
                             </span>
-
-                            <h3>
-                                Novo comentário
-                            </h3>
-
-                        </div>
-
-
-                        <label>
-
-                            <span>
-                                Seu nome
-                            </span>
-
-
-                            <input
-                                id="commentName"
-                                type="text"
-                                maxlength="30"
-                                placeholder="Digite seu nome"
-                                required
-                            >
-
-                        </label>
-
-
-                        <label>
-
-                            <span>
-                                Série
-                            </span>
-
-
-                            <select
-                                id="commentSeries"
-                                required
-                            ></select>
-
-                        </label>
-
-
-                        <label>
-
-                            <span>
-                                Comentário
-                            </span>
-
-
-                            <div class="textarea-wrap">
-
-                                <textarea
-                                    id="commentText"
-                                    maxlength="400"
-                                    placeholder="O que você achou?"
-                                    required
-                                ></textarea>
-
-
-                                <small>
-
-                                    <span id="commentCharCount">
-                                        0
-                                    </span>
-
-                                    / 400
-
-                                </small>
-
-                            </div>
-
-                        </label>
-
-
-                        <label class="checkbox-row">
-
-                            <input
-                                id="commentSpoiler"
-                                type="checkbox"
-                            >
-
-                            <span>
-                                Contém spoiler
-                            </span>
-
-                        </label>
-
-
-                        <button
-                            class="primary-btn full-btn"
-                            type="submit"
-                        >
-                            Publicar comentário
-                        </button>
-
-                    </form>
-
-
-                    <!-- COMMENTS -->
-
-                    <div class="comments-area">
-
-                        <div class="comments-toolbar">
-
-                            <h3>
-
+                            <h2>
                                 Comentários
-
                                 <span id="commentCount">
                                     0
                                 </span>
-
-                            </h3>
-
-
-                            <select id="commentSort">
-
-                                <option value="new">
-                                    Mais recentes
-                                </option>
-
-                                <option value="likes">
-                                    Mais curtidos
-                                </option>
-
-                                <option value="old">
-                                    Mais antigos
-                                </option>
-
-                            </select>
-
+                            </h2>
                         </div>
-
-
-                        <div
-                            id="commentsList"
-                            class="comments-list"
-                        ></div>
-
+                        <select id="commentSort">
+                            <option value="new">
+                                Mais novos
+                            </option>
+                            <option value="likes">
+                                Mais curtidos
+                            </option>
+                            <option value="old">
+                                Mais antigos
+                            </option>
+                        </select>
                     </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             EQUIPE
-        ================================================== -->
-
-        <section
-            id="sobre"
-            class="team-section"
-        >
-
-            <div class="team-background-glow team-glow-left"></div>
-            <div class="team-background-glow team-glow-right"></div>
-
-
-            <div class="section-container">
-
-
-                <div class="team-heading reveal">
-
-                    <span class="section-kicker">
-                        POR TRÁS DO BLOG
-                    </span>
-
-
-                    <h2>
-
-                        As pessoas por trás
-
-                        <span>
-                            do projeto.
-                        </span>
-
-                    </h2>
-
-
-                    <p>
-                        Ideia, conteúdo e desenvolvimento trabalhando juntos para criar a experiência do Blog da Bia.
-                    </p>
-
-                </div>
-
-
-                <!-- PROJECT INFO -->
-
-                <div class="project-overview reveal">
-
-
-                    <article>
-
-                        <strong id="projectSeriesCount">
-                            15
-                        </strong>
-
-                        <small>
-                            séries
-                        </small>
-
-                    </article>
-
-
-                    <article>
-
-                        <strong>
-                            2
-                        </strong>
-
-                        <small>
-                            idiomas
-                        </small>
-
-                    </article>
-
-
-                    <article>
-
-                        <strong>
-                            100%
-                        </strong>
-
-                        <small>
-                            responsivo
-                        </small>
-
-                    </article>
-
-
-                    <article>
-
-                        <strong>
-                            3
-                        </strong>
-
-                        <small>
-                            tecnologias
-                        </small>
-
-                    </article>
-
-                </div>
-
-
-                <div class="team-grid">
-
-
-                    <!-- =====================================
-                         BEATRIZ
-                    ====================================== -->
-
-                    <article
-                        class="person-card creator-card reveal"
-                        data-person-card
-                    >
-
-                        <div class="person-card-light"></div>
-
-
-                        <div class="person-card-top">
-
-                            <span class="team-number">
-                                01
-                            </span>
-
-
-                            <span class="team-status">
-
-                                <i></i>
-
-                                Criadora
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="premium-person-photo">
-
-                            <div class="photo-border"></div>
-
-
-                            <img
-                                src="./img/Beatriz.jpg"
-                                alt="Beatriz"
-                            >
-
-
-                            <div class="photo-overlay"></div>
-
-                        </div>
-
-
-                        <div class="premium-person-info">
-
-                            <span class="person-role creator-role">
-                                CRIADORA DO BLOG
-                            </span>
-
-
-                            <h3>
-                                Beatriz
-                            </h3>
-
-
-                            <p class="person-main-description">
-                                Responsável pelas ideias, seleção de séries, conteúdo e identidade do projeto.
-                            </p>
-
-
-                            <div class="person-divider"></div>
-
-
-                            <span class="person-subtitle">
-                                Principais áreas
-                            </span>
-
-
-                            <div class="person-skills">
-
-                                <span>
-                                    Curadoria
-                                </span>
-
-                                <span>
-                                    Conteúdo
-                                </span>
-
-                                <span>
-                                    Séries
-                                </span>
-
-                                <span>
-                                    Identidade
-                                </span>
-
-                            </div>
-
-
-                            <div class="person-details-grid">
-
-                                <div>
-
-                                    <small>
-                                        FOCO
-                                    </small>
-
-                                    <strong>
-                                        Conteúdo
-                                    </strong>
-
-                                </div>
-
-
-                                <div>
-
-                                    <small>
-                                        PROJETO
-                                    </small>
-
-                                    <strong>
-                                        Blog da Bia
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-
-                            <button
-                                class="team-profile-btn"
-                                data-open-team-profile="beatriz"
-                                type="button"
-                            >
-
-                                <span>
-                                    Conhecer a criadora
-                                </span>
-
-                                <b>
-                                    →
+                    <form class="comment-form" id="commentForm">
+                        <input id="commentName" maxlength="40" placeholder="Seu nome" required="" type="text"/>
+                        <select id="commentSeries" required="">
+                        </select>
+                        <div class="textarea-wrap">
+                            <textarea id="commentText" maxlength="350" placeholder="O que você achou?" required=""></textarea>
+                            <span>
+                                <b id="commentCharCount">
+                                    0
                                 </b>
-
-                            </button>
-
+                                /350
+                            </span>
                         </div>
+                        <label class="check-row">
+                            <input id="commentSpoiler" type="checkbox"/>
+                            Contém spoiler
+                        </label>
+                        <button class="primary-btn" type="submit">
+                            Publicar comentário
+                        </button>
+                    </form>
+                    <div class="comments-list" id="commentsList">
+                    </div>
+                </div>
+            </section>
 
-                    </article>
-
-
-                    <!-- =====================================
-                         BAYERLEE
-                    ====================================== -->
-
-                    <article
-                        class="person-card developer-card reveal"
-                        data-person-card
-                    >
-
-                        <div class="person-card-light"></div>
-
-
-                        <div class="person-card-top">
-
-                            <span class="team-number">
-                                02
+            <section class="section reveal" id="sobre">
+                <div class="container">
+                    <div class="section-head">
+                        <div>
+                            <span class="section-kicker">
+                                PROJETO
                             </span>
-
-
-                            <span class="team-status developer-status">
-
-                                <i></i>
-
-                                Desenvolvedor
-
-                            </span>
-
+                            <h2>
+                                Sobre o Blog da Bia
+                            </h2>
                         </div>
-
-
-                        <div class="premium-person-photo">
-
-                            <div class="photo-border developer-photo-border"></div>
-
-
-                            <img
-                                src="./img/Bayerlee.jpg"
-                                alt="Bayerlee"
-                            >
-
-
-                            <div class="photo-overlay"></div>
-
-                        </div>
-
-
-                        <div class="premium-person-info">
-
-                            <span class="person-role developer-role">
-                                DESENVOLVEDOR
-                            </span>
-
-
-                            <h3>
-                                Bayerlee
-                            </h3>
-
-
-                            <p class="person-main-description">
-                                Responsável pela estrutura, visual, responsividade, interações e funcionalidades do Blog da Bia.
-                            </p>
-
-
-                            <div class="person-divider"></div>
-
-
-                            <span class="person-subtitle">
-                                TECNOLOGIAS
-                            </span>
-
-
-                            <!-- =============================
-                                 HTML / CSS / JAVASCRIPT
-                                 SEM 5 / SEM 3
-                            ============================== -->
-
-                            <div class="developer-techs">
-
-
-                                <!-- HTML -->
-
-                                <article class="tech-card tech-html">
-
-                                    <div class="tech-logo html-logo">
-
-                                        <svg
-                                            viewBox="0 0 128 128"
-                                            aria-hidden="true"
-                                        >
-
-                                            <path
-                                                fill="#e44d26"
-                                                d="M19 3l9 101 36 10 36-10 9-101H19z"
-                                            />
-
-                                            <path
-                                                fill="#f16529"
-                                                d="M64 106V11h36l-8 85-28 10z"
-                                            />
-
-                                            <path
-                                                fill="#ebebeb"
-                                                d="M37 26h27v12H50l1 13h13v12H40zM41 67h12l1 10 10 3v13l-21-6z"
-                                            />
-
-                                            <path
-                                                fill="#ffffff"
-                                                d="M64 26h29l-1 12H64zm0 25h27l-4 36-23 6V80l12-3 1-14H64z"
-                                            />
-
-                                        </svg>
-
-                                    </div>
-
-
-                                    <div class="tech-copy">
-
+                    </div>
+                    <div class="team-grid">
+                        <article class="person-card">
+                            <img alt="Beatriz" src="./img/Beatriz.jpg"/>
+                            <div>
+                                <span>
+                                    CRIADORA
+                                </span>
+                                <h3>
+                                    Beatriz
+                                </h3>
+                                <p>
+                                    Ideia, seleção das séries, conteúdo e identidade do blog.
+                                </p>
+                            </div>
+                        </article>
+                        <article class="person-card developer-card">
+                            <img alt="Bayerlee" src="./img/Bayerlee.jpg"/>
+                            <div>
+                                <span>
+                                    DESENVOLVEDOR
+                                </span>
+                                <h3>
+                                    Bayerlee
+                                </h3>
+                                <p>
+                                    Estrutura, visual, responsividade e interações do projeto.
+                                </p>
+                                <div class="developer-techs">
+                                    <article class="tech-card">
+                                        <img alt="HTML" class="tech-logo-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"/>
                                         <strong>
                                             HTML
                                         </strong>
-
-                                        <span>
-                                            Estrutura da página
-                                        </span>
-
-                                    </div>
-
-                                </article>
-
-
-                                <!-- CSS -->
-
-                                <article class="tech-card tech-css">
-
-                                    <div class="tech-logo css-logo">
-
-                                        <svg
-                                            viewBox="0 0 128 128"
-                                            aria-hidden="true"
-                                        >
-
-                                            <path
-                                                fill="#1572b6"
-                                                d="M19 3l9 101 36 10 36-10 9-101H19z"
-                                            />
-
-                                            <path
-                                                fill="#33a9dc"
-                                                d="M64 106V11h36l-8 85-28 10z"
-                                            />
-
-                                            <path
-                                                fill="#ebebeb"
-                                                d="M38 26h26v12H51l1 13h12v12H41zM41 67h12l1 10 10 3v13l-21-6z"
-                                            />
-
-                                            <path
-                                                fill="#ffffff"
-                                                d="M64 26h29l-1 12H64zm0 25h27l-4 36-23 6V80l12-3 1-14H64z"
-                                            />
-
-                                        </svg>
-
-                                    </div>
-
-
-                                    <div class="tech-copy">
-
+                                    </article>
+                                    <article class="tech-card">
+                                        <img alt="CSS" class="tech-logo-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"/>
                                         <strong>
                                             CSS
                                         </strong>
-
-                                        <span>
-                                            Design e responsividade
-                                        </span>
-
-                                    </div>
-
-                                </article>
-
-
-                                <!-- JAVASCRIPT -->
-
-                                <article class="tech-card tech-js">
-
-                                    <div class="tech-logo js-logo">
-
-                                        <span>
-                                            JS
-                                        </span>
-
-                                    </div>
-
-
-                                    <div class="tech-copy">
-
+                                    </article>
+                                    <article class="tech-card">
+                                        <img alt="JavaScript" class="tech-logo-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"/>
                                         <strong>
                                             JavaScript
                                         </strong>
-
-                                        <span>
-                                            Interações e funcionalidades
-                                        </span>
-
-                                    </div>
-
-                                </article>
-
+                                    </article>
+                                </div>
                             </div>
-
-
-                            <button
-                                class="team-profile-btn"
-                                data-open-team-profile="bayerlee"
-                                type="button"
-                            >
-
-                                <span>
-                                    Conhecer o desenvolvedor
-                                </span>
-
-                                <b>
-                                    →
-                                </b>
-
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             DADOS
-        ================================================== -->
-
-        <section class="data-section">
-
-            <div class="section-container">
-
-                <div class="data-card">
-
-                    <div>
-
-                        <span class="section-kicker">
-                            SEUS DADOS
-                        </span>
-
-
-                        <h3>
-                            Dados salvos no navegador
-                        </h3>
-
-
-                        <p>
-                            Favoritos, curtidas, listas, avaliações, configurações e comentários ficam salvos localmente.
-                        </p>
-
+                        </article>
                     </div>
-
-
-                    <div class="data-actions">
-
-                        <button
-                            id="exportDataBtn"
-                            class="secondary-dark-btn"
-                            type="button"
-                        >
-                            Exportar
+                    <div class="project-facts">
+                        <article>
+                            <strong id="projectSeriesCount">
+                                15
+                            </strong>
+                            <span>
+                                séries no catálogo
+                            </span>
+                        </article>
+                        <article>
+                            <strong>
+                                PT / EN
+                            </strong>
+                            <span>
+                                dois idiomas
+                            </span>
+                        </article>
+                        <article>
+                            <strong>
+                                100%
+                            </strong>
+                            <span>
+                                responsivo
+                            </span>
+                        </article>
+                    </div>
+                    <div class="data-tools">
+                        <button class="secondary-dark-btn" id="exportDataBtn" type="button">
+                            Exportar dados
                         </button>
-
-
-                        <button
-                            id="importDataBtn"
-                            class="secondary-dark-btn"
-                            type="button"
-                        >
-                            Importar
+                        <button class="secondary-dark-btn" id="importDataBtn" type="button">
+                            Importar dados
                         </button>
-
-
-                        <input
-                            id="importDataInput"
-                            type="file"
-                            accept=".json,application/json"
-                            hidden
-                        >
-
-
-                        <button
-                            id="resetDataBtn"
-                            class="danger-btn"
-                            type="button"
-                        >
+                        <input accept=".json,application/json" hidden="" id="importDataInput" type="file"/>
+                        <button class="danger-btn" id="resetDataBtn" type="button">
                             Redefinir dados
                         </button>
-
                     </div>
-
                 </div>
+            </section>
 
+        </main>
+
+        <footer>
+            <div class="container footer-inner">
+                <p>
+                    ©
+                    <span id="currentYear">
+                    </span>
+                    Blog da Bia
+                </p>
+                <p>
+                    Criado por Beatriz · Desenvolvido por Bayerlee.
+                </p>
             </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         FOOTER
-         CRÉDITO APARECE SÓ AQUI
-    ====================================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-container">
-
-            <div class="footer-brand">
-
-                <img
-                    src="./img/Beatriz.jpg"
-                    alt="Blog da Bia"
-                >
-
-                <div>
-
-                    <strong>
-                        Blog da Bia
-                    </strong>
-
-                    <small>
-                        Um blog sobre séries.
-                    </small>
-
-                </div>
-
-            </div>
-
-
-            <p class="footer-credit">
-
-                Criado por
-
-                <strong>
-                    Beatriz
-                </strong>
-
-
-                <span>
-                    ·
-                </span>
-
-
-                Desenvolvido por
-
-                <strong>
-                    Bayerlee
-                </strong>
-
-            </p>
-
-
-            <small class="footer-year">
-
-                ©
-
-                <span id="currentYear">
-                    2026
-                </span>
-
-            </small>
-
-        </div>
-
-    </footer>
-
-
-    <!-- =====================================================
-         FLOATING BUTTONS
-    ====================================================== -->
-
-    <button
-        id="settingsFloating"
-        class="settings-floating"
-        type="button"
-        aria-label="Personalizar"
-        title="Personalizar"
-    >
-        ⚙
-    </button>
-
-
-    <button
-        id="backTop"
-        class="back-top"
-        type="button"
-        aria-label="Voltar ao topo"
-        title="Voltar ao topo"
-    >
-        ↑
-    </button>
-
-
-    <!-- =====================================================
-         SETTINGS
-    ====================================================== -->
-
-    <aside
-        id="settingsPanel"
-        class="settings-panel"
-        aria-label="Configurações"
-    >
-
-        <div class="settings-header">
-
-            <div>
-
-                <span class="section-kicker">
-                    CONFIGURAÇÕES
-                </span>
-
-                <h2>
-                    Personalizar
-                </h2>
-
-            </div>
-
-
-            <button
-                id="settingsClose"
-                type="button"
-                aria-label="Fechar configurações"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <!-- =================================================
-             CORES
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <span class="settings-title">
-                COR PRINCIPAL
-            </span>
-
-
-            <div class="theme-options">
-
-                <button
-                    class="theme-color active"
-                    data-theme-color="default"
-                    type="button"
-                    title="Roxo"
-                ></button>
-
-
-                <button
-                    class="theme-color"
-                    data-theme-color="wine"
-                    type="button"
-                    title="Vinho"
-                ></button>
-
-
-                <button
-                    class="theme-color"
-                    data-theme-color="blue"
-                    type="button"
-                    title="Azul"
-                ></button>
-
-
-                <button
-                    class="theme-color"
-                    data-theme-color="green"
-                    type="button"
-                    title="Verde"
-                ></button>
-
-
-                <button
-                    class="theme-color"
-                    data-theme-color="pink"
-                    type="button"
-                    title="Rosa"
-                ></button>
-
-
-                <button
-                    class="theme-color"
-                    data-theme-color="gold"
-                    type="button"
-                    title="Dourado"
-                ></button>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             FUNDO
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <span class="settings-title">
-                ESTILO DO FUNDO
-            </span>
-
-
-            <div class="settings-button-grid">
-
-                <button
-                    class="background-option active"
-                    data-background-style="gradient"
-                    type="button"
-                >
-                    Gradiente
-                </button>
-
-
-                <button
-                    class="background-option"
-                    data-background-style="clean"
-                    type="button"
-                >
-                    Limpo
-                </button>
-
-
-                <button
-                    class="background-option"
-                    data-background-style="ambient"
-                    type="button"
-                >
-                    Ambiente
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             INTERFACE SIZE
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <span class="settings-title">
-                TAMANHO DA INTERFACE
-            </span>
-
-
-            <div class="settings-button-grid three">
-
-                <button
-                    data-interface-size="small"
-                    type="button"
-                >
-                    Pequena
-                </button>
-
-
-                <button
-                    data-interface-size="normal"
-                    class="active"
-                    type="button"
-                >
-                    Normal
-                </button>
-
-
-                <button
-                    data-interface-size="large"
-                    type="button"
-                >
-                    Grande
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             DENSIDADE
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <span class="settings-title">
-                DENSIDADE DOS CARDS
-            </span>
-
-
-            <div class="settings-button-grid three">
-
-                <button
-                    data-card-density="comfortable"
-                    class="active"
-                    type="button"
-                >
-                    Normal
-                </button>
-
-
-                <button
-                    data-card-density="compact"
-                    type="button"
-                >
-                    Compacta
-                </button>
-
-
-                <button
-                    data-card-density="large"
-                    type="button"
-                >
-                    Grande
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- =================================================
-             RADIUS
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <div class="setting-range-heading">
-
-                <span class="settings-title">
-                    ARREDONDAMENTO
-                </span>
-
-                <strong id="radiusValue">
-                    16px
-                </strong>
-
-            </div>
-
-
-            <input
-                id="radiusRange"
-                class="setting-range"
-                type="range"
-                min="4"
-                max="30"
-                value="16"
-                step="1"
-            >
-
-        </div>
-
-
-        <!-- =================================================
-             ANIMATION INTENSITY
-        ================================================== -->
-
-        <div class="settings-group">
-
-            <div class="setting-range-heading">
-
-                <span class="settings-title">
-                    INTENSIDADE DOS EFEITOS
-                </span>
-
-                <strong id="effectIntensityValue">
-                    70%
-                </strong>
-
-            </div>
-
-
-            <input
-                id="effectIntensityRange"
-                class="setting-range"
-                type="range"
-                min="0"
-                max="100"
-                value="70"
-                step="10"
-            >
-
-        </div>
-
-
-        <!-- =================================================
-             TOGGLES
-        ================================================== -->
-
-        <div class="settings-toggle-list">
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Animações
-                    </strong>
-
-                    <small>
-                        Transições e movimentos do site.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="animationsToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Reduzir movimento
-                    </strong>
-
-                    <small>
-                        Remove movimentos mais intensos.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="reducedMotionToggle"
-                    type="checkbox"
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Brilho no cursor
-                    </strong>
-
-                    <small>
-                        Luz suave acompanha o mouse.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="cursorGlowToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Destaque automático
-                    </strong>
-
-                    <small>
-                        Troca a série principal automaticamente.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="autoHeroToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Autoplay do trailer
-                    </strong>
-
-                    <small>
-                        Inicia o trailer ao abrir.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="trailerAutoplayToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Modo vidro
-                    </strong>
-
-                    <small>
-                        Adiciona transparência e blur aos painéis.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="glassModeToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Alto contraste
-                    </strong>
-
-                    <small>
-                        Aumenta o contraste dos textos.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="contrastToggle"
-                    type="checkbox"
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Mostrar descrições
-                    </strong>
-
-                    <small>
-                        Exibe sinopses nos cards.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="descriptionsToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Mostrar ranking
-                    </strong>
-
-                    <small>
-                        Exibe a seção de ranking.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="rankingToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Mostrar Brasil
-                    </strong>
-
-                    <small>
-                        Exibe produções brasileiras.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="brazilToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Mostrar estatísticas
-                    </strong>
-
-                    <small>
-                        Exibe sua atividade no blog.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="statsToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Mostrar conquistas
-                    </strong>
-
-                    <small>
-                        Exibe seu progresso e conquistas.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="achievementsToggle"
-                    type="checkbox"
-                    checked
-                >
-
-            </label>
-
-
-            <label class="setting-row">
-
-                <span>
-
-                    <strong>
-                        Modo econômico
-                    </strong>
-
-                    <small>
-                        Reduz efeitos pesados em dispositivos lentos.
-                    </small>
-
-                </span>
-
-
-                <input
-                    id="performanceToggle"
-                    type="checkbox"
-                >
-
-            </label>
-
-        </div>
-
-
-        <button
-            id="resetVisualSettingsBtn"
-            class="settings-reset-btn"
-            type="button"
-        >
-            Restaurar aparência
+        </footer>
+
+        <button class="floating-btn settings-floating" id="settingsFloating" type="button">
+            ⚙
+        </button>
+        <button class="floating-btn back-top" id="backTop" type="button">
+            ↑
         </button>
 
-    </aside>
-
-
-    <!-- =====================================================
-         SERIES MODAL
-    ====================================================== -->
-
-    <div
-        id="seriesModal"
-        class="series-modal"
-    >
-
-        <div class="series-modal-box">
-
-
-            <button
-                id="seriesModalClose"
-                class="modal-close series-modal-close"
-                type="button"
-                aria-label="Fechar"
-            >
-                ×
-            </button>
-
-
-            <!-- BACKDROP -->
-
-            <div
-                id="modalBackdrop"
-                class="modal-backdrop"
-            ></div>
-
-
-            <!-- MAIN -->
-
-            <div class="modal-main">
-
-                <div class="modal-poster-wrap">
-
-                    <img
-                        id="modalPoster"
-                        src=""
-                        alt=""
-                    >
-
-
-                    <span
-                        id="modalBadge"
-                        class="modal-badge"
-                    >
-                        NETFLIX
-                    </span>
-
-                </div>
-
-
-                <div class="modal-copy">
-
-                    <span class="section-kicker">
-                        DETALHES DA SÉRIE
-                    </span>
-
-
-                    <h2 id="modalTitle">
-                        Série
-                    </h2>
-
-
-                    <div class="modal-meta">
-
-                        <span id="modalRating"></span>
-
-                        <span id="modalYear"></span>
-
-                        <span id="modalGenre"></span>
-
-                        <span id="modalSeasons"></span>
-
-                    </div>
-
-
-                    <p id="modalDescription"></p>
-
-
-                    <!-- PRINCIPAIS AÇÕES -->
-
-                    <div class="modal-actions">
-
-                        <button
-                            id="modalFavoriteBtn"
-                            class="modal-action-btn"
-                            type="button"
-                        >
-                            ♡ Favoritar
-                        </button>
-
-
-                        <button
-                            id="modalLikeBtn"
-                            class="modal-action-btn"
-                            type="button"
-                        >
-
-                            ♡ Curtir
-
-                            <span id="modalLikeCount">
-                                0
-                            </span>
-
-                        </button>
-
-
-                        <button
-                            id="modalWatchlistBtn"
-                            class="modal-action-btn"
-                            type="button"
-                        >
-                            ＋ Minha lista
-                        </button>
-
-
-                        <button
-                            id="modalWatchingBtn"
-                            class="modal-action-btn"
-                            type="button"
-                        >
-                            ▶ Assistindo
-                        </button>
-
-
-                        <button
-                            id="modalWatchedBtn"
-                            class="modal-action-btn"
-                            type="button"
-                        >
-                            ✓ Assistida
-                        </button>
-
-                    </div>
-
-
-                    <div class="modal-extra-actions">
-
-                        <button
-                            id="modalTrailerBtn"
-                            type="button"
-                        >
-                            ▶ Trailer
-                        </button>
-
-
-                        <button
-                            id="modalShareBtn"
-                            type="button"
-                        >
-                            ↗ Compartilhar
-                        </button>
-
-
-                        <button
-                            id="modalCopyBtn"
-                            type="button"
-                        >
-                            Copiar título
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 MODAL TABS
-            ================================================== -->
-
-            <div class="series-modal-tabs">
-
-                <button
-                    class="series-modal-tab active"
-                    data-modal-tab="overview"
-                    type="button"
-                >
-                    Visão geral
-                </button>
-
-
-                <button
-                    class="series-modal-tab"
-                    data-modal-tab="cast"
-                    type="button"
-                >
-                    Elenco
-                </button>
-
-
-                <button
-                    class="series-modal-tab"
-                    data-modal-tab="reviews"
-                    type="button"
-                >
-                    Avaliação
-                </button>
-
-
-                <button
-                    class="series-modal-tab"
-                    data-modal-tab="comments"
-                    type="button"
-                >
-                    Comentários
-                </button>
-
-            </div>
-
-
-            <!-- =================================================
-                 OVERVIEW TAB
-            ================================================== -->
-
-            <div
-                class="series-tab-panel active"
-                data-modal-panel="overview"
-            >
-
-                <div class="series-overview-grid">
-
-
-                    <!-- RATING -->
-
-                    <article class="series-control-card">
-
-                        <span class="control-label">
-                            SUA AVALIAÇÃO
-                        </span>
-
-
-                        <div
-                            id="starRating"
-                            class="star-rating"
-                        >
-
-                            <button data-star="1" type="button">
-                                ☆
-                            </button>
-
-                            <button data-star="2" type="button">
-                                ☆
-                            </button>
-
-                            <button data-star="3" type="button">
-                                ☆
-                            </button>
-
-                            <button data-star="4" type="button">
-                                ☆
-                            </button>
-
-                            <button data-star="5" type="button">
-                                ☆
-                            </button>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- PROGRESS -->
-
-                    <article class="series-control-card">
-
-                        <div class="modal-control-heading">
-
-                            <span class="control-label">
-                                SEU PROGRESSO
-                            </span>
-
-                            <strong id="episodeProgressText">
-                                0%
-                            </strong>
-
-                        </div>
-
-
-                        <input
-                            id="episodeProgress"
-                            type="range"
-                            min="0"
-                            max="100"
-                            step="5"
-                            value="0"
-                        >
-
-                    </article>
-
-                </div>
-
-
-                <!-- EPISODE + NOTE -->
-
-                <div class="episode-control">
-
-                    <label>
-
-                        <span>
-                            Episódio atual
-                        </span>
-
-
-                        <input
-                            id="currentEpisodeInput"
-                            type="number"
-                            min="1"
-                            value="1"
-                        >
-
-                    </label>
-
-
-                    <label>
-
-                        <span>
-                            Nota pessoal
-                        </span>
-
-
-                        <input
-                            id="personalNoteInput"
-                            type="text"
-                            maxlength="100"
-                            placeholder="Ex.: episódio muito bom..."
-                        >
-
-                    </label>
-
-
-                    <button
-                        id="saveSeriesInfoBtn"
-                        class="small-primary-btn"
-                        type="button"
-                    >
-                        Salvar
-                    </button>
-
-                </div>
-
-
-                <!-- RECOMMENDATIONS -->
-
-                <section class="modal-section">
-
-                    <span class="section-kicker">
-                        PARECIDAS
-                    </span>
-
-
-                    <h3>
-                        Você também pode gostar
-                    </h3>
-
-
-                    <div
-                        id="recommendations"
-                        class="recommendations"
-                    ></div>
-
-                </section>
-
-            </div>
-
-
-            <!-- =================================================
-                 CAST TAB
-            ================================================== -->
-
-            <div
-                class="series-tab-panel"
-                data-modal-panel="cast"
-            >
-
-                <section class="modal-section">
-
-                    <span class="section-kicker">
-                        ELENCO
-                    </span>
-
-
-                    <h3>
-                        Elenco principal
-                    </h3>
-
-
-                    <div
-                        id="castGrid"
-                        class="cast-grid"
-                    ></div>
-
-                </section>
-
-            </div>
-
-
-            <!-- =================================================
-                 REVIEW TAB
-            ================================================== -->
-
-            <div
-                class="series-tab-panel"
-                data-modal-panel="reviews"
-            >
-
-                <section class="modal-section">
-
-                    <span class="section-kicker">
-                        AVALIAÇÕES
-                    </span>
-
-
-                    <h3>
-                        Avaliação da série
-                    </h3>
-
-
-                    <div class="review-summary">
-
-
-                        <article>
-
-                            <small>
-                                Nota do blog
-                            </small>
-
-                            <strong id="modalBlogRating">
-                                —
-                            </strong>
-
-                        </article>
-
-
-                        <article>
-
-                            <small>
-                                Sua nota
-                            </small>
-
-                            <strong id="modalUserRating">
-                                —
-                            </strong>
-
-                        </article>
-
-
-                        <article>
-
-                            <small>
-                                Curtidas
-                            </small>
-
-                            <strong id="reviewLikeCount">
-                                0
-                            </strong>
-
-                        </article>
-
-
-                        <article>
-
-                            <small>
-                                Status
-                            </small>
-
-                            <strong id="reviewStatus">
-                                Não iniciada
-                            </strong>
-
-                        </article>
-
-                    </div>
-
-                </section>
-
-            </div>
-
-
-            <!-- =================================================
-                 COMMENTS TAB
-            ================================================== -->
-
-            <div
-                class="series-tab-panel"
-                data-modal-panel="comments"
-            >
-
-                <section class="modal-section">
-
-                    <span class="section-kicker">
-                        COMENTÁRIOS
-                    </span>
-
-
-                    <h3>
-                        Conversa sobre esta série
-                    </h3>
-
-
-                    <form
-                        id="modalCommentForm"
-                        class="modal-comment-form"
-                    >
-
-                        <input
-                            id="modalCommentName"
-                            type="text"
-                            maxlength="30"
-                            placeholder="Seu nome"
-                            required
-                        >
-
-
-                        <textarea
-                            id="modalCommentText"
-                            maxlength="300"
-                            placeholder="Deixe sua opinião..."
-                            required
-                        ></textarea>
-
-
-                        <div class="modal-comment-bottom">
-
-                            <label>
-
-                                <input
-                                    id="modalCommentSpoiler"
-                                    type="checkbox"
-                                >
-
-                                <span>
-                                    Spoiler
-                                </span>
-
-                            </label>
-
-
-                            <button
-                                class="primary-btn"
-                                type="submit"
-                            >
-                                Publicar
-                            </button>
-
-                        </div>
-
-                    </form>
-
-
-                    <div
-                        id="modalSeriesComments"
-                        class="modal-series-comments"
-                    ></div>
-
-                </section>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         TRAILER MODAL
-    ====================================================== -->
-
-    <div
-        id="trailerModal"
-        class="trailer-modal"
-    >
-
-        <div class="trailer-modal-box">
-
-            <div class="trailer-header">
-
+        <aside class="settings-panel" id="settingsPanel">
+            <div class="settings-head">
                 <div>
-
-                    <span class="section-kicker">
-                        TRAILER
+                    <span>
+                        PERSONALIZAÇÃO
                     </span>
-
-                    <h2 id="trailerTitle">
-                        Trailer
+                    <h2>
+                        Ajustes do site
                     </h2>
-
                 </div>
+                <button class="icon-btn" id="settingsClose" type="button">
+                    ×
+                </button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-group">
+                    <label>
+                        Cores
+                    </label>
+                    <div class="setting-row">
+                        <button class="theme-color active" data-theme-color="default" type="button">
+                        </button>
+                        <button class="theme-color wine" data-theme-color="wine" type="button">
+                        </button>
+                        <button class="theme-color blue" data-theme-color="blue" type="button">
+                        </button>
+                        <button class="theme-color green" data-theme-color="green" type="button">
+                        </button>
+                        <button class="theme-color pink" data-theme-color="pink" type="button">
+                        </button>
+                        <button class="theme-color gold" data-theme-color="gold" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        Fundo
+                    </label>
+                    <div class="segmented">
+                        <button class="active" data-background-style="gradient" type="button">
+                            Gradiente
+                        </button>
+                        <button data-background-style="clean" type="button">
+                            Limpo
+                        </button>
+                        <button data-background-style="ambient" type="button">
+                            Ambient
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        Tamanho da interface
+                    </label>
+                    <div class="segmented">
+                        <button data-interface-size="small" type="button">
+                            P
+                        </button>
+                        <button class="active" data-interface-size="normal" type="button">
+                            M
+                        </button>
+                        <button data-interface-size="large" type="button">
+                            G
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        Densidade dos cards
+                    </label>
+                    <div class="segmented">
+                        <button data-card-density="compact" type="button">
+                            Compacta
+                        </button>
+                        <button class="active" data-card-density="comfortable" type="button">
+                            Normal
+                        </button>
+                        <button data-card-density="large" type="button">
+                            Grande
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        Arredondamento
+                        <span id="radiusValue">
+                            16px
+                        </span>
+                    </label>
+                    <input id="radiusRange" max="30" min="4" type="range" value="16"/>
+                </div>
+                <div class="setting-group">
+                    <label>
+                        Intensidade dos efeitos
+                        <span id="effectIntensityValue">
+                            70%
+                        </span>
+                    </label>
+                    <input id="effectIntensityRange" max="100" min="0" type="range" value="70"/>
+                </div>
+                <div class="toggle-list">
+                    <label>
+                        <span>
+                            Animações
+                        </span>
+                        <input checked="" id="animationsToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Movimento reduzido
+                        </span>
+                        <input id="reducedMotionToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Brilho do cursor
+                        </span>
+                        <input checked="" id="cursorGlowToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Troca automática do destaque
+                        </span>
+                        <input checked="" id="autoHeroToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Autoplay do trailer
+                        </span>
+                        <input checked="" id="trailerAutoplayToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Efeito de vidro
+                        </span>
+                        <input checked="" id="glassModeToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Alto contraste
+                        </span>
+                        <input id="contrastToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Descrições nos cards
+                        </span>
+                        <input checked="" id="descriptionsToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Mostrar ranking
+                        </span>
+                        <input checked="" id="rankingToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Mostrar Brasil
+                        </span>
+                        <input checked="" id="brazilToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Mostrar estatísticas
+                        </span>
+                        <input checked="" id="statsToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Mostrar conquistas
+                        </span>
+                        <input checked="" id="achievementsToggle" type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>
+                            Modo desempenho
+                        </span>
+                        <input id="performanceToggle" type="checkbox"/>
+                    </label>
+                </div>
+                <button class="secondary-dark-btn full-btn" id="resetVisualSettingsBtn" type="button">
+                    Restaurar aparência
+                </button>
+            </div>
+        </aside>
 
-
-                <div class="trailer-header-actions">
-
-                    <button
-                        id="cinemaModeBtn"
-                        class="cinema-btn"
-                        type="button"
-                    >
-                        ⛶ Cinema
-                    </button>
-
-
-                    <button
-                        id="trailerClose"
-                        class="modal-close"
-                        type="button"
-                        aria-label="Fechar trailer"
-                    >
+        <div class="search-overlay" id="searchOverlay">
+            <div class="search-box">
+                <div class="search-head">
+                    <strong>
+                        Buscar
+                    </strong>
+                    <button class="icon-btn" id="searchClose" type="button">
                         ×
                     </button>
-
                 </div>
-
-            </div>
-
-
-            <div
-                id="trailerPlayerWrap"
-                class="trailer-player-wrap"
-            >
-
-                <div class="trailer-loading">
-
-                    <span></span>
-
-                    <p>
-                        Carregando trailer...
-                    </p>
-
+                <div class="search-input-row">
+                    <input id="globalSearch" placeholder="Digite uma série..." type="search"/>
+                    <button id="clearSearch" type="button">
+                        Limpar
+                    </button>
                 </div>
-
-
-                <iframe
-                    id="trailerFrame"
-                    src=""
-                    title="Trailer da série"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
-
-            </div>
-
-
-            <div
-                id="trailerUnavailable"
-                class="trailer-unavailable"
-            >
-
-                <span>
-                    ▶
-                </span>
-
-                <h3>
-                    Trailer indisponível
-                </h3>
-
-                <p>
-                    Não foi possível carregar o trailer desta série.
-                </p>
-
-            </div>
-
-
-            <div class="trailer-footer">
-
-                <div class="trailer-series-info">
-
-                    <img
-                        id="trailerPoster"
-                        src=""
-                        alt=""
-                    >
-
-
-                    <div>
-
-                        <strong id="trailerSeriesName">
-                            Série
-                        </strong>
-
-                        <small id="trailerSeriesMeta">
-                            Netflix
-                        </small>
-
+                <div id="searchHistoryArea">
+                    <div class="search-subhead">
+                        <span>
+                            Recentes
+                        </span>
+                        <button id="clearSearchHistoryBtn" type="button">
+                            Limpar
+                        </button>
                     </div>
-
+                    <div class="search-history" id="searchHistory">
+                    </div>
                 </div>
-
-
-                <div class="trailer-actions">
-
-                    <button
-                        id="trailerFavoriteBtn"
-                        class="secondary-dark-btn"
-                        type="button"
-                    >
-                        ♡ Favoritar
-                    </button>
-
-
-                    <button
-                        id="trailerWatchlistBtn"
-                        class="secondary-dark-btn"
-                        type="button"
-                    >
-                        ＋ Minha lista
-                    </button>
-
+                <div class="search-results" id="searchResults">
                 </div>
-
             </div>
-
         </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         CAST PHOTO MODAL
-    ====================================================== -->
-
-    <div
-        id="castPhotoModal"
-        class="cast-photo-modal"
-    >
-
-        <div class="cast-photo-box">
-
-            <button
-                id="castPhotoClose"
-                class="modal-close cast-photo-close"
-                type="button"
-                aria-label="Fechar"
-            >
-                ×
-            </button>
-
-
-            <img
-                id="castPhotoLarge"
-                src=""
-                alt=""
-            >
-
-
-            <div class="cast-photo-info">
-
-                <strong id="castPhotoName">
-                    Ator
-                </strong>
-
-                <span id="castPhotoCharacter">
-                    Personagem
-                </span>
-
+        <div class="series-modal" id="seriesModal">
+            <div class="series-modal-dialog">
+                <button class="modal-close" id="seriesModalClose" type="button">
+                    ×
+                </button>
+                <div class="modal-backdrop" id="modalBackdrop">
+                </div>
+                <div class="modal-content">
+                    <div class="modal-top">
+                        <img alt="" id="modalPoster" src=""/>
+                        <div class="modal-title-area">
+                            <span class="series-badge" id="modalBadge">
+                                NETFLIX
+                            </span>
+                            <h2 id="modalTitle">
+                                Série
+                            </h2>
+                            <div class="hero-meta">
+                                <span id="modalRating">
+                                </span>
+                                <span id="modalYear">
+                                </span>
+                                <span id="modalGenre">
+                                </span>
+                                <span id="modalSeasons">
+                                </span>
+                            </div>
+                            <p id="modalDescription">
+                            </p>
+                            <div class="modal-actions">
+                                <button class="secondary-dark-btn" id="modalFavoriteBtn" type="button">
+                                    ♡ Favoritar
+                                </button>
+                                <button class="secondary-dark-btn" id="modalLikeBtn" type="button">
+                                    ♡ Curtir
+                                </button>
+                                <button class="secondary-dark-btn" id="modalWatchlistBtn" type="button">
+                                    ＋ Minha lista
+                                </button>
+                                <button class="secondary-dark-btn" id="modalWatchingBtn" type="button">
+                                    ▶ Assistindo
+                                </button>
+                                <button class="secondary-dark-btn" id="modalWatchedBtn" type="button">
+                                    ✓ Marcar assistida
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-modal-tabs">
+                        <button class="series-modal-tab active" data-modal-tab="overview" type="button">
+                            Visão geral
+                        </button>
+                        <button class="series-modal-tab" data-modal-tab="cast" type="button">
+                            Elenco
+                        </button>
+                        <button class="series-modal-tab" data-modal-tab="review" type="button">
+                            Minha avaliação
+                        </button>
+                        <button class="series-modal-tab" data-modal-tab="comments" type="button">
+                            Comentários
+                        </button>
+                    </div>
+                    <div class="series-tab-panel active" data-modal-panel="overview">
+                        <div class="modal-section">
+                            <h3>
+                                Ações
+                            </h3>
+                            <div class="modal-extra-actions">
+                                <button class="primary-btn" id="modalTrailerBtn" type="button">
+                                    ▶ Assistir trailer
+                                </button>
+                                <button class="secondary-dark-btn" id="modalShareBtn" type="button">
+                                    Compartilhar
+                                </button>
+                                <button class="secondary-dark-btn" id="modalCopyBtn" type="button">
+                                    Copiar título
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-section">
+                            <h3>
+                                Recomendações parecidas
+                            </h3>
+                            <div class="recommendations" id="recommendations">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-tab-panel" data-modal-panel="cast">
+                        <div class="modal-section">
+                            <h3>
+                                Elenco
+                            </h3>
+                            <div class="cast-grid" id="castGrid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="series-tab-panel" data-modal-panel="review">
+                        <div class="review-grid">
+                            <article>
+                                <span>
+                                    Nota do blog
+                                </span>
+                                <strong id="modalBlogRating">
+                                    —
+                                </strong>
+                            </article>
+                            <article>
+                                <span>
+                                    Sua nota
+                                </span>
+                                <strong id="modalUserRating">
+                                    —
+                                </strong>
+                            </article>
+                            <article>
+                                <span>
+                                    Curtidas
+                                </span>
+                                <strong id="reviewLikeCount">
+                                    0
+                                </strong>
+                            </article>
+                            <article>
+                                <span>
+                                    Status
+                                </span>
+                                <strong id="reviewStatus">
+                                    —
+                                </strong>
+                            </article>
+                        </div>
+                        <div class="modal-section">
+                            <h3>
+                                Sua nota
+                            </h3>
+                            <div class="star-rating" id="starRating">
+                                <button data-star="1" type="button">
+                                    ☆
+                                </button>
+                                <button data-star="2" type="button">
+                                    ☆
+                                </button>
+                                <button data-star="3" type="button">
+                                    ☆
+                                </button>
+                                <button data-star="4" type="button">
+                                    ☆
+                                </button>
+                                <button data-star="5" type="button">
+                                    ☆
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-section">
+                            <label>
+                                Progresso
+                                <span id="episodeProgressText">
+                                    0%
+                                </span>
+                            </label>
+                            <input id="episodeProgress" max="100" min="0" type="range" value="0"/>
+                        </div>
+                        <div class="modal-section form-grid">
+                            <label>
+                                Episódio atual
+                                <input id="currentEpisodeInput" min="1" type="number" value="1"/>
+                            </label>
+                            <label>
+                                Nota pessoal
+                                <textarea id="personalNoteInput" maxlength="500"></textarea>
+                            </label>
+                            <button class="primary-btn" id="saveSeriesInfoBtn" type="button">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="series-tab-panel" data-modal-panel="comments">
+                        <form class="comment-form" id="modalCommentForm">
+                            <input id="modalCommentName" placeholder="Seu nome" required="" type="text"/>
+                            <textarea id="modalCommentText" maxlength="350" placeholder="Comente sobre esta série" required=""></textarea>
+                            <label class="check-row">
+                                <input id="modalCommentSpoiler" type="checkbox"/>
+                                Contém spoiler
+                            </label>
+                            <button class="primary-btn" type="submit">
+                                Publicar
+                            </button>
+                        </form>
+                        <div class="comments-list" id="modalSeriesComments">
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         TEAM PROFILE MODAL
-    ====================================================== -->
-
-    <div
-        id="teamProfileModal"
-        class="team-profile-modal"
-    >
-
-        <div class="team-profile-box">
-
-            <button
-                id="teamProfileClose"
-                class="modal-close team-profile-close"
-                type="button"
-            >
-                ×
-            </button>
-
-
-            <div class="team-modal-photo">
-
-                <img
-                    id="teamModalImage"
-                    src=""
-                    alt=""
-                >
-
+        <div class="trailer-modal" id="trailerModal">
+            <div class="trailer-dialog">
+                <div class="trailer-head">
+                    <div>
+                        <span>
+                            TRAILER
+                        </span>
+                        <h2 id="trailerTitle">
+                            Série
+                        </h2>
+                    </div>
+                    <div>
+                        <button class="secondary-dark-btn" id="cinemaModeBtn" type="button">
+                            ⛶ Cinema
+                        </button>
+                        <button class="icon-btn" id="trailerClose" type="button">
+                            ×
+                        </button>
+                    </div>
+                </div>
+                <div class="trailer-player" id="trailerPlayerWrap">
+                    <iframe allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen="" id="trailerFrame" title="Trailer">
+                    </iframe>
+                </div>
+                <div class="trailer-unavailable" id="trailerUnavailable">
+                    <h3>
+                        Trailer indisponível
+                    </h3>
+                    <p>
+                        Este título ainda não possui um trailer configurado dentro do site.
+                    </p>
+                </div>
+                <div class="trailer-info">
+                    <img alt="" id="trailerPoster" src=""/>
+                    <div>
+                        <h3 id="trailerSeriesName">
+                        </h3>
+                        <p id="trailerSeriesMeta">
+                        </p>
+                        <div class="modal-extra-actions">
+                            <button class="secondary-dark-btn" id="trailerFavoriteBtn" type="button">
+                                ♡ Favoritar
+                            </button>
+                            <button class="secondary-dark-btn" id="trailerWatchlistBtn" type="button">
+                                ＋ Minha lista
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
-            <div class="team-modal-content">
-
-                <span
-                    id="teamModalRole"
-                    class="section-kicker"
-                >
+        </div>
+        <div class="cast-photo-modal" id="castPhotoModal">
+            <div class="simple-dialog cast-photo-dialog">
+                <button class="modal-close" id="castPhotoClose" type="button">
+                    ×
+                </button>
+                <img alt="" id="castPhotoLarge" src=""/>
+                <h3 id="castPhotoName">
+                </h3>
+                <p id="castPhotoCharacter">
+                </p>
+            </div>
+        </div>
+        <div class="simple-modal" id="quizModal">
+            <div class="simple-dialog">
+                <button class="modal-close" id="quizClose" type="button">
+                    ×
+                </button>
+                <div class="quiz-progress">
+                    <div id="quizProgress">
+                    </div>
+                </div>
+                <div id="quizContent">
+                </div>
+            </div>
+        </div>
+        <div class="simple-modal" id="profileModal">
+            <div class="simple-dialog">
+                <button class="modal-close" id="profileClose" type="button">
+                    ×
+                </button>
+                <span class="section-kicker">
                     PERFIL
                 </span>
-
-
-                <h2 id="teamModalName">
-                    Nome
-                </h2>
-
-
-                <p id="teamModalDescription"></p>
-
-
-                <div
-                    id="teamModalTags"
-                    class="team-modal-tags"
-                ></div>
-
-
-                <div class="team-modal-project">
-
-                    <small>
-                        PROJETO
-                    </small>
-
-                    <strong>
-                        Blog da Bia
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         QUIZ
-    ====================================================== -->
-
-    <div
-        id="quizModal"
-        class="simple-modal"
-    >
-
-        <div class="simple-modal-box">
-
-            <button
-                id="quizClose"
-                class="modal-close"
-                type="button"
-            >
-                ×
-            </button>
-
-
-            <div class="quiz-progress">
-
-                <span id="quizProgress"></span>
-
-            </div>
-
-
-            <div id="quizContent">
-
-                <span class="section-kicker">
-                    QUIZ
-                </span>
-
-
                 <h2>
-                    Descubra sua próxima série
+                    Editar perfil
                 </h2>
-
-
-                <p>
-                    Responda algumas perguntas e veja qual série combina com você.
-                </p>
-
-
-                <button
-                    id="quizBeginBtn"
-                    class="primary-btn"
-                    type="button"
-                >
-                    Começar
-                </button>
-
+                <form class="profile-form" id="profileForm">
+                    <label>
+                        Nome
+                        <input id="profileNameInput" maxlength="30" required="" type="text"/>
+                    </label>
+                    <div class="avatar-picker">
+                        <button data-avatar="B" type="button">
+                            B
+                        </button>
+                        <button data-avatar="★" type="button">
+                            ★
+                        </button>
+                        <button data-avatar="♡" type="button">
+                            ♡
+                        </button>
+                        <button data-avatar="✦" type="button">
+                            ✦
+                        </button>
+                    </div>
+                    <button class="primary-btn" type="submit">
+                        Salvar perfil
+                    </button>
+                </form>
             </div>
-
         </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         PROFILE MODAL
-    ====================================================== -->
-
-    <div
-        id="profileModal"
-        class="simple-modal"
-    >
-
-        <form
-            id="profileForm"
-            class="simple-modal-box profile-modal-box"
-        >
-
-            <button
-                id="profileClose"
-                class="modal-close"
-                type="button"
-            >
-                ×
-            </button>
-
-
-            <span class="section-kicker">
-                PERFIL
+        <div class="toast" id="toast">
+            <span id="toastIcon">
+                ✓
             </span>
-
-
-            <h2>
-                Como podemos te chamar?
-            </h2>
-
-
-            <label>
-
-                <span>
-                    Nome
-                </span>
-
-
-                <input
-                    id="profileNameInput"
-                    type="text"
-                    maxlength="25"
-                    placeholder="Seu nome"
-                    required
-                >
-
-            </label>
-
-
-            <div class="avatar-picker">
-
-                <span>
-                    Escolha um avatar
-                </span>
-
-
-                <div>
-
-                    <button
-                        data-avatar="B"
-                        type="button"
-                    >
-                        B
-                    </button>
-
-
-                    <button
-                        data-avatar="🎬"
-                        type="button"
-                    >
-                        🎬
-                    </button>
-
-
-                    <button
-                        data-avatar="🍿"
-                        type="button"
-                    >
-                        🍿
-                    </button>
-
-
-                    <button
-                        data-avatar="★"
-                        type="button"
-                    >
-                        ★
-                    </button>
-
-
-                    <button
-                        data-avatar="♡"
-                        type="button"
-                    >
-                        ♡
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="primary-btn full-btn"
-                type="submit"
-            >
-                Salvar perfil
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <!-- =====================================================
-         SCRIPT
-    ====================================================== -->
-
-    <script src="script.js"></script>
-
-</body>
-
+            <p id="toastText">
+                Pronto
+            </p>
+        </div>
+        <script src="./script.js">
+        </script>
+    </body>
 </html>
